@@ -37,7 +37,7 @@
             this.labelTitle = new System.Windows.Forms.Label();
             this.labelVersionCaption = new Acacia.Controls.KCopyLabel();
             this.labelRevisionCaption = new Acacia.Controls.KCopyLabel();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.textLicense = new System.Windows.Forms.RichTextBox();
             this.labelDateCaption = new Acacia.Controls.KCopyLabel();
             this.linkKopano = new System.Windows.Forms.LinkLabel();
             this.labelVersionValue = new Acacia.Controls.KCopyLabel();
@@ -63,7 +63,7 @@
             this._layoutForm.Controls.Add(this.labelTitle, 1, 0);
             this._layoutForm.Controls.Add(this.labelVersionCaption, 0, 2);
             this._layoutForm.Controls.Add(this.labelRevisionCaption, 0, 3);
-            this._layoutForm.Controls.Add(this.richTextBox1, 0, 6);
+            this._layoutForm.Controls.Add(this.textLicense, 0, 6);
             this._layoutForm.Controls.Add(this.labelDateCaption, 0, 4);
             this._layoutForm.Controls.Add(this.linkKopano, 1, 1);
             this._layoutForm.Controls.Add(this.labelVersionValue, 1, 2);
@@ -112,14 +112,14 @@
             this.labelRevisionCaption.ReadOnly = true;
             this.labelRevisionCaption.TabStop = false;
             // 
-            // richTextBox1
+            // textLicense
             // 
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this._layoutForm.SetColumnSpan(this.richTextBox1, 2);
-            resources.ApplyResources(this.richTextBox1, "richTextBox1");
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBox1_LinkClicked);
+            this.textLicense.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this._layoutForm.SetColumnSpan(this.textLicense, 2);
+            resources.ApplyResources(this.textLicense, "textLicense");
+            this.textLicense.Name = "textLicense";
+            this.textLicense.ReadOnly = true;
+            this.textLicense.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBox1_LinkClicked);
             // 
             // labelDateCaption
             // 
@@ -186,7 +186,7 @@
         private Controls.KCopyLabel labelRevisionCaption;
         private Controls.KCopyLabel labelDateCaption;
         private System.Windows.Forms.LinkLabel linkKopano;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox textLicense;
         private Controls.KCopyLabel labelVersionValue;
     }
 }

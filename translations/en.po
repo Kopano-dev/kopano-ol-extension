@@ -34,26 +34,6 @@ msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelRevisionCa
 msgid "Revision"
 msgstr "Revision"
 
-#: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\richTextBox1.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\richTextBox1.Text"
-msgid ""
-"Copyright 2016 Kopano b.v.\n"
-"\n"
-"This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License, version 3, as published by the Free Software Foundation.\n"
-"\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU Affero General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>"
-msgstr ""
-"Copyright 2016 Kopano b.v.\n"
-"\n"
-"This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License, version 3, as published by the Free Software Foundation.\n"
-"\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU Affero General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>"
-
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelDateCaption.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelDateCaption.Text"
