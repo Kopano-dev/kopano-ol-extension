@@ -1,0 +1,434 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="OOFGet_Failed" xml:space="preserve">
+    <value>Unable to retrieve Out of Office settings. You can still enable or disable Out of Office, but applying the settings might fail.</value>
+  </data>
+  <data name="OOFGet_Label" xml:space="preserve">
+    <value>Retrieving current Out of Office settings</value>
+  </data>
+  <data name="OOFGet_Title" xml:space="preserve">
+    <value>Out of Office Assistant</value>
+  </data>
+  <data name="OOFSet_DifferentState" xml:space="preserve">
+    <value>Out of office has been enabled, but the server could not handle your full request.
+
+</value>
+  </data>
+  <data name="OOFSet_Disabled" xml:space="preserve">
+    <value>Out of Office has been disabled.</value>
+  </data>
+  <data name="OOFSet_DisableFailed" xml:space="preserve">
+    <value>Unable to disable Out of Office.</value>
+  </data>
+  <data name="OOFSet_Enabled" xml:space="preserve">
+    <value>Out of Office has been enabled until further notice.</value>
+  </data>
+  <data name="OOFSet_EnabledTimeBased" xml:space="preserve">
+    <value>Out of Office has been enabled from {0} till {1}.</value>
+  </data>
+  <data name="OOFSet_EnableFailed" xml:space="preserve">
+    <value>Unable to enable Out of Office.</value>
+  </data>
+  <data name="OOFSet_Failed" xml:space="preserve">
+    <value>Unable to apply Out of Office settings</value>
+  </data>
+  <data name="OOFSet_Label" xml:space="preserve">
+    <value>Applying Out of Office settings</value>
+  </data>
+  <data name="OOFSet_Title" xml:space="preserve">
+    <value>Out of Office Assistant</value>
+  </data>
+  <data name="Ribbon_Debug_Label" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="Ribbon_Debug_Screentip" xml:space="preserve">
+    <value>Debug dialog</value>
+  </data>
+  <data name="Ribbon_Debug_Supertip" xml:space="preserve">
+    <value>Opens the debug dialog, which shows information on the Kopano Outlook Extension.</value>
+  </data>
+  <data name="Ribbon_GroupMain_Label" xml:space="preserve">
+    <value>Kopano</value>
+    <comment>The group label for the ribbon</comment>
+  </data>
+  <data name="Ribbon_OOF_Label" xml:space="preserve">
+    <value>Out-of-Office</value>
+  </data>
+  <data name="Ribbon_OOF_Screentip" xml:space="preserve">
+    <value>Change Out-of-Office settings</value>
+  </data>
+  <data name="Ribbon_OOF_Supertip" xml:space="preserve">
+    <value>Opens a dialog which allows Out-of-Office settings to be viewed or modified.</value>
+  </data>
+  <data name="Ribbon_Settings_Label" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Ribbon_Settings_Screentip" xml:space="preserve">
+    <value>Settings dialog</value>
+  </data>
+  <data name="Ribbon_Settings_Supertip" xml:space="preserve">
+    <value>Opens the settings dialog, which allows configuration of the plugin and access to support functions.</value>
+  </data>
+  <data name="OOFStartup_Message" xml:space="preserve">
+    <value>Out of Office is currently enabled on account '{0}'. Would you like to change the settings?</value>
+  </data>
+  <data name="OOFStartup_Title" xml:space="preserve">
+    <value>Out of Office Assistant</value>
+  </data>
+  <data name="GABEvent_Body" xml:space="preserve">
+    <value>Modifications to the Global Address Book are not allowed. Please contact your administrator if you think changes are required.</value>
+  </data>
+  <data name="GABEvent_Title" xml:space="preserve">
+    <value>Global Address Book</value>
+  </data>
+  <data name="GAB_FolderFormat" xml:space="preserve">
+    <value>Address Book for {0}</value>
+  </data>
+  <data name="LocalStore_DisplayName" xml:space="preserve">
+    <value>Kopano Folders</value>
+  </data>
+  <data name="Feature_DebugSupport" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="Feature_FreeBusy" xml:space="preserve">
+    <value>Free/Busy</value>
+  </data>
+  <data name="Feature_GAB" xml:space="preserve">
+    <value>Global Address Book</value>
+  </data>
+  <data name="Feature_Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Feature_OutOfOffice" xml:space="preserve">
+    <value>Out of office</value>
+  </data>
+  <data name="Feature_ReplyFlags" xml:space="preserve">
+    <value>Reply flags</value>
+  </data>
+  <data name="ThisAddIn_Title" xml:space="preserve">
+    <value>Kopano</value>
+  </data>
+  <data name="SSLFailed_Body" xml:space="preserve">
+    <value>There is an error with the security certificate for server {0}. Do you want to allow the connection anyway?</value>
+  </data>
+  <data name="SSLFailed_Title" xml:space="preserve">
+    <value>Certificate error</value>
+  </data>
+  <data name="Ribbon_Title" xml:space="preserve">
+    <value>Kopano</value>
+  </data>
+  <data name="SharedFolders_Adding_Label" xml:space="preserve">
+    <value>Opening shared folder</value>
+  </data>
+  <data name="SharedFolders_Adding_Title" xml:space="preserve">
+    <value>Shared folders</value>
+  </data>
+  <data name="SharedFolders_Closing_Confirm" xml:space="preserve">
+    <value>Close shared folder {0}?</value>
+    <comment>{0} will be replaced with the folder name</comment>
+  </data>
+  <data name="SharedFolders_Closing_Label" xml:space="preserve">
+    <value>Closing shared folder</value>
+  </data>
+  <data name="SharedFolders_Closing_Title" xml:space="preserve">
+    <value>Shared folders</value>
+  </data>
+  <data name="SharedFolders_Adding_Failure" xml:space="preserve">
+    <value>Unable to open the shared folder. Please ensure you have permission to open the shared folder.</value>
+  </data>
+  <data name="SharedFolders_Closing_Failure" xml:space="preserve">
+    <value>Unable to close the shared folder.</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Kopano" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Kopano.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_WebApp_Label" xml:space="preserve">
+    <value>Open WebApp</value>
+  </data>
+  <data name="Ribbon_WebApp_Screentip" xml:space="preserve">
+    <value>Open WebApp</value>
+  </data>
+  <data name="Ribbon_WebApp_Supertip" xml:space="preserve">
+    <value>Open WebApp in the system default browser</value>
+  </data>
+  <data name="Ribbon_AddSharedFolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_AddSharedFolder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_AddSharedFolder_Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_AddSharedFolder_Small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_Debug" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_Debug.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_Debug_Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_Debug_Small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_Logfile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_Logfile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_Logfile_Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_Logfile_Small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_ManageSharedFolders" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_ManageSharedFolders.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_ManageSharedFolders_Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_ManageSharedFolders_Small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_MDM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_MDM.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_MDM_Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_MDM_Small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_OOF" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_OOF.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_OOF_Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_OOF_Small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_Restore" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_Restore.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_Restore_Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_Restore_Small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_Rules" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_Rules.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_Rules_Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_Rules_Small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_Settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_Settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_Settings_Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_Settings_Small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_SyncGAB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_SyncGAB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_SyncGAB_Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_SyncGAB_Small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_WebApp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_WebApp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_WebApp_Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_WebApp_Small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_WebMeetings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_WebMeetings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_WebMeetings_Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_WebMeetings_Small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_SharedFolders" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_ManageSharedFolders1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_SharedFolders_Label" xml:space="preserve">
+    <value>Shared folders</value>
+  </data>
+  <data name="Ribbon_SharedFolders_Screentip" xml:space="preserve">
+    <value>Manage shared folders</value>
+  </data>
+  <data name="Ribbon_SharedFolders_Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_ManageSharedFolders_Small1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_SharedFolders_Supertip" xml:space="preserve">
+    <value>Open the "Shared Folders" dialog, which can be used to add or remove shared folders.</value>
+  </data>
+  <data name="SharedFolders_PublicFolders" xml:space="preserve">
+    <value>Public folders</value>
+  </data>
+  <data name="SharedFolders_Loading" xml:space="preserve">
+    <value>Retrieving shared folders</value>
+  </data>
+  <data name="SharedFolders_Loading_Error" xml:space="preserve">
+    <value>There was an error retrieving shared folders</value>
+  </data>
+  <data name="SharedFolders_None" xml:space="preserve">
+    <value>No shared folders are available</value>
+  </data>
+  <data name="TreeLoading" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>TreeLoading.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SharedFolders_Fetching_Failure" xml:space="preserve">
+    <value>Unable to retrieve shared folders. Please try again later.</value>
+  </data>
+  <data name="SharedFolders_Fetching_Label" xml:space="preserve">
+    <value>Retrieving shared folders</value>
+  </data>
+  <data name="SharedFolders_Fetching_Title" xml:space="preserve">
+    <value>Shared folders</value>
+  </data>
+  <data name="SharedFolders_Unsaved_Changes" xml:space="preserve">
+    <value>There are unsaved changes. Do you really want to to discard these?</value>
+  </data>
+  <data name="Ribbon_SharedFolders_Context" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_ManageSharedFolders_Small11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_SharedFolders_Context_Label" xml:space="preserve">
+    <value>Manage shared folder</value>
+  </data>
+  <data name="Ribbon_SharedFolders_Context_Screentip" xml:space="preserve">
+    <value>Manage this folder in the Shared Folders dialog</value>
+  </data>
+  <data name="Ribbon_SharedFolders_Context_Supertip" xml:space="preserve">
+    <value>Open the "Shared Folders" dialog for the currently selected folder.</value>
+  </data>
+  <data name="SharedFolders_Applying_Label" xml:space="preserve">
+    <value>Applying changes to shared folders</value>
+  </data>
+  <data name="SharedFolders_Applying_Failure" xml:space="preserve">
+    <value>Unable to apply the changes to the shared folders. Please try again later.</value>
+  </data>
+  <data name="SharedFolders_Applying_Title" xml:space="preserve">
+    <value>Shared folders</value>
+  </data>
+  <data name="SharedFolders_Permission_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="SharedFolders_Permission_Read" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="SharedFolders_Permission_Write" xml:space="preserve">
+    <value>Write</value>
+  </data>
+  <data name="SharedFolders_Applying_Success" xml:space="preserve">
+    <value>The changes to the shared folders have been applied successfully.</value>
+  </data>
+  <data name="Ribbon_About" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_About.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_About_Label" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Ribbon_About_Screentip" xml:space="preserve">
+    <value>About dialog</value>
+  </data>
+  <data name="Ribbon_About_Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Ribbon_About_Small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_About_Supertip" xml:space="preserve">
+    <value>Shows the about dialog, which contains licensing and version information.</value>
+  </data>
+</root>
