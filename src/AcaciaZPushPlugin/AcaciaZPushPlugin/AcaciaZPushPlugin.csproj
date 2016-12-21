@@ -1,0 +1,612 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <!--
+    This section defines project-level properties.
+
+    AssemblyName
+      Name of the output assembly.
+    Configuration
+      Specifies a default value for debug.
+    OutputType
+      Must be "Library" for VSTO.
+    Platform
+      Specifies what CPU the output of this project can run on.
+    NoStandardLibraries
+      Set to "false" for VSTO.
+    RootNamespace
+      In C#, this specifies the namespace given to new files. In VB, all objects are
+      wrapped in this namespace at runtime.
+  -->
+  <PropertyGroup>
+    <ProjectTypeGuids>{BAA0C2D2-18E2-41B9-852F-F413020CAA33};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1A7427A5-F814-4B07-98B2-C67D758B65D6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <RootNamespace>Acacia</RootNamespace>
+    <AssemblyName>Kopano</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <DefineConstants>VSTO40</DefineConstants>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <PublishUrl>publish\</PublishUrl>
+    <InstallUrl />
+    <TargetCulture>en</TargetCulture>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>days</UpdateIntervalUnits>
+    <IsWebBootstrapper>False</IsWebBootstrapper>
+    <ProductName>Kopano OL Extension</ProductName>
+    <PublisherName>Kopano</PublisherName>
+    <SupportUrl />
+    <FriendlyName>Kopano OL Extension</FriendlyName>
+    <OfficeApplicationDescription>Kopano OL Extension</OfficeApplicationDescription>
+    <LoadBehavior>3</LoadBehavior>
+  </PropertyGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.VSTORuntime.4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft Visual Studio 2010 Tools for Office Runtime %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <PropertyGroup>
+    <!--
+      OfficeApplication
+        Add-in host application
+    -->
+    <OfficeApplication>Outlook</OfficeApplication>
+  </PropertyGroup>
+  <!--
+    This section defines properties that are set when the "Debug" configuration is selected.
+
+    DebugSymbols
+      If "true", create symbols (.pdb). If "false", do not create symbols.
+    DefineConstants
+      Constants defined for the preprocessor.
+    EnableUnmanagedDebugging
+      If "true", starting the debugger will attach both managed and unmanaged debuggers.
+    Optimize
+      If "true", optimize the build output. If "false", do not optimize.
+    OutputPath
+      Output path of project relative to the project file.
+    WarningLevel
+      Warning level for the compiler.
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Build\Debug\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <!--
+    This section defines properties that are set when the "Release" configuration is selected.
+
+    DebugSymbols
+      If "true", create symbols (.pdb). If "false", do not create symbols.
+    DefineConstants
+      Constants defined for the preprocessor.
+    EnableUnmanagedDebugging
+      If "true", starting the debugger will attach both managed and unmanaged debuggers.
+    Optimize
+      If "true", optimize the build output. If "false", do not optimize.
+    OutputPath
+      Output path of project relative to the project file.
+    WarningLevel
+      Warning level for the compiler.
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Build\Release\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>VSTO40</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <!--
+    This section specifies references for the project.
+  -->
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Tools.v4.0.Framework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Tools.Applications.Runtime, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Tools, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Tools.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Tools.Outlook, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Tools.Common.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Outlook.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <Private>False</Private>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Outlook, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <Private>False</Private>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <!--
+    This section defines the user source files that are part of the project.
+     
+    A "Compile" element specifies a source file to compile.
+    An "EmbeddedResource" element specifies an .resx file for embedded resources.
+    A "None" element specifies a file that is not to be passed to the compiler (for instance, 
+    a text file or XML file).
+    The "AppDesigner" element specifies the directory where the application properties files
+    can be found.
+  -->
+  <ItemGroup>
+    <Compile Include="AcaciaOptionAttribute.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Controls\KAnimator.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\KBusyHider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\KBusyIndicator.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\KBusyIndicator.Designer.cs">
+      <DependentUpon>KBusyIndicator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\KCheckManager.cs" />
+    <Compile Include="Controls\KCopyLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\KDialogButtons.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\KDialogButtons.Designer.cs">
+      <DependentUpon>KDialogButtons.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\KDialogNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\KSelectionManager.cs" />
+    <Compile Include="Controls\KTreeNode.cs" />
+    <Compile Include="Controls\KTreeNodeLoader.cs" />
+    <Compile Include="Controls\KTreeNodes.cs" />
+    <Compile Include="Controls\KTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\KTreeNodeMeasurements.cs" />
+    <Compile Include="Controls\KTreeRenderer.cs" />
+    <Compile Include="Controls\KTreeRendererDefault.cs" />
+    <Compile Include="Controls\KTreeRendererVisualStyles.cs" />
+    <Compile Include="Controls\KUITask.cs" />
+    <Compile Include="Controls\KUIUtil.cs" />
+    <Compile Include="DebugOptions.cs" />
+    <Compile Include="Features\DebugSupport\AboutDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\DebugSupport\AboutDialog.Designer.cs">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\DebugSupport\DebugInfo.cs" />
+    <Compile Include="Features\DebugSupport\DebugSupportSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Features\DebugSupport\DebugSupportSettings.Designer.cs">
+      <DependentUpon>DebugSupportSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\DebugSupport\FeatureObjectConverter.cs" />
+    <Compile Include="Features\FeatureDisabled.cs" />
+    <Compile Include="Features\Features.cs" />
+    <Compile Include="Features\FeatureWithUI.cs" />
+    <Compile Include="Features\FreeBusy\FreeBusySettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Features\FreeBusy\FreeBusySettings.Designer.cs">
+      <DependentUpon>FreeBusySettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\GAB\GABInfo.cs" />
+    <Compile Include="Features\GAB\GABSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Features\GAB\GABSettings.Designer.cs">
+      <DependentUpon>GABSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\SendAs\FeatureSendAs.cs" />
+    <Compile Include="Features\SharedFolders\FolderTreeNode.cs" />
+    <Compile Include="GlobalOptions.cs" />
+    <Compile Include="Logging.cs" />
+    <Compile Include="OutlookConstants.cs" />
+    <Compile Include="UI\Outlook\OutlookImageList.cs" />
+    <Compile Include="UI\Outlook\RibbonToggleButton.cs" />
+    <Compile Include="UI\Outlook\RibbonButton.cs" />
+    <Compile Include="UI\Outlook\CommandElement.cs" />
+    <Compile Include="UI\Outlook\MenuItem.cs" />
+    <Compile Include="UI\Outlook\Types.cs" />
+    <Compile Include="Utils\RegistryUtil.cs" />
+    <Compile Include="ZPush\API\SharedFolders\AvailableFolder.cs" />
+    <Compile Include="ZPush\API\SharedFolders\SharedFolder.cs" />
+    <Compile Include="ZPush\API\SharedFolders\Types.cs" />
+    <Compile Include="ZPush\Connect\Soap\SoapException.cs" />
+    <Compile Include="ZPush\Connect\Soap\SoapParameters.cs" />
+    <Compile Include="ZPush\API\SharedFolders\SharedFoldersAPI.cs" />
+    <Compile Include="Features\SharedFolders\SharedFoldersDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\SharedFolders\SharedFoldersDialog.Designer.cs">
+      <DependentUpon>SharedFoldersDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\SharedFolders\FeatureSharedFolders.cs" />
+    <Compile Include="Features\SharedFolders\StoreTreeNode.cs" />
+    <Compile Include="Features\WebApp\FeatureWebApp.cs" />
+    <Compile Include="Native\User32.cs" />
+    <Compile Include="Native\WM.cs" />
+    <Compile Include="ZPush\Connect\Soap\ISoapSerializable.cs" />
+    <Compile Include="ZPush\Connect\Soap\SoapSerializer.cs" />
+    <Compile Include="ZPush\Connect\Soap\SoapConstants.cs" />
+    <Compile Include="ZPush\Connect\ZPushRequestEncoder.cs" />
+    <Compile Include="ZPush\Connect\Soap\SoapRequestEncoder.cs" />
+    <Compile Include="ZPush\Connect\Soap\SoapRequest.cs" />
+    <Compile Include="Stubs\ItemType.cs" />
+    <Compile Include="Stubs\OutlookWrappers\DisposableWrapper.cs" />
+    <Compile Include="UI\FeatureSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\GABLookupControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\GABLookupControl.Designer.cs">
+      <DependentUpon>GABLookupControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\KopanoDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SettingsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SettingsDialog.Designer.cs">
+      <DependentUpon>SettingsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\SettingsPage.Designer.cs">
+      <DependentUpon>SettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ErrorUtil.cs" />
+    <Compile Include="Utils\CollectionUtil.cs" />
+    <Compile Include="Utils\DnsUtil.cs" />
+    <Compile Include="Utils\FolderUtils.cs" />
+    <Compile Include="Utils\JSONUtils.cs" />
+    <Compile Include="Utils\OutlookRegistryUtils.cs" />
+    <Compile Include="Utils\ReflectUtil.cs" />
+    <Compile Include="Utils\StringUtil.cs" />
+    <Compile Include="Utils\Tasks.cs" />
+    <Compile Include="Utils\TasksBackground.cs" />
+    <Compile Include="Utils\TasksMainThread.cs" />
+    <Compile Include="Utils\TasksSynchronous.cs" />
+    <Compile Include="ZPush\Delegates.cs" />
+    <Compile Include="ZPush\FolderRegistration.cs" />
+    <Compile Include="ZPush\GABUser.cs" />
+    <Compile Include="ZPush\ItemsWatcher.cs" />
+    <Compile Include="ZPush\ZPushAccount.cs" />
+    <Compile Include="ZPush\ZPushAccounts.cs" />
+    <Compile Include="ZPush\ZPushChannel.cs" />
+    <Compile Include="ZPush\Connect\ZPushConnection.cs" />
+    <Compile Include="ZPush\ZPushFolder.cs" />
+    <Compile Include="ZPush\ZPushSync.cs" />
+    <Compile Include="ZPush\ZPushTypes.cs" />
+    <Compile Include="ZPush\ZPushWatcher.cs" />
+    <Compile Include="Features\DebugSupport\DebugDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\DebugSupport\DebugDialog.Designer.cs">
+      <DependentUpon>DebugDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\DebugSupport\FeatureDebugSupport.cs" />
+    <Compile Include="Features\DebugSupport\Statistics.cs" />
+    <Compile Include="Features\Feature.cs" />
+    <Compile Include="Features\FreeBusy\FeatureFreeBusy.cs" />
+    <Compile Include="Features\FreeBusy\FreeBusyServer.cs" />
+    <Compile Include="Features\GAB\ChunkIndex.cs" />
+    <Compile Include="Features\GAB\FeatureGAB.cs" />
+    <Compile Include="Features\GAB\GABHandler.cs" />
+    <Compile Include="Features\Notes\FeatureNotes.cs" />
+    <Compile Include="Features\OutOfOffice\FeatureOutOfOffice.cs" />
+    <Compile Include="Features\OutOfOffice\OutOfOfficeDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\OutOfOffice\OutOfOfficeDialog.Designer.cs">
+      <DependentUpon>OutOfOfficeDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\ReplyFlags\FeatureReplyFlags.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="NLogLogger.cs" />
+    <Compile Include="Stubs\IAddressBook.cs" />
+    <Compile Include="Stubs\IAppointmentItem.cs" />
+    <Compile Include="Stubs\IBase.cs" />
+    <Compile Include="Stubs\IContactItem.cs" />
+    <Compile Include="Stubs\IDistributionList.cs" />
+    <Compile Include="Stubs\IFolder.cs" />
+    <Compile Include="Stubs\IItem.cs" />
+    <Compile Include="Stubs\IMailItem.cs" />
+    <Compile Include="Stubs\ITaskItem.cs" />
+    <Compile Include="Stubs\INoteItem.cs" />
+    <Compile Include="Stubs\ISearch.cs" />
+    <Compile Include="Stubs\IStorageItem.cs" />
+    <Compile Include="Stubs\IUserProperty.cs" />
+    <Compile Include="Stubs\IZPushItem.cs" />
+    <Compile Include="Stubs\OutlookWrappers\AddressBookWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\DistributionListWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\AppointmentItemWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\ContactItemWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\FolderWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\MailItemWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\Mapping.cs" />
+    <Compile Include="Stubs\OutlookWrappers\TaskItemWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\NoteItemWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\OutlookWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\SearchWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\StorageItemWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\StoreWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\UserPropertyWrapper.cs" />
+    <Compile Include="Stubs\IStore.cs" />
+    <Compile Include="UI\ProgressDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ProgressDialog.Designer.cs">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\ActiveSync.cs" />
+    <Compile Include="Utils\ComRelease.cs" />
+    <Compile Include="Utils\LibUtils.cs" />
+    <Compile Include="Utils\MailEvents.cs" />
+    <Compile Include="Utils\PasswordEncryption.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Features\ReplyFlags\ReplyFlags.cs" />
+    <Compile Include="UI\Outlook\OutlookUI.cs" />
+    <Compile Include="Utils\Util.cs" />
+    <Compile Include="ZPush\ZPushCapabilities.cs" />
+    <Compile Include="ZPush\ZPushLocalStore.cs" />
+    <Compile Include="ZPush\ZPushChannels.cs" />
+    <Compile Include="Version.cs" />
+    <Compile Include="WBXML\ActiveSync\ActiveSyncCodeSpace.cs" />
+    <Compile Include="WBXML\ActiveSync\AirNotifyCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\AirSyncBaseCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\AirSyncCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\CalendarCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\ComposeMailCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\Contacts2CodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\ContactsCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\DocumentLibraryCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\Email2CodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\EmailCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\FolderHierarchyCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\GALCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\ItemEstimateCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\ItemOperationsCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\MeetingResponseCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\MoveCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\NotesCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\PingCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\ProvisionCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\ResolveRecipientsCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\SearchCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\SettingsCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\TasksCodePage.cs" />
+    <Compile Include="WBXML\ActiveSync\ValidateCertCodePage.cs" />
+    <Compile Include="WBXML\AttributeCodePage.cs" />
+    <Compile Include="WBXML\AttributeCodeSpace.cs" />
+    <Compile Include="WBXML\AttributeStart.cs" />
+    <Compile Include="WBXML\AttributeValue.cs" />
+    <Compile Include="WBXML\EmptyCodePage.cs" />
+    <Compile Include="WBXML\EmptyCodeSpace.cs" />
+    <Compile Include="WBXML\GlobalTokens.cs" />
+    <Compile Include="WBXML\IANACharacterSets.cs" />
+    <Compile Include="WBXML\OpaqueDataExpression.cs" />
+    <Compile Include="WBXML\StringTable.cs" />
+    <Compile Include="WBXML\StringTableItem.cs" />
+    <Compile Include="WBXML\Tag.cs" />
+    <Compile Include="WBXML\TagCodePage.cs" />
+    <Compile Include="WBXML\TagCodeSpace.cs" />
+    <Compile Include="WBXML\WBXMLDocument.cs" />
+    <Compile Include="ZPush\Connect\ZPushWebService.cs" />
+    <EmbeddedResource Include="Controls\KBusyIndicator.resx">
+      <DependentUpon>KBusyIndicator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\KDialogButtons.resx">
+      <DependentUpon>KDialogButtons.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\KDialogNew.resx">
+      <DependentUpon>KDialogNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\KTree.resx">
+      <DependentUpon>KTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\DebugSupport\AboutDialog.resx">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\DebugSupport\DebugDialog.resx">
+      <DependentUpon>DebugDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\DebugSupport\DebugSupportSettings.resx">
+      <DependentUpon>DebugSupportSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\FreeBusy\FreeBusySettings.resx">
+      <DependentUpon>FreeBusySettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\GAB\GABSettings.resx">
+      <DependentUpon>GABSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\OutOfOffice\OutOfOfficeDialog.resx">
+      <DependentUpon>OutOfOfficeDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\SharedFolders\SharedFoldersDialog.resx">
+      <DependentUpon>SharedFoldersDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="UI\ProgressDialog.resx">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SettingsDialog.resx">
+      <DependentUpon>SettingsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SettingsPage.resx">
+      <DependentUpon>SettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="ThisAddIn.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="ThisAddIn.Designer.xml">
+      <DependentUpon>ThisAddIn.cs</DependentUpon>
+    </None>
+    <Compile Include="ThisAddIn.Designer.cs">
+      <DependentUpon>ThisAddIn.Designer.xml</DependentUpon>
+    </Compile>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Kopano.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\TreeLoading.gif" />
+    <None Include="Resources\Icons\Ribbon_About.png" />
+    <None Include="Resources\Icons\Ribbon_About_Small.png" />
+    <Content Include="Resources\Icons\Ribbon_AddSharedFolder.png" />
+    <Content Include="Resources\Icons\Ribbon_AddSharedFolder_Small.png" />
+    <Content Include="Resources\Icons\Ribbon_Debug.png" />
+    <Content Include="Resources\Icons\Ribbon_Debug_Small.png" />
+    <Content Include="Resources\Icons\Ribbon_Logfile.png" />
+    <Content Include="Resources\Icons\Ribbon_Logfile_Small.png" />
+    <Content Include="Resources\Icons\Ribbon_ManageSharedFolders.png" />
+    <None Include="Resources\Icons\Ribbon_ManageSharedFolders1.png" />
+    <Content Include="Resources\Icons\Ribbon_ManageSharedFolders_Small.png" />
+    <None Include="Resources\Icons\Ribbon_ManageSharedFolders_Small1.png" />
+    <None Include="Resources\Icons\Ribbon_ManageSharedFolders_Small11.png" />
+    <Content Include="Resources\Icons\Ribbon_MDM.png" />
+    <Content Include="Resources\Icons\Ribbon_MDM_Small.png" />
+    <Content Include="Resources\Icons\Ribbon_OOF.png" />
+    <Content Include="Resources\Icons\Ribbon_OOF_Small.png" />
+    <Content Include="Resources\Icons\Ribbon_Restore.png" />
+    <Content Include="Resources\Icons\Ribbon_Restore_Small.png" />
+    <Content Include="Resources\Icons\Ribbon_Rules.png" />
+    <Content Include="Resources\Icons\Ribbon_Rules_Small.png" />
+    <Content Include="Resources\Icons\Ribbon_Settings.png" />
+    <Content Include="Resources\Icons\Ribbon_Settings_Small.png" />
+    <Content Include="Resources\Icons\Ribbon_SyncGAB.png" />
+    <Content Include="Resources\Icons\Ribbon_SyncGAB_Small.png" />
+    <Content Include="Resources\Icons\Ribbon_WebApp.png" />
+    <Content Include="Resources\Icons\Ribbon_WebApp_Small.png" />
+    <Content Include="Resources\Icons\Ribbon_WebMeetings.png" />
+    <Content Include="Resources\Icons\Ribbon_WebMeetings_Small.png" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>BBFB28C253605E59B6EFA7AAC079FB30F06C8298</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <!-- Include the build rules for a C# project. -->
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- Include additional build rules for an Office application add-in. -->
+  <Import Project="$(VSToolsPath)\OfficeTools\Microsoft.VisualStudio.Tools.Office.targets" Condition="'$(VSToolsPath)' != ''" />
+  <!-- This section defines VSTO properties that describe the host-changeable project properties. -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
+        <ProjectProperties HostName="Outlook" HostPackage="{29A7B9D7-A7F1-4328-8EF0-6B2D1A56B2C1}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="Outlook" Language="cs" TemplatesPath="" DebugInfoExeName="#Software\Microsoft\Office\16.0\Outlook\InstallRoot\Path#outlook.exe" AddItemTemplatesGuid="{A58A78EB-1C92-4DDD-80CF-E8BD872ABFC4}" />
+        <Host Name="Outlook" GeneratedCodeNamespace="Acacia" IconIndex="0">
+          <HostItem Name="ThisAddIn" Code="ThisAddIn.cs" CanonicalName="AddIn" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.cs" />
+        </Host>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
