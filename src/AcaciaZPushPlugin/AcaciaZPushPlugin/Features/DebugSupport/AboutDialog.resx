@@ -133,10 +133,13 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="labelDateValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>73, 132</value>
+    <value>70, 117</value>
+  </data>
+  <data name="labelDateValue.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="labelDateValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>355, 15</value>
+    <value>252, 13</value>
   </data>
   <data name="labelDateValue.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -160,10 +163,13 @@
     <value>NoControl</value>
   </data>
   <data name="labelRevisionValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>73, 111</value>
+    <value>70, 100</value>
+  </data>
+  <data name="labelRevisionValue.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="labelRevisionValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>355, 15</value>
+    <value>252, 13</value>
   </data>
   <data name="labelRevisionValue.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -184,7 +190,10 @@
     <value>Fill</value>
   </data>
   <data name="icon.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+    <value>2, 2</value>
+  </data>
+  <data name="icon.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="icon.Size" type="System.Drawing.Size, System.Drawing">
     <value>64, 64</value>
@@ -217,10 +226,13 @@
     <value>Microsoft Sans Serif, 16.2pt</value>
   </data>
   <data name="labelTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>73, 0</value>
+    <value>70, 0</value>
+  </data>
+  <data name="labelTitle.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
   </data>
   <data name="labelTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>355, 70</value>
+    <value>252, 68</value>
   </data>
   <data name="labelTitle.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -244,10 +256,13 @@
     <value>3</value>
   </data>
   <data name="labelVersionCaption.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 90</value>
+    <value>2, 83</value>
+  </data>
+  <data name="labelVersionCaption.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="labelVersionCaption.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 15</value>
+    <value>42, 13</value>
   </data>
   <data name="labelVersionCaption.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -271,10 +286,13 @@
     <value>NoControl</value>
   </data>
   <data name="labelRevisionCaption.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 111</value>
+    <value>2, 100</value>
+  </data>
+  <data name="labelRevisionCaption.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="labelRevisionCaption.Size" type="System.Drawing.Size, System.Drawing">
-    <value>62, 15</value>
+    <value>46, 13</value>
   </data>
   <data name="labelRevisionCaption.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -294,44 +312,44 @@
   <data name="&gt;&gt;labelRevisionCaption.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="richTextBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="textLicense.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="richTextBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 173</value>
+  <data name="textLicense.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 150</value>
   </data>
-  <data name="richTextBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>425, 272</value>
+  <data name="textLicense.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
-  <data name="richTextBox1.TabIndex" type="System.Int32, mscorlib">
+  <data name="textLicense.Size" type="System.Drawing.Size, System.Drawing">
+    <value>320, 208</value>
+  </data>
+  <data name="textLicense.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
-  <data name="richTextBox1.Text" xml:space="preserve">
-    <value>Copyright 2016 Kopano b.v.
-
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License, version 3, as published by the Free Software Foundation.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;</value>
+  <data name="textLicense.Text" xml:space="preserve">
+    <value />
   </data>
-  <data name="&gt;&gt;richTextBox1.Name" xml:space="preserve">
-    <value>richTextBox1</value>
+  <data name="&gt;&gt;textLicense.Name" xml:space="preserve">
+    <value>textLicense</value>
   </data>
-  <data name="&gt;&gt;richTextBox1.Type" xml:space="preserve">
+  <data name="&gt;&gt;textLicense.Type" xml:space="preserve">
     <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;richTextBox1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;textLicense.Parent" xml:space="preserve">
     <value>_layoutForm</value>
   </data>
-  <data name="&gt;&gt;richTextBox1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;textLicense.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
   <data name="labelDateCaption.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 132</value>
+    <value>2, 117</value>
+  </data>
+  <data name="labelDateCaption.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="labelDateCaption.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 15</value>
+    <value>28, 13</value>
   </data>
   <data name="labelDateCaption.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -355,10 +373,13 @@ You should have received a copy of the GNU Affero General Public License along w
     <value>True</value>
   </data>
   <data name="linkKopano.Location" type="System.Drawing.Point, System.Drawing">
-    <value>73, 70</value>
+    <value>70, 68</value>
+  </data>
+  <data name="linkKopano.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
   </data>
   <data name="linkKopano.Size" type="System.Drawing.Size, System.Drawing">
-    <value>132, 17</value>
+    <value>107, 13</value>
   </data>
   <data name="linkKopano.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -382,10 +403,13 @@ You should have received a copy of the GNU Affero General Public License along w
     <value>Fill</value>
   </data>
   <data name="labelVersionValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>73, 90</value>
+    <value>70, 83</value>
+  </data>
+  <data name="labelVersionValue.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="labelVersionValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>355, 15</value>
+    <value>252, 13</value>
   </data>
   <data name="labelVersionValue.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -406,13 +430,16 @@ You should have received a copy of the GNU Affero General Public License along w
     <value>Fill</value>
   </data>
   <data name="_layoutForm.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+    <value>2, 2</value>
+  </data>
+  <data name="_layoutForm.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="_layoutForm.RowCount" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
   <data name="_layoutForm.Size" type="System.Drawing.Size, System.Drawing">
-    <value>431, 448</value>
+    <value>324, 360</value>
   </data>
   <data name="_layoutForm.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -430,7 +457,7 @@ You should have received a copy of the GNU Affero General Public License along w
     <value>0</value>
   </data>
   <data name="_layoutForm.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="labelDateValue" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelRevisionValue" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="icon" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="labelTitle" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelVersionCaption" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="labelRevisionCaption" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="richTextBox1" Row="6" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="labelDateCaption" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="linkKopano" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelVersionValue" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Absolute,20,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="labelDateValue" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelRevisionValue" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="icon" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="labelTitle" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelVersionCaption" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="labelRevisionCaption" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textLicense" Row="6" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="labelDateCaption" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="linkKopano" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelVersionValue" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Absolute,16,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="_buttons.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -442,13 +469,13 @@ You should have received a copy of the GNU Affero General Public License along w
     <value>Fill</value>
   </data>
   <data name="_buttons.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 456</value>
+    <value>2, 366</value>
   </data>
   <data name="_buttons.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="_buttons.Size" type="System.Drawing.Size, System.Drawing">
-    <value>431, 39</value>
+    <value>324, 35</value>
   </data>
   <data name="_buttons.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -469,13 +496,16 @@ You should have received a copy of the GNU Affero General Public License along w
     <value>Fill</value>
   </data>
   <data name="_layout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 7</value>
+    <value>6, 6</value>
+  </data>
+  <data name="_layout.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="_layout.RowCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="_layout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>437, 497</value>
+    <value>328, 403</value>
   </data>
   <data name="_layout.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -499,16 +529,19 @@ You should have received a copy of the GNU Affero General Public License along w
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>8, 16</value>
+    <value>6, 13</value>
   </data>
   <data name="$this.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>453, 511</value>
+    <value>340, 415</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 7, 8, 7</value>
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
