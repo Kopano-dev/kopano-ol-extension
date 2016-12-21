@@ -100,7 +100,7 @@ namespace Acacia.Features.SharedFolders
 
             // Default include the store name in root folders
             if (folder.ParentId.IsNone)
-                share = share.WithName(folder.Store.UserName + " - " + folder.Name);
+                share = share.WithName(folder.Name + " - " + folder.Store.UserName);
 
             return share;
         }

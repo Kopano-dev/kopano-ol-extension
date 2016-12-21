@@ -69,8 +69,8 @@ namespace Acacia.Controls
 
             buttonApply.Enabled = IsDirty;
             buttonApply.Visible = _hasApply;
-            buttonClose.Visible = !IsDirty || !_hasApply;
-            buttonCancel.Visible = IsDirty && !_hasApply;
+            buttonClose.Visible = !IsDirty;
+            buttonCancel.Visible = IsDirty;
 
             KDialogNew dlg = FindForm() as KDialogNew;
             if (dlg != null)
