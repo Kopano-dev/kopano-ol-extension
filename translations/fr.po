@@ -625,7 +625,7 @@ msgstr ""
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_WebApp_Label"
-msgid "WebApp"
+msgid "Open WebApp"
 msgstr ""
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Screentip
@@ -836,5 +836,119 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Success"
 msgid "The changes to the shared folders have been applied successfully."
+msgstr ""
+
+#: AcaciaZPushPlugin\Controls\KDialogButtons\buttonApply.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonApply.Text"
+msgid "Apply"
+msgstr ""
+
+#: AcaciaZPushPlugin\Controls\KDialogButtons\buttonCancel.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonCancel.Text"
+msgid "Cancel"
+msgstr ""
+
+#: AcaciaZPushPlugin\Controls\KDialogButtons\buttonClose.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonClose.Text"
+msgid "Close"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\labelSelectUser.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\labelSelectUser.Text"
+msgid "Open folders for user"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\buttonOpenUser.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\buttonOpenUser.Text"
+msgid "Open"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelName.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelName.Text"
+msgid "Share as"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelSendAs.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelSendAs.Text"
+msgid "Send as owner"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelPermissions.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelPermissions.Text"
+msgid "Permissions"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\labelPermissionsValue.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\labelPermissionsValue.Text"
+msgid "Permissions"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\$this.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\$this.Text"
+msgid "Shared Folders - {0}"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelTitle.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelTitle.Text"
+msgid "Kopano OL Extension"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelVersionCaption.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelVersionCaption.Text"
+msgid "Version"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelRevisionCaption.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelRevisionCaption.Text"
+msgid "Revision"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelDateCaption.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelDateCaption.Text"
+msgid "Date"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\linkKopano.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\linkKopano.Text"
+msgid "https://kopano.com/"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\$this.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\$this.Text"
+msgid "About Kopano OL Extenion"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Label"
+msgid "About"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Screentip
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Screentip"
+msgid "About dialog"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Supertip
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Supertip"
+msgid "Shows the about dialog, which contains licensing and version information."
 msgstr ""
 
