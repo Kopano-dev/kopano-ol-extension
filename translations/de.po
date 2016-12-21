@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-11-02 09:35+0000\n"
+"PO-Revision-Date: 2016-12-08 11:54+0000\n"
 "Last-Translator: Felix <f.bartels@kopano.com>\n"
-"Language-Team: German <http://translate.kopano.io/projects/kopano-internal/kopano-ol-extension/de/>\n"
+"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-extension/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -627,8 +627,8 @@ msgstr "Ordner werden geladen"
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_WebApp_Label"
-msgid "WebApp"
-msgstr "WebApp"
+msgid "Open WebApp"
+msgstr "WebApp öffnen"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Screentip
 #, csharp-format
@@ -646,197 +646,311 @@ msgstr "WebApp im voreingestellten Webbrowser öffnen"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\buttonApply.Text"
 msgid "Apply"
-msgstr ""
+msgstr "Anwenden"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\buttonCancel.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\buttonCancel.Text"
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\buttonClose.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\buttonClose.Text"
 msgid "Close"
-msgstr ""
+msgstr "Schließen"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\labelSelectUser.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\labelSelectUser.Text"
 msgid "Open folders for user"
-msgstr ""
+msgstr "Ordner für Nutzer öffnen"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\buttonOpenUser.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\buttonOpenUser.Text"
 msgid "Open"
-msgstr ""
+msgstr "Öffnen"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\$this.Text"
 msgid "Shared Folders - {0}"
-msgstr ""
+msgstr "Geteilte Ordner - {0}"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Label"
 msgid "Shared folders"
-msgstr ""
+msgstr "Geteilte Ordner"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Screentip"
 msgid "Manage shared folders"
-msgstr ""
+msgstr "Geteilte Ordner verwalten"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Supertip"
 msgid "Open the \"Shared Folders\" dialog, which can be used to add or remove shared folders."
-msgstr ""
+msgstr "Den \"Geteilte Ordner\" Dialog öffnen, welcher verwendet werden kann um geteilte Ordner hinzuzufügen oder zu entfernen."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PublicFolders
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PublicFolders"
 msgid "Public folders"
-msgstr ""
+msgstr "Öffentliche Ordner"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Loading
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Loading"
 msgid "Retrieving shared folders"
-msgstr ""
+msgstr "Geteilte Ordner werden abgerufen"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Loading_Error
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Loading_Error"
 msgid "There was an error retrieving shared folders"
-msgstr ""
+msgstr "Es trat ein Fehler während des Abrufs der geteilten Ordner auf"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_None
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_None"
 msgid "No shared folders are available"
-msgstr ""
+msgstr "Keine geteilten Ordner verfügbar"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Failure
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Fetching_Failure"
 msgid "Unable to retrieve shared folders. Please try again later."
-msgstr ""
+msgstr "Die geteilten Ordner konnten nicht abgerufen werden. Bitte versuchen Sie es später erneut."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Fetching_Label"
 msgid "Retrieving shared folders"
-msgstr ""
+msgstr "Geteilte Ordner werden empfangen"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Fetching_Title"
 msgid "Shared folders"
-msgstr ""
+msgstr "Geteilte Ordner"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Unsaved_Changes
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Unsaved_Changes"
 msgid "There are unsaved changes. Do you really want to to discard these?"
-msgstr ""
+msgstr "Es gibt umgespeicherte Änderungen. Möchten Sie diese wirklich verwerfen?"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Setting_Failure
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Setting_Failure"
 msgid "Unable to open the shared folder. Please ensure you have permission to open the shared folder."
-msgstr ""
+msgstr "Der geteilte Ordner konnte nicht geöffnet werden. Bitte stellen Sie sicher, dass Sie ausreichende Berechtigungen hierfür haben."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Setting_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Setting_Title"
 msgid "Shared folders"
-msgstr ""
+msgstr "Geteilte Ordner"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\_labelName.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\_labelName.Text"
 msgid "Share as"
-msgstr ""
+msgstr "Teilen als"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\_labelSendAs.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\_labelSendAs.Text"
 msgid "Send as owner"
-msgstr ""
+msgstr "Senden als Besitzer"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\_labelPermissions.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\_labelPermissions.Text"
 msgid "Permissions"
-msgstr ""
+msgstr "Berechtigungen"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\labelPermissionsValue.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\labelPermissionsValue.Text"
 msgid "Permissions"
-msgstr ""
+msgstr "Berechtigungen"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Context_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Context_Label"
 msgid "Manage shared folder"
-msgstr ""
+msgstr "Geteilte Ordner verwalten"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Context_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Context_Screentip"
 msgid "Manage this folder in the Shared Folders dialog"
-msgstr ""
+msgstr "Diesen Ordner im Geteilte Ordner Dialog verwalten"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Context_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Context_Supertip"
 msgid "Open the \"Shared Folders\" dialog for the currently selected folder."
-msgstr ""
+msgstr "Den \"Geteilte Ordner\" Dialog für den derzeit ausgewählten Ordner öffnen."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Label"
 msgid "Applying changes to shared folders"
-msgstr ""
+msgstr "Änderungen an geteilten Ordnern werden angewandt"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Failure
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Failure"
 msgid "Unable to apply the changes to the shared folders. Please try again later."
-msgstr ""
+msgstr "Die Änderungen an den geteilten Ordnern konnten nicht angewandt werde. Bitte versuchen Sie es später erneut."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Title"
 msgid "Shared folders"
-msgstr ""
+msgstr "Geteilte Ordner"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_None
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_None"
 msgid "None"
-msgstr ""
+msgstr "Keine"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_Read
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_Read"
 msgid "Read"
-msgstr ""
+msgstr "Lesen"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_Write
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_Write"
 msgid "Write"
-msgstr ""
+msgstr "Schreiben"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Success
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Success"
 msgid "The changes to the shared folders have been applied successfully."
+msgstr "Die Änderungen an den geteilten Ordnern wurden erfolgreich angewandt."
+
+#: AcaciaZPushPlugin\Controls\KDialogButtons\buttonApply.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonApply.Text"
+msgid "Apply"
+msgstr "Anwenden"
+
+#: AcaciaZPushPlugin\Controls\KDialogButtons\buttonCancel.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonCancel.Text"
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: AcaciaZPushPlugin\Controls\KDialogButtons\buttonClose.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonClose.Text"
+msgid "Close"
+msgstr "Schließen"
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\labelSelectUser.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\labelSelectUser.Text"
+msgid "Open folders for user"
+msgstr "Ordner für Nutzer öffnen"
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\buttonOpenUser.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\buttonOpenUser.Text"
+msgid "Open"
+msgstr "Öffnen"
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelName.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelName.Text"
+msgid "Share as"
+msgstr "Teilen als"
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelSendAs.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelSendAs.Text"
+msgid "Send as owner"
+msgstr "Als Besitzer senden"
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelPermissions.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelPermissions.Text"
+msgid "Permissions"
+msgstr "Berechtigungen"
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\labelPermissionsValue.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\labelPermissionsValue.Text"
+msgid "Permissions"
+msgstr "Berechtigungen"
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\$this.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\$this.Text"
+msgid "Shared Folders - {0}"
+msgstr "Geteilte Ordner - {0}"
+
+#: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelTitle.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelTitle.Text"
+msgid "Kopano OL Extension"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelVersionCaption.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelVersionCaption.Text"
+msgid "Version"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelRevisionCaption.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelRevisionCaption.Text"
+msgid "Revision"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelDateCaption.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelDateCaption.Text"
+msgid "Date"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\linkKopano.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\linkKopano.Text"
+msgid "https://kopano.com/"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\$this.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\$this.Text"
+msgid "About Kopano OL Extenion"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Label"
+msgid "About"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Screentip
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Screentip"
+msgid "About dialog"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Supertip
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Supertip"
+msgid "Shows the about dialog, which contains licensing and version information."
 msgstr ""
 

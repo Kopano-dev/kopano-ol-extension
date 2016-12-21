@@ -1,34 +1,53 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-07 13:02+0000\n"
-"Last-Translator: Patrick Simpson <p.simpson@etosis.com>\n"
-"Language-Team: Dutch <http://translate.kopano.io/projects/kopano-internal/kopano-ol-extension/nl/>\n"
-"Language: nl\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-12 14:56+0000\n"
+"PO-Revision-Date: 2016-12-12 16:18+0000\n"
+"Last-Translator: Sebastian <s.kummer@kopano.com>\n"
+"Language-Team: Portuguese (Brazil) <http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt_BR/>\n"
+"Language: pt_br\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 2.4\n"
+
+#: AcaciaZPushPlugin\Controls\KDialogButtons\buttonApply.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonApply.Text"
+msgid "Apply"
+msgstr "Aplicar"
+
+#: AcaciaZPushPlugin\Controls\KDialogButtons\buttonCancel.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonCancel.Text"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: AcaciaZPushPlugin\Controls\KDialogButtons\buttonClose.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonClose.Text"
+msgid "Close"
+msgstr "Fechar"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonGC.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonGC.Text"
 msgid "Run GC"
-msgstr "GC uitvoeren"
+msgstr "Executar GC"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonRefresh.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonRefresh.Text"
 msgid "Refresh"
-msgstr "Vernieuwen"
+msgstr "Atualizar"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonClose.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonClose.Text"
 msgid "Close"
-msgstr "Sluiten"
+msgstr "Fechar"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonLog.Text
 #, csharp-format
@@ -46,49 +65,49 @@ msgstr "Debug"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugSupportSettings\\labelLogLevel.Text"
 msgid "Log level:"
-msgstr "Log level:"
+msgstr "Nível do log:"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugSupportSettings\buttonShowLog.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugSupportSettings\\buttonShowLog.Text"
 msgid "Open log file location"
-msgstr "Open locatie van logfile"
+msgstr "Abrir localização do log"
 
 #: AcaciaZPushPlugin\Features\FreeBusy\FreeBusySettings\checkGABLookup.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\FreeBusy\\FreeBusySettings\\checkGABLookup.Text"
 msgid "Look up contacts in Global Address Book"
-msgstr "Contactpersonen opzoeken in het adresboek"
+msgstr "Procurar contato na Lista Global de Endereços"
 
 #: AcaciaZPushPlugin\Features\FreeBusy\FreeBusySettings\labelUseAccount.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\FreeBusy\\FreeBusySettings\\labelUseAccount.Text"
 msgid "Use account: "
-msgstr "Gebruik account: "
+msgstr "Usar conta: "
 
 #: AcaciaZPushPlugin\Features\GAB\GABSettings\buttonGABResync.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\GAB\\GABSettings\\buttonGABResync.Text"
 msgid "Resynchronise Global Address Books"
-msgstr "Adresboek opnieuw synchroniseren"
+msgstr "Ressincronizar Lista Global de Endereços"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\chkEnable.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\chkEnable.Text"
 msgid "Enable out-of-office auto-responding"
-msgstr "Automatische antwoorden aanzetten"
+msgstr "Habilitar respostas fora-do-escritório"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\radioNoTime.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\radioNoTime.Text"
 msgid "until further notice"
-msgstr "tot nader order"
+msgstr "até novo aviso"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\radioTime.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\radioTime.Text"
 msgid "from"
-msgstr "vanaf"
+msgstr "de"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\timeFrom.CustomFormat
 #, csharp-format
@@ -100,7 +119,7 @@ msgstr "HH:mm"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\labelTill.Text"
 msgid "until"
-msgstr "tot"
+msgstr "até"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\timeTill.CustomFormat
 #, csharp-format
@@ -112,43 +131,85 @@ msgstr "HH:mm"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\labelBody.Text"
 msgid "AutoReply only once to each sender with the following text:"
-msgstr "Antwoord automatisch slechts eenmaal naar iedere afzender met de volgende tekst:"
+msgstr "Resposta automática apenas uma vez para cada remetente com o seguinte texto:"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\btnCancel.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\btnCancel.Text"
 msgid "Cancel"
-msgstr "Annuleren"
+msgstr "Cancelar"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\btnSave.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\btnSave.Text"
 msgid "Save"
-msgstr "Opslaan"
+msgstr "Salvar"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\$this.Text"
 msgid "Out of Office Assistant for {0}"
-msgstr "Automatische antwoorden voor {0}"
+msgstr "Assistente fora-do-escritório para {0}"
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\labelSelectUser.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\labelSelectUser.Text"
+msgid "Open folders for user"
+msgstr "Abrir pastas de usuário"
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\buttonOpenUser.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\buttonOpenUser.Text"
+msgid "Open"
+msgstr "Abrir"
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelName.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelName.Text"
+msgid "Share as"
+msgstr "Compartilhar como"
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelSendAs.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelSendAs.Text"
+msgid "Send as owner"
+msgstr "Enviar como proprietário"
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelPermissions.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelPermissions.Text"
+msgid "Permissions"
+msgstr "Permissões"
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\labelPermissionsValue.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\labelPermissionsValue.Text"
+msgid "Permissions"
+msgstr "Permissões"
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\$this.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\$this.Text"
+msgid "Shared Folders - {0}"
+msgstr "Pastas Compartilhadas - {0}"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFGet_Failed
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFGet_Failed"
 msgid "Unable to retrieve Out of Office settings. You can still enable or disable Out of Office, but applying the settings might fail."
-msgstr "Instellingen voor automatische antwoorden konden niet worden opgehaald. U kunt de instellingen wijzigen, maar het opslaan werkt mogelijk niet."
+msgstr "Não é possível carregar configurações fora-do-escritório. Você ainda pode ativar ou desativar fora-do-escritório, mas a aplicação das configurações pode falhar."
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFGet_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFGet_Label"
 msgid "Retrieving current Out of Office settings"
-msgstr "Instellingen voor automatische antwoorden worden opgehaald"
+msgstr "Carregando configurações fora-do-escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFGet_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFGet_Title"
 msgid "Out of Office Assistant"
-msgstr "Automatische antwoorden"
+msgstr "Assistente fora-do-escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_DifferentState
 #, csharp-format
@@ -157,56 +218,56 @@ msgid ""
 "Out of office has been enabled, but the server could not handle your full request.\n"
 "\n"
 msgstr ""
-"Automatische antwoorden zijn ingeschakeld, maar de server ondersteunt automatische antwoorden niet volledig.\n"
+"Fora-do-escritório habilitado, mas o servidor não conseguiu lidar com todos os dados.\n"
 "\n"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_Disabled
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_Disabled"
 msgid "Out of Office has been disabled."
-msgstr "Automatische antwoorden zijn uitgeschakeld."
+msgstr "Fora-do-escritório desabilitado."
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_DisableFailed
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_DisableFailed"
 msgid "Unable to disable Out of Office."
-msgstr "Automatische antwoorden konden niet worden uitgeschakeld."
+msgstr "Não foi possível desabilitar fora-do-escritório."
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_Enabled
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_Enabled"
 msgid "Out of Office has been enabled until further notice."
-msgstr "Automatische antwoorden zijn ingesteld tot nader order."
+msgstr "Fora-do-escritório foi habilitado até o próximo aviso."
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_EnabledTimeBased
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_EnabledTimeBased"
 msgid "Out of Office has been enabled from {0} till {1}."
-msgstr "Automatische antwoorden zijn ingesteld van {0} tot {1}."
+msgstr "Fora-do-escritório foi habilitado de {0} até {1}."
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_EnableFailed
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_EnableFailed"
 msgid "Unable to enable Out of Office."
-msgstr "Automatische antwoorden konden niet worden ingeschakeld."
+msgstr "Não foi possível habilitar fora-do-escritório."
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_Failed
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_Failed"
 msgid "Unable to apply Out of Office settings"
-msgstr "De instellingen voor automatische antwoorden konden niet worden gewijzigd"
+msgstr "Não foi possível aplicar configurações fora-do-escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_Label"
 msgid "Applying Out of Office settings"
-msgstr "Instellingen voor automatische antwoorden worden gewijzigd"
+msgstr "Aplicando configurações fora-do-escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_Title"
 msgid "Out of Office Assistant"
-msgstr "Automatische antwoorden"
+msgstr "Assistente fora-do-escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_Debug_Label
 #, csharp-format
@@ -218,13 +279,13 @@ msgstr "Debug"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_Debug_Screentip"
 msgid "Debug dialog"
-msgstr "Debugdialoog"
+msgstr "Dialogo debug"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_Debug_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_Debug_Supertip"
 msgid "Opens the debug dialog, which shows information on the Kopano Outlook Extension."
-msgstr "Opent het debug dialog, waarin informatie over de Kopano Outlook Extension beschikbaar is."
+msgstr "Abre o dialogo de debug, que mostra informações sobre a Kopano Outlook Extension."
 
 #. The group label for the ribbon
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_GroupMain_Label
@@ -237,127 +298,109 @@ msgstr "Kopano"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_OOF_Label"
 msgid "Out-of-Office"
-msgstr "Automatische antwoorden"
+msgstr "Fora-Do-Escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_OOF_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_OOF_Screentip"
 msgid "Change Out-of-Office settings"
-msgstr "Instellingen voor automatische antwoorden"
+msgstr "Modificar configurações fora-do-escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_OOF_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_OOF_Supertip"
 msgid "Opens a dialog which allows Out-of-Office settings to be viewed or modified."
-msgstr "Opent het dialoog waarin automatische antwoorden kunnen worden ingesteld of uitgeschakeld."
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_OpenSharedFolders_Label
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_OpenSharedFolders_Label"
-msgid "Open shared folders"
-msgstr "Gedeelde mappen openen"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_OpenSharedFolders_Screentip
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_OpenSharedFolders_Screentip"
-msgid "Open shared folders - Screentip"
-msgstr "Gedeelde mappen openenen"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_OpenSharedFolders_Supertip
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_OpenSharedFolders_Supertip"
-msgid "Open shared folders - Supertip"
-msgstr "Gedeelde mappen openen"
+msgstr "Abre o dialogo que permite a configuração do assistente fora-do-escritório."
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_Settings_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_Settings_Label"
 msgid "Settings"
-msgstr "Instellingen"
+msgstr "Configurações"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_Settings_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_Settings_Screentip"
 msgid "Settings dialog"
-msgstr "Instellingendialoog"
+msgstr "Dialogo de configurações"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_Settings_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_Settings_Supertip"
 msgid "Opens the settings dialog, which allows configuration of the plugin and access to support functions."
-msgstr "Opent het instellingendialoog, waarin de configuratie van de Kopano Outlook Extension kan worden aangepast."
+msgstr "Abre o dialogo de configurações, que permite a configuração do plugin e acessar funções de suporte."
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFStartup_Message
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFStartup_Message"
 msgid "Out of Office is currently enabled on account \'{0}\'. Would you like to change the settings?"
-msgstr "Automatische antwoorden zijn ingesteld voor account \'{0}\'. Wilt U deze instellingen wijzigen?"
+msgstr "Fora-do-escritório está habilitado na conta  \\\'{0}\\\'. Gostaria de modificar essas configurações?"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFStartup_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFStartup_Title"
 msgid "Out of Office Assistant"
-msgstr "Automatische antwoorden"
+msgstr "Assistente Fora-do-Escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\GABEvent_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABEvent_Body"
 msgid "Modifications to the Global Address Book are not allowed. Please contact your administrator if you think changes are required."
-msgstr "Het adresboek kan niet worden gewijzigd. Neem contact op met Uw beheerder om wijzigingen door te voeren."
+msgstr "Modificações na lista global de endereços não são permitidas. Entre em contato com o administrador se achar que as alterações são necessárias."
 
 #: AcaciaZPushPlugin\Properties\Resources\GABEvent_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABEvent_Title"
 msgid "Global Address Book"
-msgstr "Adresboek"
+msgstr "Lista Global de Endereços"
 
 #: AcaciaZPushPlugin\Properties\Resources\GAB_FolderFormat
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GAB_FolderFormat"
 msgid "Address Book for {0}"
-msgstr "Adresboek voor {0}"
+msgstr "Lista de endereços de {0}"
 
 #: AcaciaZPushPlugin\Properties\Resources\LocalStore_DisplayName
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\LocalStore_DisplayName"
 msgid "Kopano Folders"
-msgstr "Kopano Mappen"
+msgstr "Pastas Kopano"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_DebugSupport
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_DebugSupport"
 msgid "Support"
-msgstr "Ondersteuning"
+msgstr "Suporte"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_FreeBusy
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_FreeBusy"
 msgid "Free/Busy"
-msgstr "Beschikbaarheidsinfo"
+msgstr "Livre/Ocupado"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_GAB
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_GAB"
 msgid "Global Address Book"
-msgstr "Adresboek"
+msgstr "Lista Global de Endereços"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_Notes
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_Notes"
 msgid "Notes"
-msgstr "Notities"
+msgstr "Notas"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_OutOfOffice
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_OutOfOffice"
 msgid "Out of office"
-msgstr "Automatische antwoorden"
+msgstr "Fora-do-escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_ReplyFlags
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_ReplyFlags"
 msgid "Reply flags"
-msgstr "Antwoorden"
+msgstr "Sinalizadores de resposta"
 
 #: AcaciaZPushPlugin\Properties\Resources\ThisAddIn_Title
 #, csharp-format
@@ -369,13 +412,13 @@ msgstr "Kopano"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SSLFailed_Body"
 msgid "There is an error with the security certificate for server {0}. Do you want to allow the connection anyway?"
-msgstr "Er is een fout in het beveilingscertificaat voor server {0}. Wilt U de verbinding toch maken?"
+msgstr "Ocorreu um erro com o certificado de segurança do servidor {0}. Deseja permitir a conexão mesmo assim?"
 
 #: AcaciaZPushPlugin\Properties\Resources\SSLFailed_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SSLFailed_Title"
 msgid "Certificate error"
-msgstr "Certificaatfout"
+msgstr "Erro de certifcado"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_Title
 #, csharp-format
@@ -383,35 +426,222 @@ msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_Title"
 msgid "Kopano"
 msgstr "Kopano"
 
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Adding_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Adding_Label"
+msgid "Opening shared folder"
+msgstr "Abrir pasta compartilhada"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Adding_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Adding_Title"
+msgid "Shared folders"
+msgstr "Pastas compartilhadas"
+
+#. {0} will be replaced with the folder name
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Closing_Confirm
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Closing_Confirm"
+msgid "Close shared folder {0}?"
+msgstr "Fechar pasta compartilhada {0}?"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Closing_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Closing_Label"
+msgid "Closing shared folder"
+msgstr "Fechando pasta compartilhada"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Closing_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Closing_Title"
+msgid "Shared folders"
+msgstr "Pastas compartilhadas"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Adding_Failure
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Adding_Failure"
+msgid "Unable to open the shared folder. Please ensure you have permission to open the shared folder."
+msgstr "Não é possível abrir a pasta compartilhada. Certifique-se de que tem permissões suficientes para abrir a pasta."
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Closing_Failure
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Closing_Failure"
+msgid "Unable to close the shared folder."
+msgstr "Não foi possível fechar a pasta compartilhada."
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_WebApp_Label"
+msgid "Open WebApp"
+msgstr "Abrir WebApp"
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Screentip
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_WebApp_Screentip"
+msgid "Open WebApp"
+msgstr "Abrir WebApp"
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Supertip
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_WebApp_Supertip"
+msgid "Open WebApp in the system default browser"
+msgstr "Abrir WebApp no navegador padrão do sistema"
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Label"
+msgid "Shared folders"
+msgstr "Pastas compartilhadas"
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Screentip
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Screentip"
+msgid "Manage shared folders"
+msgstr "Gerenciar pastas compartilhadas"
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Supertip
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Supertip"
+msgid "Open the \"Shared Folders\" dialog, which can be used to add or remove shared folders."
+msgstr "Abra o diálogo \"Pastas compartilhadas\", que pode ser usada para abrir ou fechar pastas compartilhadas."
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PublicFolders
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PublicFolders"
+msgid "Public folders"
+msgstr "Pastas públicas"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Loading
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Loading"
+msgid "Retrieving shared folders"
+msgstr "Carregando pastas compartilhadas"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Loading_Error
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Loading_Error"
+msgid "There was an error retrieving shared folders"
+msgstr "Ocorreu um error ao carregar pastas compartilhadas"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_None
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_None"
+msgid "No shared folders are available"
+msgstr "Nenhuma pasta compartilhada disponível"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Failure
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Fetching_Failure"
+msgid "Unable to retrieve shared folders. Please try again later."
+msgstr "Não é possível carregar pastas compartilhadas. Por favor, tente novamente mais tarde."
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Fetching_Label"
+msgid "Retrieving shared folders"
+msgstr "Carregando pastas compartilhadas"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Fetching_Title"
+msgid "Shared folders"
+msgstr "Pastas compartilhadas"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Unsaved_Changes
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Unsaved_Changes"
+msgid "There are unsaved changes. Do you really want to to discard these?"
+msgstr "Há modificações não salvas. Você realmente deseja descartar?"
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Context_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Context_Label"
+msgid "Manage shared folder"
+msgstr "Gerenciar pastas compartilhadas"
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Context_Screentip
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Context_Screentip"
+msgid "Manage this folder in the Shared Folders dialog"
+msgstr "Gerenciar essa pasta pelo diálogo de pastas compartilhadas"
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Context_Supertip
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Context_Supertip"
+msgid "Open the \"Shared Folders\" dialog for the currently selected folder."
+msgstr "Abre o diálogo \"Pastas compartilhadas\" para a pasta selecionada."
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Label"
+msgid "Applying changes to shared folders"
+msgstr "Aplicando modificações às pastas compartilhadas"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Failure
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Failure"
+msgid "Unable to apply the changes to the shared folders. Please try again later."
+msgstr "Não é possível aplicar as modificações às pastas compartilhadas. Por favor, tente novamente mais tarde."
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Title"
+msgid "Shared folders"
+msgstr "Pastas compartilhadas"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_None
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_None"
+msgid "None"
+msgstr "Nenhum"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_Read
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_Read"
+msgid "Read"
+msgstr "Leitura"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_Write
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_Write"
+msgid "Write"
+msgstr "Escrita"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Success
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Success"
+msgid "The changes to the shared folders have been applied successfully."
+msgstr "As modificações às pastas compartilhadas foram aplicadas com êxito."
+
 #: AcaciaZPushPlugin\UI\ProgressDialog\labelMessage.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\ProgressDialog\\labelMessage.Text"
 msgid "labelMessage: SET FROM CODE, NO NEED TO TRANSLATE"
-msgstr "labelMessage"
+msgstr "labelMessage: SET FROM CODE, NO NEED TO TRANSLATE"
 
 #: AcaciaZPushPlugin\UI\ProgressDialog\buttonCancel.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\ProgressDialog\\buttonCancel.Text"
 msgid "Cancel"
-msgstr "Annuleren"
+msgstr "Cancelar"
 
 #: AcaciaZPushPlugin\UI\ProgressDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\ProgressDialog\\$this.Text"
 msgid "ProgressDialog: SET FROM CODE, NO NEED TO TRANSLATE"
-msgstr "ProgressDialog"
+msgstr "ProgressDialog: SET FROM CODE, NO NEED TO TRANSLATE"
 
 #: AcaciaZPushPlugin\UI\SettingsDialog\buttonApply.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\SettingsDialog\\buttonApply.Text"
 msgid "Apply"
-msgstr "Toepassen"
+msgstr "Aplicar"
 
 #: AcaciaZPushPlugin\UI\SettingsDialog\buttonCancel.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\SettingsDialog\\buttonCancel.Text"
 msgid "Cancel"
-msgstr "Annuleren"
+msgstr "Cancelar"
 
 #: AcaciaZPushPlugin\UI\SettingsDialog\buttonOK.Text
 #, csharp-format
@@ -423,482 +653,7 @@ msgstr "OK"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\SettingsDialog\\$this.Text"
 msgid "Kopano Settings"
-msgstr "Kopano Instellingen"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\ManageSharedFoldersDialog\labelIntro.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\ManageSharedFoldersDialog\\labelIntro.Text"
-msgid "Please select any folders you wish to close and click \"Close\""
-msgstr "Selecteer de map die U wilt sluiten en klik op \"Sluit\""
-
-#: AcaciaZPushPlugin\Features\SharedFolders\ManageSharedFoldersDialog\buttonRemove.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\ManageSharedFoldersDialog\\buttonRemove.Text"
-msgid "Close"
-msgstr "Sluit"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\ManageSharedFoldersDialog\buttonCancel.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\ManageSharedFoldersDialog\\buttonCancel.Text"
-msgid "Done"
-msgstr "Klaar"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\ManageSharedFoldersDialog\labelNoFolders.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\ManageSharedFoldersDialog\\labelNoFolders.Text"
-msgid "You currently have no shared folders open"
-msgstr "U heeft momenteel geen gedeelde mappen geopend"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\ManageSharedFoldersDialog\label1.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\ManageSharedFoldersDialog\\label1.Text"
-msgid "Folders are being loaded"
-msgstr "Mapppen worden opgevraagd"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\ManageSharedFoldersDialog\$this.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\ManageSharedFoldersDialog\\$this.Text"
-msgid "Manage Shared Folders - {0}"
-msgstr "Beheer Gedeelde Mappen - {0}"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\AddSharedFolderDialog\labelUser.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\AddSharedFolderDialog\\labelUser.Text"
-msgid "User:"
-msgstr "Gebruiker:"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\AddSharedFolderDialog\buttonUpdateFolders.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\AddSharedFolderDialog\\buttonUpdateFolders.Text"
-msgid "Update"
-msgstr "Bijwerken"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\AddSharedFolderDialog\labelName.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\AddSharedFolderDialog\\labelName.Text"
-msgid "Name:"
-msgstr "Naam:"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\AddSharedFolderDialog\checkReadOnly.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\AddSharedFolderDialog\\checkReadOnly.Text"
-msgid "Read only"
-msgstr "Alleen lezen"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\AddSharedFolderDialog\labelNoUser.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\AddSharedFolderDialog\\labelNoUser.Text"
-msgid "Please select a user to see the available shared folders"
-msgstr "Selecteer een gebruiker om de beschikbare gedeelde mappen te bekijken"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\AddSharedFolderDialog\label1.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\AddSharedFolderDialog\\label1.Text"
-msgid "Folders are being loaded"
-msgstr "Mappen worden opgevraagd"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\AddSharedFolderDialog\labelNoFolders.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\AddSharedFolderDialog\\labelNoFolders.Text"
-msgid "No shared folders were found"
-msgstr "Geen gedeelde mappen gevonden"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\AddSharedFolderDialog\buttonCancel.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\AddSharedFolderDialog\\buttonCancel.Text"
-msgid "Cancel"
-msgstr "Annuleren"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\AddSharedFolderDialog\buttonOpen.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\AddSharedFolderDialog\\buttonOpen.Text"
-msgid "Open"
-msgstr "Openen"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\AddSharedFolderDialog\$this.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\AddSharedFolderDialog\\$this.Text"
-msgid "Add Shared Folder - {0}"
-msgstr "Gedeelde Map Openen - {0}"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_AddSharedFolder_Label
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_AddSharedFolder_Label"
-msgid "Open shared folder"
-msgstr "Gedeelde map openen"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_AddSharedFolder_Screentip
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_AddSharedFolder_Screentip"
-msgid "Open another user\'s shared folders"
-msgstr "Open een gedeelde map van een andere gebruiker"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_AddSharedFolder_Supertip
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_AddSharedFolder_Supertip"
-msgid "Open another user\'s shared folders"
-msgstr "Open een gedeelde map van een andere gebruiker"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Adding_Label
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Adding_Label"
-msgid "Opening shared folder"
-msgstr "Gedeelde map wordt geopend"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Adding_Title
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Adding_Title"
-msgid "Shared folders"
-msgstr "Gedeelde mappen"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_ManageSharedFolders_Label
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_ManageSharedFolders_Label"
-msgid "Shared folders"
-msgstr "Gedeelde mappen"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_ManageSharedFolders_Screentip
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_ManageSharedFolders_Screentip"
-msgid "Manage shared folders"
-msgstr "Beheer gedeelde mappen"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_ManageSharedFolders_Supertip
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_ManageSharedFolders_Supertip"
-msgid "Open the \"Manage Shared Folders\" dialog, which can be used to remove shared folders."
-msgstr "Opent het dialoog \"Beheer Gedeelde Mappen\", waar gedeelde mappen kunnen worden gesloten."
-
-#. {0} will be replaced with the folder name
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Closing_Confirm
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Closing_Confirm"
-msgid "Close shared folder {0}?"
-msgstr "Gedeelde map {0} sluiten?"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Closing_Label
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Closing_Label"
-msgid "Closing shared folder"
-msgstr "Gedeelde map wordt gesloten"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Closing_Title
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Closing_Title"
-msgid "Shared folders"
-msgstr "Gedeelde mappen"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Adding_Failure
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Adding_Failure"
-msgid "Unable to open the shared folder. Please ensure you have permission to open the shared folder."
-msgstr "De gedeelde map kon niet worden geopend. Controleer of U rechten heeft om de gedeelde map te openen."
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Closing_Failure
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Closing_Failure"
-msgid "Unable to close the shared folder."
-msgstr "De gedeelde map kon niet worden gesloten."
-
-#: AcaciaZPushPlugin\Features\SharedFolders\AddSharedFolderDialog\radioPublicFolder.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\AddSharedFolderDialog\\radioPublicFolder.Text"
-msgid "Open public folder"
-msgstr "Open publieke map"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\AddSharedFolderDialog\radioUser.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\AddSharedFolderDialog\\radioUser.Text"
-msgid "Open folder from user:"
-msgstr "Open map van gebruiker:"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\AddSharedFolderDialog\labelWarningRecursive.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\AddSharedFolderDialog\\labelWarningRecursive.Text"
-msgid "Please note that the subfolders of the selected folder will not be shared."
-msgstr "Let op: mappen onder de geselecteerde map zullen niet worden gedeeld."
-
-#: AcaciaZPushPlugin\Features\SharedFolders\AddSharedFolderDialog\labelFoldersLoading.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\AddSharedFolderDialog\\labelFoldersLoading.Text"
-msgid "Folders are being loaded"
-msgstr "De mappen worden geladen"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Label
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_WebApp_Label"
-msgid "Open WebApp"
-msgstr "Open WebApp"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Screentip
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_WebApp_Screentip"
-msgid "Open WebApp"
-msgstr "Open WebApp"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Supertip
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_WebApp_Supertip"
-msgid "Open WebApp in the system default browser"
-msgstr "Opent WebApp in de standaard webbrowser"
-
-#: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\buttonApply.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\buttonApply.Text"
-msgid "Apply"
-msgstr "Toepassen"
-
-#: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\buttonCancel.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\buttonCancel.Text"
-msgid "Cancel"
-msgstr "Annuleren"
-
-#: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\buttonClose.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\buttonClose.Text"
-msgid "Close"
-msgstr "Sluiten"
-
-#: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\labelSelectUser.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\labelSelectUser.Text"
-msgid "Open folders for user"
-msgstr "Open mappen van gebruiker"
-
-#: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\buttonOpenUser.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\buttonOpenUser.Text"
-msgid "Open"
-msgstr "Openen"
-
-#: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\$this.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\$this.Text"
-msgid "Shared Folders - {0}"
-msgstr "Gedeelde mappen - {0}"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Label
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Label"
-msgid "Shared folders"
-msgstr "Gedeelde mappen"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Screentip
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Screentip"
-msgid "Manage shared folders"
-msgstr "Gedeelde mappen beheren"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Supertip
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Supertip"
-msgid "Open the \"Shared Folders\" dialog, which can be used to add or remove shared folders."
-msgstr "Open het dialoogvenster \"Gedeelde mappen\", wat kan worden gebruikt om gedeelde mappen toe te voegen of te verwijderen."
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PublicFolders
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PublicFolders"
-msgid "Public folders"
-msgstr "Openbare mappen"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Loading
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Loading"
-msgid "Retrieving shared folders"
-msgstr "Gedeelde mappen worden opgehaald"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Loading_Error
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Loading_Error"
-msgid "There was an error retrieving shared folders"
-msgstr "Het is niet gelukt om de gedeelde mappen op te halen"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_None
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_None"
-msgid "No shared folders are available"
-msgstr "Er zijn geen gedeelde mappen beschikbaar"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Failure
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Fetching_Failure"
-msgid "Unable to retrieve shared folders. Please try again later."
-msgstr "Het is niet gelukt om de gedeelde mappen op te halen. Probeer het later nog eens."
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Label
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Fetching_Label"
-msgid "Retrieving shared folders"
-msgstr "Gedeelde mappen worden opgehaald"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Title
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Fetching_Title"
-msgid "Shared folders"
-msgstr "Gedeelde mappen"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Unsaved_Changes
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Unsaved_Changes"
-msgid "There are unsaved changes. Do you really want to to discard these?"
-msgstr "U heeft wijzigingen gemaakt. Weet U zeker dat U deze wilt annuleren?"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Setting_Failure
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Setting_Failure"
-msgid "Unable to open the shared folder. Please ensure you have permission to open the shared folder."
-msgstr "De gedeelde map kon niet worden geopend. Controleer of U rechten heeft om de map te openen."
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Setting_Title
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Setting_Title"
-msgid "Shared folders"
-msgstr "Gedeelde mappen"
-
-#: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\_labelName.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\_labelName.Text"
-msgid "Share as"
-msgstr "Delen als"
-
-#: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\_labelSendAs.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\_labelSendAs.Text"
-msgid "Send as owner"
-msgstr "Versturen als eigenaar"
-
-#: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\_labelPermissions.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\_labelPermissions.Text"
-msgid "Permissions"
-msgstr "Rechten"
-
-#: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\labelPermissionsValue.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\labelPermissionsValue.Text"
-msgid "Permissions"
-msgstr "Rechten"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Context_Label
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Context_Label"
-msgid "Manage shared folder"
-msgstr "Beheer gedeelde map"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Context_Screentip
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Context_Screentip"
-msgid "Manage this folder in the Shared Folders dialog"
-msgstr "Beheer deze map in het dialoog \"Gedeelde mappen\""
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Context_Supertip
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Context_Supertip"
-msgid "Open the \"Shared Folders\" dialog for the currently selected folder."
-msgstr "Open het dialoog \"Gedeelde mappen\" voor de geselecteerde map."
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Label
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Label"
-msgid "Applying changes to shared folders"
-msgstr "Wijzigingen in gedeelde mappen worden opgeslagen"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Failure
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Failure"
-msgid "Unable to apply the changes to the shared folders. Please try again later."
-msgstr "De wijzigingen konden niet worden opgeslagen. Pobeer het later nog eens."
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Title
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Title"
-msgid "Shared folders"
-msgstr "Gedeelde mappen"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_None
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_None"
-msgid "None"
-msgstr "Geen"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_Read
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_Read"
-msgid "Read"
-msgstr "Lezen"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_Write
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_Write"
-msgid "Write"
-msgstr "Schrijven"
-
-#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Success
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Success"
-msgid "The changes to the shared folders have been applied successfully."
-msgstr "De wijzigingen zijn opgeslagen."
-
-#: AcaciaZPushPlugin\Controls\KDialogButtons\buttonApply.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonApply.Text"
-msgid "Apply"
-msgstr "Toepassen"
-
-#: AcaciaZPushPlugin\Controls\KDialogButtons\buttonCancel.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonCancel.Text"
-msgid "Cancel"
-msgstr "Annuleren"
-
-#: AcaciaZPushPlugin\Controls\KDialogButtons\buttonClose.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonClose.Text"
-msgid "Close"
-msgstr "Sluiten"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\labelSelectUser.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\labelSelectUser.Text"
-msgid "Open folders for user"
-msgstr "Open mappen voor gebruiker"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\buttonOpenUser.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\buttonOpenUser.Text"
-msgid "Open"
-msgstr "Open"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelName.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelName.Text"
-msgid "Share as"
-msgstr "Delen als"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelSendAs.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelSendAs.Text"
-msgid "Send as owner"
-msgstr "Verzenden als eigenaar"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelPermissions.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelPermissions.Text"
-msgid "Permissions"
-msgstr "Rechten"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\labelPermissionsValue.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\labelPermissionsValue.Text"
-msgid "Permissions"
-msgstr "Rechten"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\$this.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\$this.Text"
-msgid "Shared Folders - {0}"
-msgstr "Gedeelde Mappen - {0}"
+msgstr "Configurações Kopano"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelTitle.Text
 #, csharp-format
