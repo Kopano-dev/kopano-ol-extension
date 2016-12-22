@@ -2,9 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-08 11:54+0000\n"
+"PO-Revision-Date: 2016-12-22 07:41+0000\n"
 "Last-Translator: Felix <f.bartels@kopano.com>\n"
-"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-extension/de/>\n"
+"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-"
+"extension/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -904,53 +905,53 @@ msgstr "Geteilte Ordner - {0}"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelTitle.Text"
 msgid "Kopano OL Extension"
-msgstr ""
+msgstr "Kopano OL Extension"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelVersionCaption.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelVersionCaption.Text"
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelRevisionCaption.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelRevisionCaption.Text"
 msgid "Revision"
-msgstr ""
+msgstr "Revision"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelDateCaption.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelDateCaption.Text"
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\linkKopano.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\linkKopano.Text"
 msgid "https://kopano.com/"
-msgstr ""
+msgstr "https://kopano.com"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\$this.Text"
 msgid "About Kopano OL Extenion"
-msgstr ""
+msgstr "Über die Kopano OL Extension"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Label"
 msgid "About"
-msgstr ""
+msgstr "Über"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Screentip"
 msgid "About dialog"
-msgstr ""
+msgstr "Über Dialog"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Supertip"
 msgid "Shows the about dialog, which contains licensing and version information."
 msgstr ""
-
+"Zeigt den über Dialog, welcher Informationen zur Lizenz und Version enthält."
