@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-06 11:27+0000\n"
-"PO-Revision-Date: 2016-10-05 10:18+0000\n"
+"PO-Revision-Date: 2016-12-28 11:55+0000\n"
 "Last-Translator: Zoltan <zoltan.kiss@serverside.hu>\n"
-"Language-Team: Hungarian <http://translate.kopano.io/projects/kopano-internal/kopano-ol-extension/hu/>\n"
+"Language-Team: Hungarian <http://translate.kopano.io/projects/kopano/kopano-"
+"ol-extension/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -629,329 +630,337 @@ msgstr "Mappák betöltése folyamatban"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_WebApp_Label"
 msgid "Open WebApp"
-msgstr ""
+msgstr "WebApp megnyitása"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_WebApp_Screentip"
 msgid "Open WebApp"
-msgstr ""
+msgstr "WebApp megnyitása"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_WebApp_Supertip"
 msgid "Open WebApp in the system default browser"
-msgstr ""
+msgstr "WebApp megnyitása az alapértelmezett böngészőben"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\buttonApply.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\buttonApply.Text"
 msgid "Apply"
-msgstr ""
+msgstr "Alkalmaz"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\buttonCancel.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\buttonCancel.Text"
 msgid "Cancel"
-msgstr ""
+msgstr "Mégse"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\buttonClose.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\buttonClose.Text"
 msgid "Close"
-msgstr ""
+msgstr "Bezár"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\labelSelectUser.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\labelSelectUser.Text"
 msgid "Open folders for user"
-msgstr ""
+msgstr "Másik felhasználó mappáinak megnyitása"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\buttonOpenUser.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\buttonOpenUser.Text"
 msgid "Open"
-msgstr ""
+msgstr "Megnyitás"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\$this.Text"
 msgid "Shared Folders - {0}"
-msgstr ""
+msgstr "Megosztott mappák - {0}"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Label"
 msgid "Shared folders"
-msgstr ""
+msgstr "Megosztott mappák"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Screentip"
 msgid "Manage shared folders"
-msgstr ""
+msgstr "Megosztott mappák kezelése"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Supertip"
 msgid "Open the \"Shared Folders\" dialog, which can be used to add or remove shared folders."
 msgstr ""
+"\"Megosztott mappák\" ablak megnyitása, amelyben hozzáadni, vagy törölni "
+"lehet megosztott mappákat."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PublicFolders
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PublicFolders"
 msgid "Public folders"
-msgstr ""
+msgstr "Közös mappák"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Loading
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Loading"
 msgid "Retrieving shared folders"
-msgstr ""
+msgstr "Megosztott mappák betöltése"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Loading_Error
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Loading_Error"
 msgid "There was an error retrieving shared folders"
-msgstr ""
+msgstr "Hiba a megosztott mappák betöltése közben"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_None
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_None"
 msgid "No shared folders are available"
-msgstr ""
+msgstr "Nincsenek elérhető megosztott mappák"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Failure
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Fetching_Failure"
 msgid "Unable to retrieve shared folders. Please try again later."
-msgstr ""
+msgstr "Megosztott mappák betöltése nem sikerült. Kérem próbálja újra."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Fetching_Label"
 msgid "Retrieving shared folders"
-msgstr ""
+msgstr "Megosztott mappák betöltése"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Fetching_Title"
 msgid "Shared folders"
-msgstr ""
+msgstr "Megosztott mappák"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Unsaved_Changes
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Unsaved_Changes"
 msgid "There are unsaved changes. Do you really want to to discard these?"
 msgstr ""
+"Nem mentett módosításokat észleltem. Biztosan nem menti ezeket a "
+"módosításokat?"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Setting_Failure
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Setting_Failure"
 msgid "Unable to open the shared folder. Please ensure you have permission to open the shared folder."
 msgstr ""
+"Megosztott mappa megnyitása sikertelen. Győződjön meg róla, hogy rendelkezik "
+"jogosultságokkal a mappa megnyitásához."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Setting_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Setting_Title"
 msgid "Shared folders"
-msgstr ""
+msgstr "Megosztott mappák"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\_labelName.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\_labelName.Text"
 msgid "Share as"
-msgstr ""
+msgstr "Megosztás mint"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\_labelSendAs.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\_labelSendAs.Text"
 msgid "Send as owner"
-msgstr ""
+msgstr "Küldés tulajdonosként"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\_labelPermissions.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\_labelPermissions.Text"
 msgid "Permissions"
-msgstr ""
+msgstr "Jogosultságok"
 
 #: AcaciaZPushPlugin\Features\SharedFolders2\SharedFoldersDialog\labelPermissionsValue.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders2\\SharedFoldersDialog\\labelPermissionsValue.Text"
 msgid "Permissions"
-msgstr ""
+msgstr "Jogosultságok"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Context_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Context_Label"
 msgid "Manage shared folder"
-msgstr ""
+msgstr "Megosztott mappák kezelése"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Context_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Context_Screentip"
 msgid "Manage this folder in the Shared Folders dialog"
-msgstr ""
+msgstr "Mappa kezelése a \"Megosztott mappák\" ablakban"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Context_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Context_Supertip"
 msgid "Open the \"Shared Folders\" dialog for the currently selected folder."
-msgstr ""
+msgstr "\"Megosztott mappák\" ablak megnyitása a kiválasztott mappához."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Label"
 msgid "Applying changes to shared folders"
-msgstr ""
+msgstr "Megosztott mappák változásainak alkalmazása"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Failure
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Failure"
 msgid "Unable to apply the changes to the shared folders. Please try again later."
 msgstr ""
+"Megosztott mappák változásainak alkalmazása sikertelen. Kérem próbálja újra."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Title"
 msgid "Shared folders"
-msgstr ""
+msgstr "Megosztott mappák"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_None
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_None"
 msgid "None"
-msgstr ""
+msgstr "Nincs"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_Read
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_Read"
 msgid "Read"
-msgstr ""
+msgstr "Olvasás"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_Write
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_Write"
 msgid "Write"
-msgstr ""
+msgstr "Írás"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Success
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Success"
 msgid "The changes to the shared folders have been applied successfully."
-msgstr ""
+msgstr "A megosztott mappák változásai sikeresen alkalmazásra kerültek."
 
 #: AcaciaZPushPlugin\Controls\KDialogButtons\buttonApply.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonApply.Text"
 msgid "Apply"
-msgstr ""
+msgstr "Alkalmaz"
 
 #: AcaciaZPushPlugin\Controls\KDialogButtons\buttonCancel.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonCancel.Text"
 msgid "Cancel"
-msgstr ""
+msgstr "Mégse"
 
 #: AcaciaZPushPlugin\Controls\KDialogButtons\buttonClose.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonClose.Text"
 msgid "Close"
-msgstr ""
+msgstr "Bezár"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\labelSelectUser.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\labelSelectUser.Text"
 msgid "Open folders for user"
-msgstr ""
+msgstr "Más felhasználó mappáinak megnyitása"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\buttonOpenUser.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\buttonOpenUser.Text"
 msgid "Open"
-msgstr ""
+msgstr "Megnyitás"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelName.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelName.Text"
 msgid "Share as"
-msgstr ""
+msgstr "Megosztás mint"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelSendAs.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelSendAs.Text"
 msgid "Send as owner"
-msgstr ""
+msgstr "Küldés tulajdonosként"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelPermissions.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelPermissions.Text"
 msgid "Permissions"
-msgstr ""
+msgstr "Jogosultságok"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\labelPermissionsValue.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\labelPermissionsValue.Text"
 msgid "Permissions"
-msgstr ""
+msgstr "Jogosultságok"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\$this.Text"
 msgid "Shared Folders - {0}"
-msgstr ""
+msgstr "Megosztott mappák - {0}"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelTitle.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelTitle.Text"
 msgid "Kopano OL Extension"
-msgstr ""
+msgstr "Kopano OL Extension"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelVersionCaption.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelVersionCaption.Text"
 msgid "Version"
-msgstr ""
+msgstr "Verzió"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelRevisionCaption.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelRevisionCaption.Text"
 msgid "Revision"
-msgstr ""
+msgstr "Revízió"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelDateCaption.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelDateCaption.Text"
 msgid "Date"
-msgstr ""
+msgstr "Dátum"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\linkKopano.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\linkKopano.Text"
 msgid "https://kopano.com/"
-msgstr ""
+msgstr "https://kopano.com/"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\$this.Text"
 msgid "About Kopano OL Extenion"
-msgstr ""
+msgstr "A Kopano OL Extension névjegye"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Label"
 msgid "About"
-msgstr ""
+msgstr "Névjegy"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Screentip"
 msgid "About dialog"
-msgstr ""
+msgstr "Névjegy ablak"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Supertip"
 msgid "Shows the about dialog, which contains licensing and version information."
 msgstr ""
-
+"A névjegy ablak megnyitása, amelyben a license és verzió információk érhetők "
+"el."
