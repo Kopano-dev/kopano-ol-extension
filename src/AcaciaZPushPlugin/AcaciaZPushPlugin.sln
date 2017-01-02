@@ -5,12 +5,6 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcaciaZPushPlugin", "AcaciaZPushPlugin\AcaciaZPushPlugin.csproj", "{1A7427A5-F814-4B07-98B2-C67D758B65D6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{3BAA09C4-9E3C-4088-901C-E03489366468}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginUnitTests", "Test\PluginUnitTests\PluginUnitTests.csproj", "{1862C3CA-3347-4180-B076-D018BAA70F40}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlookIntegrationTests", "Test\OutlookIntegrationTests\OutlookIntegrationTests.csproj", "{A1AA144C-ABCE-462D-ADB4-6EC25AC062B7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginDebugger", "PluginDebugger\PluginDebugger.csproj", "{9258AD17-0A25-4669-A95C-93EC70882551}"
 EndProject
 Global
@@ -35,30 +29,6 @@ Global
 		{1A7427A5-F814-4B07-98B2-C67D758B65D6}.Release|x64.Build.0 = Release|Any CPU
 		{1A7427A5-F814-4B07-98B2-C67D758B65D6}.Release|x86.ActiveCfg = Release|Any CPU
 		{1A7427A5-F814-4B07-98B2-C67D758B65D6}.Release|x86.Build.0 = Release|Any CPU
-		{1862C3CA-3347-4180-B076-D018BAA70F40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1862C3CA-3347-4180-B076-D018BAA70F40}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1862C3CA-3347-4180-B076-D018BAA70F40}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{1862C3CA-3347-4180-B076-D018BAA70F40}.Debug|x64.Build.0 = Debug|Any CPU
-		{1862C3CA-3347-4180-B076-D018BAA70F40}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1862C3CA-3347-4180-B076-D018BAA70F40}.Debug|x86.Build.0 = Debug|Any CPU
-		{1862C3CA-3347-4180-B076-D018BAA70F40}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1862C3CA-3347-4180-B076-D018BAA70F40}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1862C3CA-3347-4180-B076-D018BAA70F40}.Release|x64.ActiveCfg = Release|Any CPU
-		{1862C3CA-3347-4180-B076-D018BAA70F40}.Release|x64.Build.0 = Release|Any CPU
-		{1862C3CA-3347-4180-B076-D018BAA70F40}.Release|x86.ActiveCfg = Release|Any CPU
-		{1862C3CA-3347-4180-B076-D018BAA70F40}.Release|x86.Build.0 = Release|Any CPU
-		{A1AA144C-ABCE-462D-ADB4-6EC25AC062B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1AA144C-ABCE-462D-ADB4-6EC25AC062B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1AA144C-ABCE-462D-ADB4-6EC25AC062B7}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{A1AA144C-ABCE-462D-ADB4-6EC25AC062B7}.Debug|x64.Build.0 = Debug|Any CPU
-		{A1AA144C-ABCE-462D-ADB4-6EC25AC062B7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A1AA144C-ABCE-462D-ADB4-6EC25AC062B7}.Debug|x86.Build.0 = Debug|Any CPU
-		{A1AA144C-ABCE-462D-ADB4-6EC25AC062B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1AA144C-ABCE-462D-ADB4-6EC25AC062B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1AA144C-ABCE-462D-ADB4-6EC25AC062B7}.Release|x64.ActiveCfg = Release|Any CPU
-		{A1AA144C-ABCE-462D-ADB4-6EC25AC062B7}.Release|x64.Build.0 = Release|Any CPU
-		{A1AA144C-ABCE-462D-ADB4-6EC25AC062B7}.Release|x86.ActiveCfg = Release|Any CPU
-		{A1AA144C-ABCE-462D-ADB4-6EC25AC062B7}.Release|x86.Build.0 = Release|Any CPU
 		{9258AD17-0A25-4669-A95C-93EC70882551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9258AD17-0A25-4669-A95C-93EC70882551}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9258AD17-0A25-4669-A95C-93EC70882551}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -74,9 +44,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{1862C3CA-3347-4180-B076-D018BAA70F40} = {3BAA09C4-9E3C-4088-901C-E03489366468}
-		{A1AA144C-ABCE-462D-ADB4-6EC25AC062B7} = {3BAA09C4-9E3C-4088-901C-E03489366468}
 	EndGlobalSection
 EndGlobal
