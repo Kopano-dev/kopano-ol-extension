@@ -1,38 +1,54 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-12 16:12+0000\n"
+"PO-Revision-Date: 2017-01-14 09:53+0000\n"
+"Last-Translator: Klaus <klaus@linuxavdelingen.no>\n"
+"Language-Team: Norwegian Bokmål <http://translate.kopano.io/projects/kopano"
+"/kopano-ol-extension/nb/>\n"
+"Language: nb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.4\n"
+
 #: AcaciaZPushPlugin\Controls\KDialogButtons\buttonApply.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonApply.Text"
 msgid "Apply"
-msgstr ""
+msgstr "Bruk"
 
 #: AcaciaZPushPlugin\Controls\KDialogButtons\buttonCancel.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonCancel.Text"
 msgid "Cancel"
-msgstr ""
+msgstr "Avbryt"
 
 #: AcaciaZPushPlugin\Controls\KDialogButtons\buttonClose.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonClose.Text"
 msgid "Close"
-msgstr ""
+msgstr "Lukk"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelTitle.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelTitle.Text"
 msgid "Kopano OL Extension"
-msgstr ""
+msgstr "Kopano OL Extension"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelVersionCaption.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelVersionCaption.Text"
 msgid "Version"
-msgstr ""
+msgstr "Versjon"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelRevisionCaption.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelRevisionCaption.Text"
 msgid "Revision"
-msgstr ""
+msgstr "Revisjon"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\textLicense.Text
 #, csharp-format
@@ -44,73 +60,73 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelDateCaption.Text"
 msgid "Date"
-msgstr ""
+msgstr "Dato"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\linkKopano.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\linkKopano.Text"
 msgid "https://kopano.com/"
-msgstr ""
+msgstr "https://kopano.com/"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\$this.Text"
 msgid "About Kopano OL Extenion"
-msgstr ""
+msgstr "Om Kopano OL Extenion"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonGC.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonGC.Text"
 msgid "Run GC"
-msgstr ""
+msgstr "Kjør GC"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonRefresh.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonRefresh.Text"
 msgid "Refresh"
-msgstr ""
+msgstr "Oppdater"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonClose.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonClose.Text"
 msgid "Close"
-msgstr ""
+msgstr "Lukk"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonLog.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonLog.Text"
 msgid "Log"
-msgstr ""
+msgstr "Logg"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\$this.Text"
 msgid "Debug"
-msgstr ""
+msgstr "Feilsøk"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugSupportSettings\labelLogLevel.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugSupportSettings\\labelLogLevel.Text"
 msgid "Log level:"
-msgstr ""
+msgstr "Loggnivå:"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugSupportSettings\buttonShowLog.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugSupportSettings\\buttonShowLog.Text"
 msgid "Open log file location"
-msgstr ""
+msgstr "Åpne loggfilplassering"
 
 #: AcaciaZPushPlugin\Features\FreeBusy\FreeBusySettings\checkGABLookup.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\FreeBusy\\FreeBusySettings\\checkGABLookup.Text"
 msgid "Look up contacts in Global Address Book"
-msgstr ""
+msgstr "Søk etter kontakter i Global Adresse Bok"
 
 #: AcaciaZPushPlugin\Features\FreeBusy\FreeBusySettings\labelUseAccount.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\FreeBusy\\FreeBusySettings\\labelUseAccount.Text"
 msgid "Use account: "
-msgstr ""
+msgstr "Bruk konto: "
 
 #: AcaciaZPushPlugin\Features\GAB\GABSettings\buttonGABResync.Text
 #, csharp-format
@@ -134,25 +150,25 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\radioTime.Text"
 msgid "from"
-msgstr ""
+msgstr "Fra"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\timeFrom.CustomFormat
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\timeFrom.CustomFormat"
 msgid "HH:mm"
-msgstr ""
+msgstr "HH:mm"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\labelTill.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\labelTill.Text"
 msgid "until"
-msgstr ""
+msgstr "til"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\timeTill.CustomFormat
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\timeTill.CustomFormat"
 msgid "HH:mm"
-msgstr ""
+msgstr "HH:mm"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\labelBody.Text
 #, csharp-format
@@ -164,13 +180,13 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\btnCancel.Text"
 msgid "Cancel"
-msgstr ""
+msgstr "Avbryt"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\btnSave.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\btnSave.Text"
 msgid "Save"
-msgstr ""
+msgstr "Lagre"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\$this.Text
 #, csharp-format
@@ -188,13 +204,13 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\buttonOpenUser.Text"
 msgid "Open"
-msgstr ""
+msgstr "Åpne"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelName.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelName.Text"
 msgid "Share as"
-msgstr ""
+msgstr "Del som"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelSendAs.Text
 #, csharp-format
@@ -206,13 +222,13 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelPermissions.Text"
 msgid "Permissions"
-msgstr ""
+msgstr "Tillatelser"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\labelPermissionsValue.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\labelPermissionsValue.Text"
 msgid "Permissions"
-msgstr ""
+msgstr "Tillatelser"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\$this.Text
 #, csharp-format
@@ -298,7 +314,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_Debug_Label"
 msgid "Debug"
-msgstr ""
+msgstr "Feilsøk"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_Debug_Screentip
 #, csharp-format
@@ -317,7 +333,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_GroupMain_Label"
 msgid "Kopano"
-msgstr ""
+msgstr "Kopano"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_OOF_Label
 #, csharp-format
@@ -377,13 +393,13 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABEvent_Title"
 msgid "Global Address Book"
-msgstr ""
+msgstr "Global Adresse Bok"
 
 #: AcaciaZPushPlugin\Properties\Resources\GAB_FolderFormat
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GAB_FolderFormat"
 msgid "Address Book for {0}"
-msgstr ""
+msgstr "Adressebok for {0}"
 
 #: AcaciaZPushPlugin\Properties\Resources\LocalStore_DisplayName
 #, csharp-format
@@ -431,7 +447,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\ThisAddIn_Title"
 msgid "Kopano"
-msgstr ""
+msgstr "Kopano"
 
 #: AcaciaZPushPlugin\Properties\Resources\SSLFailed_Body
 #, csharp-format
@@ -449,7 +465,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_Title"
 msgid "Kopano"
-msgstr ""
+msgstr "Kopano"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Adding_Label
 #, csharp-format
@@ -498,13 +514,13 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_WebApp_Label"
 msgid "Open WebApp"
-msgstr ""
+msgstr "Åpne WebApp"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_WebApp_Screentip"
 msgid "Open WebApp"
-msgstr ""
+msgstr "Åpne WebApp"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Supertip
 #, csharp-format
@@ -618,19 +634,19 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_None"
 msgid "None"
-msgstr ""
+msgstr "Ingen"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_Read
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_Read"
 msgid "Read"
-msgstr ""
+msgstr "Lese"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_Write
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_Write"
 msgid "Write"
-msgstr ""
+msgstr "Skrive"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Success
 #, csharp-format
@@ -642,7 +658,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Label"
 msgid "About"
-msgstr ""
+msgstr "Om"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Screentip
 #, csharp-format
@@ -666,7 +682,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\ProgressDialog\\buttonCancel.Text"
 msgid "Cancel"
-msgstr ""
+msgstr "Avbryt"
 
 #: AcaciaZPushPlugin\UI\ProgressDialog\$this.Text
 #, csharp-format
@@ -684,17 +700,16 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\SettingsDialog\\buttonCancel.Text"
 msgid "Cancel"
-msgstr ""
+msgstr "Avbryt"
 
 #: AcaciaZPushPlugin\UI\SettingsDialog\buttonOK.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\SettingsDialog\\buttonOK.Text"
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: AcaciaZPushPlugin\UI\SettingsDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\SettingsDialog\\$this.Text"
 msgid "Kopano Settings"
 msgstr ""
-
