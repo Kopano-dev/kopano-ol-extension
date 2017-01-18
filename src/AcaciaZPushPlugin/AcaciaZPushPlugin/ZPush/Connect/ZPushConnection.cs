@@ -47,6 +47,7 @@ namespace Acacia.ZPush.Connect
         static ZPushConnection()
         {
             ServicePointManager.ServerCertificateValidationCallback = HandleCertificateError;
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
         }
 
         private static readonly Dictionary<string, bool> _allowCertificateErrors = new Dictionary<string, bool>();
