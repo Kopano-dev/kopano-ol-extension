@@ -33,6 +33,7 @@ namespace Acacia.Features
             typeof(FreeBusy.FeatureFreeBusy),
             typeof(GAB.FeatureGAB),
             typeof(Notes.FeatureNotes),
+            typeof(SecondaryContacts.FeatureSecondaryContacts),
             typeof(SendAs.FeatureSendAs),
             typeof(DebugSupport.FeatureDebugSupport)
         };
