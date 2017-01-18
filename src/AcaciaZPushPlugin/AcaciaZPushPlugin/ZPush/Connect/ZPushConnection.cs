@@ -280,7 +280,7 @@ namespace Acacia.ZPush.Connect
                 string url = string.Format(ACTIVESYNC_URL, _account.ServerURL, _account.DeviceId,
                     request.Command, _account.UserName, "WindowsOutlook");
 
-                // Parse the body
+                // Construct the body
                 WBXMLDocument doc = new WBXMLDocument();
                 doc.LoadXml(request.Body);
                 doc.VersionNumber = 1.3;
@@ -292,6 +292,9 @@ namespace Acacia.ZPush.Connect
                 {
                     Logger.Instance.Trace(this, "Sending request: {0} -> {1}", _account.ServerURL, doc.ToXMLString());
                     content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.ms-sync.wbxml");
+                    string caps = ZPushCapabilities.Client.ToString();
+                    Logger.Instance.Trace(this, "Sending request: {0} -> {1}: {2}", _account.ServerURL, caps, doc.ToXMLString());
+                    content.Headers.Add(Constants.ZPUSH_HEADER_CLIENT_CAPABILITIES, caps);
                     using (HttpResponseMessage response = _client.PostAsync(url, content, _cancel).Result)
                     {
                         return new Response(response);
