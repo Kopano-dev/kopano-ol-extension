@@ -169,46 +169,54 @@ namespace Acacia.ZPush
 
         private void SubFolders_FolderAdd(MAPIFolder folder)
         {
-            Logger.Instance.Debug(this, "Folder added in {0}: {1}", this._item.Name, folder.Name);
-            WatchChild((Folder)folder);
+            try
+            {
+                Logger.Instance.Debug(this, "Folder added in {0}: {1}", this._item.Name, folder.Name);
+                WatchChild((Folder)folder);
+            }
+            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderAdd: {0}: {1}", Name, e); }
         }
 
         private void SubFolders_FolderRemove()
         {
-            Logger.Instance.Debug(this, "Folder removed from {0}", this._item.Name);
-
-            // Helpfully, Outlook doesn't tell us which folder was removed. Could use the BeforeFolderMove event instead,
-            // but that doesn't fire if a folder was removed on the server.
-            // Hence, fetch all the remaining folder ids, and remove any folder that no longer exists.
-            HashSet<string> remaining = new HashSet<string>();
-            foreach (Folder child in _subFolders)
+            try
             {
-                try
+                Logger.Instance.Debug(this, "Folder removed from {0}", this._item.Name);
+
+                // Helpfully, Outlook doesn't tell us which folder was removed. Could use the BeforeFolderMove event instead,
+                // but that doesn't fire if a folder was removed on the server.
+                // Hence, fetch all the remaining folder ids, and remove any folder that no longer exists.
+                HashSet<string> remaining = new HashSet<string>();
+                foreach (Folder child in _subFolders)
                 {
-                    remaining.Add(child.EntryID);
+                    try
+                    {
+                        remaining.Add(child.EntryID);
+                    }
+                    catch (System.Exception e) { Logger.Instance.Warning(this, "Ignoring failed child: {0}", e); }
                 }
-                catch (System.Exception e) { Logger.Instance.Warning(this, "Ignoring failed child: {0}", e); }
-            }
 
-            // Find the folders that need to be removed. There should be only one, but with Outlook we can never be sure,
-            // so compare all. We cannot modify the dictionary during iteration, so store entries to be removed in a
-            // temporary list
-            List<KeyValuePair<string, ZPushFolder>> remove = new List<KeyValuePair<string, ZPushFolder>>();
-            foreach (var entry in _children)
-            {
-                if (!remaining.Contains(entry.Key))
+                // Find the folders that need to be removed. There should be only one, but with Outlook we can never be sure,
+                // so compare all. We cannot modify the dictionary during iteration, so store entries to be removed in a
+                // temporary list
+                List<KeyValuePair<string, ZPushFolder>> remove = new List<KeyValuePair<string, ZPushFolder>>();
+                foreach (var entry in _children)
                 {
-                    remove.Add(entry);
+                    if (!remaining.Contains(entry.Key))
+                    {
+                        remove.Add(entry);
+                    }
+                }
+
+                // Actually remove the folders
+                foreach (var entry in remove)
+                {
+                    Logger.Instance.Debug(this, "Removing subfolder {0}, {1}", this._item.Name, entry.Key);
+                    _children.Remove(entry.Key);
+                    entry.Value.Cleanup();
                 }
             }
-
-            // Actually remove the folders
-            foreach (var entry in remove)
-            {
-                Logger.Instance.Debug(this, "Removing subfolder {0}, {1}", this._item.Name, entry.Key);
-                _children.Remove(entry.Key);
-                entry.Value.Cleanup();
-            }
+            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderRemove: {0}: {1}", Name, e); }
         }
 
         private void SubFolders_FolderChange(MAPIFolder folder)
@@ -231,10 +239,7 @@ namespace Acacia.ZPush
                     WatchChild((Folder)folder);
                 }
             }
-            catch(System.Exception e)
-            {
-                Logger.Instance.Trace(this, "FolderChange exception: {0}: {1}", Name, e);
-            }
+            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderChange: {0}: {1}", Name, e); }
         }
 
         private void Items_ItemAdd(object oItem)
