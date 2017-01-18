@@ -60,6 +60,12 @@ namespace Acacia.Features.ReplyFlags
             }
         }
 
+        override public void GetCapabilities(ZPushCapabilities caps)
+        {
+            caps.Add("receiveflags");
+            caps.Add("sendflags");
+        }
+
         [AcaciaOption("Enables or disables the handling of update events to mail items. When a mail item is " +
                       "updated, it is checked to see if the reply flags are up to date. This is the main " +
                       "mechanism for updating reply flags that change on the server")]

@@ -237,6 +237,7 @@
     <Compile Include="Controls\KUITask.cs" />
     <Compile Include="Controls\KUIUtil.cs" />
     <Compile Include="DebugOptions.cs" />
+    <Compile Include="Features\Contacts\FeatureContacts.cs" />
     <Compile Include="Features\DebugSupport\AboutDialog.cs">
       <SubType>Form</SubType>
     </Compile>

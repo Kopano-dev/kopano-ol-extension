@@ -65,7 +65,7 @@ namespace Acacia.Features
 
         virtual public void GetCapabilities(ZPushCapabilities caps)
         {
-            caps.Add(Name);
+            caps.Add(Name.ToLower());
         }
 
         #region Debug options
