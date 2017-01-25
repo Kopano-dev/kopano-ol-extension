@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static Acacia.DebugOptions;
 
 namespace Acacia.Features.SecondaryContacts
@@ -57,6 +58,10 @@ namespace Acacia.Features.SecondaryContacts
             }
         }
 
+        // Contains the ids of folders for which we've shown a warning. This is both to prevent
+        // warning multiple times and to detect the case when the app has been restarted.
+        private readonly HashSet<string> _warnedFolders = new HashSet<string>();
+
         public FeatureSecondaryContacts()
         {
 
@@ -68,27 +73,67 @@ namespace Acacia.Features.SecondaryContacts
                                 OnUnpatchedFolderDiscovered);
         }
         
-
         private void OnUnpatchedFolderDiscovered(IFolder folder)
         {
             string strippedName = folder.Name.StripSuffix(SUFFIX_CONTACTS);
             Logger.Instance.Debug(this, "Patching secondary contacts folder: {0}", strippedName);
 
-            // Note that somehow it fails if these are updated in one go, so do the steps individually
+            // To patch we need to do the following
+            // 1) Update the sync type from 18 to 14
+            // 2) Update the container class from Note to Contact
+            // 3) Patch the name
+            // Note that the above steps need to be done in this order and individually for this to work.
+            //
+            // At some point after 2 we also need to restart Outlook to make it appear in the list of contact folders.
+            // So, when the folder is detected, we make it invisible and perform steps 1 and 2. We issue a warning
+            // that Outlook must be restarted. When the folder is detected again and is invisible, that means we've restarted
+            // At this point the name is patched and the folder is made visible. 
 
-            // Sync type
-            Logger.Instance.Trace(this, "Setting sync type");
-            folder.SetProperty(OutlookConstants.PR_EAS_SYNCTYPE, (int)OutlookConstants.SyncType.UserContact);
+            if (!folder.AttrHidden)
+            {
+                // Stage 1
 
-            // Container type
-            Logger.Instance.Trace(this, "Setting container class");
-            folder.SetProperty(OutlookConstants.PR_CONTAINER_CLASS, "IPF.Contact");
+                // Sync type
+                Logger.Instance.Trace(this, "Setting sync type");
+                folder.SetProperty(OutlookConstants.PR_EAS_SYNCTYPE, (int)OutlookConstants.SyncType.UserContact);
 
-            // And the name
-            Logger.Instance.Trace(this, "Patching name");
-            folder.Name = strippedName;
+                // Container type
+                Logger.Instance.Trace(this, "Setting container class");
+                folder.SetProperty(OutlookConstants.PR_CONTAINER_CLASS, "IPF.Contact");
 
-            Logger.Instance.Debug(this, "Patched secondary contacts folder: {0}", strippedName);
+                // Make it invisible.
+                folder.AttrHidden = true;
+
+                Logger.Instance.Debug(this, "Patched secondary contacts folder: {0}", strippedName);
+                // Register and show a warning, if not already done.
+                // Note that patching may be done multiple times.
+                if (!_warnedFolders.Contains(folder.EntryId))
+                {
+                    _warnedFolders.Add(folder.EntryId);
+
+                    if (MessageBox.Show(StringUtil.GetResourceString("SecondaryContactsPatched_Body", strippedName),
+                                    StringUtil.GetResourceString("SecondaryContactsPatched_Title"),
+                                    MessageBoxButtons.YesNo,
+                                    MessageBoxIcon.Warning
+                                ) == DialogResult.Yes)
+                    {
+                        ThisAddIn.Instance.Restart();
+                    }
+                }
+            }
+            // If _warnedFolders does not contain the folder (and it's hidden), this means Outlook was restarted.
+            else if (!_warnedFolders.Contains(folder.EntryId))
+            {
+                // Stage 2
+
+                // Patch the name
+                Logger.Instance.Trace(this, "Patching name");
+                folder.Name = strippedName;
+
+                // Show it
+                folder.AttrHidden = false;
+                Logger.Instance.Debug(this, "Shown secondary contacts folder: {0}", strippedName);
+            }
         }
     }
 }

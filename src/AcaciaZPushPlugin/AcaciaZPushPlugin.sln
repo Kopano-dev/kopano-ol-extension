@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcaciaZPushPlugin", "AcaciaZPushPlugin\AcaciaZPushPlugin.csproj", "{1A7427A5-F814-4B07-98B2-C67D758B65D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginDebugger", "PluginDebugger\PluginDebugger.csproj", "{9258AD17-0A25-4669-A95C-93EC70882551}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlookRestarter", "OutlookRestarter\OutlookRestarter.csproj", "{222C4DA5-FA31-471A-B127-5E0C6AD2CB3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,18 @@ Global
 		{9258AD17-0A25-4669-A95C-93EC70882551}.Release|x64.Build.0 = Release|Any CPU
 		{9258AD17-0A25-4669-A95C-93EC70882551}.Release|x86.ActiveCfg = Release|Any CPU
 		{9258AD17-0A25-4669-A95C-93EC70882551}.Release|x86.Build.0 = Release|Any CPU
+		{222C4DA5-FA31-471A-B127-5E0C6AD2CB3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{222C4DA5-FA31-471A-B127-5E0C6AD2CB3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{222C4DA5-FA31-471A-B127-5E0C6AD2CB3C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{222C4DA5-FA31-471A-B127-5E0C6AD2CB3C}.Debug|x64.Build.0 = Debug|Any CPU
+		{222C4DA5-FA31-471A-B127-5E0C6AD2CB3C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{222C4DA5-FA31-471A-B127-5E0C6AD2CB3C}.Debug|x86.Build.0 = Debug|Any CPU
+		{222C4DA5-FA31-471A-B127-5E0C6AD2CB3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{222C4DA5-FA31-471A-B127-5E0C6AD2CB3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{222C4DA5-FA31-471A-B127-5E0C6AD2CB3C}.Release|x64.ActiveCfg = Release|Any CPU
+		{222C4DA5-FA31-471A-B127-5E0C6AD2CB3C}.Release|x64.Build.0 = Release|Any CPU
+		{222C4DA5-FA31-471A-B127-5E0C6AD2CB3C}.Release|x86.ActiveCfg = Release|Any CPU
+		{222C4DA5-FA31-471A-B127-5E0C6AD2CB3C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -112,7 +112,14 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             get
             {
-                return Props.GetProperty(OutlookConstants.PR_ATTR_HIDDEN);
+                try
+                {
+                    return Props.GetProperty(OutlookConstants.PR_ATTR_HIDDEN);
+                }
+                catch(System.Exception)
+                {
+                    return false;
+                }
             }
             set
             {

@@ -72,7 +72,7 @@ namespace Acacia.ZPush
         /// </summary>
         public void SendReceive()
         {
-            ThisAddIn.Instance.Application.Session.SendAndReceive(false);
+            ThisAddIn.Instance.SendReceive();
         }
 
         #endregion
