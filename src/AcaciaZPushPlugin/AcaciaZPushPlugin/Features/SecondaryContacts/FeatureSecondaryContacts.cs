@@ -43,14 +43,16 @@ namespace Acacia.Features.SecondaryContacts
 
             public override bool IsApplicable(IFolder folder)
             {
-                // Check the sync type
-                if (FolderUtils.GetFolderSyncType(folder) != OutlookConstants.SyncType.Unknown)
+                // Check the sync type.
+                // Also allow again if the sync type is user contact, it may not have been fully patched.
+                if (FolderUtils.GetFolderSyncType(folder) != OutlookConstants.SyncType.Unknown &&
+                    FolderUtils.GetFolderSyncType(folder) != OutlookConstants.SyncType.UserContact)
                     return false;
 
                 // Check the hidden suffix
                 if (!folder.Name.EndsWith(SUFFIX_CONTACTS))
                     return false;
-                Logger.Instance.Debug(this.Feature, "CONTACTS: {0} - {1}", folder.Name, StringUtil.BytesToHex(Encoding.UTF8.GetBytes(folder.Name)));
+ 
                 return true;
             }
         }
@@ -70,24 +72,23 @@ namespace Acacia.Features.SecondaryContacts
         private void OnUnpatchedFolderDiscovered(IFolder folder)
         {
             string strippedName = folder.Name.StripSuffix(SUFFIX_CONTACTS);
-            // Update the properties
-            folder.SetProperties(new string[]
-            {
-                OutlookConstants.PR_EAS_SYNCTYPE,
-                OutlookConstants.PR_CONTAINER_CLASS,
-                OutlookConstants.PR_EAS_NAME,
-                OutlookConstants.PR_DISPLAY_NAME,
-                            OutlookConstants.PR_EAS_SYNC1,
-                            OutlookConstants.PR_EAS_SYNC2
-            }, new object[]
-            {
-                (int)OutlookConstants.SyncType.UserContact,
-                "IPF.Contact",
-                strippedName,
-                strippedName,
-                true, true
-            });
+            Logger.Instance.Debug(this, "Patching secondary contacts folder: {0}", strippedName);
+
+            // Note that somehow it fails if these are updated in one go, so do the steps individually
+
+            // Sync type
+            Logger.Instance.Trace(this, "Setting sync type");
+            folder.SetProperty(OutlookConstants.PR_EAS_SYNCTYPE, (int)OutlookConstants.SyncType.UserContact);
+
+            // Container type
+            Logger.Instance.Trace(this, "Setting container class");
+            folder.SetProperty(OutlookConstants.PR_CONTAINER_CLASS, "IPF.Contact");
+
+            // And the name
+            Logger.Instance.Trace(this, "Patching name");
+            folder.Name = strippedName;
+
+            Logger.Instance.Debug(this, "Patched secondary contacts folder: {0}", strippedName);
         }
-        
     }
 }
