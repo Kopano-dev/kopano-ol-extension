@@ -84,7 +84,7 @@ namespace Acacia.Features.Notes
             PatchIfConfirmed(folder);
         }
 
-        private bool IsNotesFolder(OutlookConstants.SyncType type)
+        private bool IsNotesFolder(OutlookConstants.SyncType? type)
         {
             return type == OutlookConstants.SyncType.Note || type == OutlookConstants.SyncType.UserNote;
         }
@@ -128,7 +128,7 @@ namespace Acacia.Features.Notes
                         return;
 
                     // Patch if needed
-                    OutlookConstants.SyncType type = FolderUtils.GetFolderSyncType(folder);
+                    OutlookConstants.SyncType? type = FolderUtils.GetFolderSyncType(folder);
                     Logger.Instance.Trace(this, "Notes folder type: {0}", type);
                     if (IsNotesFolder(type))
                     {
@@ -174,7 +174,7 @@ namespace Acacia.Features.Notes
                         return;
 
                     // Unpatch if needed
-                    OutlookConstants.SyncType type = FolderUtils.GetFolderSyncType(folder, true);
+                    OutlookConstants.SyncType? type = FolderUtils.GetFolderSyncType(folder, true);
                     Logger.Instance.Trace(this, "Notes folder type: {0}", type);
                     // Unpatch only if the original type is a notes folder, but the current type isn't
                     if (IsNotesFolder(type) && !IsNotesFolder(FolderUtils.GetFolderSyncType(folder)))

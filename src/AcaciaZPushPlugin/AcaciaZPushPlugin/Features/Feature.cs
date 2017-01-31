@@ -63,6 +63,11 @@ namespace Acacia.Features
             get { return ThisAddIn.Instance.Application; }
         }
 
+        virtual public void GetCapabilities(ZPushCapabilities caps)
+        {
+            caps.Add(Name.ToLower());
+        }
+
         #region Debug options
 
         public static string GetFeatureName(Type featureType)

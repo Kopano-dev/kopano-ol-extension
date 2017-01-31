@@ -83,6 +83,8 @@ namespace Acacia
 
         public const string PR_SUBJECT = PROP + "0037" + PT_UNICODE;
 
+        public const string PR_CONTAINER_CLASS = PROP + "3613" + PT_UNICODE;
+
         #endregion
 
         #region Email specific
@@ -120,6 +122,7 @@ namespace Acacia
         public const string PR_EAS_SYNCTYPE = PROP + "6A1A" + PT_LONG;
         public const string PR_EAS_SYNC2 = PROP + "6A1D" + PT_BOOLEAN;
         public const string PR_NET_FOLDER_FLAGS = PROP + "36DE" + PT_LONG;
+        public const string PR_EAS_NAME = PROP + "6915" + PT_UNICODE;
 
         public enum SyncType
         {

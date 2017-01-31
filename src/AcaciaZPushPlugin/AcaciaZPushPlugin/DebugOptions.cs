@@ -68,19 +68,25 @@ namespace Acacia
         }
 
         public class EnumOption<EnumType> : Option<EnumType>
+            where EnumType : struct
         {
+            private readonly EnumType? _defaultValue;
+
             private EnumType DefaultValue
             {
                 get
                 {
+                    if (_defaultValue.HasValue)
+                        return (EnumType)_defaultValue;
                     return (EnumType)typeof(EnumType).GetEnumValues().GetValue(0);
                 }
             }
 
-            public EnumOption(string token) 
+            public EnumOption(string token, EnumType? defaultValue = null) 
             :
             base(token)
             {
+                this._defaultValue = defaultValue;
             }
 
             public override string GetToken(EnumType value)

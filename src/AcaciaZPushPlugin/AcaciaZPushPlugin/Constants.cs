@@ -71,6 +71,7 @@ namespace Acacia
 
         public const string ZPUSH_HEADER_GAB_NAME = "X-Push-GAB-Name";
         public const string ZPUSH_HEADER_CAPABILITIES = "X-Push-Capabilities";
+        public const string ZPUSH_HEADER_CLIENT_CAPABILITIES = "X-Push-Plugin-Capabilities";
         public const string ZPUSH_HEADER_PLUGIN = "X-Push-Plugin";
         public const string ZPUSH_HEADER_VERSION = "X-Z-Push-Version";
         

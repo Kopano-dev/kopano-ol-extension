@@ -30,7 +30,7 @@ using static Acacia.DebugOptions;
 namespace Acacia.Features.SendAs
 {
     [AcaciaOption("Provides the ability to select different senders for Z-Push accounts.")]
-    public class FeatureSendAs : FeatureDisabled
+    public class FeatureSendAs : Feature
     {
         private FeatureSharedFolders _sharedFolders;
 

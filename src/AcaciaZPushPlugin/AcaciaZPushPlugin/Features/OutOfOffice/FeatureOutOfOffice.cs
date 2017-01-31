@@ -48,6 +48,12 @@ namespace Acacia.Features.OutOfOffice
             Watcher.ZPushAccountChange += Watcher_ZPushAccountChange;
         }
 
+        override public void GetCapabilities(ZPushCapabilities caps)
+        {
+            caps.Add("oof");
+            caps.Add("ooftime");
+        }
+
         private static bool IsOOFEnabled(ActiveSync.SettingsOOF settings)
         {
             if (settings == null)

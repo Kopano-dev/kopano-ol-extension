@@ -431,4 +431,12 @@
   <data name="Ribbon_About_Supertip" xml:space="preserve">
     <value>Shows the about dialog, which contains licensing and version information.</value>
   </data>
+  <data name="SecondaryContactsPatched_Body" xml:space="preserve">
+    <value>To synchronise the contacts folder '{0}', Outlook must be restarted. Click 'Yes' to restart Outlook now, or 'No' if you plan to restart Outlook later.</value>
+    <comment>Shown when a secondary contact folder is detected, to inform the user that a restart is required</comment>
+  </data>
+  <data name="SecondaryContactsPatched_Title" xml:space="preserve">
+    <value>Contacts folder</value>
+    <comment>Shown when a secondary contact folder is detected, to inform the user that a restart is required</comment>
+  </data>
 </root>
