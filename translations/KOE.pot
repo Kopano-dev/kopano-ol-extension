@@ -670,6 +670,18 @@ msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Titl
 msgid "Contacts folder"
 msgstr ""
 
+#: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Body
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Body"
+msgid "The password for account \'{0}\' is not available. Advanced Z-Push features will not work."
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Title"
+msgid "Password unavailable"
+msgstr ""
+
 #: AcaciaZPushPlugin\UI\ProgressDialog\labelMessage.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\ProgressDialog\\labelMessage.Text"
