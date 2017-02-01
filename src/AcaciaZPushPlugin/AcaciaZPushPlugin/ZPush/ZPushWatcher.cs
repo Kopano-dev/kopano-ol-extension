@@ -141,24 +141,39 @@ namespace Acacia.ZPush
             // Register any events
             HandleFolderWatchers(account);
 
-            // Send an OOF request to get the OOF state and capabilities
-            Tasks.Task(null, "ZPushCheck: " + account.DisplayName, () =>
+            if (account.HasPassword)
             {
-                // TODO: if this fails, retry?
-                ActiveSync.SettingsOOF oof;
-                using (ZPushConnection connection = new ZPushConnection(account, new System.Threading.CancellationToken(false)))
+                // Send an OOF request to get the OOF state and capabilities
+                Tasks.Task(null, "ZPushCheck: " + account.DisplayName, () =>
                 {
-                    oof = connection.Execute(new ActiveSync.SettingsOOFGet());
-                }
-                account.OnConfirmationResponse(oof.RawResponse);
+                    // TODO: if this fails, retry?
+                    ActiveSync.SettingsOOF oof;
+                    using (ZPushConnection connection = new ZPushConnection(account, new System.Threading.CancellationToken(false)))
+                    {
+                        oof = connection.Execute(new ActiveSync.SettingsOOFGet());
+                    }
+                    account.OnConfirmationResponse(oof.RawResponse);
 
-                // [ZO-109] Always update the current selection, it might have changed.
-                Explorer_SelectionChange();
+                    // [ZO-109] Always update the current selection, it might have changed.
+                    Explorer_SelectionChange();
 
-                // Notify the OOF feature.
-                // TODO: this coupling is pretty hideous
-                ThisAddIn.Instance.GetFeature<FeatureOutOfOffice>()?.OnOOFSettings(account, oof);
-            });
+                    // Notify the OOF feature.
+                    // TODO: this coupling is pretty hideous
+                    ThisAddIn.Instance.GetFeature<FeatureOutOfOffice>()?.OnOOFSettings(account, oof);
+                });
+            }
+            else
+            {
+                ThisAddIn.Instance.InvokeUI(() =>
+                {
+                    Logger.Instance.Warning(this, "Password not available for account: {0}", account);
+                    System.Windows.Forms.MessageBox.Show(ThisAddIn.Instance.Window,
+                        string.Format(Properties.Resources.AccountNoPassword_Body, account.DisplayName),
+                        Properties.Resources.AccountNoPassword_Title,
+                        System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information
+                    );
+                });
+            }
         }
 
         internal void OnAccountsScanned()

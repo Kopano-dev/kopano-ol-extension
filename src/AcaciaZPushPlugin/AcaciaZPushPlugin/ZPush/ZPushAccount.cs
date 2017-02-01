@@ -136,6 +136,12 @@ namespace Acacia.ZPush
             }
         }
 
+        [Browsable(false)]
+        public bool HasPassword
+        {
+            get { return Registry.GetValue(_regPath, OutlookConstants.REG_VAL_EAS_PASSWORD, null) != null; }
+        }
+
         public string StoreID
         {
             get { return GetStoreId(_regPath); }

@@ -32,6 +32,7 @@ using Acacia.UI.Outlook;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using Acacia.Native;
 
 namespace Acacia
 {
@@ -243,6 +244,41 @@ namespace Acacia
                 return _outlookUI;
             }
         }
+
+        #region Window handle
+
+        private class WindowHandle : IWin32Window
+        {
+            private IntPtr hWnd;
+
+            public WindowHandle(IntPtr hWnd)
+            {
+                this.hWnd = hWnd;
+            }
+
+            public IntPtr Handle
+            {
+                get
+                {
+                    return hWnd;
+                }
+            }
+        }
+
+        public IWin32Window Window
+        {
+            get
+            {
+                var win = Application.ActiveWindow() as IOleWindow;
+                if (win == null)
+                    return null;
+                IntPtr hWnd;
+                win.GetWindow(out hWnd);
+                return new WindowHandle(hWnd);
+            }
+        }
+
+        #endregion
 
         protected override Microsoft.Office.Core.IRibbonExtensibility CreateRibbonExtensibilityObject()
         {

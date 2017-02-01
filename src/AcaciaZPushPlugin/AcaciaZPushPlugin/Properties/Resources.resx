@@ -439,4 +439,10 @@
     <value>Contacts folder</value>
     <comment>Shown when a secondary contact folder is detected, to inform the user that a restart is required</comment>
   </data>
+  <data name="AccountNoPassword_Body" xml:space="preserve">
+    <value>The password for account '{0}' is not available. Advanced Z-Push features will not work.</value>
+  </data>
+  <data name="AccountNoPassword_Title" xml:space="preserve">
+    <value>Password unavailable</value>
+  </data>
 </root>

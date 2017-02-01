@@ -61,6 +61,24 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The password for account &apos;{0}&apos; is not available. Advanced Z-Push features will not work..
+        /// </summary>
+        internal static string AccountNoPassword_Body {
+            get {
+                return ResourceManager.GetString("AccountNoPassword_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password unavailable.
+        /// </summary>
+        internal static string AccountNoPassword_Title {
+            get {
+                return ResourceManager.GetString("AccountNoPassword_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Support.
         /// </summary>
         internal static string Feature_DebugSupport {
