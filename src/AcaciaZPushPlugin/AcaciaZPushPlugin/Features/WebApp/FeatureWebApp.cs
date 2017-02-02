@@ -124,7 +124,7 @@ namespace Acacia.Features.WebApp
         private string PerformAutoDiscover(ZPushAccount account)
         {
             // Fetch the txt record
-            List<string> txt = DnsUtil.GetTxtRecord(account.DomainName);
+            IList<string> txt = DnsUtil.GetTxtRecord(account.DomainName);
             if (txt == null)
                 return null;
 

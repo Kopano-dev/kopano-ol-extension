@@ -133,8 +133,12 @@
   -->
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="Heijden.Dns, Version=2.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Heijden.Dns.2.0.0\lib\net35\Heijden.Dns.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.4.1\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -272,6 +276,7 @@
     <Compile Include="Features\SharedFolders\FolderTreeNode.cs" />
     <Compile Include="GlobalOptions.cs" />
     <Compile Include="Logging.cs" />
+    <Compile Include="Native\IOleWindow.cs" />
     <Compile Include="OutlookConstants.cs" />
     <Compile Include="UI\Outlook\OutlookImageList.cs" />
     <Compile Include="UI\Outlook\RibbonToggleButton.cs" />
