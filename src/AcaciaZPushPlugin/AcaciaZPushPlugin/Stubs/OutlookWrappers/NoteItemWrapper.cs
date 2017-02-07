@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    public class NoteItemWrapper : OutlookWrapper<NoteItem>, INoteItem
+    public class NoteItemWrapper : OutlookItemWrapper<NoteItem>, INoteItem
     {
         internal NoteItemWrapper(NoteItem item)
         :
@@ -62,8 +62,9 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #region Methods
 
-        public IUserProperty<Type> GetUserProperty<Type>(string name, bool create = false)
+        protected override UserProperties GetUserProperties()
         {
+            // Note item doesn't have user properties
             throw new NotSupportedException();
         }
 

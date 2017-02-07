@@ -31,7 +31,7 @@ namespace Acacia.ZPush
     /// Manages a local store in which Z-Push data is stored.
     /// </summary>
     /// TODO: merge with Store where possible
-    public class ZPushLocalStore : DisposableWrapper
+    public class ZPushLocalStore : ComWrapper
     {
         private Store _store;
 

@@ -24,7 +24,7 @@ using Acacia.Utils;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    class AppointmentItemWrapper : OutlookWrapper<AppointmentItem>, IAppointmentItem, IZPushItem
+    class AppointmentItemWrapper : OutlookItemWrapper<AppointmentItem>, IAppointmentItem, IZPushItem
     {
 
         internal AppointmentItemWrapper(AppointmentItem item)
@@ -79,9 +79,9 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #region Methods
 
-        public IUserProperty<Type> GetUserProperty<Type>(string name, bool create = false)
+        protected override UserProperties GetUserProperties()
         {
-            return UserPropertyWrapper<Type>.Get(_item.UserProperties, name, create);
+            return _item.UserProperties;
         }
 
         public void Delete() { _item.Delete(); }

@@ -24,7 +24,7 @@ using Acacia.Utils;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    class MailItemWrapper : OutlookWrapper<MailItem>, IMailItem
+    class MailItemWrapper : OutlookItemWrapper<MailItem>, IMailItem
     {
         internal MailItemWrapper(MailItem item)
         :
@@ -132,9 +132,9 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #region Methods
 
-        public IUserProperty<Type> GetUserProperty<Type>(string name, bool create = false)
+        protected override UserProperties GetUserProperties()
         {
-            return UserPropertyWrapper<Type>.Get(_item.UserProperties, name, create);
+            return _item.UserProperties;
         }
 
         public void Delete() { _item.Delete(); }

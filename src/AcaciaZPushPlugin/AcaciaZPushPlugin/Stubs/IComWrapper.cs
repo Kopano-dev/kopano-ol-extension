@@ -1,4 +1,4 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -13,7 +13,6 @@
 /// along with this program.If not, see<http://www.gnu.org/licenses/>.
 /// 
 /// Consult LICENSE file for details
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,17 +21,8 @@ using System.Threading.Tasks;
 
 namespace Acacia.Stubs
 {
-    public interface IUserProperty<Type>
+    public interface IComWrapper : IDisposable
     {
-        #region Properties
-
-        Type Value
-        {
-            get;
-            set;
-        }
-
-        #endregion
+        bool MustRelease { get; set; }
     }
-
 }

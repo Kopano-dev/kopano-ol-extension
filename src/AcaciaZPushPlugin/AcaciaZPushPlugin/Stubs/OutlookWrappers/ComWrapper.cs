@@ -25,19 +25,19 @@ using System.Threading.Tasks;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    public abstract class DisposableWrapper : IDisposable
+    public abstract class ComWrapper : IComWrapper
     {
 
         /// <summary>
         /// Creates a wrapper.
         /// </summary>
-        internal DisposableWrapper()
+        internal ComWrapper()
         {
             Interlocked.Increment(ref Statistics.CreatedWrappers);
             this._createdTrace = new System.Diagnostics.StackTrace();
         }
 
-        ~DisposableWrapper()
+        ~ComWrapper()
         {
             Interlocked.Increment(ref Statistics.DeletedWrappers);
             if (!_isDisposed)
