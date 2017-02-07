@@ -316,7 +316,7 @@ namespace Acacia.Features.GAB
             }
         }
 
-        private IItem FindNewestChunk()
+        private ChunkIndex? FindNewestChunkIndex()
         {
             if (Folder == null)
                 return null;
@@ -326,12 +326,15 @@ namespace Acacia.Features.GAB
             int i = 0;
             foreach(IItem item in Folder.ItemsSorted("LastModificationTime", true))
             {
-                if (ChunkIndex.Parse(item.Subject) != null)
-                    return item;
-                item.Dispose();
-                if (i > Constants.ZPUSH_GAB_NEWEST_MAX_CHECK)
-                    return null;
-                ++i;
+                using (item)
+                {
+                    ChunkIndex? index = ChunkIndex.Parse(item.Subject);
+                    if (index != null)
+                        return index;
+                    if (i > Constants.ZPUSH_GAB_NEWEST_MAX_CHECK)
+                        return null;
+                    ++i;
+                }
             }
             return null;
         }
@@ -341,39 +344,38 @@ namespace Acacia.Features.GAB
             try
             {
                 // Find the newest chunk
-                using (IItem newest = FindNewestChunk())
+                ChunkIndex? newestChunkIndex = FindNewestChunkIndex();
+                if (newestChunkIndex == null)
                 {
-                    if (newest == null)
-                        CurrentSequence = null;
-                    else
+                    CurrentSequence = null;
+                }
+                else
+                {
+                    Logger.Instance.Trace(this, "Newest chunk: {0}", newestChunkIndex.Value);
+
+                    if (!CurrentSequence.HasValue || CurrentSequence.Value != newestChunkIndex?.numberOfChunks)
                     {
-                        Logger.Instance.Trace(this, "Newest chunk: {0}", newest.Subject);
-                        ChunkIndex? newestChunkIndex = ChunkIndex.Parse(newest.Subject);
+                        // Sequence has changed. Delete contacts
+                        Logger.Instance.Trace(this, "Rechunked, deleting contacts");
+                        ClearContacts();
 
-                        if (!CurrentSequence.HasValue || CurrentSequence.Value != newestChunkIndex?.numberOfChunks)
+                        // Determine new sequence
+                        if (newestChunkIndex == null)
                         {
-                            // Sequence has changed. Delete contacts
-                            Logger.Instance.Trace(this, "Rechunked, deleting contacts");
-                            ClearContacts();
-
-                            // Determine new sequence
-                            if (newestChunkIndex == null)
+                            using (IStorageItem index = GetIndexItem())
                             {
-                                using (IStorageItem index = GetIndexItem())
-                                {
-                                    if (index != null)
-                                        index.Delete();
-                                }
+                                if (index != null)
+                                    index.Delete();
                             }
-                            else
+                        }
+                        else
+                        {
+                            int numberOfChunks = newestChunkIndex.Value.numberOfChunks;
+                            using (IStorageItem index = GetIndexItem())
                             {
-                                int numberOfChunks = newestChunkIndex.Value.numberOfChunks;
-                                using (IStorageItem index = GetIndexItem())
-                                {
-                                    index.GetUserProperty<int>(PROP_CURRENT_SEQUENCE, true).Value = numberOfChunks;
-                                    index.GetUserProperty<string>(PROP_LAST_PROCESSED, true).Value = CreateChunkStateString(numberOfChunks);
-                                    index.Save();
-                                }
+                                index.GetUserProperty<int>(PROP_CURRENT_SEQUENCE, true).Value = numberOfChunks;
+                                index.GetUserProperty<string>(PROP_LAST_PROCESSED, true).Value = CreateChunkStateString(numberOfChunks);
+                                index.Save();
                             }
                         }
                     }
