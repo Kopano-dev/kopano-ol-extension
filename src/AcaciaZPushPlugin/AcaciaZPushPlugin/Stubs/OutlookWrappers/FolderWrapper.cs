@@ -139,11 +139,7 @@ namespace Acacia.Stubs.OutlookWrappers
             {
                 get
                 {
-                    if (_last != null)
-                    {
-                        _last.Dispose();
-                        _last = default(ItemType);
-                    }
+                    CleanLast();
                     _last = Mapping.Wrap<ItemType>(_enum.Current);
                     return _last;
                 }
@@ -157,12 +153,23 @@ namespace Acacia.Stubs.OutlookWrappers
                 }
             }
 
+            private void CleanLast()
+            {
+                if (_last != null)
+                {
+                    _last.Dispose();
+                    _last = default(ItemType);
+                }
+            }
+
             public void Dispose()
             {
+                CleanLast();
                 if (_enum != null)
                 {
                     if (_enum is IDisposable)
                         ((IDisposable)_enum).Dispose();
+                    ComRelease.Release(_enum);
                     _enum = null;
                 }
                 if (_items != null)
@@ -174,16 +181,13 @@ namespace Acacia.Stubs.OutlookWrappers
 
             public bool MoveNext()
             {
-                if (_last != null)
-                {
-                    _last.Dispose();
-                    _last = default(ItemType);
-                }
+                CleanLast();
                 return _enum.MoveNext();
             }
 
             public void Reset()
             {
+                CleanLast();
                 _enum.Reset();
             }
         }
