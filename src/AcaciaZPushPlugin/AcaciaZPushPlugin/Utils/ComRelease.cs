@@ -59,7 +59,7 @@ namespace Acacia.Utils
         {
             if (!Enabled)
                 return;
-            if (o == null)
+            if (o == null || !Marshal.IsComObject(o))
                 return;
 
             if (Logger.Instance.IsLevelEnabled(LogLevel.TraceExtra))
