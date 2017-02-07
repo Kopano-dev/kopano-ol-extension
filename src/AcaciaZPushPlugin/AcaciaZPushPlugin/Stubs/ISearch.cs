@@ -22,14 +22,17 @@ using System.Threading.Tasks;
 
 namespace Acacia.Stubs
 {
-    public enum SearchOperation
+    /// <summary>
+    /// Order matches MAPI RELOP_ constants
+    /// </summary>
+    public enum SearchOperation : uint
     {
+        Smaller,
+        SmallerEqual,
+        Greater,
+        GreaterEqual,
         Equal,
         NotEqual,
-        SmallerEqual,
-        Smaller,
-        GreaterEqual,
-        Greater,
         Like
     }
 
@@ -41,7 +44,8 @@ namespace Acacia.Stubs
     public enum SearchOperator
     {
         Or,
-        And
+        And,
+        Not
     }
 
     public interface ISearchOperator
@@ -49,8 +53,7 @@ namespace Acacia.Stubs
         ISearchField AddField(string name, bool isUserField = false);
     }
 
-    public interface ISearch<ItemType>
-    : ISearchOperator
+    public interface ISearch<ItemType> : ISearchOperator
     where ItemType : IItem
     {
         ISearchOperator AddOperator(SearchOperator oper);

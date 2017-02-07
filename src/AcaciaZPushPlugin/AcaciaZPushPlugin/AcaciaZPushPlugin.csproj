@@ -276,6 +276,7 @@
     <Compile Include="Features\SharedFolders\FolderTreeNode.cs" />
     <Compile Include="GlobalOptions.cs" />
     <Compile Include="Logging.cs" />
+    <Compile Include="Native\MAPI.cs" />
     <Compile Include="Native\IOleWindow.cs" />
     <Compile Include="OutlookConstants.cs" />
     <Compile Include="UI\Outlook\OutlookImageList.cs" />
