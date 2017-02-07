@@ -24,7 +24,7 @@ using Acacia.Utils;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    public class StoreWrapper : DisposableWrapper, IStore
+    public class StoreWrapper : ComWrapper, IStore
     {
         public static IStore Wrap(Store store)
         {

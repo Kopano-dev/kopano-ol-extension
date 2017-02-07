@@ -39,11 +39,21 @@ namespace Acacia.Stubs
         #region User properties
 
         /// <summary>
-        /// Retrieves the user property with the specified name. 
+        /// Retrieves the item's user property with the specified name.
         /// </summary>
-        /// <param name="create">If true, the property is created if it does not exist. 
-        /// If false, null is returned in this case</param>
-        IUserProperty<Type> GetUserProperty<Type>(string name, bool create = false);
+        /// <typeparam name="Type">The property type.</typeparam>
+        /// <param name="name">The name of the property.</param>
+        /// <returns>The property's value, if it exists. If it does not exist, the type's default value is returned.
+        /// A nullable type can be specified to return null if the property does not exist.</returns>
+        Type GetUserProperty<Type>(string name);
+
+        /// <summary>
+        /// Sets the property.
+        /// </summary>
+        /// <typeparam name="Type">The property type</typeparam>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        void SetUserProperty<Type>(string name, Type value);
 
         #endregion
 

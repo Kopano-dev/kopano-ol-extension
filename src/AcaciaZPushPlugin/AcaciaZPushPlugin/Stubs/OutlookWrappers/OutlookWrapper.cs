@@ -29,7 +29,7 @@ namespace Acacia.Stubs.OutlookWrappers
     /// <summary>
     /// Helper for Outlook wrapper implementations
     /// </summary>
-    abstract public class OutlookWrapper<ItemType> : DisposableWrapper
+    abstract public class OutlookWrapper<ItemType> : ComWrapper
     {
 
         #region Construction / Destruction

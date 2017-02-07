@@ -279,6 +279,8 @@
     <Compile Include="Native\MAPI.cs" />
     <Compile Include="Native\IOleWindow.cs" />
     <Compile Include="OutlookConstants.cs" />
+    <Compile Include="Stubs\IComWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\OutlookItemWrapper.cs" />
     <Compile Include="UI\Outlook\OutlookImageList.cs" />
     <Compile Include="UI\Outlook\RibbonToggleButton.cs" />
     <Compile Include="UI\Outlook\RibbonButton.cs" />
@@ -310,7 +312,7 @@
     <Compile Include="ZPush\Connect\Soap\SoapRequestEncoder.cs" />
     <Compile Include="ZPush\Connect\Soap\SoapRequest.cs" />
     <Compile Include="Stubs\ItemType.cs" />
-    <Compile Include="Stubs\OutlookWrappers\DisposableWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\ComWrapper.cs" />
     <Compile Include="UI\FeatureSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -396,7 +398,6 @@
     <Compile Include="Stubs\INoteItem.cs" />
     <Compile Include="Stubs\ISearch.cs" />
     <Compile Include="Stubs\IStorageItem.cs" />
-    <Compile Include="Stubs\IUserProperty.cs" />
     <Compile Include="Stubs\IZPushItem.cs" />
     <Compile Include="Stubs\OutlookWrappers\AddressBookWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\DistributionListWrapper.cs" />
@@ -411,7 +412,6 @@
     <Compile Include="Stubs\OutlookWrappers\SearchWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\StorageItemWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\StoreWrapper.cs" />
-    <Compile Include="Stubs\OutlookWrappers\UserPropertyWrapper.cs" />
     <Compile Include="Stubs\IStore.cs" />
     <Compile Include="UI\ProgressDialog.cs">
       <SubType>Form</SubType>

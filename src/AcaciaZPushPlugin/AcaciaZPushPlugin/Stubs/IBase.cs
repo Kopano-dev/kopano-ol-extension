@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace Acacia.Stubs
 {
-    public interface IBase : IDisposable
+    public interface IBase : IComWrapper
     {
         #region MAPI properties
 
@@ -48,8 +48,6 @@ namespace Acacia.Stubs
         /// </summary>
         string StoreDisplayName { get; }
         void Delete();
-
-        bool MustRelease { get; set; }
 
         string ToString();
     }

@@ -297,7 +297,7 @@ namespace Acacia.Features.GAB
             {
                 using (IStorageItem index = GetIndexItem())
                 {
-                    return index?.GetUserProperty<int>(PROP_CURRENT_SEQUENCE)?.Value;
+                    return index?.GetUserProperty<int?>(PROP_CURRENT_SEQUENCE);
                 }
             }
             set
@@ -306,7 +306,7 @@ namespace Acacia.Features.GAB
                 {
                     if (value != null)
                     {
-                        index.GetUserProperty<int>(PROP_CURRENT_SEQUENCE, true).Value = value.Value;
+                        index.SetUserProperty<int>(PROP_CURRENT_SEQUENCE, value.Value);
                     }
                     else
                     {
@@ -353,7 +353,8 @@ namespace Acacia.Features.GAB
                 {
                     Logger.Instance.Trace(this, "Newest chunk: {0}", newestChunkIndex.Value);
 
-                    if (!CurrentSequence.HasValue || CurrentSequence.Value != newestChunkIndex?.numberOfChunks)
+                    int? currentSequence = CurrentSequence;
+                    if (!currentSequence.HasValue || currentSequence.Value != newestChunkIndex?.numberOfChunks)
                     {
                         // Sequence has changed. Delete contacts
                         Logger.Instance.Trace(this, "Rechunked, deleting contacts");
@@ -373,8 +374,8 @@ namespace Acacia.Features.GAB
                             int numberOfChunks = newestChunkIndex.Value.numberOfChunks;
                             using (IStorageItem index = GetIndexItem())
                             {
-                                index.GetUserProperty<int>(PROP_CURRENT_SEQUENCE, true).Value = numberOfChunks;
-                                index.GetUserProperty<string>(PROP_LAST_PROCESSED, true).Value = CreateChunkStateString(numberOfChunks);
+                                index.SetUserProperty(PROP_CURRENT_SEQUENCE, numberOfChunks);
+                                index.SetUserProperty(PROP_LAST_PROCESSED, CreateChunkStateString(numberOfChunks));
                                 index.Save();
                             }
                         }
@@ -404,7 +405,7 @@ namespace Acacia.Features.GAB
             {
                 if (item == null)
                     return null;
-                string state = item.GetUserProperty<string>(PROP_LAST_PROCESSED)?.Value;
+                string state = item.GetUserProperty<string>(PROP_LAST_PROCESSED);
                 if (string.IsNullOrEmpty(state))
                     return null;
 
@@ -422,7 +423,7 @@ namespace Acacia.Features.GAB
         {
             using (IStorageItem item = GetIndexItem())
             {
-                string state = item.GetUserProperty<string>(PROP_LAST_PROCESSED)?.Value;
+                string state = item.GetUserProperty<string>(PROP_LAST_PROCESSED);
                 string[] parts;
                 if (string.IsNullOrEmpty(state))
                     parts = new string[index.numberOfChunks];
@@ -436,7 +437,7 @@ namespace Acacia.Features.GAB
                 parts[index.chunk] = partState;
                 string combined = string.Join(";", parts);
 
-                item.GetUserProperty<string>(PROP_LAST_PROCESSED, true).Value = combined;
+                item.SetUserProperty(PROP_LAST_PROCESSED, combined);
                 item.Save();
             }
         }
@@ -623,9 +624,9 @@ namespace Acacia.Features.GAB
         private void SetItemStandard(IItem item, string id, Dictionary<string, object> value, ChunkIndex index)
         {
             // Set the chunk data
-            item.GetUserProperty<int>(PROP_SEQUENCE, true).Value = index.numberOfChunks;
-            item.GetUserProperty<int>(PROP_CHUNK, true).Value = index.chunk;
-            item.GetUserProperty<string>(PROP_GAB_ID, true).Value = id;
+            item.SetUserProperty(PROP_SEQUENCE, index.numberOfChunks);
+            item.SetUserProperty(PROP_CHUNK, index.chunk);
+            item.SetUserProperty(PROP_GAB_ID, id);
         }
 
         private void AddGroupMember(IDistributionList group, IItem item)

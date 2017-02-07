@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    class ContactItemWrapper : OutlookWrapper<ContactItem>, IContactItem
+    class ContactItemWrapper : OutlookItemWrapper<ContactItem>, IContactItem
     {
         internal ContactItemWrapper(ContactItem item)
         :
@@ -200,9 +200,9 @@ namespace Acacia.Stubs.OutlookWrappers
         public string StoreId { get { return _item.Parent?.Store?.StoreID; } }
         public string StoreDisplayName { get { return _item.Parent?.Store?.DisplayName; } }
 
-        public IUserProperty<Type> GetUserProperty<Type>(string name, bool create = false)
+        protected override UserProperties GetUserProperties()
         {
-            return UserPropertyWrapper<Type>.Get(_item.UserProperties, name, create);
+            return _item.UserProperties;
         }
 
         public void Delete() { _item.Delete(); }

@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    public class TaskItemWrapper : OutlookWrapper<TaskItem>, ITaskItem
+    public class TaskItemWrapper : OutlookItemWrapper<TaskItem>, ITaskItem
     {
         internal TaskItemWrapper(TaskItem item)
         :
@@ -62,9 +62,9 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #region Methods
 
-        public IUserProperty<Type> GetUserProperty<Type>(string name, bool create = false)
+        protected override UserProperties GetUserProperties()
         {
-            throw new NotSupportedException();
+            return _item.UserProperties;
         }
 
         public void Delete() { _item.Delete(); }

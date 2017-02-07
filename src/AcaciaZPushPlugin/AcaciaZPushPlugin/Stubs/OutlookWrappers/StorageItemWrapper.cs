@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    public class StorageItemWrapper : OutlookWrapper<StorageItem>, IStorageItem
+    public class StorageItemWrapper : OutlookItemWrapper<StorageItem>, IStorageItem
     {
         public StorageItemWrapper(StorageItem item)
         :
@@ -62,9 +62,9 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #region Methods
 
-        public IUserProperty<Type> GetUserProperty<Type>(string name, bool create = false)
+        protected override UserProperties GetUserProperties()
         {
-            return UserPropertyWrapper<Type>.Get(_item.UserProperties, name, create);
+            return _item.UserProperties;
         }
 
         public void Delete() { _item.Delete(); }
