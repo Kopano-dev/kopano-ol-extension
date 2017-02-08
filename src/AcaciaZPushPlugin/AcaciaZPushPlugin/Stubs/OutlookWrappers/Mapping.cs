@@ -38,14 +38,14 @@ namespace Acacia.Stubs.OutlookWrappers
             if (o == null)
                 return null;
 
-            IBase wrapper = CreateWrapper(o);
+            IBase wrapper = CreateWrapper(o, mustRelease);
             if (wrapper != null)
                 wrapper.MustRelease = mustRelease;
             ComRelease.LogWrapper(o, wrapper);
             return wrapper;
         }
 
-        private static IBase CreateWrapper(object o)
+        private static IBase CreateWrapper(object o, bool mustRelease)
         { 
             // TODO: switch on o.Class
             if (o is NSOutlook.MailItem)
@@ -64,9 +64,11 @@ namespace Acacia.Stubs.OutlookWrappers
                 return new TaskItemWrapper((NSOutlook.TaskItem)o);
 
             // TODO: support others?
-            // The caller assumes a wrapper will be returned, so any lingering object here will never be released.
-            // TODO: do this only if caller has mustRelease
-            ComRelease.Release(o);
+            if (mustRelease)
+            {
+                // The caller assumes a wrapper will be returned, so any lingering object here will never be released.
+                ComRelease.Release(o);
+            }
             return null;
         }
 
@@ -75,6 +77,7 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             return (Type)Wrap(o, mustRelease);
         }
+
         // TODO: are these not the same now? Differ only on wrong type?
         public static Type WrapOrDefault<Type>(object o, bool mustRelease = true)
         where Type : IBase

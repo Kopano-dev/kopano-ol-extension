@@ -73,7 +73,7 @@ namespace Acacia.Utils
                 Logger.Instance.TraceExtra(typeof(ComRelease), "Releasing object: {0:X} @ {1}", GetObjAddress(o),
                                 new System.Diagnostics.StackTrace());
             }
-            Marshal.ReleaseComObject(o);
+            Marshal.FinalReleaseComObject(o);
         }
 
         private static long GetObjAddress(object o)
