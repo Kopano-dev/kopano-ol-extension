@@ -32,6 +32,7 @@ namespace Acacia.Features.DebugSupport
     {
         Version,
         Memory,
+        Tasks,
         Wrappers,
         Misc,
         System,
@@ -133,6 +134,25 @@ namespace Acacia.Features.DebugSupport
 
         #endregion
 
+        #region Tasks
+
+        [DebugCategory(DebugCategory.Tasks)]
+        public string Threading
+        {
+            get { return Tasks.Executor.Name; }
+        }
+
+        [DebugCategory(DebugCategory.Tasks)]
+        public long ActiveTasks { get { return Statistics.StartedTasks - Statistics.FinishedTasks; } }
+
+        [DebugCategory(DebugCategory.Tasks)]
+        public long StartedTasks { get { return Statistics.StartedTasks; } }
+
+        [DebugCategory(DebugCategory.Tasks)]
+        public long FinishedTasks { get { return Statistics.FinishedTasks; } }
+
+        #endregion
+
         #region Wrappers
 
         [DebugCategory(DebugCategory.Wrappers)]
@@ -161,12 +181,6 @@ namespace Acacia.Features.DebugSupport
             {
                 Logger.Instance.SetLevel(value);
             }
-        }
-
-        [DebugCategory(DebugCategory.Misc)]
-        public string Threading
-        {
-            get { return Tasks.Executor.Name; }
         }
 
         [DebugCategory(DebugCategory.Misc)]
@@ -227,7 +241,7 @@ namespace Acacia.Features.DebugSupport
 
         #endregion
 
-#region Outlook
+        #region Outlook
 
         [DebugCategory(DebugCategory.System)]
         public string OutlookVersion
@@ -247,7 +261,7 @@ namespace Acacia.Features.DebugSupport
             }
         }
 
-#endregion
+        #endregion
 
 #region Helpers
 

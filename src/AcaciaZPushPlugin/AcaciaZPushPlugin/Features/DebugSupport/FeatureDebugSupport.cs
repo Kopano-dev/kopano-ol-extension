@@ -45,11 +45,19 @@ namespace Acacia.Features.DebugSupport
             RegisterButton(this, "Settings", false, ShowSettings);
         }
 
+
+        public override void AfterStartup()
+        {
+            ShowAbout();
+        }
+
         #region About dialog
-        
+
         public void ShowAbout()
         {
-            new AboutDialog().ShowDialog();
+            DebugDialog dd = new DebugDialog();
+            dd.Show();
+            dd.DebugCycle(5);
         }
 
         #endregion

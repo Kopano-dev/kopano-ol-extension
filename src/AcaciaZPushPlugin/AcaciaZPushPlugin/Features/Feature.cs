@@ -226,6 +226,11 @@ namespace Acacia.Features
 
         }
 
+        public virtual void AfterStartup()
+        {
+
+        }
+
         #endregion
 
         #region Z-Push channels

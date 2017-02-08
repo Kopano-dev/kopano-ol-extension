@@ -57,6 +57,11 @@ namespace Acacia.Stubs.OutlookWrappers
             _app.Quit();
         }
 
+        public void Quit()
+        {
+            _app.Quit();
+        }
+
         public event NSOutlook.ApplicationEvents_11_ItemLoadEventHandler ItemLoad
         {
             add { _app.ItemLoad += value; }

@@ -333,10 +333,14 @@ namespace Acacia.Features.GAB
                 }
 
                 // Do the resync
+                int remaining = _gabsByDomainName.Count;
                 foreach (GABHandler gab in _gabsByDomainName.Values)
                 {
                     Logger.Instance.Debug(this, "FullResync: Starting resync: {0}", gab.DisplayName);
-                    Tasks.Task(this, "FullResync", () => gab.FullResync());
+                    Tasks.Task(this, "FullResync", () =>
+                    {
+                        gab.FullResync();
+                    });
                 }
             }
             finally

@@ -44,9 +44,6 @@ namespace Acacia
             private set;
         }
 
-        // TODO: remove?
-        private Control _dispatcher;
-
         #region Features
 
         /// <summary>
@@ -91,10 +88,6 @@ namespace Acacia
                 // Set the culture info from Outlook's language setting rather than the OS setting
                 int lcid = Application.LanguageSettings.get_LanguageID(Microsoft.Office.Core.MsoAppLanguageID.msoLanguageIDUI);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(lcid);
-
-                // Create a dispatcher
-                _dispatcher = new Control();
-                _dispatcher.CreateControl();
 
                 // The synchronization context is needed to allow background tasks to jump back to the UI thread.
                 // It's null in older versions of .Net, this fixes that
@@ -142,6 +135,9 @@ namespace Acacia
                 // Done
                 Logger.Instance.Debug(this, "Startup done");
                 Acacia.Features.DebugSupport.Statistics.StartupTime.Stop();
+                foreach (Feature feature in Features)
+                    feature.AfterStartup();
+
             }
             catch (System.Exception e)
             {

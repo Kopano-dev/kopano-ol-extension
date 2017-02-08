@@ -1,4 +1,6 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿
+using Acacia.Features.DebugSupport;
+/// Copyright 2016 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -13,7 +15,6 @@
 /// along with this program.If not, see<http://www.gnu.org/licenses/>.
 /// 
 /// Consult LICENSE file for details
-
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -40,15 +41,15 @@ namespace Acacia.Utils
             while (!_tasks.IsCompleted)
             {
                 AcaciaTask task = _tasks.Take();
-                task.Execute();
+                PerformTask(task);
             }
         }
 
-        public void ExecuteTask(AcaciaTask task)
+        protected override void EnqueueTask(AcaciaTask task)
         {
             _tasks.Add(task);
         }
 
-        public string Name { get { return "Background"; } }
+        override public string Name { get { return "Background"; } }
     }
 }
