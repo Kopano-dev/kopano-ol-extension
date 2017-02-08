@@ -53,7 +53,7 @@ namespace Acacia.Stubs
         ISearchField AddField(string name, bool isUserField = false);
     }
 
-    public interface ISearch<ItemType> : ISearchOperator
+    public interface ISearch<ItemType> : ISearchOperator, IDisposable
     where ItemType : IItem
     {
         ISearchOperator AddOperator(SearchOperator oper);

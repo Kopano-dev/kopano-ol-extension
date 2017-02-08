@@ -19,47 +19,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Office.Interop.Outlook;
 using Acacia.Utils;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    class DistributionListWrapper : OutlookItemWrapper<DistListItem>, IDistributionList
+    class DistributionListWrapper : OutlookItemWrapper<NSOutlook.DistListItem>, IDistributionList
     {
-        internal DistributionListWrapper(DistListItem item)
+        internal DistributionListWrapper(NSOutlook.DistListItem item)
         :
         base(item)
         {
         }
 
-        protected override PropertyAccessor GetPropertyAccessor()
-        {
-            return _item.PropertyAccessor;
-        }
-
-        #region Properties
+        #region IDistributionList implementation
 
         public string SMTPAddress
         {
             get
             {
-                PropertyAccessor props = _item.PropertyAccessor;
-                try
-                {
-                    return (string)props.GetProperty(OutlookConstants.PR_EMAIL1EMAILADDRESS);
-                }
-                finally
-                {
-                    ComRelease.Release(props);
-                }
+                return (string)GetProperty(OutlookConstants.PR_EMAIL1EMAILADDRESS);
             }
             set
             {
-                string displayName = DLName + " (" + value + ")";
-                byte[] oneOffId = CreateOneOffMemberId(DLName, "SMTP", value);
-                PropertyAccessor props = _item.PropertyAccessor;
-                try
+                using (ComRelease com = new ComRelease())
                 {
+                    string displayName = DLName + " (" + value + ")";
+                    byte[] oneOffId = CreateOneOffMemberId(DLName, "SMTP", value);
+
+                    NSOutlook.PropertyAccessor props = com.Add(_item.PropertyAccessor);
                     props.SetProperties(
                         new string[]
                         {
@@ -79,35 +67,20 @@ namespace Acacia.Stubs.OutlookWrappers
                         }
                     );
                 }
-                finally
-                {
-                    ComRelease.Release(props);
-                }
             }
         }
 
-        #endregion
-
-        #region Methods
-
-        protected override UserProperties GetUserProperties()
+        public string DLName
         {
-            return _item.UserProperties;
+            get { return _item.DLName; }
+            set { _item.DLName = value; }
         }
-
-        public void Delete() { _item.Delete(); }
-        public void Save() { _item.Save(); }
 
         public void AddMember(IItem item)
         {
             if (item is IContactItem)
             {
-                string email = ((IContactItem)item).Email1Address;
-                Recipient recipient = ThisAddIn.Instance.Application.Session.CreateRecipient(email);
-                if (recipient.Resolve())
-                    _item.AddMember(recipient);
-                else
-                    Logger.Instance.Warning(this, "Unable to resolve recipient: {0}", email);
+                AddContactMember((IContactItem)item);
             }
             else if (item is IDistributionList)
             {
@@ -115,8 +88,19 @@ namespace Acacia.Stubs.OutlookWrappers
             }
             else
             {
-                Logger.Instance.Warning(this, "Unknown item type when adding to distlist: {0}", item);
-            }            
+                throw new NotSupportedException("Unknown item type when adding to distlist: " + item.GetType());
+            }
+        }
+
+        private void AddContactMember(IContactItem member)
+        {
+            string email = member.Email1Address;
+            // TODO: remove RawApp, Recipient wrapper
+            NSOutlook.Recipient recipient = ThisAddIn.Instance.RawApp.Session.CreateRecipient(email);
+            if (recipient.Resolve())
+                _item.AddMember(recipient);
+            else
+                Logger.Instance.Warning(this, "Unable to resolve recipient: {0}", email);
         }
 
         private void AddDistributionListMember(IDistributionList member)
@@ -124,9 +108,8 @@ namespace Acacia.Stubs.OutlookWrappers
             // Resolving a distribution list can only be done by name. This fails if the name is in multiple
             // groups (e.g. 'Germany' and 'Sales Germany' fails to find Germany). Patch the member
             // tables explicitly.
-            PropertyAccessor props = _item.PropertyAccessor;
-            object[] members = props.GetProperty(OutlookConstants.PR_DISTLIST_MEMBERS);
-            object[] oneOffMembers = props.GetProperty(OutlookConstants.PR_DISTLIST_ONEOFFMEMBERS);
+            object[] members = (object[])GetProperty(OutlookConstants.PR_DISTLIST_MEMBERS);
+            object[] oneOffMembers = (object[])GetProperty(OutlookConstants.PR_DISTLIST_ONEOFFMEMBERS);
 
             // Create the new member ids
             byte[] memberId = CreateMemberId(member);
@@ -163,7 +146,7 @@ namespace Acacia.Stubs.OutlookWrappers
             newOneOffMembers[existingIndex] = oneOffMemberId;
 
             // Write back
-            props.SetProperties(
+            SetProperties(
                 new string[] { OutlookConstants.PR_DISTLIST_MEMBERS, OutlookConstants.PR_DISTLIST_ONEOFFMEMBERS },
                 new object[] { newMembers, newOneOffMembers }
             );
@@ -213,13 +196,26 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #endregion
 
-        public override string ToString() { return "DistributionList: " + DLName; }
+        #region Wrapper methods
 
-        public string DLName
+        protected override NSOutlook.UserProperties GetUserProperties()
         {
-            get { return _item.DLName; }
-            set { _item.DLName = value; }
+            return _item.UserProperties;
         }
+
+        protected override NSOutlook.PropertyAccessor GetPropertyAccessor()
+        {
+            return _item.PropertyAccessor;
+        }
+
+        public override string ToString()
+        {
+            return "DistributionList: " + DLName;
+        }
+
+        #endregion
+
+        #region IItem implementation
 
         public string Body
         {
@@ -233,40 +229,75 @@ namespace Acacia.Stubs.OutlookWrappers
             set { _item.Subject = value; }
         }
 
-        public IFolder Parent { get { return (IFolder)Mapping.Wrap(_item.Parent as Folder); } }
+        public void Save() { _item.Save(); }
+
+        #endregion
+
+        #region IBase implementation
+
+        public string EntryId { get { return _item.EntryID; } }
+
+        public IFolder Parent
+        {
+            get
+            {
+                // The wrapper manages the returned folder
+                return Mapping.Wrap<IFolder>(_item.Parent as NSOutlook.Folder);
+            }
+        }
+
         public string ParentEntryId
         {
             get
             {
-                Folder parent = _item.Parent;
-                try
+                using (ComRelease com = new ComRelease())
                 {
+                    NSOutlook.Folder parent = com.Add(_item.Parent);
                     return parent?.EntryID;
-                }
-                finally
-                {
-                    ComRelease.Release(parent);
                 }
             }
         }
-        public IStore Store { get { return StoreWrapper.Wrap(_item.Parent?.Store); } }
+
+        public IStore Store
+        {
+            get
+            {
+                using (ComRelease com = new ComRelease())
+                {
+                    NSOutlook.Folder parent = com.Add(_item.Parent);
+                    return StoreWrapper.Wrap(parent?.Store);
+                }
+            }
+        }
+
         public string StoreId
         {
             get
             {
-                // TODO: release needed
-                return _item.Parent?.Store?.StoreID;
+                using (ComRelease com = new ComRelease())
+                {
+                    NSOutlook.Folder parent = com.Add(_item.Parent);
+                    NSOutlook.Store store = com.Add(parent?.Store);
+                    return store.StoreID;
+                }
             }
         }
+
         public string StoreDisplayName
         {
             get
             {
-                // TODO: release needed
-                return _item.Parent?.Store?.DisplayName;
+                using (ComRelease com = new ComRelease())
+                {
+                    NSOutlook.Folder parent = com.Add(_item.Parent);
+                    NSOutlook.Store store = com.Add(parent?.Store);
+                    return store.StoreID;
+                }
             }
         }
 
-        public string EntryId { get { return _item.EntryID; } }
+        public void Delete() { _item.Delete(); }
+
+        #endregion
     }
 }

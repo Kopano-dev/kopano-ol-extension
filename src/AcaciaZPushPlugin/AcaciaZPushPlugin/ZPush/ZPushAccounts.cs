@@ -16,13 +16,13 @@
 
 using Acacia.Stubs;
 using Acacia.Utils;
-using Microsoft.Office.Interop.Outlook;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.ZPush
 {
@@ -33,9 +33,10 @@ namespace Acacia.ZPush
     public class ZPushAccounts
     {
         private readonly ZPushWatcher _watcher;
-        private readonly Application _app;
-        private readonly NameSpace _session;
-        private readonly Stores _stores;
+        // TODO: wrap these
+        private readonly NSOutlook.Application _app;
+        private readonly NSOutlook.NameSpace _session;
+        private readonly NSOutlook.Stores _stores;
 
         /// <summary>
         /// ZPushAccounts indexed by SMTPAddress. Null values are not allowed.
@@ -48,7 +49,7 @@ namespace Acacia.ZPush
         /// </summary>
         private readonly Dictionary<string, ZPushAccount> _accountsByStoreId = new Dictionary<string, ZPushAccount>();
 
-        public ZPushAccounts(ZPushWatcher watcher, Application app)
+        public ZPushAccounts(ZPushWatcher watcher, NSOutlook.Application app)
         {
             this._watcher = watcher;
             this._app = app;
@@ -66,7 +67,7 @@ namespace Acacia.ZPush
             {
                 // Process existing accounts
                 using (ComRelease com = new ComRelease())
-                    foreach (Account account in com.Add(_session.Accounts))
+                    foreach (NSOutlook.Account account in com.Add(_session.Accounts))
                     {
                         Tasks.Task(null, "AccountCheck", () =>
                         {
@@ -113,7 +114,7 @@ namespace Acacia.ZPush
             {
                 // Collect all the store ids
                 HashSet<string> stores = new HashSet<string>();
-                foreach (Store store in _stores)
+                foreach (NSOutlook.Store store in _stores)
                 {
                     try
                     {
@@ -184,21 +185,17 @@ namespace Acacia.ZPush
             return null;
         }
 
-        public ZPushAccount GetAccount(MAPIFolder folder)
+        public ZPushAccount GetAccount(NSOutlook.MAPIFolder folder)
         {
-            ZPushAccount zpush = null;
-            Store store = folder.Store;
-            try
+            using (ComRelease com = new ComRelease())
             {
+                ZPushAccount zpush = null;
+                NSOutlook.Store store = com.Add(folder.Store);
                 string storeId = store?.StoreID;
                 if (storeId == null)
                     return null;
                 _accountsByStoreId.TryGetValue(storeId, out zpush);
                 return zpush;
-            }
-            finally
-            {
-                ComRelease.Release(store);
             }
         }
 
@@ -214,12 +211,12 @@ namespace Acacia.ZPush
         /// </summary>
         /// <param name="account">The account. This function will release the handle</param>
         /// <returns>The ZPushAccount, or null if not a ZPush account.</returns>
-        private ZPushAccount GetAccount(Account account)
+        private ZPushAccount GetAccount(NSOutlook.Account account)
         {
             try
             {
                 // Only EAS accounts can be zpush accounts
-                if (account.AccountType != OlAccountType.olEas)
+                if (account.AccountType != NSOutlook.OlAccountType.olEas)
                     return null;
 
                 // Check for a cached value
@@ -239,14 +236,14 @@ namespace Acacia.ZPush
         /// <summary>
         /// Event handler for Stores.StoreAdded event.
         /// </summary>
-        internal void StoreAdded(Store s)
+        private void StoreAdded(NSOutlook.Store s)
         {
             try
             {
                 using (ComRelease com = new ComRelease())
                 {
                     Logger.Instance.Trace(this, "StoreAdded: {0}", s.StoreID);
-                    foreach (Store store in com.Add(com.Add(_app.Session).Stores))
+                    foreach (NSOutlook.Store store in com.Add(com.Add(_app.Session).Stores))
                     {
                         if (!_accountsByStoreId.ContainsKey(store.StoreID))
                         {
@@ -287,11 +284,12 @@ namespace Acacia.ZPush
         /// <summary>
         /// Creates the ZPushAccount for the account, from the registry values.
         /// </summary>
-        /// <param name="account">The account.</param>
+        /// <param name="account">The account. The caller is responsible for releasing this.</param>
         /// <returns>The associated ZPushAccount</returns>
         /// <exception cref="Exception">If the registry key cannot be found</exception>
-        private ZPushAccount CreateFromRegistry(Account account)
+        private ZPushAccount CreateFromRegistry(NSOutlook.Account account)
         {
+            // TODO: check that caller releases account everywhere
             using (ComRelease com = new ComRelease())
             using (RegistryKey baseKey = FindRegistryKey(account))
             {
@@ -302,7 +300,7 @@ namespace Acacia.ZPush
                 string storeId = ZPushAccount.GetStoreId(baseKey.Name);
 
                 // Find the store
-                Store store = _app.Session.GetStoreFromID(storeId);
+                NSOutlook.Store store = _app.Session.GetStoreFromID(storeId);
 
                 // Done, create and register
                 ZPushAccount zpush = new ZPushAccount(baseKey.Name, store);
@@ -316,7 +314,7 @@ namespace Acacia.ZPush
         /// </summary>
         /// <param name="store">The store</param>
         /// <returns>The ZPushAccount, or null if no account is associated with the store</returns>
-        private ZPushAccount TryCreateFromRegistry(Store store)
+        private ZPushAccount TryCreateFromRegistry(NSOutlook.Store store)
         {
             using (RegistryKey baseKey = FindRegistryKey(store))
             {
@@ -330,7 +328,7 @@ namespace Acacia.ZPush
 
         private RegistryKey OpenBaseKey()
         {
-            NameSpace session = _app.Session;
+            NSOutlook.NameSpace session = _app.Session;
             string path = string.Format(OutlookConstants.REG_SUBKEY_ACCOUNTS, session.CurrentProfileName);
             ComRelease.Release(session);
             return OutlookRegistryUtils.OpenOutlookKey(path);
@@ -340,7 +338,7 @@ namespace Acacia.ZPush
         /// Finds the registry key for the account.
         /// </summary>
         /// <returns>The registry key, or null if it cannot be found</returns>
-        private RegistryKey FindRegistryKey(Account account)
+        private RegistryKey FindRegistryKey(NSOutlook.Account account)
         {
             // Find the registry key by email adddress
             using (RegistryKey key = OpenBaseKey())
@@ -365,7 +363,7 @@ namespace Acacia.ZPush
         /// Finds the registry key for the account associated with the store.
         /// </summary>
         /// <returns>The registry key, or null if it cannot be found</returns>
-        private RegistryKey FindRegistryKey(Store store)
+        private RegistryKey FindRegistryKey(NSOutlook.Store store)
         {
             // Find the registry key by store id
             using (RegistryKey key = OpenBaseKey())

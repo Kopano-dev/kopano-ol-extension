@@ -27,6 +27,11 @@ namespace Acacia.Stubs
         string DLName { get; set; }
         string SMTPAddress { get; set; }
 
+        /// <summary>
+        /// Adds a member to the distribution list.
+        /// </summary>
+        /// <param name="item">The item. This is not disposed or released.</param>
+        /// <exception cref="NotSupportedException">If the item is not a contact or distribution list</exception>
         void AddMember(IItem item);
     }
 }

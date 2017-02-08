@@ -29,7 +29,7 @@ namespace Acacia.Utils
         public static RegistryKey OpenOutlookKey(string suffix = null, RegistryKeyPermissionCheck permissions = RegistryKeyPermissionCheck.Default)
         {
             // Determine the base path
-            string[] versionParts = ThisAddIn.Instance.Application.Version.Split('.');
+            string[] versionParts = ThisAddIn.Instance.Version.Split('.');
             string versionString = versionParts[0] + "." + versionParts[1];
             string baseKeyPath = string.Format(OutlookConstants.REG_KEY_BASE, versionString);
             return RegistryUtil.OpenKeyImpl(baseKeyPath, suffix, false, permissions);

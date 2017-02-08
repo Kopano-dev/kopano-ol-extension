@@ -1,10 +1,10 @@
 ﻿using Acacia.Utils;
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
@@ -20,8 +20,8 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             using (ComRelease com = new ComRelease())
             {
-                UserProperties userProperties = com.Add(GetUserProperties());
-                UserProperty prop = com.Add(userProperties.Find(name, true));
+                NSOutlook.UserProperties userProperties = com.Add(GetUserProperties());
+                NSOutlook.UserProperty prop = com.Add(userProperties.Find(name, true));
                 if (prop == null)
                     return default(Type);
 
@@ -35,8 +35,8 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             using (ComRelease com = new ComRelease())
             {
-                UserProperties userProperties = com.Add(GetUserProperties());
-                UserProperty prop = com.Add(userProperties.Find(name, true));
+                NSOutlook.UserProperties userProperties = com.Add(GetUserProperties());
+                NSOutlook.UserProperty prop = com.Add(userProperties.Find(name, true));
                 if (prop == null)
                     prop = userProperties.Add(name, Mapping.OutlookPropertyType<Type>());
 
@@ -52,6 +52,10 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        abstract protected UserProperties GetUserProperties();
+        /// <summary>
+        /// Returns the UserProperties associated with the current item.
+        /// </summary>
+        /// <returns>An unwrapped UserProperties object. The caller is responsible for releasing this.</returns>
+        abstract protected NSOutlook.UserProperties GetUserProperties();
     }
 }

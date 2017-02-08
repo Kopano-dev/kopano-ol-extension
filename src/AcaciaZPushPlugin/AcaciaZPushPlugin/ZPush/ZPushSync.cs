@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.ZPush
 {
@@ -76,7 +77,7 @@ namespace Acacia.ZPush
 
         #region Setup 
 
-        private readonly Microsoft.Office.Interop.Outlook.SyncObject _syncObject;
+        private readonly NSOutlook.SyncObject _syncObject;
         private readonly Timer _timer;
         private ZPushWatcher _watcher;
         private bool _started;
@@ -85,7 +86,7 @@ namespace Acacia.ZPush
         public readonly bool Enabled;
         public readonly TimeSpan Period;
 
-        public ZPushSync(ZPushWatcher watcher, Microsoft.Office.Interop.Outlook.Application app)
+        public ZPushSync(ZPushWatcher watcher, NSOutlook.Application app)
         {
             // Get the settings
             Enabled = GlobalOptions.INSTANCE.ZPushSync;

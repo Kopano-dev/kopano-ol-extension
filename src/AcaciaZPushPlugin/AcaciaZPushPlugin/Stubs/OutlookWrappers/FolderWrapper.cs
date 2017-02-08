@@ -14,7 +14,6 @@
 /// 
 /// Consult LICENSE file for details
 
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,38 +22,40 @@ using System.Threading.Tasks;
 using System.Collections;
 using Acacia.Utils;
 using Acacia.ZPush;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    public class FolderWrapper : OutlookWrapper<Folder>, IFolder
+    public class FolderWrapper : OutlookWrapper<NSOutlook.Folder>, IFolder
     {
-        public FolderWrapper(Folder folder)
+        public FolderWrapper(NSOutlook.MAPIFolder folder)
         :
-        base(folder)
+        base((NSOutlook.Folder)folder)
         {
         }
 
-        protected override PropertyAccessor GetPropertyAccessor()
+        protected override NSOutlook.PropertyAccessor GetPropertyAccessor()
         {
             return _item.PropertyAccessor;
         }
 
         public IFolder Parent
         {
-            get { return (IFolder)Mapping.Wrap(_item.Parent as Folder); }
+            get
+            {
+                // The wrapper manages the returned folder
+                return Mapping.Wrap<IFolder>(_item.Parent as NSOutlook.Folder);
+            }
         }
+
         public string ParentEntryId
         {
             get
             {
-                Folder parent = _item.Parent;
-                try
+                using (ComRelease com = new ComRelease())
                 {
+                    NSOutlook.Folder parent = com.Add(_item.Parent);
                     return parent?.EntryID;
-                }
-                finally
-                {
-                    ComRelease.Release(parent);
                 }
             }
         }
@@ -69,17 +70,20 @@ namespace Acacia.Stubs.OutlookWrappers
             using (ComRelease com = new ComRelease())
             {
                 // The parent of the root item is a session, not null. Hence the explicit type checks.
-                Folder current = _item;
+                // _item is managed by this wrapper and does not need to be released.
+                NSOutlook.Folder current = _item;
                 for (int i = 0; i < depth; ++i)
                 {
-                    object parent = current.Parent;
-                    com.Add(parent);
-                    if (!(parent is Folder))
+                    object parent = com.Add(current.Parent);
+
+                    current = parent as NSOutlook.Folder;
+                    if (current == null)
                         return false;
-                    current = (Folder)parent;
                 }
 
-                return !(com.Add(current.Parent) is Folder);
+                // Check if the remaining parent is a folder
+                object finalParent = com.Add(current.Parent);
+                return !(finalParent is NSOutlook.Folder);
             }
         }
 
@@ -118,21 +122,41 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public ItemType ItemType { get { return (ItemType)(int)_item.DefaultItemType; } }
 
-        public class IItemsEnumerator<ItemType> : IEnumerator<ItemType>
+        #region Enumeration
+
+        public class ItemsEnumerator<ItemType> : ComWrapper, IEnumerator<ItemType>
         where ItemType : IItem
         {
-            private Items _items;
+            private NSOutlook.Items _items;
             private IEnumerator _enum;
             private ItemType _last;
 
-            public IItemsEnumerator(Folder _folder, string field, bool descending)
+            public ItemsEnumerator(NSOutlook.Folder _folder, string field, bool descending)
             {
+                // TODO: can _items be released here already?
                 this._items = _folder.Items;
                 if (field != null)
                 {
                     this._items.Sort("[" + field + "]", descending);
                 }
                 this._enum = _items.GetEnumerator();
+            }
+
+            protected override void DoRelease()
+            {
+                CleanLast();
+                if (_enum != null)
+                {
+                    if (_enum is IDisposable)
+                        ((IDisposable)_enum).Dispose();
+                    ComRelease.Release(_enum);
+                    _enum = null;
+                }
+                if (_items != null)
+                {
+                    ComRelease.Release(_items);
+                    _items = null;
+                }
             }
 
             public ItemType Current
@@ -162,23 +186,6 @@ namespace Acacia.Stubs.OutlookWrappers
                 }
             }
 
-            public void Dispose()
-            {
-                CleanLast();
-                if (_enum != null)
-                {
-                    if (_enum is IDisposable)
-                        ((IDisposable)_enum).Dispose();
-                    ComRelease.Release(_enum);
-                    _enum = null;
-                }
-                if (_items != null)
-                {
-                    ComRelease.Release(_items);
-                    _items = null;
-                }
-            }
-
             public bool MoveNext()
             {
                 CleanLast();
@@ -192,14 +199,15 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public class IItemsEnumerable<ItemType> : IEnumerable<ItemType>
+        public class ItemsEnumerable<ItemType> : IEnumerable<ItemType>
         where ItemType : IItem
         {
-            private readonly Folder _folder;
+            // Managed by the caller, not released here
+            private readonly NSOutlook.Folder _folder;
             private readonly string _field;
             private readonly bool _descending;
 
-            public IItemsEnumerable(Folder folder, string field, bool descending)
+            public ItemsEnumerable(NSOutlook.Folder folder, string field, bool descending)
             {
                 this._folder = folder;
                 this._field = field;
@@ -208,7 +216,7 @@ namespace Acacia.Stubs.OutlookWrappers
 
             public IEnumerator<ItemType> GetEnumerator()
             {
-                return new IItemsEnumerator<ItemType>(_folder, _field, _descending);
+                return new ItemsEnumerator<ItemType>(_folder, _field, _descending);
             }
 
             IEnumerator IEnumerable.GetEnumerator()
@@ -221,14 +229,16 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             get
             {
-                return new IItemsEnumerable<IItem>(_item, null, false);
+                return new ItemsEnumerable<IItem>(_item, null, false);
             }
         }
 
         public IEnumerable<IItem> ItemsSorted(string field, bool descending)
         {
-            return new IItemsEnumerable<IItem>(_item, field, descending);
+            return new ItemsEnumerable<IItem>(_item, field, descending);
         }
+
+        #endregion
 
         public IItem GetItemById(string entryId)
         {
@@ -274,10 +284,13 @@ namespace Acacia.Stubs.OutlookWrappers
             return new SearchWrapper<ItemType>(_item.Items);
         }
 
+        #region Subfolders
+
         public IEnumerable<FolderType> GetSubFolders<FolderType>()
         where FolderType : IFolder
         {
-            foreach (MAPIFolder folder in _item.Folders)
+            // Don't release the items, the wrapper manages them
+            foreach (NSOutlook.Folder folder in _item.Folders.RawEnum(false))
             {
                 yield return WrapFolder<FolderType>(folder);
             };
@@ -287,14 +300,19 @@ namespace Acacia.Stubs.OutlookWrappers
         where FolderType : IFolder
         {
             // Fetching the folder by name throws an exception if not found, loop and find
-            // to prevent exceptions in the log
-            MAPIFolder sub = null;
-            foreach(MAPIFolder folder in _item.Folders)
+            // to prevent exceptions in the log.
+            // Don't release the items in RawEnum, they are release manually or handed to WrapFolders.
+            NSOutlook.Folder sub = null;
+            foreach(NSOutlook.Folder folder in _item.Folders.RawEnum(false))
             {
                 if (folder.Name == name)
                 {
                     sub = folder;
-                    break;
+                    break; // TODO: does this prevent the rest of the objects from getting released?
+                }
+                else
+                {
+                    ComRelease.Release(folder);
                 }
             }
             if (sub == null)
@@ -305,46 +323,47 @@ namespace Acacia.Stubs.OutlookWrappers
         public FolderType CreateFolder<FolderType>(string name)
         where FolderType : IFolder
         {
-            Folders folders = _item.Folders;
-            try
+            using (ComRelease com = new ComRelease())
             {
+                NSOutlook.Folders folders = com.Add(_item.Folders);
                 if (typeof(FolderType) == typeof(IFolder))
                 {
                     return WrapFolder<FolderType>(folders.Add(name));
                 }
                 else if (typeof(FolderType) == typeof(IAddressBook))
                 {
-                    MAPIFolder newFolder = folders.Add(name, OlDefaultFolders.olFolderContacts);
+                    NSOutlook.MAPIFolder newFolder = folders.Add(name, NSOutlook.OlDefaultFolders.olFolderContacts);
                     newFolder.ShowAsOutlookAB = true;
                     return WrapFolder<FolderType>(newFolder);
                 }
                 else
                     throw new NotSupportedException();
             }
-            finally
-            {
-                ComRelease.Release(folders);
-            }
         }
 
-        private FolderType WrapFolder<FolderType>(MAPIFolder folder)
+        private FolderType WrapFolder<FolderType>(NSOutlook.MAPIFolder folder)
         where FolderType : IFolder
         {
             if (typeof(FolderType) == typeof(IFolder))
             {
-                return (FolderType)(IFolder)new FolderWrapper((Folder)folder);
+                return (FolderType)(IFolder)new FolderWrapper(folder);
             }
             else if (typeof(FolderType) == typeof(IAddressBook))
             {
-                return (FolderType)(IFolder)new AddressBookWrapper((Folder)folder);
+                return (FolderType)(IFolder)new AddressBookWrapper(folder);
             }
             else
+            {
+                ComRelease.Release(folder);
                 throw new NotSupportedException();
+            }
         }
+
+        #endregion
 
         public IStorageItem GetStorageItem(string name)
         {
-            StorageItem item = _item.GetStorage(name, OlStorageIdentifierType.olIdentifyBySubject);
+            NSOutlook.StorageItem item = _item.GetStorage(name, NSOutlook.OlStorageIdentifierType.olIdentifyBySubject);
             if (item == null)
                 return null;
             return new StorageItemWrapper(item);
@@ -359,15 +378,11 @@ namespace Acacia.Stubs.OutlookWrappers
         public ItemType Create<ItemType>()
         where ItemType : IItem
         {
-            Items items = _item.Items;
-            try
+            using (ComRelease com = new ComRelease())
             {
+                NSOutlook.Items items = com.Add(_item.Items);
                 object item = items.Add(Mapping.OutlookItemType<ItemType>());
                 return Mapping.Wrap<ItemType>(item);
-            }
-            finally
-            {
-                ComRelease.Release(items);
             }
         }
 
@@ -415,12 +430,14 @@ namespace Acacia.Stubs.OutlookWrappers
                 _item.BeforeItemMove -= HandleBeforeItemMove;
         }
 
-        private void HandleBeforeItemMove(object item, MAPIFolder target, ref bool cancel)
+        private void HandleBeforeItemMove(object item, NSOutlook.MAPIFolder target, ref bool cancel)
         {
             try
             {
                 if (_beforeItemMove != null)
                 {
+                    // TODO: there is a tiny potential for a leak here, if there is an exception in the wrap methods. Should
+                    //       only happen if Outlook sends the wrong type object though
                     using (IItem itemWrapped = Mapping.Wrap<IItem>(item))
                     using (IFolder targetWrapped = Mapping.Wrap<IFolder>(target))
                     {
@@ -429,6 +446,11 @@ namespace Acacia.Stubs.OutlookWrappers
                             _beforeItemMove(this, itemWrapped, targetWrapped, ref cancel);
                         }
                     }
+                }
+                else
+                {
+                    // TODO: check this
+                    ComRelease.Release(item, target);
                 }
             }
             catch(System.Exception e)

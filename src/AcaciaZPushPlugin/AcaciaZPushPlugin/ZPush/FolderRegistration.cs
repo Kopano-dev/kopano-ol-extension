@@ -16,7 +16,6 @@
 
 using Acacia.Features;
 using Acacia.Stubs;
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -19,7 +19,6 @@ using Acacia.Stubs;
 using Acacia.Stubs.OutlookWrappers;
 using Acacia.Utils;
 using Acacia.ZPush.Connect;
-using Microsoft.Office.Interop.Outlook;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -27,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.ZPush
 {
@@ -37,22 +37,22 @@ namespace Acacia.ZPush
     /// </summary>
     public class ZPushWatcher
     {
-        private readonly Application _app;
+        private readonly NSOutlook.Application _app;
         public readonly ZPushAccounts Accounts;
         public readonly ZPushSync Sync;
-        private Explorer _explorer;
+        private NSOutlook.Explorer _explorer;
 
 
         #region Setup
 
-        public ZPushWatcher(Application app)
+        public ZPushWatcher(IAddIn addIn)
         {
-            this._app = app;
-            Sync = new ZPushSync(this, app);
-            Accounts = new ZPushAccounts(this, app);
+            this._app = addIn.RawApp;
+            Sync = new ZPushSync(this, _app);
+            Accounts = new ZPushAccounts(this, _app);
 
             // Need to keep a link to keep receiving events
-            _explorer = app.ActiveExplorer();
+            _explorer = _app.ActiveExplorer();
             _explorer.SelectionChange += Explorer_SelectionChange;
         }
 
@@ -164,6 +164,7 @@ namespace Acacia.ZPush
             }
             else
             {
+                // TODO
                 ThisAddIn.Instance.InvokeUI(() =>
                 {
                     Logger.Instance.Warning(this, "Password not available for account: {0}", account);
@@ -206,7 +207,7 @@ namespace Acacia.ZPush
             {
                 if (ActiveFolderChange != null)
                 {
-                    MAPIFolder active = _explorer.CurrentFolder;
+                    NSOutlook.MAPIFolder active = _explorer.CurrentFolder;
                     if (active != null)
                     {
                         using (IFolder folder = Mapping.Wrap<IFolder>(active))
@@ -237,7 +238,7 @@ namespace Acacia.ZPush
             if (_explorer.CurrentFolder == null)
                 return null;
 
-            MAPIFolder folder = _explorer.CurrentFolder;
+            NSOutlook.MAPIFolder folder = _explorer.CurrentFolder;
             try
             {
                 return Accounts.GetAccount(folder);
@@ -276,7 +277,7 @@ namespace Acacia.ZPush
         private void HandleFolderWatchers(ZPushAccount account)
         {
             // We need to keep the object alive to keep receiving events
-            _rootFolder = new ZPushFolder(this, (Folder)account.Store.GetRootFolder());
+            _rootFolder = new ZPushFolder(this, (NSOutlook.Folder)account.Store.GetRootFolder());
         }
 
         public void WatchFolder(FolderRegistration folder, FolderEventHandler handler, FolderEventHandler changedHandler = null)
@@ -341,12 +342,12 @@ namespace Acacia.ZPush
                 watcher.OnChanged(folder);
         }
 
-        internal bool ShouldFolderBeWatched(ZPushFolder parent, Folder child)
+        internal bool ShouldFolderBeWatched(ZPushFolder parent, NSOutlook.Folder child)
         {
             if (parent.IsAtDepth(0))
             {
                 // Special mail folders cause issues, they are disallowed
-                if (child.DefaultItemType != OlItemType.olMailItem)
+                if (child.DefaultItemType != NSOutlook.OlItemType.olMailItem)
                     return true;
 
                 return !IsBlackListedMailFolder(child);
@@ -354,23 +355,23 @@ namespace Acacia.ZPush
             return true;
         }
 
-        private static readonly OlDefaultFolders[] BLACKLISTED_MAIL_FOLDERS =
+        private static readonly NSOutlook.OlDefaultFolders[] BLACKLISTED_MAIL_FOLDERS =
         {
-            OlDefaultFolders.olFolderOutbox,
-            OlDefaultFolders.olFolderDrafts,
-            OlDefaultFolders.olFolderConflicts,
-            OlDefaultFolders.olFolderSyncIssues,
-            OlDefaultFolders.olFolderRssFeeds,
-            OlDefaultFolders.olFolderManagedEmail
+            NSOutlook.OlDefaultFolders.olFolderOutbox,
+            NSOutlook.OlDefaultFolders.olFolderDrafts,
+            NSOutlook.OlDefaultFolders.olFolderConflicts,
+            NSOutlook.OlDefaultFolders.olFolderSyncIssues,
+            NSOutlook.OlDefaultFolders.olFolderRssFeeds,
+            NSOutlook.OlDefaultFolders.olFolderManagedEmail
         };
 
-        private static bool IsBlackListedMailFolder(Folder folder)
+        private static bool IsBlackListedMailFolder(NSOutlook.Folder folder)
         {
             string entryId = folder.EntryID;
             using (ComRelease com = new ComRelease())
             {
-                Store store = com.Add(folder.Store);
-                foreach(OlDefaultFolders defaultFolder in BLACKLISTED_MAIL_FOLDERS)
+                NSOutlook.Store store = com.Add(folder.Store);
+                foreach(NSOutlook.OlDefaultFolders defaultFolder in BLACKLISTED_MAIL_FOLDERS)
                 {
                     try
                     {

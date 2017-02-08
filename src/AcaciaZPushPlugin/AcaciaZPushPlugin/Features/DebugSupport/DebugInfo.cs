@@ -101,9 +101,9 @@ namespace Acacia.Features.DebugSupport
                 }
 
                 // Add Add-ins
-                foreach (COMAddIn addin in ThisAddIn.Instance.Application.COMAddIns)
+                foreach (KeyValuePair<string,string> addin in ThisAddIn.Instance.COMAddIns)
                 {
-                    PropertyDescriptor p = new CustomPropertyDescriptor<string, DebugInfo>(addin.ProgId, DebugCategory.AddIns, addin.Description);
+                    PropertyDescriptor p = new CustomPropertyDescriptor<string, DebugInfo>(addin.Key, DebugCategory.AddIns, addin.Value);
                     properties.Add(p);
                 }
             }
@@ -234,7 +234,7 @@ namespace Acacia.Features.DebugSupport
         {
             get
             {
-                return ThisAddIn.Instance.Application.Version;
+                return ThisAddIn.Instance.Version;
             }
         }
 

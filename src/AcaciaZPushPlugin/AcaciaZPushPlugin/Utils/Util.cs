@@ -15,8 +15,8 @@
 /// Consult LICENSE file for details
 
 using Acacia.ZPush;
-using Microsoft.Office.Interop.Outlook;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -43,6 +43,41 @@ namespace Acacia.Utils
             }
 
             return a.Equals(b);
+        }
+
+        public static IEnumerable<T> RawEnum<T>(this IEnumerable<T> source, bool releaseItems = true)
+        {
+            foreach (T item in source)
+            {
+                try
+                {
+                    yield return item;
+                }
+                finally
+                {
+                    if (releaseItems)
+                        ComRelease.Release(item);
+                }
+            }
+            ComRelease.Release(source);
+        }
+
+        // TODO: check this
+        public static IEnumerable RawEnum(this IEnumerable source, bool releaseItems = true)
+        {
+            foreach (object item in source)
+            {
+                try
+                {
+                    yield return item;
+                }
+                finally
+                {
+                    if (releaseItems)
+                        ComRelease.Release(item);
+                }
+            }
+            ComRelease.Release(source);
         }
     }
 }

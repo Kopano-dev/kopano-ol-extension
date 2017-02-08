@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs
 {
@@ -34,6 +33,7 @@ namespace Acacia.Stubs
         string SenderEmailAddress { get; }
         string SenderName { get; }
 
-        void SetSender(AddressEntry addressEntry);
+        // TODO: make a wrapper for this
+        void SetSender(Microsoft.Office.Interop.Outlook.AddressEntry addressEntry);
     }
 }

@@ -15,18 +15,18 @@
 /// Consult LICENSE file for details
 
 using Acacia.Utils;
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
     class AddressBookWrapper : FolderWrapper, IAddressBook
     {
-        public AddressBookWrapper(Folder folder)
+        public AddressBookWrapper(NSOutlook.MAPIFolder folder)
         :
         base(folder)
         {
@@ -35,10 +35,9 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public void Clear()
         {
-            foreach(dynamic item in _item.Items)
+            foreach(dynamic item in _item.Items.RawEnum())
             {
                 item.Delete();
-                ComRelease.Release(item);
             }
         }
     }

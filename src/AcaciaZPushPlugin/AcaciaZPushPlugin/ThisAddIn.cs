@@ -19,8 +19,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using Outlook = Microsoft.Office.Interop.Outlook;
-using Office = Microsoft.Office.Core;
 using Acacia.Features;
 using System.Threading;
 using System.Windows.Forms;
@@ -33,26 +31,21 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Reflection;
 using Acacia.Native;
+using Acacia.Stubs;
+using Acacia.Stubs.OutlookWrappers;
 
 namespace Acacia
 {
     public partial class ThisAddIn
     {
-
-        public static ThisAddIn Instance
+        public static IAddIn Instance
         {
             get;
             private set;
         }
 
+        // TODO: remove?
         private Control _dispatcher;
-
-        public void InvokeUI(Action action)
-        {
-            // [ZP-992] For some reason using the dispatcher causes a deadlock
-            // since switching to UI-chunked tasks. Running directly works.
-            action();
-        }
 
         #region Features
 
@@ -71,17 +64,6 @@ namespace Acacia
         {
             get;
             private set;
-        }
-
-        public FeatureType GetFeature<FeatureType>()
-            where FeatureType : Feature
-        {
-            foreach(Feature feature in Features)
-            {
-                if (feature is FeatureType)
-                    return (FeatureType)feature;
-            }
-            return default(FeatureType);
         }
 
         #region Startup / Shutdown
@@ -104,10 +86,10 @@ namespace Acacia
                     return;
                 }
 
-                Instance = this;
+                Instance = new AddInWrapper(this);
 
                 // Set the culture info from Outlook's language setting rather than the OS setting
-                int lcid = Application.LanguageSettings.get_LanguageID(Office.MsoAppLanguageID.msoLanguageIDUI);
+                int lcid = Application.LanguageSettings.get_LanguageID(Microsoft.Office.Core.MsoAppLanguageID.msoLanguageIDUI);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(lcid);
 
                 // Create a dispatcher
@@ -122,7 +104,7 @@ namespace Acacia
                 }
 
                 // Create the watcher
-                Watcher = new ZPushWatcher(Application);
+                Watcher = new ZPushWatcher(Instance);
                 OutlookUI.Watcher = Watcher;
 
                 // Allow to features to register whatever they need
@@ -176,6 +158,7 @@ namespace Acacia
         {
             try
             {
+                // TODO: is any management of Pages needed here?
                 Pages.Add(new SettingsPage(Features.ToArray()), Properties.Resources.ThisAddIn_Title);
             }
             catch(System.Exception e)
@@ -188,35 +171,6 @@ namespace Acacia
         {
             // Note: Outlook no longer raises this event. If you have code that 
             //    must run when Outlook shuts down, see http://go.microsoft.com/fwlink/?LinkId=506785
-        }
-
-        #endregion
-
-        #region Misc helpers
-
-        public void SendReceive()
-        {
-            Outlook.NameSpace session = Application.Session;
-            session.SendAndReceive(false);
-            ComRelease.Release(session);
-        }
-
-        public void Restart()
-        {
-            // Can not use the assembly location, as that is in the GAC
-            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-            UriBuilder uri = new UriBuilder(codeBase);
-            string path = Uri.UnescapeDataString(uri.Path);
-            // Create the path to the restarter
-            path = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(path), "OutlookRestarter.exe");
-
-            // Run that
-            Process process = new Process();
-            process.StartInfo = new ProcessStartInfo(path, Environment.CommandLine);
-            process.Start();
-
-            // And close us
-            Application.Quit();
         }
 
         #endregion
@@ -244,41 +198,6 @@ namespace Acacia
                 return _outlookUI;
             }
         }
-
-        #region Window handle
-
-        private class WindowHandle : IWin32Window
-        {
-            private IntPtr hWnd;
-
-            public WindowHandle(IntPtr hWnd)
-            {
-                this.hWnd = hWnd;
-            }
-
-            public IntPtr Handle
-            {
-                get
-                {
-                    return hWnd;
-                }
-            }
-        }
-
-        public IWin32Window Window
-        {
-            get
-            {
-                var win = Application.ActiveWindow() as IOleWindow;
-                if (win == null)
-                    return null;
-                IntPtr hWnd;
-                win.GetWindow(out hWnd);
-                return new WindowHandle(hWnd);
-            }
-        }
-
-        #endregion
 
         protected override Microsoft.Office.Core.IRibbonExtensibility CreateRibbonExtensibilityObject()
         {

@@ -14,7 +14,6 @@
 /// 
 /// Consult LICENSE file for details
 
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +29,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using Acacia.UI;
 using static Acacia.DebugOptions;
+using Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Features.GAB
 {
@@ -233,7 +233,7 @@ namespace Acacia.Features.GAB
         /// <param name="cancel"></param>
         private void DoSuppressEvent(IItem item, ref bool cancel)
         {
-            if (item != null)
+            /*if (item != null)
             {
                 foreach (Inspector inspector in App.Inspectors)
                 {
@@ -248,7 +248,8 @@ namespace Acacia.Features.GAB
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning
                         );
-            cancel = true;
+            cancel = true;*/
+            // TODO
         }
 
         #endregion
@@ -263,7 +264,7 @@ namespace Acacia.Features.GAB
                 BeginProcessing();
 
                 // Delete any contacts folders in the local store
-                using (ZPushLocalStore store = ZPushLocalStore.GetInstance(App))
+                using (ZPushLocalStore store = ZPushLocalStore.GetInstance(ThisAddIn.Instance))
                 {
                     if (store != null)
                     {
@@ -353,7 +354,7 @@ namespace Acacia.Features.GAB
                 _store.Dispose();
                 _store = null;
             }
-            _store = ZPushLocalStore.GetInstance(App);
+            _store = ZPushLocalStore.GetInstance(ThisAddIn.Instance);
             if (_store == null)
                 return null;
 
@@ -469,7 +470,7 @@ namespace Acacia.Features.GAB
                 _store.Dispose();
                 _store = null;
             }
-            _store = ZPushLocalStore.GetInstance(App);
+            _store = ZPushLocalStore.GetInstance(ThisAddIn.Instance);
             if (_store == null)
                 return;
 

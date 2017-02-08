@@ -55,6 +55,12 @@ namespace Acacia.Utils
             }
         }
 
+        public static void Release(params object[] objs)
+        {
+            foreach (object o in objs)
+                Release(o);
+        }
+
         public static void Release(object o)
         {
             if (!Enabled)
@@ -67,7 +73,7 @@ namespace Acacia.Utils
                 Logger.Instance.TraceExtra(typeof(ComRelease), "Releasing object: {0:X} @ {1}", GetObjAddress(o),
                                 new System.Diagnostics.StackTrace());
             }
-            Marshal.FinalReleaseComObject(o);
+            Marshal.ReleaseComObject(o);
         }
 
         private static long GetObjAddress(object o)

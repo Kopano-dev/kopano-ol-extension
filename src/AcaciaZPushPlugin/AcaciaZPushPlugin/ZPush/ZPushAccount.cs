@@ -17,7 +17,6 @@
 using Acacia.Stubs;
 using Acacia.Utils;
 using Acacia.ZPush.Connect;
-using Microsoft.Office.Interop.Outlook;
 using Microsoft.Win32;
 using System;
 using System.Collections.Concurrent;
@@ -28,6 +27,7 @@ using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.ZPush
 {
@@ -37,14 +37,16 @@ namespace Acacia.ZPush
         #region Miscellaneous
 
         private readonly string _regPath;
-        private readonly Store _store;
+
+        // TODO: this should probably be wrapped. Make ZPushAccount ComWrapper?
+        private readonly NSOutlook.Store _store;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="regPath">They registry key containing the account settings.</param>
         /// <param name="store">The store this account represents.</param>
-        internal ZPushAccount(string regPath, Store store)
+        internal ZPushAccount(string regPath, NSOutlook.Store store)
         {
             this._regPath = regPath;
             this._store = store;
@@ -72,7 +74,8 @@ namespace Acacia.ZPush
         /// </summary>
         public void SendReceive()
         {
-            ThisAddIn.Instance.SendReceive();
+            // TODO: ThisAddIn.Instance.SendReceive();
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -80,7 +83,8 @@ namespace Acacia.ZPush
         #region Properties
 
         [Browsable(false)]
-        public Store Store
+        // TODO: remove this
+        public NSOutlook.Store Store
         {
             get
             {
