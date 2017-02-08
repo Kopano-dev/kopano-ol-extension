@@ -41,6 +41,7 @@ namespace Acacia.Stubs
         /// Restarts the application
         /// </summary>
         void Restart();
+        void Quit();
 
         void InvokeUI(Action action);
 

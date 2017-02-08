@@ -47,6 +47,76 @@ namespace Acacia.Features.DebugSupport
             Properties.Refresh();
         }
 
+        private class DebugCycleInfo
+        {
+            private int cycleIndex = 0;
+            private int cycleCount;
+            private Timer timer = new Timer();
+            private GAB.FeatureGAB gab;
+            private int zeroCount = 1000;
+
+            public DebugCycleInfo(DebugDialog dlg, GAB.FeatureGAB gab, int count)
+            {
+                this.cycleCount = count;
+                this.gab = gab;
+                timer.Interval = 1000;
+                timer.Tick += (a, b) =>
+                {
+                    dlg.Text = string.Format("Cycle {0} of {1}", cycleIndex + 1, cycleCount);
+                    dlg.GarbageCollect();
+
+                    if (((DebugInfo)dlg.Properties.SelectedObject).ActiveTasks == 0)
+                    {
+                        // Make sure the value is stable at zero
+                        ++zeroCount;
+                        if (zeroCount >= 3)
+                        {
+                            zeroCount = 0;
+                            Logger.Instance.Debug(this, "CYCLER");
+                            ++cycleIndex;
+
+                            if (cycleIndex >= cycleCount)
+                            {
+                                timer.Stop();
+                                dlg.Hide();
+                                ThisAddIn.Instance.Quit();
+                            }
+                            else
+                            {
+                                DebugCycle();
+                            }
+                        }
+                    }
+                };
+            }
+
+            public void Run()
+            {
+                timer.Start();
+            }
+
+            private void DebugCycle()
+            {
+                Tasks.Task(gab, "DebugCycle", () =>
+                {
+                    gab.FullResync();
+                });
+            }
+
+        }
+
+        private DebugCycleInfo cycle;
+
+        internal void DebugCycle(int count)
+        {
+            GAB.FeatureGAB gab = ThisAddIn.Instance.GetFeature<GAB.FeatureGAB>();
+            if (gab != null)
+            {
+                cycle = new DebugCycleInfo(this, gab, count);
+                cycle.Run();
+            }
+        }
+
         #region Logging
 
         private const string INDENT = "+";
@@ -89,6 +159,11 @@ namespace Acacia.Features.DebugSupport
 
         private void buttonGC_Click(object sender, EventArgs e)
         {
+            GarbageCollect();
+        }
+
+        private void GarbageCollect()
+        { 
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
