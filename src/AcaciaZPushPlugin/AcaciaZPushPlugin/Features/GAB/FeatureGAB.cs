@@ -173,6 +173,33 @@ namespace Acacia.Features.GAB
         }
         private static readonly BoolOption OPTION_CHECK_UNUSED = new BoolOption("CheckUnused", true);
 
+        [AcaciaOption("If disabled, existing contacts are not cleared before new contacts are created. " +
+                      "This should only be disabled for debug purposes.")]
+        public bool ClearContacts
+        {
+            get { return GetOption(OPTION_CLEAR_CONTACTS); }
+            set { SetOption(OPTION_CLEAR_CONTACTS, value); }
+        }
+        private static readonly BoolOption OPTION_CLEAR_CONTACTS = new BoolOption("ClearContacts", true);
+
+        [AcaciaOption("If disabled, existing contact folders are not deleted before new contacts are created. " +
+                      "This should only be disabled for debug purposes.")]
+        public bool DeleteExistingFolder
+        {
+            get { return GetOption(OPTION_DELETE_EXISTING_FOLDER); }
+            set { SetOption(OPTION_DELETE_EXISTING_FOLDER, value); }
+        }
+        private static readonly BoolOption OPTION_DELETE_EXISTING_FOLDER = new BoolOption("DeleteExistingFolder", true);
+
+        [AcaciaOption("If disabled, deleted items are not removed from the waste basket. " +
+                      "This should only be disabled for debug purposes.")]
+        public bool EmptyDeletedItems
+        {
+            get { return GetOption(OPTION_EMPTY_DELETED_ITEMS); }
+            set { SetOption(OPTION_EMPTY_DELETED_ITEMS, value); }
+        }
+        private static readonly BoolOption OPTION_EMPTY_DELETED_ITEMS = new BoolOption("EmptyDeletedItems", true);
+        
         #endregion
 
         #region Modification suppression
@@ -264,28 +291,31 @@ namespace Acacia.Features.GAB
                 BeginProcessing();
 
                 // Delete any contacts folders in the local store
-                using (ZPushLocalStore store = ZPushLocalStore.GetInstance(ThisAddIn.Instance))
+                if (DeleteExistingFolder)
                 {
-                    if (store != null)
+                    using (ZPushLocalStore store = ZPushLocalStore.GetInstance(ThisAddIn.Instance))
                     {
-                        using (IFolder root = store.RootFolder)
+                        if (store != null)
                         {
-                            foreach (IFolder folder in root.GetSubFolders<IFolder>())
+                            using (IFolder root = store.RootFolder)
                             {
-                                // TODO: let enumerator handle this
-                                using (folder)
+                                foreach (IFolder folder in root.GetSubFolders<IFolder>())
                                 {
-                                    try
+                                    // TODO: let enumerator handle this
+                                    using (folder)
                                     {
-                                        if (IsGABContactsFolder(folder))
+                                        try
                                         {
-                                            Logger.Instance.Debug(this, "FullResync: Deleting contacts folder: {0}", folder.Name);
-                                            folder.Delete();
+                                            if (IsGABContactsFolder(folder))
+                                            {
+                                                Logger.Instance.Debug(this, "FullResync: Deleting contacts folder: {0}", folder.Name);
+                                                folder.Delete();
+                                            }
                                         }
-                                    }
-                                    catch (System.Exception e)
-                                    {
-                                        Logger.Instance.Error(this, "FullResync: Exception deleting contacts folder: {0}", e);
+                                        catch (System.Exception e)
+                                        {
+                                            Logger.Instance.Error(this, "FullResync: Exception deleting contacts folder: {0}", e);
+                                        }
                                     }
                                 }
                             }
@@ -501,7 +531,7 @@ namespace Acacia.Features.GAB
             }
 
             if (deletedSomething)
-                EmptyDeletedItems();
+                DoEmptyDeletedItems();
         }
 
         private void CheckGABRemoved()
@@ -536,7 +566,7 @@ namespace Acacia.Features.GAB
                     }
                 }
 
-                EmptyDeletedItems();
+                DoEmptyDeletedItems();
             }
         }
 
@@ -607,7 +637,7 @@ namespace Acacia.Features.GAB
             try
             {
                 gab.Process(item);
-                EmptyDeletedItems();
+                DoEmptyDeletedItems();
             }
             finally
             {
@@ -616,8 +646,11 @@ namespace Acacia.Features.GAB
             }
         }
 
-        private void EmptyDeletedItems()
+        private void DoEmptyDeletedItems()
         {
+            if (!EmptyDeletedItems)
+                return;
+
             if (_store != null)
                 _store.EmptyDeletedItems();
         }
