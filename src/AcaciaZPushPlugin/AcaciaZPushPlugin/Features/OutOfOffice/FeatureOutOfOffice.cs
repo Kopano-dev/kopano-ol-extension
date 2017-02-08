@@ -19,7 +19,6 @@ using Acacia.UI.Outlook;
 using Acacia.Utils;
 using Acacia.ZPush;
 using Acacia.ZPush.Connect;
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -24,7 +24,7 @@ namespace Acacia.Stubs
 {
     public interface IBase : IComWrapper
     {
-        #region MAPI properties
+        #region Properties
 
         bool AttrHidden { get; set; }
 
@@ -34,21 +34,31 @@ namespace Acacia.Stubs
 
         #endregion
 
+        #region Ids and hierarchy
+
         string EntryId { get; }
         IFolder Parent { get; }
         string ParentEntryId { get; }
 
         IStore Store { get; }
         /// <summary>
-        /// Quick accessor to Store.Id, to prevent allocation a wrapper for it.
+        /// Quick accessor to Store.Id, to prevent allocating a wrapper for it.
         /// </summary>
         string StoreId { get; }
+
         /// <summary>
-        /// Quick accessor to Store.DisplayName, to prevent allocation a wrapper for it.
+        /// Quick accessor to Store.DisplayName, to prevent allocating a wrapper for it.
         /// </summary>
         string StoreDisplayName { get; }
+
+        #endregion
+
+        #region Methods
+
         void Delete();
 
         string ToString();
+
+        #endregion
     }
 }

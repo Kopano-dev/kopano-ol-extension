@@ -262,16 +262,18 @@ namespace Acacia.Features.GAB
             try
             {
                 // Delete the old contacts from this chunk
-                ISearch<IItem> search = Contacts.Search<IItem>();
-                search.AddField(PROP_SEQUENCE, true).SetOperation(SearchOperation.Equal, index.numberOfChunks);
-                search.AddField(PROP_CHUNK, true).SetOperation(SearchOperation.Equal, index.chunk);
-                foreach (IItem oldItem in search.Search())
+                using (ISearch<IItem> search = Contacts.Search<IItem>())
                 {
-                    // TODO: Search should handle this, like folder enumeration
-                    using (oldItem)
+                    search.AddField(PROP_SEQUENCE, true).SetOperation(SearchOperation.Equal, index.numberOfChunks);
+                    search.AddField(PROP_CHUNK, true).SetOperation(SearchOperation.Equal, index.chunk);
+                    foreach (IItem oldItem in search.Search())
                     {
-                        Logger.Instance.Trace(this, "Deleting GAB entry: {0}", oldItem.Subject);
-                        oldItem.Delete();
+                        // TODO: Search should handle this, like folder enumeration
+                        using (oldItem)
+                        {
+                            Logger.Instance.Trace(this, "Deleting GAB entry: {0}", oldItem.Subject);
+                            oldItem.Delete();
+                        }
                     }
                 }
 
@@ -616,9 +618,11 @@ namespace Acacia.Features.GAB
 
         private IItem FindItemById(string id)
         {
-            ISearch<IItem> search = Contacts.Search<IItem>();
-            search.AddField(PROP_GAB_ID, true).SetOperation(SearchOperation.Equal, id);
-            return search.SearchOne();
+            using (ISearch<IItem> search = Contacts.Search<IItem>())
+            {
+                search.AddField(PROP_GAB_ID, true).SetOperation(SearchOperation.Equal, id);
+                return search.SearchOne();
+            }
         }
 
         private void SetItemStandard(IItem item, string id, Dictionary<string, object> value, ChunkIndex index)

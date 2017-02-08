@@ -19,12 +19,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Office.Interop.Outlook;
 using Acacia.Utils;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    class SearchWrapper<ItemType> : ISearch<ItemType>
+    class SearchWrapper<ItemType> : ComWrapper, ISearch<ItemType>
     where ItemType : IItem
     {
         private interface SearchTerm
@@ -151,11 +151,21 @@ namespace Acacia.Stubs.OutlookWrappers
         }
 
         private readonly List<SearchTerm> terms = new List<SearchTerm>();
-        private readonly Items _items;
+        private NSOutlook.Items _items;
 
-        public SearchWrapper(Items items)
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="items">The items to search. The new object takes ownership</param>
+        public SearchWrapper(NSOutlook.Items items)
         {
             this._items = items;
+        }
+
+        protected override void DoRelease()
+        {
+            ComRelease.Release(_items);
+            _items = null;
         }
 
         public ISearchOperator AddOperator(SearchOperator oper)
@@ -176,11 +186,13 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             List<ItemType> values = new List<ItemType>();
             string filter = MakeFilter();
+
             object value = _items.Find(filter);
             while(value != null)
             {
                 if (values.Count < maxResults)
                 {
+                    // Wrap and add if it returns an object. If not, WrapOrDefault will release it
                     ItemType wrapped = Mapping.WrapOrDefault<ItemType>(value);
                     if (wrapped != null)
                     {
@@ -189,6 +201,7 @@ namespace Acacia.Stubs.OutlookWrappers
                 }
                 else
                 {
+                    // Release if not returned. Keep looping to release any others
                     ComRelease.Release(value);
                 }
                 value = _items.FindNext();
@@ -198,6 +211,7 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public ItemType SearchOne()
         {
+            // Wrap manages com object in value
             object value = _items.Find(MakeFilter());
             if (value == null)
                 return default(ItemType);

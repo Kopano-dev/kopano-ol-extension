@@ -18,7 +18,6 @@ using Acacia.Stubs;
 using Acacia.Stubs.OutlookWrappers;
 using Acacia.Utils;
 using Acacia.ZPush;
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -122,7 +121,7 @@ namespace Acacia.Features.Notes
             Logger.Instance.Trace(this, "PatchFolder: {0}", folderId);
             try
             {
-                using (IFolder folder = Mapping.GetFolderFromID(folderId))
+                using (IFolder folder = ThisAddIn.Instance.GetFolderFromID(folderId))
                 {
                     if (folder == null)
                         return;
@@ -168,7 +167,7 @@ namespace Acacia.Features.Notes
             Logger.Instance.Trace(this, "UnpatchFolder: {0}", folderId);
             try
             {
-                using (IFolder folder = Mapping.GetFolderFromID(folderId))
+                using (IFolder folder = ThisAddIn.Instance.GetFolderFromID(folderId))
                 {
                     if (folder == null)
                         return;

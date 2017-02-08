@@ -15,7 +15,6 @@
 /// Consult LICENSE file for details
 
 using Acacia.Features.DebugSupport;
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +22,7 @@ using Acacia.Utils;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
@@ -70,9 +70,10 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #region Properties implementation
 
-        private PropertyAccessor _props;
+        // Assigned in Props, released in DoRelease
+        private NSOutlook.PropertyAccessor _props;
 
-        private PropertyAccessor Props
+        private NSOutlook.PropertyAccessor Props
         {
             get
             {
@@ -88,7 +89,7 @@ namespace Acacia.Stubs.OutlookWrappers
         /// Returns the wrapped item's property accessor.
         /// </summary>
         /// <returns>The property accessor. The caller is responsible for disposing this.</returns>
-        abstract protected PropertyAccessor GetPropertyAccessor();
+        abstract protected NSOutlook.PropertyAccessor GetPropertyAccessor();
 
         #endregion
 
@@ -124,30 +125,6 @@ namespace Acacia.Stubs.OutlookWrappers
             set
             {
                 Props.SetProperty(OutlookConstants.PR_ATTR_HIDDEN, value);
-            }
-        }
-
-        public DateTime? AttrLastVerbExecutionTime
-        {
-            get
-            {
-                return Props.GetProperty(OutlookConstants.PR_LAST_VERB_EXECUTION_TIME) as DateTime?;
-            }
-            set
-            {
-                Props.SetProperty(OutlookConstants.PR_LAST_VERB_EXECUTION_TIME, value);
-            }
-        }
-
-        public int AttrLastVerbExecuted
-        {
-            get
-            {
-                return Props.GetProperty(OutlookConstants.PR_LAST_VERB_EXECUTED);
-            }
-            set
-            {
-                Props.SetProperty(OutlookConstants.PR_LAST_VERB_EXECUTED, value);
             }
         }
 

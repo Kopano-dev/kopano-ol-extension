@@ -128,7 +128,8 @@ namespace Acacia.UI.Outlook
             Images.ColorDepth = ColorDepth.Depth32Bit;
             Images.ImageSize = new Size(16, 16);
 
-            CommandBars cmdBars = ThisAddIn.Instance.Application.ActiveWindow().CommandBars;
+            // TODO: memory management
+            CommandBars cmdBars = ThisAddIn.Instance.RawApp.ActiveWindow().CommandBars;
             foreach (string id in icons)
             {
                 IPictureDisp pict = cmdBars.GetImageMso(id, Images.ImageSize.Width, Images.ImageSize.Height);

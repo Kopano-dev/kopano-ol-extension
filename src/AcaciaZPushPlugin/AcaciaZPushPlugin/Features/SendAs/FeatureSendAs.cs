@@ -22,7 +22,6 @@ using System.Threading.Tasks;
 using Acacia.Stubs;
 using Acacia.Utils;
 using Acacia.ZPush;
-using Microsoft.Office.Interop.Outlook;
 using Acacia.Features.SharedFolders;
 using Acacia.ZPush.API.SharedFolders;
 using static Acacia.DebugOptions;
@@ -86,7 +85,8 @@ namespace Acacia.Features.SendAs
                             Logger.Instance.Trace(this, "Checking, Shared folder owner: {0}", shared.Store.UserName);
                             // It's a shared folder, use the owner as the sender if possible
                             // TODO: make a wrapper for this
-                            var recip = ThisAddIn.Instance.Application.Session.CreateRecipient(shared.Store.UserName);
+                            // TODO: remove RawApp access
+                            var recip = ThisAddIn.Instance.RawApp.Session.CreateRecipient(shared.Store.UserName);
                             Logger.Instance.Trace(this, "Checking, Shared folder owner recipient: {0}", recip.Name);
                             if (recip != null && recip.Resolve())
                             {

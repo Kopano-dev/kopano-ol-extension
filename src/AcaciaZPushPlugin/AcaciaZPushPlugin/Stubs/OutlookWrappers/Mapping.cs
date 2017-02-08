@@ -15,12 +15,12 @@
 /// Consult LICENSE file for details
 
 using Acacia.Utils;
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
@@ -32,7 +32,8 @@ namespace Acacia.Stubs.OutlookWrappers
         /// </summary>
         /// <param name="o">The Outlook object.</param>
         /// <returns>The IItem wrapper, or null if the object could not be wrapped</returns>
-        public static IBase Wrap(object o, bool mustRelease = true)
+        // TODO: made this private to see if it's still used
+        private static IBase Wrap(object o, bool mustRelease = true)
         {
             if (o == null)
                 return null;
@@ -47,25 +48,25 @@ namespace Acacia.Stubs.OutlookWrappers
         private static IBase CreateWrapper(object o)
         { 
             // TODO: switch on o.Class
-            if (o is MailItem)
-                return new MailItemWrapper((MailItem)o);
-            if (o is AppointmentItem)
-                return new AppointmentItemWrapper((AppointmentItem)o);
-            if (o is Folder)
-                return new FolderWrapper((Folder)o);
-            if (o is ContactItem)
-                return new ContactItemWrapper((ContactItem)o);
-            if (o is DistListItem)
-                return new DistributionListWrapper((DistListItem)o);
-            if (o is NoteItem)
-                return new NoteItemWrapper((NoteItem)o);
-            if (o is TaskItem)
-                return new TaskItemWrapper((TaskItem)o);
+            if (o is NSOutlook.MailItem)
+                return new MailItemWrapper((NSOutlook.MailItem)o);
+            if (o is NSOutlook.AppointmentItem)
+                return new AppointmentItemWrapper((NSOutlook.AppointmentItem)o);
+            if (o is NSOutlook.Folder)
+                return new FolderWrapper((NSOutlook.Folder)o);
+            if (o is NSOutlook.ContactItem)
+                return new ContactItemWrapper((NSOutlook.ContactItem)o);
+            if (o is NSOutlook.DistListItem)
+                return new DistributionListWrapper((NSOutlook.DistListItem)o);
+            if (o is NSOutlook.NoteItem)
+                return new NoteItemWrapper((NSOutlook.NoteItem)o);
+            if (o is NSOutlook.TaskItem)
+                return new TaskItemWrapper((NSOutlook.TaskItem)o);
 
-            // TODO: support this?
-            if (o is ReportItem)
-                return null;
-
+            // TODO: support others?
+            // The caller assumes a wrapper will be returned, so any lingering object here will never be released.
+            // TODO: do this only if caller has mustRelease
+            ComRelease.Release(o);
             return null;
         }
 
@@ -74,60 +75,45 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             return (Type)Wrap(o, mustRelease);
         }
-
+        // TODO: are these not the same now? Differ only on wrong type?
         public static Type WrapOrDefault<Type>(object o, bool mustRelease = true)
         where Type : IBase
         {
             IBase wrapped = Wrap(o, mustRelease);
             if (wrapped is Type)
                 return (Type)wrapped;
+
+            // TODO: release if required
             if (wrapped != null)
                 wrapped.Dispose();
             return default(Type);
         }
 
-        public static OlItemType OutlookItemType<ItemType>()
+        public static NSOutlook.OlItemType OutlookItemType<ItemType>()
         where ItemType: IItem
         {
             Type type = typeof(ItemType);
             if (type == typeof(IContactItem))
-                return OlItemType.olContactItem;
+                return NSOutlook.OlItemType.olContactItem;
             if (type == typeof(IDistributionList))
-                return OlItemType.olDistributionListItem;
+                return NSOutlook.OlItemType.olDistributionListItem;
             throw new NotImplementedException(); // TODO
         }
 
-        public static OlUserPropertyType OutlookPropertyType<PropType>()
+        public static NSOutlook.OlUserPropertyType OutlookPropertyType<PropType>()
         {
             Type type = typeof(PropType);
             if (type == typeof(string))
-                return OlUserPropertyType.olText;
+                return NSOutlook.OlUserPropertyType.olText;
             if (type == typeof(DateTime))
-                return OlUserPropertyType.olDateTime;
+                return NSOutlook.OlUserPropertyType.olDateTime;
             if (type == typeof(int))
-                return OlUserPropertyType.olInteger;
+                return NSOutlook.OlUserPropertyType.olInteger;
             if (type.IsEnum)
-                return OlUserPropertyType.olInteger;
+                return NSOutlook.OlUserPropertyType.olInteger;
             if (type == typeof(string[]))
-                return OlUserPropertyType.olKeywords;
+                return NSOutlook.OlUserPropertyType.olKeywords;
             throw new NotImplementedException(); // TODO
         }
-
-
-        // TODO: this needs to go elsewhere
-        public static IFolder GetFolderFromID(string folderId)
-        {
-            NameSpace nmspace = ThisAddIn.Instance.Application.Session;
-            try
-            {
-                Folder f = (Folder)nmspace.GetFolderFromID(folderId);
-                return Wrap<IFolder>(f);
-            }
-            finally
-            {
-                ComRelease.Release(nmspace);
-            }
-        }
-
     }
 }

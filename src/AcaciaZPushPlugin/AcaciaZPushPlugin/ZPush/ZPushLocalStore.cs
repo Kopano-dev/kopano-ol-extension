@@ -17,13 +17,13 @@
 using Acacia.Stubs;
 using Acacia.Stubs.OutlookWrappers;
 using Acacia.Utils;
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.ZPush
 {
@@ -33,7 +33,7 @@ namespace Acacia.ZPush
     /// TODO: merge with Store where possible
     public class ZPushLocalStore : ComWrapper
     {
-        private Store _store;
+        private NSOutlook.Store _store;
 
         public IFolder RootFolder
         {
@@ -45,7 +45,7 @@ namespace Acacia.ZPush
 
         public string StoreId { get { return _store.StoreID; } }
 
-        private ZPushLocalStore(Store store)
+        private ZPushLocalStore(NSOutlook.Store store)
         {
             this._store = store;
             HideAllFolders();
@@ -69,7 +69,7 @@ namespace Acacia.ZPush
                 // Hide the folders that are not custom folders
                 using (ComRelease com = new ComRelease())
                 {
-                    foreach (Folder sub in com.Add(com.Add(_store.GetRootFolder()).Folders))
+                    foreach (NSOutlook.Folder sub in com.Add(com.Add(_store.GetRootFolder()).Folders))
                     {
                         using (IFolder wrapped = Mapping.Wrap<IFolder>(sub))
                         {
@@ -80,7 +80,7 @@ namespace Acacia.ZPush
             }
         }
 
-        public static ZPushLocalStore GetInstance(Application App)
+        public static ZPushLocalStore GetInstance(IAddIn addIn)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace Acacia.ZPush
                 Logger.Instance.Debug(typeof(ZPushLocalStore), "Opening store with prefix {0}", prefix);
 
                 // See if a store with this prefix exists
-                Store store = FindInstance(App, prefix);
+                NSOutlook.Store store = FindInstance(addIn, prefix);
                 if (store != null)
                     return new ZPushLocalStore(store);
 
@@ -114,8 +114,8 @@ namespace Acacia.ZPush
 
                 // Path found, create the store
                 Logger.Instance.Info(typeof(ZPushLocalStore), "Creating new store: {0}", path);
-                App.Session.AddStore(path);
-                store = App.Session.Stores[App.Session.Stores.Count];
+                addIn.RawApp.Session.AddStore(path);
+                store = addIn.RawApp.Session.Stores[addIn.RawApp.Session.Stores.Count];
                 Logger.Instance.Debug(typeof(ZPushLocalStore), "Created new store: {0}", store.FilePath);
 
                 // Set the display name
@@ -134,9 +134,9 @@ namespace Acacia.ZPush
             }
         }
 
-        private static Store FindInstance(Application app, string prefix)
+        private static NSOutlook.Store FindInstance(IAddIn addIn, string prefix)
         {
-            foreach (Store store in app.Session.Stores)
+            foreach (NSOutlook.Store store in addIn.RawApp.Session.Stores)
             {
                 if (store.IsDataFileStore && store.FilePath.StartsWith(prefix))
                 {
@@ -151,17 +151,17 @@ namespace Acacia.ZPush
         {
             using (ComRelease com = new ComRelease())
             {
-                MAPIFolder f = _store.GetDefaultFolder(OlDefaultFolders.olFolderDeletedItems);
+                NSOutlook.MAPIFolder f = _store.GetDefaultFolder(NSOutlook.OlDefaultFolders.olFolderDeletedItems);
                 if (f != null)
                 {
                     com.Add(f);
 
                     // Normal enumeration fails when deleting. Do it like this.
-                    Folders folders = com.Add(f.Folders);
+                    NSOutlook.Folders folders = com.Add(f.Folders);
                     for (int i = folders.Count; i > 0; --i)
                         com.Add(folders[i]).Delete();
 
-                    Items items = com.Add(f.Items);
+                    NSOutlook.Items items = com.Add(f.Items);
                     for (int i = items.Count; i > 0; --i)
                         com.Add(items[i]).Delete();
                 }

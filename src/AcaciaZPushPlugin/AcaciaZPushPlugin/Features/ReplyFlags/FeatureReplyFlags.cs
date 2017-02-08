@@ -22,7 +22,6 @@ using System.Threading.Tasks;
 using Acacia.Stubs;
 using Acacia.Utils;
 using Acacia.ZPush;
-using Microsoft.Office.Interop.Outlook;
 using static Acacia.DebugOptions;
 
 namespace Acacia.Features.ReplyFlags

@@ -190,12 +190,14 @@ namespace Acacia.Features.FreeBusy
                         if (account != null && handler.Contacts != null)
                         {
                             // Look for the email address. If found, use the account associated with the GAB
-                            ISearch<IContactItem> search = handler.Contacts.Search<IContactItem>();
-                            search.AddField("urn:schemas:contacts:email1").SetOperation(SearchOperation.Equal, username);
-                            using (IItem result = search.SearchOne())
+                            using (ISearch<IContactItem> search = handler.Contacts.Search<IContactItem>())
                             {
-                                if (result != null)
-                                    return account;
+                                search.AddField("urn:schemas:contacts:email1").SetOperation(SearchOperation.Equal, username);
+                                using (IItem result = search.SearchOne())
+                                {
+                                    if (result != null)
+                                        return account;
+                                }
                             }
                         }
                     }

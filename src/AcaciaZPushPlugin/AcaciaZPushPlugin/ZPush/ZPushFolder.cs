@@ -16,20 +16,20 @@
 
 using Acacia.Stubs;
 using Acacia.Stubs.OutlookWrappers;
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Acacia.Utils;
 using System.Text;
 using System.Threading.Tasks;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.ZPush
 {
     public class ZPushFolder : FolderWrapper
     {
-        private readonly Items _items;
-        private readonly Folders _subFolders;
+        private readonly NSOutlook.Items _items;
+        private readonly NSOutlook.Folders _subFolders;
         private ZPushFolder _parent;
         private readonly ZPushWatcher _watcher;
         private List<ItemsWatcher> _itemsWatchers = new List<ItemsWatcher>();
@@ -39,14 +39,14 @@ namespace Acacia.ZPush
         /// </summary>
         protected readonly Dictionary<string, ZPushFolder> _children = new Dictionary<string, ZPushFolder>();
 
-        internal ZPushFolder(ZPushWatcher watcher, Folder folder)
+        internal ZPushFolder(ZPushWatcher watcher, NSOutlook.Folder folder)
         :
         this(watcher, null, folder)
         {
             Initialise();
         }
 
-        private ZPushFolder(ZPushWatcher watcher, ZPushFolder parent, Folder folder)
+        private ZPushFolder(ZPushWatcher watcher, ZPushFolder parent, NSOutlook.Folder folder)
         :
         base(folder)
         {
@@ -66,7 +66,7 @@ namespace Acacia.ZPush
             _watcher.OnFolderDiscovered(this);
 
             // Recurse the children
-            foreach (Folder subfolder in this._subFolders)
+            foreach (NSOutlook.Folder subfolder in this._subFolders)
             {
                 Tasks.Task(null, "WatchChild", () => WatchChild(subfolder));
             }
@@ -140,7 +140,7 @@ namespace Acacia.ZPush
         /// Watches the child folder.
         /// </summary>
         /// <param name="child">The child folder. Ownership will be taken.</param>
-        private void WatchChild(Folder child)
+        private void WatchChild(NSOutlook.Folder child)
         {
             if (!_children.ContainsKey(child.EntryID))
             {
@@ -167,12 +167,12 @@ namespace Acacia.ZPush
 
         #region Event handlers
 
-        private void SubFolders_FolderAdd(MAPIFolder folder)
+        private void SubFolders_FolderAdd(NSOutlook.MAPIFolder folder)
         {
             try
             {
                 Logger.Instance.Debug(this, "Folder added in {0}: {1}", this._item.Name, folder.Name);
-                WatchChild((Folder)folder);
+                WatchChild((NSOutlook.Folder)folder);
             }
             catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderAdd: {0}: {1}", Name, e); }
         }
@@ -187,7 +187,7 @@ namespace Acacia.ZPush
                 // but that doesn't fire if a folder was removed on the server.
                 // Hence, fetch all the remaining folder ids, and remove any folder that no longer exists.
                 HashSet<string> remaining = new HashSet<string>();
-                foreach (Folder child in _subFolders)
+                foreach (NSOutlook.Folder child in _subFolders)
                 {
                     try
                     {
@@ -219,7 +219,7 @@ namespace Acacia.ZPush
             catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderRemove: {0}: {1}", Name, e); }
         }
 
-        private void SubFolders_FolderChange(MAPIFolder folder)
+        private void SubFolders_FolderChange(NSOutlook.MAPIFolder folder)
         {
             try
             {
@@ -236,7 +236,7 @@ namespace Acacia.ZPush
                     // Create it now
                     // This will send a discover notification if required, which is just as good as a change notification
                     Logger.Instance.Debug(this, "Folder change on unreported folder in {0}: {1}, {2}, {3}", this._item.Name, folder.Name, folder.EntryID, folder.Store.DisplayName);
-                    WatchChild((Folder)folder);
+                    WatchChild((NSOutlook.Folder)folder);
                 }
             }
             catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderChange: {0}: {1}", Name, e); }

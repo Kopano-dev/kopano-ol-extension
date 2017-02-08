@@ -19,21 +19,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Office.Interop.Outlook;
 using Acacia.Utils;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
     public class StoreWrapper : ComWrapper, IStore
     {
-        public static IStore Wrap(Store store)
+        public static IStore Wrap(NSOutlook.Store store)
         {
             return store == null ? null : new StoreWrapper(store);
         }
 
-        private Store _store;
+        private NSOutlook.Store _store;
 
-        private StoreWrapper(Store store)
+        private StoreWrapper(NSOutlook.Store store)
         {
             this._store = store;
         }
@@ -46,20 +46,19 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public IFolder GetRootFolder()
         {
-            return new FolderWrapper((Folder)_store.GetRootFolder());
+            // FolderWrapper manages the returned Folder
+            return new FolderWrapper((NSOutlook.Folder)_store.GetRootFolder());
         }
 
         public IItem GetItemFromID(string id)
         {
-            NameSpace nmspace = _store.Session;
-            try
-            {
+            using (ComRelease com = new ComRelease())
+            { 
+                NSOutlook.NameSpace nmspace = com.Add(_store.Session);
+
+                // Get the item; the wrapper manages it
                 object o = nmspace.GetItemFromID(id);
                 return Mapping.Wrap<IItem>(o);
-            }
-            finally
-            {
-                ComRelease.Release(nmspace);
             }
         }
 

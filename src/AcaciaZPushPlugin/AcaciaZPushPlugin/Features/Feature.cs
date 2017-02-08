@@ -14,7 +14,6 @@
 /// 
 /// Consult LICENSE file for details
 
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,11 +55,6 @@ namespace Acacia.Features
         public virtual FeatureSettings GetSettings()
         {
             return null;
-        }
-
-        protected static Microsoft.Office.Interop.Outlook.Application App
-        {
-            get { return ThisAddIn.Instance.Application; }
         }
 
         virtual public void GetCapabilities(ZPushCapabilities caps)
@@ -206,7 +200,7 @@ namespace Acacia.Features
             get
             {
                 if (_mailEvents == null)
-                    _mailEvents = new MailEvents(App);
+                    _mailEvents = new MailEvents(ThisAddIn.Instance);
                 return _mailEvents;
             }
         }

@@ -43,9 +43,8 @@ namespace Acacia.Stubs.OutlookWrappers
             if (!_isDisposed)
             {
                 Logger.Instance.Warning(this, "Undisposed wrapper: {0}", _createdTrace);
-                Dispose();
-                // Don't count auto disposals
-                Interlocked.Decrement(ref Statistics.DisposedWrappers);
+                // Dispose, but don't count auto disposals, so the stats show it.
+                DoRelease();
             }
         }
 
