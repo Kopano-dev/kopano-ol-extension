@@ -136,6 +136,13 @@ namespace Acacia.Features.GAB
 
         private void ClearContacts()
         {
+            if (!_feature.ClearContacts)
+            {
+                using (IStorageItem item = GetIndexItem())
+                    item?.Delete();
+                return;
+            }
+
             if (Contacts != null)
             {
                 try
