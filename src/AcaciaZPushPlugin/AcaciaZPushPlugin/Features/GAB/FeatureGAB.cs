@@ -118,6 +118,15 @@ namespace Acacia.Features.GAB
         }
         private static readonly BoolOption OPTION_PROCESS_MESSAGE = new BoolOption("ProcessMessage", true);
 
+        [AcaciaOption("If disabled, existing contacts are not deleted when a chunk is processed. " +
+                      "This should only be disabled for debug purposes.")]
+        public bool ProcessMessageDeleteExisting
+        {
+            get { return GetOption(OPTION_PROCESS_MESSAGE_DELETE_EXISTING); }
+            set { SetOption(OPTION_PROCESS_MESSAGE_DELETE_EXISTING, value); }
+        }
+        private static readonly BoolOption OPTION_PROCESS_MESSAGE_DELETE_EXISTING = new BoolOption("ProcessMessageDeleteExisting", true);
+
         [AcaciaOption("If disabled, contacts are not created from incoming GAB messages. " +
                       "This should only be disabled for debug purposes.")]
         public bool CreateContacts
