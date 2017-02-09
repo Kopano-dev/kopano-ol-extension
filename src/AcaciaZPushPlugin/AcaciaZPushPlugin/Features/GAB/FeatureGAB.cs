@@ -64,8 +64,11 @@ namespace Acacia.Features.GAB
 
         public override void Startup()
         {
-            MailEvents.BeforeDelete += SuppressEventHandler_Delete;
-            MailEvents.Write += SuppressEventHandler_Modify;
+            if (SuppressModifications)
+            {
+                MailEvents.BeforeDelete += SuppressEventHandler_Delete;
+                MailEvents.Write += SuppressEventHandler_Modify;
+            }
             Watcher.AccountDiscovered += AccountDiscovered;
             Watcher.AccountRemoved += AccountRemoved;
             Watcher.AccountsScanned += AccountsScanned;
@@ -208,7 +211,16 @@ namespace Acacia.Features.GAB
             set { SetOption(OPTION_EMPTY_DELETED_ITEMS, value); }
         }
         private static readonly BoolOption OPTION_EMPTY_DELETED_ITEMS = new BoolOption("EmptyDeletedItems", true);
-        
+
+        [AcaciaOption("If enabled, modifications to the GAB folder are suppressed. " +
+                      "This should only be disabled for debug purposes.")]
+        public bool SuppressModifications
+        {
+            get { return GetOption(OPTION_SUPPRESS_MODIFICATIONS); }
+            set { SetOption(OPTION_SUPPRESS_MODIFICATIONS, value); }
+        }
+        private static readonly BoolOption OPTION_SUPPRESS_MODIFICATIONS = new BoolOption("SuppressModifications", true);
+
         #endregion
 
         #region Modification suppression
