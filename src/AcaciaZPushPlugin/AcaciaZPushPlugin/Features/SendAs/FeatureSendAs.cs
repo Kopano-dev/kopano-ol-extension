@@ -49,7 +49,10 @@ namespace Acacia.Features.SendAs
 
         public override void Startup()
         {
-            MailEvents.ItemSend += MailEvents_ItemSend;
+            if (MailEvents != null)
+            {
+                MailEvents.ItemSend += MailEvents_ItemSend;
+            }
 
             if (SendAsOwner)
             {
@@ -57,7 +60,10 @@ namespace Acacia.Features.SendAs
                 _sharedFolders = ThisAddIn.Instance.GetFeature<FeatureSharedFolders>();
                 if (_sharedFolders != null)
                 {
-                    MailEvents.Respond += MailEvents_Respond;
+                    if (MailEvents != null)
+                    {
+                        MailEvents.Respond += MailEvents_Respond;
+                    }
                 }
             }
         }

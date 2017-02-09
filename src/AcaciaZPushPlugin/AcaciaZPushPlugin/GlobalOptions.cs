@@ -118,6 +118,15 @@ namespace Acacia
             }
         }
 
+        [AcaciaOption("Enables or disables item event hooking." +
+                      "Note that if this is disabled, several features may not work correctly.")]
+        virtual public bool HookItemEvents
+        {
+            get { return GetOption(null, HOOK_ITEM_EVENTS); }
+            set { SetOption(null, HOOK_ITEM_EVENTS, value); }
+        }
+        private static readonly BoolOption HOOK_ITEM_EVENTS = new BoolOption("HookItemEvents", true);
+
         #region UI Options
 
         [AcaciaOption("Completely enables or disables modifications to the Outlook UI." +

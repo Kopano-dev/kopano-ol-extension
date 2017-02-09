@@ -194,14 +194,11 @@ namespace Acacia.Features
 
         #region Event helpers
 
-        private static MailEvents _mailEvents;
         protected static MailEvents MailEvents
         {
             get
             {
-                if (_mailEvents == null)
-                    _mailEvents = new MailEvents(ThisAddIn.Instance);
-                return _mailEvents;
+                return ThisAddIn.Instance.MailEvents;
             }
         }
         

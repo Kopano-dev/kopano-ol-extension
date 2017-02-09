@@ -64,7 +64,7 @@ namespace Acacia.Features.GAB
 
         public override void Startup()
         {
-            if (SuppressModifications)
+            if (SuppressModifications && MailEvents != null)
             {
                 MailEvents.BeforeDelete += SuppressEventHandler_Delete;
                 MailEvents.Write += SuppressEventHandler_Modify;
