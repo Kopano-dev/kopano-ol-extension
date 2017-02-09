@@ -35,6 +35,7 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             Interlocked.Increment(ref Statistics.CreatedWrappers);
             this._createdTrace = new System.Diagnostics.StackTrace();
+            MustRelease = true;
         }
 
         ~ComWrapper()

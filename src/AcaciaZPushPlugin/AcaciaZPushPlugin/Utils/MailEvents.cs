@@ -219,25 +219,22 @@ namespace Acacia.Utils
             NSOutlook.ItemEvents_10_Event hasEvents = item as NSOutlook.ItemEvents_10_Event;
             if (hasEvents != null)
             {
-                new MailEventHooker(item, hasEvents, this);
+                new MailEventHooker(hasEvents, this);
             }
-            else ComRelease.Release(item);
         }
 
         private class MailEventHooker : ComWrapper
         {
-            private object _item;
             private NSOutlook.ItemEvents_10_Event _itemEvents;
             private readonly MailEvents _events;
             // TODO: remove id and debug logging
             private int _id;
             private static int nextId;
 
-            public MailEventHooker(object item, NSOutlook.ItemEvents_10_Event itemEvents, MailEvents events)
+            public MailEventHooker(NSOutlook.ItemEvents_10_Event itemEvents, MailEvents events)
             {
-                this._id = ++nextId;
-                this._item = item;
                 this._itemEvents = itemEvents;
+                this._id = ++nextId;
                 this._events = events;
                 HookEvents(true);
             }
@@ -245,11 +242,8 @@ namespace Acacia.Utils
             protected override void DoRelease()
             {
                 Logger.Instance.Debug(this, "DoRelease: {0}", _id);
-
-                ComRelease.Release(_item);
-                _item = null;
-                ComRelease.Release(_itemEvents);
-                _itemEvents = null;
+                // TODO: It looks like release _itemEvents is not only not needed, but causes exceptions.
+                //       If that is really the case, this doesn't need to be a ComWrapper
             }
 
             private void HookEvents(bool add)
