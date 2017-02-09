@@ -163,12 +163,8 @@ namespace Acacia.Features.DebugSupport
         }
 
         private void GarbageCollect()
-        { 
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
+        {
+            Util.GarbageCollect();
             UpdateFields();
         }
 

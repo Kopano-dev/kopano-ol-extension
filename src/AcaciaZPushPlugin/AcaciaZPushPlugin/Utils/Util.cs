@@ -79,5 +79,14 @@ namespace Acacia.Utils
             }
             ComRelease.Release(source);
         }
+
+        public static void GarbageCollect()
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
     }
 }

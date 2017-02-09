@@ -48,7 +48,7 @@ namespace Acacia.Features.DebugSupport
 
         public override void AfterStartup()
         {
-            ShowAbout();
+            //ShowAbout();
         }
 
         #region About dialog
@@ -79,7 +79,9 @@ namespace Acacia.Features.DebugSupport
 
         public void ShowSettings()
         {
-            new SettingsDialog().ShowDialog();
+            //new SettingsDialog().ShowDialog();
+            ThisAddIn.Instance.GetFeature<GAB.FeatureGAB>()?.FullResync();
+            Tasks.Task(this, "GC", () => Util.GarbageCollect());
         }
 
         public override FeatureSettings GetSettings()

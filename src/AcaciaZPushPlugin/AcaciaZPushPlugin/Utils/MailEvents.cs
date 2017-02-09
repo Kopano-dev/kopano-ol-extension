@@ -208,8 +208,6 @@ namespace Acacia.Utils
 
         #region Implementation
 
-        private readonly HashSet<MailEventHooker> _keepAlives = new HashSet<MailEventHooker>();
-
         public MailEvents(IAddIn app)
         {
             app.ItemLoad += OnItemLoad;
@@ -221,7 +219,7 @@ namespace Acacia.Utils
             NSOutlook.ItemEvents_10_Event hasEvents = item as NSOutlook.ItemEvents_10_Event;
             if (hasEvents != null)
             {
-                _keepAlives.Add(new MailEventHooker(item, hasEvents, this));
+                new MailEventHooker(item, hasEvents, this);
             }
             else ComRelease.Release(item);
         }
@@ -247,8 +245,6 @@ namespace Acacia.Utils
             protected override void DoRelease()
             {
                 Logger.Instance.Debug(this, "DoRelease: {0}", _id);
-
-                _events._keepAlives.Remove(this);
 
                 ComRelease.Release(_item);
                 _item = null;
