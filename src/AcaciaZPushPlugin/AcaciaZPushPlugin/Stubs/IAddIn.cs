@@ -1,5 +1,6 @@
 ﻿using Acacia.Features;
 using Acacia.UI.Outlook;
+using Acacia.Utils;
 using Acacia.ZPush;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace Acacia.Stubs
         NSOutlook.Application RawApp { get; } // TODO: remove
 
         ZPushWatcher Watcher { get; }
+        MailEvents MailEvents { get; }
         IEnumerable<Feature> Features { get; }
         IEnumerable<KeyValuePair<string,string>> COMAddIns { get; }
         string Version { get; }

@@ -63,6 +63,22 @@ namespace Acacia
             private set;
         }
 
+        private MailEvents _mailEvents;
+        public MailEvents MailEvents
+        {
+            get
+            {
+                if (_mailEvents == null)
+                {
+                    if (GlobalOptions.INSTANCE.HookItemEvents)
+                    {
+                        _mailEvents = new MailEvents(Instance);
+                    }
+                }
+                return _mailEvents;
+            }
+        }
+
         #region Startup / Shutdown
 
         private void ThisAddIn_Startup(object sender, System.EventArgs args)

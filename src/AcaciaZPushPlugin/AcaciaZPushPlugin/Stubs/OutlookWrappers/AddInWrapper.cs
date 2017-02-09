@@ -85,6 +85,7 @@ namespace Acacia.Stubs.OutlookWrappers
         public OutlookUI OutlookUI { get { return _thisAddIn.OutlookUI; } }
 
         public ZPushWatcher Watcher { get { return _thisAddIn.Watcher; } }
+        public MailEvents MailEvents { get { return _thisAddIn.MailEvents; } }
         public IEnumerable<Feature> Features { get { return _thisAddIn.Features; } }
         public IEnumerable<KeyValuePair<string, string>> COMAddIns
         {
