@@ -81,9 +81,9 @@ namespace Acacia.Stubs.OutlookWrappers
         }
 
 
-        public void SetSender(NSOutlook.AddressEntry addressEntry)
+        public void SetSender(IAddressEntry addressEntry)
         {
-            _item.Sender = addressEntry;
+            _item.Sender = ((AddressEntryWrapper)addressEntry).RawItem;
         }
 
         #endregion

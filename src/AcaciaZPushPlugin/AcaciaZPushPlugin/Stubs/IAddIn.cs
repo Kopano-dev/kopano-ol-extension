@@ -34,6 +34,9 @@ namespace Acacia.Stubs
 
         #endregion
 
+        #region Miscellaneous methods
+        // TODO: clean this up
+
         /// <summary>
         /// Sends and receives all accounts.
         /// </summary>
@@ -51,5 +54,9 @@ namespace Acacia.Stubs
 
         FeatureType GetFeature<FeatureType>()
         where FeatureType : Feature;
+
+        IRecipient ResolveRecipient(string name);
+
+        #endregion
     }
 }

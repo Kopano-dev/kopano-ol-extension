@@ -190,5 +190,19 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #endregion
 
+
+        public IRecipient ResolveRecipient(string name)
+        {
+            using (ComRelease com = new ComRelease())
+            {
+                NSOutlook.NameSpace session = com.Add(_app.Session);
+                NSOutlook.Recipient recipient = session.CreateRecipient(name);
+                if (recipient == null)
+                    return null;
+                com.Add(recipient);
+                recipient.Resolve();
+                return Mapping.Wrap(com.Remove(recipient));
+            }
+        }
     }
 }

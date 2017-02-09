@@ -25,7 +25,7 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    public class TaskItemWrapper : OutlookItemWrapper<NSOutlook.TaskItem>, ITaskItem
+    class TaskItemWrapper : OutlookItemWrapper<NSOutlook.TaskItem>, ITaskItem
     {
         internal TaskItemWrapper(NSOutlook.TaskItem item)
         :
