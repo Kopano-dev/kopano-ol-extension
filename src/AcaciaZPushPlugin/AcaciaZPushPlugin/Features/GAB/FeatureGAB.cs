@@ -281,23 +281,25 @@ namespace Acacia.Features.GAB
         /// <param name="cancel"></param>
         private void DoSuppressEvent(IItem item, ref bool cancel)
         {
+            // TODO: Find and close the inspector
             /*if (item != null)
             {
-                foreach (Inspector inspector in App.Inspectors)
+                foreach (Inspector inspector in ThisAddIn.Instance.Inspectors)
                 {
                     if (item.EntryId == inspector.CurrentItem.EntryID)
                     {
                         break;
                     }
                 }
-            }
+            }*/
+
+            // Show message and cancel event
             MessageBox.Show(StringUtil.GetResourceString("GABEvent_Body"),
                             StringUtil.GetResourceString("GABEvent_Title"),
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning
                         );
-            cancel = true;*/
-            // TODO
+            cancel = true;
         }
 
         #endregion
@@ -436,9 +438,12 @@ namespace Acacia.Features.GAB
                 GABInfo gabInfo = GABInfo.Get(gab, domainName);
                 gabInfo.Store(gab);
 
-                // Hook BeforeMove event to prevent modifications
-                // TODO: use ZPushWatcher for this?
-                gab.BeforeItemMove += SuppressMoveEventHandler;
+                if (SuppressModifications)
+                {
+                    // Hook BeforeMove event to prevent modifications
+                    // TODO: use ZPushWatcher for this?
+                    gab.BeforeItemMove += SuppressMoveEventHandler;
+                }
 
                 return gab;
             }
@@ -446,8 +451,11 @@ namespace Acacia.Features.GAB
 
         private void DisposeGABContacts(IAddressBook gab)
         {
-            // Unhook the event to prevent the gab lingering in memory
-            gab.BeforeItemMove -= SuppressMoveEventHandler;
+            if (SuppressModifications)
+            {
+                // Unhook the event to prevent the gab lingering in memory
+                gab.BeforeItemMove -= SuppressMoveEventHandler;
+            }
         }
 
         public static GABInfo GetGABContactsFolderInfo(IFolder folder)

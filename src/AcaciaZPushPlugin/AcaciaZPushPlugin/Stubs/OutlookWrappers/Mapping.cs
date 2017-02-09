@@ -78,6 +78,13 @@ namespace Acacia.Stubs.OutlookWrappers
             return (Type)Wrap(o, mustRelease);
         }
 
+        public static IRecipient Wrap(NSOutlook.Recipient r, bool mustRelease = true)
+        {
+            RecipientWrapper wrapped = new RecipientWrapper(r);
+            wrapped.MustRelease = mustRelease;
+            return wrapped;
+        }
+
         // TODO: are these not the same now? Differ only on wrong type?
         public static Type WrapOrDefault<Type>(object o, bool mustRelease = true)
         where Type : IBase

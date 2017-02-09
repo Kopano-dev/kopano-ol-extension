@@ -42,31 +42,27 @@ namespace Acacia.Stubs.OutlookWrappers
             }
             set
             {
-                using (ComRelease com = new ComRelease())
-                {
-                    string displayName = DLName + " (" + value + ")";
-                    byte[] oneOffId = CreateOneOffMemberId(DLName, "SMTP", value);
+                string displayName = DLName + " (" + value + ")";
+                byte[] oneOffId = CreateOneOffMemberId(DLName, "SMTP", value);
 
-                    NSOutlook.PropertyAccessor props = com.Add(_item.PropertyAccessor);
-                    props.SetProperties(
-                        new string[]
-                        {
-                            OutlookConstants.PR_EMAIL1DISPLAYNAME,
-                            OutlookConstants.PR_EMAIL1EMAILADDRESS,
-                            OutlookConstants.PR_EMAIL1ADDRESSTYPE,
-                            OutlookConstants.PR_EMAIL1ORIGINALDISPLAYNAME,
-                            OutlookConstants.PR_EMAIL1ORIGINALENTRYID
-                        },
-                        new object[]
-                        {
-                            DLName,
-                            value,
-                            "SMTP",
-                            value,
-                            oneOffId
-                        }
-                    );
-                }
+                SetProperties(
+                    new string[]
+                    {
+                        OutlookConstants.PR_EMAIL1DISPLAYNAME,
+                        OutlookConstants.PR_EMAIL1EMAILADDRESS,
+                        OutlookConstants.PR_EMAIL1ADDRESSTYPE,
+                        OutlookConstants.PR_EMAIL1ORIGINALDISPLAYNAME,
+                        OutlookConstants.PR_EMAIL1ORIGINALENTRYID
+                    },
+                    new object[]
+                    {
+                        DLName,
+                        value,
+                        "SMTP",
+                        value,
+                        oneOffId
+                    }
+                );
             }
         }
 
@@ -95,12 +91,15 @@ namespace Acacia.Stubs.OutlookWrappers
         private void AddContactMember(IContactItem member)
         {
             string email = member.Email1Address;
-            // TODO: remove RawApp, Recipient wrapper
-            NSOutlook.Recipient recipient = ThisAddIn.Instance.RawApp.Session.CreateRecipient(email);
-            if (recipient.Resolve())
-                _item.AddMember(recipient);
-            else
-                Logger.Instance.Warning(this, "Unable to resolve recipient: {0}", email);
+            using (IRecipient recipient = ThisAddIn.Instance.ResolveRecipient(email))
+            {
+                if (recipient.IsResolved)
+                {
+                    _item.AddMember(((RecipientWrapper)recipient).RawItem);
+                }
+                else
+                    Logger.Instance.Warning(this, "Unable to resolve recipient: {0}", email);
+            }
         }
 
         private void AddDistributionListMember(IDistributionList member)

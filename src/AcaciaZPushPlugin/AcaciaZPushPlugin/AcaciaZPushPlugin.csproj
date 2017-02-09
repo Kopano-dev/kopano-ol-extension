@@ -280,9 +280,13 @@
     <Compile Include="Native\IOleWindow.cs" />
     <Compile Include="OutlookConstants.cs" />
     <Compile Include="Stubs\IAddIn.cs" />
+    <Compile Include="Stubs\IAddressEntry.cs" />
     <Compile Include="Stubs\IComWrapper.cs" />
+    <Compile Include="Stubs\IRecipient.cs" />
     <Compile Include="Stubs\OutlookWrappers\AddInWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\AddressEntryWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\OutlookItemWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\RecipientWrapper.cs" />
     <Compile Include="UI\Outlook\OutlookImageList.cs" />
     <Compile Include="UI\Outlook\RibbonToggleButton.cs" />
     <Compile Include="UI\Outlook\RibbonButton.cs" />

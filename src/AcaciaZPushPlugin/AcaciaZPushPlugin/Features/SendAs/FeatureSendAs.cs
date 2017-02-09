@@ -90,18 +90,21 @@ namespace Acacia.Features.SendAs
                         {
                             Logger.Instance.Trace(this, "Checking, Shared folder owner: {0}", shared.Store.UserName);
                             // It's a shared folder, use the owner as the sender if possible
-                            // TODO: make a wrapper for this
-                            // TODO: remove RawApp access
-                            var recip = ThisAddIn.Instance.RawApp.Session.CreateRecipient(shared.Store.UserName);
-                            Logger.Instance.Trace(this, "Checking, Shared folder owner recipient: {0}", recip.Name);
-                            if (recip != null && recip.Resolve())
+                            using (IRecipient recip = ThisAddIn.Instance.ResolveRecipient(shared.Store.UserName))
                             {
-                                Logger.Instance.Trace(this, "Sending as: {0}", recip.AddressEntry.Address);
-                                response.SetSender(recip.AddressEntry);
-                            }
-                            else
-                            {
-                                Logger.Instance.Trace(this, "Unable to resolve sender");
+                                Logger.Instance.Trace(this, "Checking, Shared folder owner recipient: {0}", recip.Name);
+                                if (recip != null && recip.IsResolved)
+                                {
+                                    Logger.Instance.Trace(this, "Sending as: {0}", recip.Address);
+                                    using (IAddressEntry address = recip.GetAddressEntry())
+                                    {
+                                        response.SetSender(address);
+                                    }
+                                }
+                                else
+                                {
+                                    Logger.Instance.Trace(this, "Unable to resolve sender");
+                                }
                             }
                         }
                     }

@@ -34,6 +34,12 @@ namespace Acacia.Utils
             return t;
         }
 
+        public Type Remove<Type>(Type t)
+        {
+            objects.Remove(t);
+            return t;
+        }
+
         public void Dispose()
         {
             foreach (object o in objects)

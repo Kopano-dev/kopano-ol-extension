@@ -33,7 +33,10 @@ namespace Acacia.Stubs
         string SenderEmailAddress { get; }
         string SenderName { get; }
 
-        // TODO: make a wrapper for this
-        void SetSender(Microsoft.Office.Interop.Outlook.AddressEntry addressEntry);
+        /// <summary>
+        /// Sets the sender.
+        /// </summary>
+        /// <param name="addressEntry">The address. The caller is responsible for disposing.</param>
+        void SetSender(IAddressEntry addressEntry);
     }
 }

@@ -24,7 +24,7 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    public class NoteItemWrapper : OutlookItemWrapper<NSOutlook.NoteItem>, INoteItem
+    class NoteItemWrapper : OutlookItemWrapper<NSOutlook.NoteItem>, INoteItem
     {
         internal NoteItemWrapper(NSOutlook.NoteItem item)
         :
