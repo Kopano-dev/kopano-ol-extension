@@ -36,11 +36,16 @@ namespace Acacia.Stubs
 
         #region Ids and hierarchy
 
-        string EntryId { get; }
+        string EntryID { get; }
         IFolder Parent { get; }
-        string ParentEntryId { get; }
+        string ParentEntryID { get; }
 
+        /// <summary>
+        /// Returns the store. The owner is responsible for disposing. 
+        /// TODO: make method to make disposing clear
+        /// </summary>
         IStore Store { get; }
+
         /// <summary>
         /// Quick accessor to Store.Id, to prevent allocating a wrapper for it.
         /// </summary>

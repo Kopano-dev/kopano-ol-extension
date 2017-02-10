@@ -252,7 +252,7 @@ namespace Acacia.ZPush.Connect
             }
         }
 
-        private class Request : RawComWrapper
+        private class Request : DisposableWrapper
         {
             private const string ACTIVESYNC_URL = "https://{0}/Microsoft-Server-ActiveSync?DeviceId={1}&Cmd={2}&User={3}&DeviceType={4}";
 

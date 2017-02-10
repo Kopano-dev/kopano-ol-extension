@@ -22,15 +22,12 @@ using System.Linq;
 using Acacia.Utils;
 using System.Text;
 using System.Threading.Tasks;
-using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.ZPush
 {
-    // TODO: make this contain Folder instead of inheriting, then FolderWrapper needn't be public
-    public class ZPushFolder : FolderWrapper
+    public class ZPushFolder : DisposableWrapper
     {
-        private readonly NSOutlook.Items _items;
-        private readonly NSOutlook.Folders _subFolders;
+        private IFolder _folder;
         private ZPushFolder _parent;
         private readonly ZPushWatcher _watcher;
         private List<ItemsWatcher> _itemsWatchers = new List<ItemsWatcher>();
@@ -40,23 +37,28 @@ namespace Acacia.ZPush
         /// </summary>
         protected readonly Dictionary<string, ZPushFolder> _children = new Dictionary<string, ZPushFolder>();
 
-        internal ZPushFolder(ZPushWatcher watcher, NSOutlook.Folder folder)
+        internal ZPushFolder(ZPushWatcher watcher, IFolder folder)
         :
         this(watcher, null, folder)
         {
             Initialise();
         }
 
-        private ZPushFolder(ZPushWatcher watcher, ZPushFolder parent, NSOutlook.Folder folder)
-        :
-        base(folder)
+        private ZPushFolder(ZPushWatcher watcher, ZPushFolder parent, IFolder folder)
         {
             Logger.Instance.Trace(this, "Watching folder: {1}: {0}", folder.EntryID, folder.Name);
             this._parent = parent;
             this._watcher = watcher;
-            this._items = folder.Items;
-            this._subFolders = folder.Folders;
+            this._folder = folder;
         }
+
+        protected override void DoRelease()
+        {
+            _folder.Dispose();
+        }
+
+        public IFolder Folder { get; }
+        public string Name { get { return _folder.Name; } }
 
         private void Initialise()
         { 
@@ -67,20 +69,21 @@ namespace Acacia.ZPush
             _watcher.OnFolderDiscovered(this);
 
             // Recurse the children
-            foreach (NSOutlook.Folder subfolder in this._subFolders)
+            foreach (IFolder subfolder in _folder.GetSubFolders())
             {
                 Tasks.Task(null, "WatchChild", () => WatchChild(subfolder));
             }
         }
 
-        public override void Dispose()
+        // TODO
+        /*public override void Dispose()
         {
             Logger.Instance.Trace(this, "Disposing folder: {0}", _item.Name);
             Cleanup();
             base.Dispose();
             ComRelease.Release(_items);
             ComRelease.Release(_subFolders);
-        }
+        }*/
 
         internal ItemsWatcher ItemsWatcher()
         {
@@ -92,7 +95,7 @@ namespace Acacia.ZPush
         public void ReportExistingItems<TypedItem>(TypedItemEventHandler<TypedItem> handler)
         where TypedItem : IItem
         {
-            foreach(IItem item in Items)
+            foreach(IItem item in _folder.Items)
             {
                 if (item is TypedItem)
                     handler((TypedItem)item);
@@ -101,6 +104,8 @@ namespace Acacia.ZPush
 
         private void HookEvents(bool register)
         {
+            // TODO
+            /*
             if (register)
             {
                 // Item events
@@ -122,12 +127,12 @@ namespace Acacia.ZPush
                 _subFolders.FolderAdd -= SubFolders_FolderAdd;
                 _subFolders.FolderRemove -= SubFolders_FolderRemove;
                 _subFolders.FolderChange -= SubFolders_FolderChange;
-            }
+            }*/
         }
 
         private void Cleanup()
         {
-            Logger.Instance.Trace(this, "Unwatching folder: {0}", _item.Name);
+            Logger.Instance.Trace(this, "Unwatching folder: {0}", _folder.Name);
             // The events need to be unhooked explicitly, otherwise we get double notifications if a folder is moved
             HookEvents(false);
             foreach (ZPushFolder child in _children.Values)
@@ -141,7 +146,7 @@ namespace Acacia.ZPush
         /// Watches the child folder.
         /// </summary>
         /// <param name="child">The child folder. Ownership will be taken.</param>
-        private void WatchChild(NSOutlook.Folder child)
+        private void WatchChild(IFolder child)
         {
             if (!_children.ContainsKey(child.EntryID))
             {
@@ -165,124 +170,5 @@ namespace Acacia.ZPush
             // Release the folder if not used
             ComRelease.Release(child);
         }
-
-        #region Event handlers
-
-        private void SubFolders_FolderAdd(NSOutlook.MAPIFolder folder)
-        {
-            try
-            {
-                Logger.Instance.Debug(this, "Folder added in {0}: {1}", this._item.Name, folder.Name);
-                WatchChild((NSOutlook.Folder)folder);
-            }
-            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderAdd: {0}: {1}", Name, e); }
-        }
-
-        private void SubFolders_FolderRemove()
-        {
-            try
-            {
-                Logger.Instance.Debug(this, "Folder removed from {0}", this._item.Name);
-
-                // Helpfully, Outlook doesn't tell us which folder was removed. Could use the BeforeFolderMove event instead,
-                // but that doesn't fire if a folder was removed on the server.
-                // Hence, fetch all the remaining folder ids, and remove any folder that no longer exists.
-                HashSet<string> remaining = new HashSet<string>();
-                foreach (NSOutlook.Folder child in _subFolders)
-                {
-                    try
-                    {
-                        remaining.Add(child.EntryID);
-                    }
-                    catch (System.Exception e) { Logger.Instance.Warning(this, "Ignoring failed child: {0}", e); }
-                }
-
-                // Find the folders that need to be removed. There should be only one, but with Outlook we can never be sure,
-                // so compare all. We cannot modify the dictionary during iteration, so store entries to be removed in a
-                // temporary list
-                List<KeyValuePair<string, ZPushFolder>> remove = new List<KeyValuePair<string, ZPushFolder>>();
-                foreach (var entry in _children)
-                {
-                    if (!remaining.Contains(entry.Key))
-                    {
-                        remove.Add(entry);
-                    }
-                }
-
-                // Actually remove the folders
-                foreach (var entry in remove)
-                {
-                    Logger.Instance.Debug(this, "Removing subfolder {0}, {1}", this._item.Name, entry.Key);
-                    _children.Remove(entry.Key);
-                    entry.Value.Cleanup();
-                }
-            }
-            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderRemove: {0}: {1}", Name, e); }
-        }
-
-        private void SubFolders_FolderChange(NSOutlook.MAPIFolder folder)
-        {
-            try
-            {
-                Logger.Instance.Debug(this, "Folder changed in {0}: {1}", this._item.Name, folder.Name);
-                ZPushFolder child;
-                if (_children.TryGetValue(folder.EntryID, out child))
-                {
-                    _watcher.OnFolderChanged(child);
-                    // TODO: release folder?
-                }
-                else
-                {
-                    // On a clean profile, we sometimes get a change notification, but not an add notification
-                    // Create it now
-                    // This will send a discover notification if required, which is just as good as a change notification
-                    Logger.Instance.Debug(this, "Folder change on unreported folder in {0}: {1}, {2}, {3}", this._item.Name, folder.Name, folder.EntryID, folder.Store.DisplayName);
-                    WatchChild((NSOutlook.Folder)folder);
-                }
-            }
-            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderChange: {0}: {1}", Name, e); }
-        }
-
-        private void Items_ItemAdd(object oItem)
-        {
-            try
-            {
-                using (IItem item = Mapping.Wrap<IItem>(oItem))
-                {
-                    if (item != null)
-                    {
-                        Logger.Instance.Trace(this, "New item {0}: {1}", Name, item.EntryId);
-                        foreach (ItemsWatcher watcher in _itemsWatchers)
-                            watcher.OnItemAdd(this, item);
-                    }
-                }
-            }
-            catch(System.Exception e)
-            {
-                Logger.Instance.Trace(this, "ItemAdd exception: {0}: {1}", Name, e);
-            }
-        }
-
-        private void Items_ItemChange(object oItem)
-        {
-            try
-            {
-                using (IItem item = Mapping.Wrap<IItem>(oItem))
-                {
-                    if (item != null)
-                    {
-                        Logger.Instance.Trace(this, "Changed item {0}", Name);
-                        foreach (ItemsWatcher watcher in _itemsWatchers)
-                            watcher.OnItemChange(this, item);
-                    }
-                }
-            }
-            catch (System.Exception e)
-            {
-                Logger.Instance.Trace(this, "ItemChange exception: {0}: {1}", Name, e);
-            }
-        }
-
-        #endregion
     }
 }

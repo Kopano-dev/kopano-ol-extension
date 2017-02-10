@@ -15,6 +15,7 @@
 /// Consult LICENSE file for details
 
 using Acacia.Stubs;
+using Acacia.Stubs.OutlookWrappers;
 using Acacia.Utils;
 using Microsoft.Win32;
 using System;
@@ -238,36 +239,41 @@ namespace Acacia.ZPush
         /// </summary>
         private void StoreAdded(NSOutlook.Store s)
         {
+            IStore store = null;
             try
             {
-                using (ComRelease com = new ComRelease())
+                // Accessing the store object causes random crashes, simply iterate to find new stores
+                Logger.Instance.Trace(this, "StoreAdded: {0}", s.StoreID);
+                foreach (NSOutlook.Store rawStore in _session.Stores.RawEnum(false))
                 {
-                    Logger.Instance.Trace(this, "StoreAdded: {0}", s.StoreID);
-                    foreach (NSOutlook.Store store in com.Add(com.Add(_app.Session).Stores))
+                    if (!_accountsByStoreId.ContainsKey(rawStore.StoreID))
                     {
-                        if (!_accountsByStoreId.ContainsKey(store.StoreID))
+                        Logger.Instance.Trace(this, "New store: {0}", rawStore.DisplayName);
+
+                        store = Mapping.Wrap(rawStore);
+                        ZPushAccount zpush = TryCreateFromRegistry(store);
+                        if (zpush == null)
                         {
-                            Logger.Instance.Trace(this, "New store: {0}", store.DisplayName);
-                            ZPushAccount zpush = TryCreateFromRegistry(store);
-                            if (zpush == null)
-                            {
-                                // Add it to the cache so it is not evaluated again.
-                                _accountsByStoreId.Add(store.StoreID, null);
-                                Logger.Instance.Trace(this, "Not a ZPush store: {0}", store.DisplayName);
-                            }
-                            else
-                            {
-                                Logger.Instance.Trace(this, "New ZPush store: {0}: {1}", store.DisplayName, zpush);
-                                _watcher.OnAccountDiscovered(zpush, false);
-                            }
+                            // Add it to the cache so it is not evaluated again.
+                            _accountsByStoreId.Add(store.StoreID, null);
+                            Logger.Instance.Trace(this, "Not a ZPush store: {0}", store.DisplayName);
+                            store.Dispose();
                         }
-                        else ComRelease.Release(store);
+                        else
+                        {
+                            Logger.Instance.Trace(this, "New ZPush store: {0}: {1}", store.DisplayName, zpush);
+                            _watcher.OnAccountDiscovered(zpush, false);
+                            // zpush has taken ownership
+                        }
                     }
+                    else ComRelease.Release(rawStore);
                 }
             }
             catch(System.Exception e)
             {
                 Logger.Instance.Error(this, "StoreAdded Exception: {0}", e);
+                if (store != null)
+                    store.Dispose();
             }
         }
 
@@ -287,6 +293,7 @@ namespace Acacia.ZPush
         /// <param name="account">The account. The caller is responsible for releasing this.</param>
         /// <returns>The associated ZPushAccount</returns>
         /// <exception cref="Exception">If the registry key cannot be found</exception>
+        // TODO: check management of account
         private ZPushAccount CreateFromRegistry(NSOutlook.Account account)
         {
             // TODO: check that caller releases account everywhere
@@ -300,10 +307,10 @@ namespace Acacia.ZPush
                 string storeId = ZPushAccount.GetStoreId(baseKey.Name);
 
                 // Find the store
-                NSOutlook.Store store = _app.Session.GetStoreFromID(storeId);
+                NSOutlook.Store store = _session.GetStoreFromID(storeId);
 
                 // Done, create and register
-                ZPushAccount zpush = new ZPushAccount(baseKey.Name, store);
+                ZPushAccount zpush = new ZPushAccount(baseKey.Name, Mapping.Wrap(store));
                 Register(zpush);
                 return zpush;
             }
@@ -312,9 +319,9 @@ namespace Acacia.ZPush
         /// <summary>
         /// Creates the ZPushAccount for the store, from the registry.
         /// </summary>
-        /// <param name="store">The store</param>
+        /// <param name="store">The store. Ownership is transferred to the ZPushAccount. If the account is not created, the store is NOT disposed</param>
         /// <returns>The ZPushAccount, or null if no account is associated with the store</returns>
-        private ZPushAccount TryCreateFromRegistry(NSOutlook.Store store)
+        private ZPushAccount TryCreateFromRegistry(IStore store)
         {
             using (RegistryKey baseKey = FindRegistryKey(store))
             {
@@ -363,7 +370,7 @@ namespace Acacia.ZPush
         /// Finds the registry key for the account associated with the store.
         /// </summary>
         /// <returns>The registry key, or null if it cannot be found</returns>
-        private RegistryKey FindRegistryKey(NSOutlook.Store store)
+        private RegistryKey FindRegistryKey(IStore store)
         {
             // Find the registry key by store id
             using (RegistryKey key = OpenBaseKey())

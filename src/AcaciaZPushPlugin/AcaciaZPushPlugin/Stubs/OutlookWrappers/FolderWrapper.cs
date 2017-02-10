@@ -39,6 +39,8 @@ namespace Acacia.Stubs.OutlookWrappers
             return _item.PropertyAccessor;
         }
 
+        public string FullFolderPath { get { return _item.FullFolderPath; } }
+
         public IFolder Parent
         {
             get
@@ -48,7 +50,7 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public string ParentEntryId
+        public string ParentEntryID
         {
             get
             {
@@ -96,9 +98,10 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public string EntryId { get { return _item.EntryID; } }
+        public string EntryID { get { return _item.EntryID; } }
 
-        public IStore Store { get { return StoreWrapper.Wrap(_item.Store); } }
+        public IStore Store { get { return Mapping.Wrap(_item.Store); } }
+
         public string StoreId
         {
             get
@@ -460,5 +463,9 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #endregion
 
+        public ItemType DefaultItemType
+        {
+            get { return (ItemType)(int)_item.DefaultItemType; }
+        }
     }
 }

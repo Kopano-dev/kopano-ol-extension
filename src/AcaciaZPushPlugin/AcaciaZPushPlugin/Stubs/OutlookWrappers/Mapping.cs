@@ -80,7 +80,19 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public static IRecipient Wrap(NSOutlook.Recipient r, bool mustRelease = true)
         {
+            if (r == null)
+                return null;
             RecipientWrapper wrapped = new RecipientWrapper(r);
+            wrapped.MustRelease = mustRelease;
+            return wrapped;
+        }
+
+        // TODO: extension methods for this
+        public static IStore Wrap(NSOutlook.Store obj, bool mustRelease = true)
+        {
+            if (obj == null)
+                return null;
+            StoreWrapper wrapped = new StoreWrapper(obj);
             wrapped.MustRelease = mustRelease;
             return wrapped;
         }

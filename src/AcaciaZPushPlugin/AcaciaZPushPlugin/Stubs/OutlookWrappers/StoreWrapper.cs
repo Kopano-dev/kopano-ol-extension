@@ -26,12 +26,7 @@ namespace Acacia.Stubs.OutlookWrappers
 {
     class StoreWrapper : ComWrapper<NSOutlook.Store>, IStore
     {
-        internal static IStore Wrap(NSOutlook.Store store)
-        {
-            return store == null ? null : new StoreWrapper(store);
-        }
-
-        private StoreWrapper(NSOutlook.Store store) : base(store)
+        internal StoreWrapper(NSOutlook.Store store) : base(store)
         {
         }
 
@@ -39,6 +34,25 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             // FolderWrapper manages the returned Folder
             return new FolderWrapper((NSOutlook.Folder)_item.GetRootFolder());
+        }
+
+        public IFolder GetDefaultFolder(DefaultFolder folder)
+        {
+            // FolderWrapper manages the returned Folder
+            return new FolderWrapper((NSOutlook.Folder)_item.GetDefaultFolder((NSOutlook.OlDefaultFolders)(int)folder));
+        }
+
+        public string GetDefaultFolderId(DefaultFolder folder)
+        {
+            NSOutlook.MAPIFolder mapiFolder = _item.GetDefaultFolder((NSOutlook.OlDefaultFolders)(int)folder);
+            try
+            {
+                return mapiFolder.EntryID;
+            }
+            finally
+            {
+                ComRelease.Release(mapiFolder);
+            }
         }
 
         public IItem GetItemFromID(string id)
@@ -79,6 +93,5 @@ namespace Acacia.Stubs.OutlookWrappers
                 }
             }
         }
-
     }
 }

@@ -15,6 +15,7 @@
 /// Consult LICENSE file for details
 
 using Acacia.Stubs;
+using Acacia.Stubs.OutlookWrappers;
 using Acacia.Utils;
 using Acacia.ZPush.Connect;
 using Microsoft.Win32;
@@ -32,27 +33,31 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 namespace Acacia.ZPush
 {
     [TypeConverter(typeof(ExpandableObjectConverter))]
-    public class ZPushAccount : LogContext
+    public class ZPushAccount : DisposableWrapper, LogContext
     {
         #region Miscellaneous
 
         private readonly string _regPath;
 
-        // TODO: this should probably be wrapped. Make ZPushAccount ComWrapper?
-        private readonly NSOutlook.Store _store;
+        private readonly IStore _store;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="regPath">They registry key containing the account settings.</param>
-        /// <param name="store">The store this account represents.</param>
-        internal ZPushAccount(string regPath, NSOutlook.Store store)
+        /// <param name="store">The store this account represents. The new object takes ownership</param>
+        internal ZPushAccount(string regPath, IStore store)
         {
             this._regPath = regPath;
             this._store = store;
 
             // Cache the SmtpAddress, it is used as the key
             SmtpAddress = RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_EMAIL, null);
+        }
+
+        protected override void DoRelease()
+        {
+            _store.Dispose();
         }
 
         [Browsable(false)]
@@ -83,8 +88,7 @@ namespace Acacia.ZPush
         #region Properties
 
         [Browsable(false)]
-        // TODO: remove this
-        public NSOutlook.Store Store
+        public IStore Store
         {
             get
             {
@@ -229,7 +233,7 @@ namespace Acacia.ZPush
 
         public void LinkedGABFolder(IFolder folder)
         {
-            GABFolderLinked = folder.EntryId;
+            GABFolderLinked = folder.EntryID;
         }
 
         internal void OnConfirmationResponse(ZPushConnection.Response response)

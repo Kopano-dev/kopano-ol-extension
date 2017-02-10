@@ -92,7 +92,7 @@ namespace Acacia.Features.Notes
         {
             // Only patch if on a ZPush server that supports notes. Store the folder as entryId, there have been some
             // issues with the folder object being disposed in the past
-            string folderId = folder.EntryId;
+            string folderId = folder.EntryID;
             ZPushAccount zpush = Watcher.Accounts.GetAccount(folder);
             if (zpush != null)
             {
@@ -219,7 +219,7 @@ namespace Acacia.Features.Notes
             {
                 if ((int)item.GetProperty(OutlookConstants.PR_ICON_INDEX) != 771)
                 {
-                    Logger.Instance.Trace(this, "Patching item: {0}", item.EntryId);
+                    Logger.Instance.Trace(this, "Patching item: {0}", item.EntryID);
 
                     // Patch standard properties
                     item.SetProperties(

@@ -205,7 +205,7 @@ namespace Acacia.Features.GAB
                 // TODO: make type-checking iterator?
                 if (item is IZPushItem)
                 {
-                    string entryId = item.EntryId;
+                    string entryId = item.EntryID;
                     Logger.Instance.Trace(this, "Checking chunk: {0}", item.Subject);
                     if (_feature.ProcessItems2)
                     {
@@ -613,7 +613,7 @@ namespace Acacia.Features.GAB
                         {
                             using (IItem item = FindItemById(memberId))
                             {
-                                Logger.Instance.Debug(this, "Finding member {0} of {1}: {2}", memberId, id, item?.EntryId);
+                                Logger.Instance.Debug(this, "Finding member {0} of {1}: {2}", memberId, id, item?.EntryID);
                                 if (item != null)
                                     AddGroupMember(group, item);
                             }
@@ -670,7 +670,7 @@ namespace Acacia.Features.GAB
                 {
                     using (IItem groupItem = FindItemById(memberOf))
                     {
-                        Logger.Instance.Debug(this, "Finding group {0} for {1}: {2}", memberOf, id, groupItem?.EntryId);
+                        Logger.Instance.Debug(this, "Finding group {0} for {1}: {2}", memberOf, id, groupItem?.EntryID);
                         if (groupItem is IDistributionList)
                         {
                             AddGroupMember((IDistributionList)groupItem, item);

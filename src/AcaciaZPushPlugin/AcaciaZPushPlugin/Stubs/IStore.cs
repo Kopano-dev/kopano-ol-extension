@@ -29,6 +29,17 @@ namespace Acacia.Stubs
         /// </summary>
         /// <returns>The root folder. The caller is responsible for disposing.</returns>
         IFolder GetRootFolder();
+
+        /// <summary>
+        /// Returns a default folder.
+        /// </summary>
+        /// <returns>The default folder. The caller is responsible for disposing.</returns>
+        IFolder GetDefaultFolder(DefaultFolder folder);
+        /// <summary>
+        /// Returns GetDefaultFolder.EntryID, for simplified memory manaement
+        /// </summary>
+        string GetDefaultFolderId(DefaultFolder folder);
+
         IItem GetItemFromID(string id);
         string DisplayName { get; }
         string StoreID { get; }
