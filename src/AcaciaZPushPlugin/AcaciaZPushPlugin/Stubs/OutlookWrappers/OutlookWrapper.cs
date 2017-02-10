@@ -44,10 +44,6 @@ namespace Acacia.Stubs.OutlookWrappers
             this._item = item;
         }
 
-        ~OutlookWrapper()
-        {
-        }
-
         protected override void DoRelease()
         {
             if (_props != null)
