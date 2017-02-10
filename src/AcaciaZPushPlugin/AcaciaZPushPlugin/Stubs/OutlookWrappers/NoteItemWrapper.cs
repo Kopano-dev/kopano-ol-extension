@@ -74,7 +74,7 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #region IBase implementation
 
-        public string EntryId { get { return _item.EntryID; } }
+        public string EntryID { get { return _item.EntryID; } }
 
         public IFolder Parent
         {
@@ -85,7 +85,7 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public string ParentEntryId
+        public string ParentEntryID
         {
             get
             {
@@ -104,7 +104,7 @@ namespace Acacia.Stubs.OutlookWrappers
                 using (ComRelease com = new ComRelease())
                 {
                     NSOutlook.Folder parent = com.Add(_item.Parent);
-                    return StoreWrapper.Wrap(parent?.Store);
+                    return Mapping.Wrap(parent?.Store);
                 }
             }
         }

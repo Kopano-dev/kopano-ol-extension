@@ -106,9 +106,9 @@ namespace Acacia.Features.SecondaryContacts
                 Logger.Instance.Debug(this, "Patched secondary contacts folder: {0}", strippedName);
                 // Register and show a warning, if not already done.
                 // Note that patching may be done multiple times.
-                if (!_warnedFolders.Contains(folder.EntryId))
+                if (!_warnedFolders.Contains(folder.EntryID))
                 {
-                    _warnedFolders.Add(folder.EntryId);
+                    _warnedFolders.Add(folder.EntryID);
 
                     if (MessageBox.Show(StringUtil.GetResourceString("SecondaryContactsPatched_Body", strippedName),
                                     StringUtil.GetResourceString("SecondaryContactsPatched_Title"),
@@ -121,7 +121,7 @@ namespace Acacia.Features.SecondaryContacts
                 }
             }
             // If _warnedFolders does not contain the folder (and it's hidden), this means Outlook was restarted.
-            else if (!_warnedFolders.Contains(folder.EntryId))
+            else if (!_warnedFolders.Contains(folder.EntryID))
             {
                 // Stage 2
 

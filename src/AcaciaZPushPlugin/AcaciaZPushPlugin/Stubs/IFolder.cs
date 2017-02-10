@@ -41,6 +41,10 @@ namespace Acacia.Stubs
 
         IItem GetItemById(string id);
 
+        string FullFolderPath { get; }
+
+        ItemType DefaultItemType { get; }
+
         #endregion
 
         #region Searching

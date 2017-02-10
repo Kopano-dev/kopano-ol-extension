@@ -37,6 +37,7 @@ namespace Acacia.ZPush
     /// </summary>
     public class ZPushWatcher
     {
+        // TODO: remove
         private readonly NSOutlook.Application _app;
         public readonly ZPushAccounts Accounts;
         public readonly ZPushSync Sync;
@@ -277,7 +278,7 @@ namespace Acacia.ZPush
         private void HandleFolderWatchers(ZPushAccount account)
         {
             // We need to keep the object alive to keep receiving events
-            _rootFolder = new ZPushFolder(this, (NSOutlook.Folder)account.Store.GetRootFolder());
+            _rootFolder = new ZPushFolder(this, account.Store.GetRootFolder());
         }
 
         public void WatchFolder(FolderRegistration folder, FolderEventHandler handler, FolderEventHandler changedHandler = null)
@@ -299,7 +300,7 @@ namespace Acacia.ZPush
             // Check existing folders for events
             foreach(ZPushFolder existing in _allFolders)
             {
-                if (folder.IsApplicable(existing))
+                if (folder.IsApplicable(existing.Folder))
                 {
                     DispatchFolderEvent(folder, watcher, existing, true);
                 }
@@ -326,7 +327,7 @@ namespace Acacia.ZPush
             // See if anybody is interested
             foreach (KeyValuePair<FolderRegistration, FolderWatcher> entry in _folderWatchers)
             {
-                if (entry.Key.IsApplicable(folder))
+                if (entry.Key.IsApplicable(folder.Folder))
                 {
                     DispatchFolderEvent(entry.Key, entry.Value, folder, isNew);
                 }
@@ -337,17 +338,17 @@ namespace Acacia.ZPush
         {
             Logger.Instance.Debug(this, "Folder event: {0}, {1}, {2}", folder, reg, isNew);
             if (isNew)
-                watcher.OnDiscovered(folder);
+                watcher.OnDiscovered(folder.Folder);
             else
-                watcher.OnChanged(folder);
+                watcher.OnChanged(folder.Folder);
         }
 
-        internal bool ShouldFolderBeWatched(ZPushFolder parent, NSOutlook.Folder child)
+        internal bool ShouldFolderBeWatched(ZPushFolder parent, IFolder child)
         {
-            if (parent.IsAtDepth(0))
+            if (parent.Folder.IsAtDepth(0))
             {
                 // Special mail folders cause issues, they are disallowed
-                if (child.DefaultItemType != NSOutlook.OlItemType.olMailItem)
+                if (child.DefaultItemType != ItemType.MailItem)
                     return true;
 
                 return !IsBlackListedMailFolder(child);
@@ -355,30 +356,27 @@ namespace Acacia.ZPush
             return true;
         }
 
-        private static readonly NSOutlook.OlDefaultFolders[] BLACKLISTED_MAIL_FOLDERS =
+        private static readonly DefaultFolder[] BLACKLISTED_MAIL_FOLDERS =
         {
-            NSOutlook.OlDefaultFolders.olFolderOutbox,
-            NSOutlook.OlDefaultFolders.olFolderDrafts,
-            NSOutlook.OlDefaultFolders.olFolderConflicts,
-            NSOutlook.OlDefaultFolders.olFolderSyncIssues,
-            NSOutlook.OlDefaultFolders.olFolderRssFeeds,
-            NSOutlook.OlDefaultFolders.olFolderManagedEmail
+            DefaultFolder.Outbox,
+            DefaultFolder.Drafts,
+            DefaultFolder.Conflicts,
+            DefaultFolder.SyncIssues,
+            DefaultFolder.RssFeeds,
+            DefaultFolder.ManagedEmail
         };
 
-        private static bool IsBlackListedMailFolder(NSOutlook.Folder folder)
+        private static bool IsBlackListedMailFolder(IFolder folder)
         {
+            
             string entryId = folder.EntryID;
-            using (ComRelease com = new ComRelease())
-            {
-                NSOutlook.Store store = com.Add(folder.Store);
-                foreach(NSOutlook.OlDefaultFolders defaultFolder in BLACKLISTED_MAIL_FOLDERS)
+
+            using (IStore store = folder.Store)
+            { 
+                foreach(DefaultFolder defaultFolderId in BLACKLISTED_MAIL_FOLDERS)
                 {
-                    try
-                    {
-                        if (entryId == com.Add(store.GetDefaultFolder(defaultFolder)).EntryID)
-                            return true;
-                    }
-                    catch (System.Exception) { }
+                    if (entryId == store.GetDefaultFolderId(defaultFolderId))
+                        return true;
                 }
             }
             return false;

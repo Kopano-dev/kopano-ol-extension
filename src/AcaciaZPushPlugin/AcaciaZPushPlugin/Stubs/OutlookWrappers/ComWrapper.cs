@@ -25,50 +25,7 @@ using System.Threading.Tasks;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    abstract class RawComWrapper : IComWrapper
-    {
-        protected RawComWrapper()
-        {
-            Interlocked.Increment(ref Statistics.CreatedWrappers);
-            this._createdTrace = new System.Diagnostics.StackTrace();
-            MustRelease = true;
-        }
-
-        ~RawComWrapper()
-        {
-            Interlocked.Increment(ref Statistics.DeletedWrappers);
-            if (!_isDisposed)
-            {
-                Logger.Instance.Warning(this, "Undisposed wrapper: {0}", _createdTrace);
-                // Dispose, but don't count auto disposals, so the stats show it.
-                DoRelease();
-            }
-        }
-
-        private bool _isDisposed;
-        private readonly System.Diagnostics.StackTrace _createdTrace;
-
-        virtual public void Dispose()
-        {
-            if (!_isDisposed)
-            {
-                Logger.Instance.TraceExtra(this, "Disposing wrapper: {0}", new System.Diagnostics.StackTrace());
-                _isDisposed = true;
-                Interlocked.Increment(ref Statistics.DisposedWrappers);
-                DoRelease();
-            }
-        }
-
-        public bool MustRelease
-        {
-            get;
-            set;
-        }
-
-        abstract protected void DoRelease();
-    }
-
-    abstract class ComWrapper<ItemType> : RawComWrapper
+    abstract class ComWrapper<ItemType> : DisposableWrapper, IComWrapper
     {
         protected ItemType _item { get; private set; }
 
@@ -78,6 +35,13 @@ namespace Acacia.Stubs.OutlookWrappers
         protected ComWrapper(ItemType item)
         {
             this._item = item;
+            MustRelease = true;
+        }
+
+        public bool MustRelease
+        {
+            get;
+            set;
         }
 
         override protected void DoRelease()

@@ -228,7 +228,7 @@ namespace Acacia.Stubs.OutlookWrappers
 
                 // And fetch it and wrap
                 NSOutlook.Stores stores = com.Add(session.Stores);
-                return StoreWrapper.Wrap(stores[stores.Count]);
+                return Mapping.Wrap(stores[stores.Count]);
             }
         }
 
@@ -242,7 +242,7 @@ namespace Acacia.Stubs.OutlookWrappers
                     NSOutlook.Stores stores = com.Add(session.Stores);
                     foreach (NSOutlook.Store store in stores)
                     {
-                        yield return StoreWrapper.Wrap(store);
+                        yield return Mapping.Wrap(store);
                     }
                 }
             }

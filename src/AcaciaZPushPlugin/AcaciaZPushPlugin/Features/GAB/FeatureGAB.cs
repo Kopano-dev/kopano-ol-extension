@@ -251,7 +251,7 @@ namespace Acacia.Features.GAB
             if (_processing == 0)
             {
                 // Check parent folder is a GAB contacts folder
-                if (_gabFolders.Contains(item.ParentEntryId) && IsGABItem(item))
+                if (_gabFolders.Contains(item.ParentEntryID) && IsGABItem(item))
                 {
                     DoSuppressEvent(findInspector ? item : null, ref cancel);
                 }
@@ -434,7 +434,7 @@ namespace Acacia.Features.GAB
                 gab.AttrHidden = false;
 
                 // Update admin
-                _gabFolders.Add(gab.EntryId);
+                _gabFolders.Add(gab.EntryID);
                 GABInfo gabInfo = GABInfo.Get(gab, domainName);
                 gabInfo.Store(gab);
 
@@ -548,7 +548,7 @@ namespace Acacia.Features.GAB
                         GABInfo info = GetGABContactsFolderInfo(subfolder);
                         if (info != null && !_domains.Contains(info.Domain))
                         {
-                            Logger.Instance.Info(this, "Unused GAB folder: {0} - {1}", subfolder.EntryId, subfolder.Name);
+                            Logger.Instance.Info(this, "Unused GAB folder: {0} - {1}", subfolder.EntryID, subfolder.Name);
                             try
                             {
                                 deletedSomething = true;
