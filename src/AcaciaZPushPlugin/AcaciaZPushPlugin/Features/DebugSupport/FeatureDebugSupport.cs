@@ -48,16 +48,16 @@ namespace Acacia.Features.DebugSupport
 
         public override void AfterStartup()
         {
-            //ShowAbout();
+            /*DebugDialog dd = new DebugDialog();
+            dd.Show();
+            dd.DebugCycle(5);*/
         }
 
         #region About dialog
 
         public void ShowAbout()
         {
-            DebugDialog dd = new DebugDialog();
-            dd.Show();
-            dd.DebugCycle(5);
+            new AboutDialog().ShowDialog();
         }
 
         #endregion
@@ -79,9 +79,7 @@ namespace Acacia.Features.DebugSupport
 
         public void ShowSettings()
         {
-            //new SettingsDialog().ShowDialog();
-            ThisAddIn.Instance.GetFeature<GAB.FeatureGAB>()?.FullResync();
-            Tasks.Task(this, "GC", () => Util.GarbageCollect());
+            new SettingsDialog().ShowDialog();
         }
 
         public override FeatureSettings GetSettings()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Acacia.Stubs.OutlookWrappers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Acacia.Stubs
     {
         public static IFolder Wrap(this NSOutlook.MAPIFolder obj)
         {
-            throw new NotImplementedException(); // TODO
+            return Mapping.WrapOrDefault<IFolder>(obj);
         }
     }
 }

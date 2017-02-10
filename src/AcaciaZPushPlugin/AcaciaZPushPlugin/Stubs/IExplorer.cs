@@ -13,5 +13,11 @@ namespace Acacia.Stubs
         /// </summary>
         /// <returns>The command bars. The caller is responsible for disposing.</returns>
         ICommandBars GetCommandBars();
+
+        /// <summary>
+        /// Returns the currently selected folder, or null if no folder is selected.
+        /// </summary>
+        /// <returns>The folder. The caller is responsible for disposing.</returns>
+        IFolder GetCurrentFolder();
     }
 }
