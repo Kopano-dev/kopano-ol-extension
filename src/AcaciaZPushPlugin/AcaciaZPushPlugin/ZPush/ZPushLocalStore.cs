@@ -134,11 +134,14 @@ namespace Acacia.ZPush
             if (GlobalOptions.INSTANCE.LocalFolders_Hide)
             {
                 // Hide the folders that are not custom folders
-                using (ComRelease com = new ComRelease())
+                using (IFolder root = store.GetRootFolder())
                 {
-                    foreach(IFolder sub in store.GetRootFolder().GetSubFolders())
+                    foreach(IFolder sub in root.GetSubFolders())
                     {
-                        sub.AttrHidden = !IsCustomFolder(sub);
+                        using (sub)
+                        {
+                            sub.AttrHidden = !IsCustomFolder(sub);
+                        }
                     }
                 }
             }

@@ -281,10 +281,15 @@
     <Compile Include="OutlookConstants.cs" />
     <Compile Include="Stubs\IAddIn.cs" />
     <Compile Include="Stubs\IAddressEntry.cs" />
+    <Compile Include="Stubs\ICommandBars.cs" />
     <Compile Include="Stubs\IComWrapper.cs" />
+    <Compile Include="Stubs\IExplorer.cs" />
+    <Compile Include="Stubs\IOutlookWindow.cs" />
     <Compile Include="Stubs\IRecipient.cs" />
     <Compile Include="Stubs\OutlookWrappers\AddInWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\AddressEntryWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\CommandBarsWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\ExplorerWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\OutlookItemWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\RecipientWrapper.cs" />
     <Compile Include="UI\Outlook\OutlookImageList.cs" />
@@ -293,6 +298,7 @@
     <Compile Include="UI\Outlook\CommandElement.cs" />
     <Compile Include="UI\Outlook\MenuItem.cs" />
     <Compile Include="UI\Outlook\Types.cs" />
+    <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="Utils\RegistryUtil.cs" />
     <Compile Include="ZPush\API\SharedFolders\AvailableFolder.cs" />
     <Compile Include="ZPush\API\SharedFolders\SharedFolder.cs" />

@@ -22,9 +22,14 @@ namespace Acacia.Stubs
         IEnumerable<KeyValuePair<string,string>> COMAddIns { get; }
         string Version { get; }
 
-        IWin32Window Window { get; }
+        #region UI
 
         OutlookUI OutlookUI { get; }
+        IWin32Window Window { get; }
+        IExplorer GetActiveExplorer();
+
+        #endregion
+
 
         #region Event handlers
 

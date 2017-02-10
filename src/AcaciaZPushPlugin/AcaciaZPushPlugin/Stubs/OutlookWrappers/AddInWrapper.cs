@@ -82,7 +82,61 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
+        #region UI
+
         public OutlookUI OutlookUI { get { return _thisAddIn.OutlookUI; } }
+
+        public IExplorer GetActiveExplorer()
+        {
+            using (ComRelease com = new ComRelease())
+            {
+                return new ExplorerWrapper(com.Add(_thisAddIn.Application).ActiveExplorer());
+            }
+        }
+
+        #region Window handle
+
+        private class WindowHandle : IWin32Window
+        {
+            private IntPtr hWnd;
+
+            public WindowHandle(IntPtr hWnd)
+            {
+                this.hWnd = hWnd;
+            }
+
+            public IntPtr Handle
+            {
+                get
+                {
+                    return hWnd;
+                }
+            }
+        }
+
+        public IWin32Window Window
+        {
+            get
+            {
+                IOleWindow win = _app.ActiveWindow() as IOleWindow;
+                if (win == null)
+                    return null;
+                try
+                {
+                    IntPtr hWnd;
+                    win.GetWindow(out hWnd);
+                    return new WindowHandle(hWnd);
+                }
+                finally
+                {
+                    ComRelease.Release(win);
+                }
+            }
+        }
+
+        #endregion
+
+        #endregion
 
         public ZPushWatcher Watcher { get { return _thisAddIn.Watcher; } }
         public MailEvents MailEvents { get { return _thisAddIn.MailEvents; } }
@@ -147,48 +201,6 @@ namespace Acacia.Stubs.OutlookWrappers
                 return Mapping.Wrap<IFolder>(f);
             }
         }
-
-        #region Window handle
-
-        private class WindowHandle : IWin32Window
-        {
-            private IntPtr hWnd;
-
-            public WindowHandle(IntPtr hWnd)
-            {
-                this.hWnd = hWnd;
-            }
-
-            public IntPtr Handle
-            {
-                get
-                {
-                    return hWnd;
-                }
-            }
-        }
-
-        public IWin32Window Window
-        {
-            get
-            {
-                IOleWindow win = _app.ActiveWindow() as IOleWindow;
-                if (win == null)
-                    return null;
-                try
-                {
-                    IntPtr hWnd;
-                    win.GetWindow(out hWnd);
-                    return new WindowHandle(hWnd);
-                }
-                finally
-                {
-                    ComRelease.Release(win);
-                }
-            }
-        }
-
-        #endregion
 
 
         public IRecipient ResolveRecipient(string name)
