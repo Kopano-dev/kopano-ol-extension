@@ -24,9 +24,18 @@ namespace Acacia.Stubs
 {
     public interface IStore : IDisposable
     {
+        /// <summary>
+        /// Returns the root folder.
+        /// </summary>
+        /// <returns>The root folder. The caller is responsible for disposing.</returns>
         IFolder GetRootFolder();
         IItem GetItemFromID(string id);
         string DisplayName { get; }
         string StoreID { get; }
+
+        bool IsFileStore { get; }
+        string FilePath { get; }
+
+        void EmptyDeletedItems();
     }
 }

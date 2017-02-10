@@ -24,9 +24,9 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    public class StoreWrapper : ComWrapper, IStore
+    class StoreWrapper : ComWrapper, IStore
     {
-        public static IStore Wrap(NSOutlook.Store store)
+        internal static IStore Wrap(NSOutlook.Store store)
         {
             return store == null ? null : new StoreWrapper(store);
         }
@@ -64,5 +64,30 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public string DisplayName { get { return _store.DisplayName; } }
         public string StoreID { get { return _store.StoreID; } }
+
+        public bool IsFileStore { get { return _store.IsDataFileStore; } }
+        public string FilePath { get { return _store.FilePath; } }
+
+        public void EmptyDeletedItems()
+        {
+            using (ComRelease com = new ComRelease())
+            {
+                NSOutlook.MAPIFolder f = _store.GetDefaultFolder(NSOutlook.OlDefaultFolders.olFolderDeletedItems);
+                if (f != null)
+                {
+                    com.Add(f);
+
+                    // Normal enumeration fails when deleting. Do it like this.
+                    NSOutlook.Folders folders = com.Add(f.Folders);
+                    for (int i = folders.Count; i > 0; --i)
+                        com.Add(folders[i]).Delete();
+
+                    NSOutlook.Items items = com.Add(f.Items);
+                    for (int i = items.Count; i > 0; --i)
+                        com.Add(items[i]).Delete();
+                }
+            }
+        }
+
     }
 }

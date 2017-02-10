@@ -57,6 +57,13 @@ namespace Acacia.Stubs
 
         IRecipient ResolveRecipient(string name);
 
+        IStore AddFileStore(string path);
+
+        /// <summary>
+        /// Returns the stores. The caller is responsible for disposing.
+        /// </summary>
+        IEnumerable<IStore> Stores { get; }
+
         #endregion
     }
 }

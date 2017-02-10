@@ -54,6 +54,7 @@ namespace Acacia.Stubs
 
         IEnumerable<FolderType> GetSubFolders<FolderType>()
         where FolderType : IFolder;
+        IEnumerable<IFolder> GetSubFolders();
 
         FolderType GetSubFolder<FolderType>(string name)
         where FolderType : IFolder;
