@@ -8,7 +8,7 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    abstract public class OutlookItemWrapper<ItemType> : OutlookWrapper<ItemType>
+    abstract class OutlookItemWrapper<ItemType> : OutlookWrapper<ItemType>
     {
         public OutlookItemWrapper(ItemType item)
         :

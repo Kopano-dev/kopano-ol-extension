@@ -8,19 +8,10 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    class ExplorerWrapper : ComWrapper, IExplorer
+    class ExplorerWrapper : ComWrapper<NSOutlook.Explorer>, IExplorer
     {
-        private NSOutlook.Explorer _item;
-
-        public ExplorerWrapper(NSOutlook.Explorer item)
+        public ExplorerWrapper(NSOutlook.Explorer item) : base(item)
         {
-            this._item = item;
-        }
-
-        protected override void DoRelease()
-        {
-            ComRelease.Release(_item);
-            _item = null;
         }
 
         public ICommandBars GetCommandBars()

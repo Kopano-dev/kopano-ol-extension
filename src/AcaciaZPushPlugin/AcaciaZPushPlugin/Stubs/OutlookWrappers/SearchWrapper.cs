@@ -24,7 +24,7 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    class SearchWrapper<ItemType> : ComWrapper, ISearch<ItemType>
+    class SearchWrapper<ItemType> : ComWrapper<NSOutlook.Items>, ISearch<ItemType>
     where ItemType : IItem
     {
         private interface SearchTerm
@@ -151,21 +151,13 @@ namespace Acacia.Stubs.OutlookWrappers
         }
 
         private readonly List<SearchTerm> terms = new List<SearchTerm>();
-        private NSOutlook.Items _items;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="items">The items to search. The new object takes ownership</param>
-        public SearchWrapper(NSOutlook.Items items)
+        public SearchWrapper(NSOutlook.Items items) : base(items)
         {
-            this._items = items;
-        }
-
-        protected override void DoRelease()
-        {
-            ComRelease.Release(_items);
-            _items = null;
         }
 
         public ISearchOperator AddOperator(SearchOperator oper)
@@ -187,7 +179,7 @@ namespace Acacia.Stubs.OutlookWrappers
             List<ItemType> values = new List<ItemType>();
             string filter = MakeFilter();
 
-            object value = _items.Find(filter);
+            object value = _item.Find(filter);
             while(value != null)
             {
                 if (values.Count < maxResults)
@@ -204,7 +196,7 @@ namespace Acacia.Stubs.OutlookWrappers
                     // Release if not returned. Keep looping to release any others
                     ComRelease.Release(value);
                 }
-                value = _items.FindNext();
+                value = _item.FindNext();
             }
             return values;
         }
@@ -212,7 +204,7 @@ namespace Acacia.Stubs.OutlookWrappers
         public ItemType SearchOne()
         {
             // Wrap manages com object in value
-            object value = _items.Find(MakeFilter());
+            object value = _item.Find(MakeFilter());
             if (value == null)
                 return default(ItemType);
             return Mapping.Wrap<ItemType>(value);

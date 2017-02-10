@@ -25,20 +25,16 @@ using System.Threading.Tasks;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    public abstract class ComWrapper : IComWrapper
+    abstract class RawComWrapper : IComWrapper
     {
-
-        /// <summary>
-        /// Creates a wrapper.
-        /// </summary>
-        internal ComWrapper()
+        protected RawComWrapper()
         {
             Interlocked.Increment(ref Statistics.CreatedWrappers);
             this._createdTrace = new System.Diagnostics.StackTrace();
             MustRelease = true;
         }
 
-        ~ComWrapper()
+        ~RawComWrapper()
         {
             Interlocked.Increment(ref Statistics.DeletedWrappers);
             if (!_isDisposed)
@@ -70,5 +66,28 @@ namespace Acacia.Stubs.OutlookWrappers
         }
 
         abstract protected void DoRelease();
+    }
+
+    abstract class ComWrapper<ItemType> : RawComWrapper
+    {
+        protected ItemType _item { get; private set; }
+
+        /// <summary>
+        /// Creates a wrapper.
+        /// </summary>
+        protected ComWrapper(ItemType item)
+        {
+            this._item = item;
+        }
+
+        override protected void DoRelease()
+        {
+            if (MustRelease)
+            {
+                ComRelease.Release(_item);
+                _item = default(ItemType);
+            }
+        }
+
     }
 }

@@ -29,37 +29,28 @@ namespace Acacia.Stubs.OutlookWrappers
     /// <summary>
     /// Helper for Outlook wrapper implementations
     /// </summary>
-    abstract public class OutlookWrapper<ItemType> : ComWrapper
+    abstract class OutlookWrapper<ItemType> : ComWrapper<ItemType>
     {
 
         #region Construction / Destruction
 
-        protected ItemType _item;
-
         /// <summary>
         /// Creates a wrapper.
         /// </summary>
-        internal OutlookWrapper(ItemType item)
+        internal OutlookWrapper(ItemType item) : base(item)
         {
-            this._item = item;
         }
 
         protected override void DoRelease()
         {
+            // Always release props, as we allocated that
             if (_props != null)
             {
                 ComRelease.Release(_props);
                 _props = null;
             }
 
-            if (MustRelease)
-            {
-                if (_item != null)
-                {
-                    ComRelease.Release(_item);
-                    _item = default(ItemType);
-                }
-            }
+            base.DoRelease();
         }
 
         #endregion

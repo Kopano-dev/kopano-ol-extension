@@ -10,7 +10,7 @@ using stdole;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    class CommandBarsWrapper : ComWrapper, ICommandBars
+    class CommandBarsWrapper : ComWrapper<NSOffice.CommandBars>, ICommandBars
     {
         private class MSOCommand : IMSOCommand
         {
@@ -37,23 +37,13 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        private NSOffice.CommandBars _item;
-
-        public CommandBarsWrapper(NSOffice.CommandBars item)
+        public CommandBarsWrapper(NSOffice.CommandBars item) : base(item)
         {
-            this._item = item;
         }
 
         public IMSOCommand GetMso(string id)
         {
             return new MSOCommand(this, id);
-        }
-
-        // TODO: make TypedComWrapper
-        protected override void DoRelease()
-        {
-            ComRelease.Release(_item);
-            _item = null;
         }
     }
 }
