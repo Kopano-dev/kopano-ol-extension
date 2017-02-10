@@ -39,7 +39,7 @@ namespace Acacia.Features.GAB
         private readonly Dictionary<string, GABHandler> _gabsByDomainName = new Dictionary<string, GABHandler>();
         private readonly HashSet<string> _gabFolders = new HashSet<string>();
         private readonly HashSet<string> _domains = new HashSet<string>();
-        private ZPushLocalStore _store;
+        private IStore _store;
         private int _processing;
 
         public FeatureGAB()
@@ -316,11 +316,11 @@ namespace Acacia.Features.GAB
                 // Delete any contacts folders in the local store
                 if (DeleteExistingFolder)
                 {
-                    using (ZPushLocalStore store = ZPushLocalStore.GetInstance(ThisAddIn.Instance))
+                    using (IStore store = ZPushLocalStore.GetInstance(ThisAddIn.Instance))
                     {
                         if (store != null)
                         {
-                            using (IFolder root = store.RootFolder)
+                            using (IFolder root = store.GetRootFolder())
                             {
                                 foreach (IFolder folder in root.GetSubFolders<IFolder>())
                                 {
@@ -416,7 +416,7 @@ namespace Acacia.Features.GAB
                 return null;
 
             // Try to find the existing GAB
-            using (IFolder root = _store.RootFolder)
+            using (IFolder root = _store.GetRootFolder())
             {
                 IAddressBook gab = FindGABForDomain(root, domainName);
                 if (gab == null)
@@ -538,7 +538,7 @@ namespace Acacia.Features.GAB
                 return;
 
             bool deletedSomething = false;
-            using (IFolder root = _store.RootFolder)
+            using (IFolder root = _store.GetRootFolder())
             {
                 foreach (IFolder subfolder in root.GetSubFolders<IFolder>())
                 {

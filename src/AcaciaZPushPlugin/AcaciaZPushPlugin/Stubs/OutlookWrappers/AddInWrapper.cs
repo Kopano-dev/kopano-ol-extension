@@ -94,7 +94,7 @@ namespace Acacia.Stubs.OutlookWrappers
                 Microsoft.Office.Core.COMAddIns addIns = _app.COMAddIns;
                 try
                 {
-                    foreach(Microsoft.Office.Core.COMAddIn comAddin in addIns)
+                    foreach (Microsoft.Office.Core.COMAddIn comAddin in addIns)
                     {
                         try
                         {
@@ -196,12 +196,43 @@ namespace Acacia.Stubs.OutlookWrappers
             using (ComRelease com = new ComRelease())
             {
                 NSOutlook.NameSpace session = com.Add(_app.Session);
-                NSOutlook.Recipient recipient = session.CreateRecipient(name);
+                // Add recipient, unlock after Resolve (which might throw) to wrap
+                NSOutlook.Recipient recipient = com.Add(session.CreateRecipient(name));
                 if (recipient == null)
                     return null;
-                com.Add(recipient);
                 recipient.Resolve();
                 return Mapping.Wrap(com.Remove(recipient));
+            }
+        }
+
+        public IStore AddFileStore(string path)
+        {
+            using (ComRelease com = new ComRelease())
+            {
+                NSOutlook.NameSpace session = com.Add(_app.Session);
+                
+                // Add the store
+                session.AddStore(path);
+
+                // And fetch it and wrap
+                NSOutlook.Stores stores = com.Add(session.Stores);
+                return StoreWrapper.Wrap(stores[stores.Count]);
+            }
+        }
+
+        public IEnumerable<IStore> Stores
+        {
+            get
+            {
+                using (ComRelease com = new ComRelease())
+                {
+                    NSOutlook.NameSpace session = com.Add(_app.Session);
+                    NSOutlook.Stores stores = com.Add(session.Stores);
+                    foreach (NSOutlook.Store store in stores)
+                    {
+                        yield return StoreWrapper.Wrap(store);
+                    }
+                }
             }
         }
     }

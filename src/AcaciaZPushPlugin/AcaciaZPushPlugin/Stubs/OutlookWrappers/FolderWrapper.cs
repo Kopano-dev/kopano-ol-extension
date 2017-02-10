@@ -296,6 +296,11 @@ namespace Acacia.Stubs.OutlookWrappers
             };
         }
 
+        public IEnumerable<IFolder> GetSubFolders()
+        {
+            return GetSubFolders<IFolder>();
+        }
+
         public FolderType GetSubFolder<FolderType>(string name)
         where FolderType : IFolder
         {
