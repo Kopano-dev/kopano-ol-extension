@@ -25,7 +25,7 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    public class StorageItemWrapper : OutlookItemWrapper<NSOutlook.StorageItem>, IStorageItem
+    class StorageItemWrapper : OutlookItemWrapper<NSOutlook.StorageItem>, IStorageItem
     {
         public StorageItemWrapper(NSOutlook.StorageItem item)
         :

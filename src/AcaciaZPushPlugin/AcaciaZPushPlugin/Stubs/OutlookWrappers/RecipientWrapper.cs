@@ -8,22 +8,13 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    class RecipientWrapper : ComWrapper, IRecipient
+    class RecipientWrapper : ComWrapper<NSOutlook.Recipient>, IRecipient
     {
-        private NSOutlook.Recipient _item;
-
-        internal RecipientWrapper(NSOutlook.Recipient item)
+        internal RecipientWrapper(NSOutlook.Recipient item) : base(item)
         {
-            this._item = item;
         }
 
         internal NSOutlook.Recipient RawItem { get { return _item; } }
-
-        protected override void DoRelease()
-        {
-            ComRelease.Release(_item);
-            _item = null;
-        }
 
         public bool IsResolved
         {

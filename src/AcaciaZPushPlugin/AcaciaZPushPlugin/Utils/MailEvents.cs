@@ -223,17 +223,15 @@ namespace Acacia.Utils
             }
         }
 
-        private class MailEventHooker : ComWrapper
+        private class MailEventHooker : ComWrapper<NSOutlook.ItemEvents_10_Event>
         {
-            private NSOutlook.ItemEvents_10_Event _itemEvents;
             private readonly MailEvents _events;
             // TODO: remove id and debug logging
             private int _id;
             private static int nextId;
 
-            public MailEventHooker(NSOutlook.ItemEvents_10_Event itemEvents, MailEvents events)
+            public MailEventHooker(NSOutlook.ItemEvents_10_Event itemEvents, MailEvents events) : base(itemEvents)
             {
-                this._itemEvents = itemEvents;
                 this._id = ++nextId;
                 this._events = events;
                 HookEvents(true);
@@ -250,23 +248,23 @@ namespace Acacia.Utils
             {
                 if (add)
                 {
-                    _itemEvents.BeforeDelete += HandleBeforeDelete;
-                    _itemEvents.Forward += HandleForward;
-                    _itemEvents.Read += HandleRead;
-                    _itemEvents.Reply += HandleReply;
-                    _itemEvents.ReplyAll += HandleReplyAll;
-                    _itemEvents.Unload += HandleUnload;
-                    _itemEvents.Write += HandleWrite;
+                    _item.BeforeDelete += HandleBeforeDelete;
+                    _item.Forward += HandleForward;
+                    _item.Read += HandleRead;
+                    _item.Reply += HandleReply;
+                    _item.ReplyAll += HandleReplyAll;
+                    _item.Unload += HandleUnload;
+                    _item.Write += HandleWrite;
                 }
                 else
                 {
-                    _itemEvents.BeforeDelete -= HandleBeforeDelete;
-                    _itemEvents.Forward -= HandleForward;
-                    _itemEvents.Read -= HandleRead;
-                    _itemEvents.Reply -= HandleReply;
-                    _itemEvents.ReplyAll -= HandleReplyAll;
-                    _itemEvents.Unload -= HandleUnload;
-                    _itemEvents.Write -= HandleWrite;
+                    _item.BeforeDelete -= HandleBeforeDelete;
+                    _item.Forward -= HandleForward;
+                    _item.Read -= HandleRead;
+                    _item.Reply -= HandleReply;
+                    _item.ReplyAll -= HandleReplyAll;
+                    _item.Unload -= HandleUnload;
+                    _item.Write -= HandleWrite;
                 }
             }
 
@@ -279,25 +277,25 @@ namespace Acacia.Utils
             private void HandleForward(object response, ref bool cancel)
             {
                 Logger.Instance.Debug(this, "HandleForward: {0}", _id);
-                _events.OnForward(_itemEvents as NSOutlook.MailItem, response as NSOutlook.MailItem);
+                _events.OnForward(_item as NSOutlook.MailItem, response as NSOutlook.MailItem);
             }
 
             private void HandleRead()
             {
                 Logger.Instance.Debug(this, "HandleRead: {0}", _id);
-                _events.OnRead(_itemEvents as NSOutlook.MailItem);
+                _events.OnRead(_item as NSOutlook.MailItem);
             }
 
             private void HandleReply(object response, ref bool cancel)
             {
                 Logger.Instance.Debug(this, "HandleReply: {0}", _id);
-                _events.OnReply(_itemEvents as NSOutlook.MailItem, response as NSOutlook.MailItem);
+                _events.OnReply(_item as NSOutlook.MailItem, response as NSOutlook.MailItem);
             }
 
             private void HandleReplyAll(object response, ref bool cancel)
             {
                 Logger.Instance.Debug(this, "HandleReplyAll: {0}", _id);
-                _events.OnReplyAll(_itemEvents as NSOutlook.MailItem, response as NSOutlook.MailItem);
+                _events.OnReplyAll(_item as NSOutlook.MailItem, response as NSOutlook.MailItem);
             }
 
             private void HandleUnload()
@@ -311,7 +309,7 @@ namespace Acacia.Utils
             private void HandleWrite(ref bool cancel)
             {
                 Logger.Instance.Debug(this, "HandleWrite: {0}", _id);
-                _events.OnWrite(_itemEvents, ref cancel);
+                _events.OnWrite(_item, ref cancel);
             }
         }
 

@@ -26,7 +26,7 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    public class FolderWrapper : OutlookWrapper<NSOutlook.Folder>, IFolder
+    class FolderWrapper : OutlookWrapper<NSOutlook.Folder>, IFolder
     {
         public FolderWrapper(NSOutlook.MAPIFolder folder)
         :
@@ -124,22 +124,20 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #region Enumeration
 
-        public class ItemsEnumerator<ItemType> : ComWrapper, IEnumerator<ItemType>
+        public class ItemsEnumerator<ItemType> : ComWrapper<NSOutlook.Items>, IEnumerator<ItemType>
         where ItemType : IItem
         {
-            private NSOutlook.Items _items;
             private IEnumerator _enum;
             private ItemType _last;
 
-            public ItemsEnumerator(NSOutlook.Folder _folder, string field, bool descending)
+            public ItemsEnumerator(NSOutlook.Folder folder, string field, bool descending) : base(folder.Items)
             {
                 // TODO: can _items be released here already?
-                this._items = _folder.Items;
                 if (field != null)
                 {
-                    this._items.Sort("[" + field + "]", descending);
+                    this._item.Sort("[" + field + "]", descending);
                 }
-                this._enum = _items.GetEnumerator();
+                this._enum = _item.GetEnumerator();
             }
 
             protected override void DoRelease()
@@ -152,11 +150,7 @@ namespace Acacia.Stubs.OutlookWrappers
                     ComRelease.Release(_enum);
                     _enum = null;
                 }
-                if (_items != null)
-                {
-                    ComRelease.Release(_items);
-                    _items = null;
-                }
+                base.DoRelease();
             }
 
             public ItemType Current

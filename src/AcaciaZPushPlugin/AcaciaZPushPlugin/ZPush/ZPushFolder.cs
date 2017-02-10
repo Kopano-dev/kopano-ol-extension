@@ -26,6 +26,7 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.ZPush
 {
+    // TODO: make this contain Folder instead of inheriting, then FolderWrapper needn't be public
     public class ZPushFolder : FolderWrapper
     {
         private readonly NSOutlook.Items _items;

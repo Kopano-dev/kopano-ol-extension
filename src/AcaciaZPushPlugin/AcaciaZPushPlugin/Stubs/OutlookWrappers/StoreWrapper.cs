@@ -24,37 +24,28 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    class StoreWrapper : ComWrapper, IStore
+    class StoreWrapper : ComWrapper<NSOutlook.Store>, IStore
     {
         internal static IStore Wrap(NSOutlook.Store store)
         {
             return store == null ? null : new StoreWrapper(store);
         }
 
-        private NSOutlook.Store _store;
-
-        private StoreWrapper(NSOutlook.Store store)
+        private StoreWrapper(NSOutlook.Store store) : base(store)
         {
-            this._store = store;
-        }
-
-        protected override void DoRelease()
-        {
-            ComRelease.Release(_store);
-            _store = null;
         }
 
         public IFolder GetRootFolder()
         {
             // FolderWrapper manages the returned Folder
-            return new FolderWrapper((NSOutlook.Folder)_store.GetRootFolder());
+            return new FolderWrapper((NSOutlook.Folder)_item.GetRootFolder());
         }
 
         public IItem GetItemFromID(string id)
         {
             using (ComRelease com = new ComRelease())
             { 
-                NSOutlook.NameSpace nmspace = com.Add(_store.Session);
+                NSOutlook.NameSpace nmspace = com.Add(_item.Session);
 
                 // Get the item; the wrapper manages it
                 object o = nmspace.GetItemFromID(id);
@@ -62,17 +53,17 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public string DisplayName { get { return _store.DisplayName; } }
-        public string StoreID { get { return _store.StoreID; } }
+        public string DisplayName { get { return _item.DisplayName; } }
+        public string StoreID { get { return _item.StoreID; } }
 
-        public bool IsFileStore { get { return _store.IsDataFileStore; } }
-        public string FilePath { get { return _store.FilePath; } }
+        public bool IsFileStore { get { return _item.IsDataFileStore; } }
+        public string FilePath { get { return _item.FilePath; } }
 
         public void EmptyDeletedItems()
         {
             using (ComRelease com = new ComRelease())
             {
-                NSOutlook.MAPIFolder f = _store.GetDefaultFolder(NSOutlook.OlDefaultFolders.olFolderDeletedItems);
+                NSOutlook.MAPIFolder f = _item.GetDefaultFolder(NSOutlook.OlDefaultFolders.olFolderDeletedItems);
                 if (f != null)
                 {
                     com.Add(f);
