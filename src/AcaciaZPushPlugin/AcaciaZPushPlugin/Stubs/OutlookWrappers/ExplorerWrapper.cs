@@ -14,9 +14,19 @@ namespace Acacia.Stubs.OutlookWrappers
         {
         }
 
+        protected override void DoRelease()
+        {
+            base.DoRelease();
+        }
+
         public ICommandBars GetCommandBars()
         {
             return new CommandBarsWrapper(_item.CommandBars);
+        }
+
+        public IFolder GetCurrentFolder()
+        {
+            return _item.CurrentFolder.Wrap();
         }
     }
 }

@@ -293,7 +293,7 @@ namespace Acacia.ZPush
         /// <param name="account">The account. The caller is responsible for releasing this.</param>
         /// <returns>The associated ZPushAccount</returns>
         /// <exception cref="Exception">If the registry key cannot be found</exception>
-        // TODO: check management of account
+        // TODO: check owner
         private ZPushAccount CreateFromRegistry(NSOutlook.Account account)
         {
             // TODO: check that caller releases account everywhere

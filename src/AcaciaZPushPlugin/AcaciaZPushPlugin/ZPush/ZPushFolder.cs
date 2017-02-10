@@ -50,14 +50,16 @@ namespace Acacia.ZPush
             this._parent = parent;
             this._watcher = watcher;
             this._folder = folder;
+            folder.ZPush = this;
         }
 
         protected override void DoRelease()
         {
+            Cleanup();
             _folder.Dispose();
         }
 
-        public IFolder Folder { get; }
+        public IFolder Folder { get { return _folder; } }
         public string Name { get { return _folder.Name; } }
 
         private void Initialise()
@@ -74,16 +76,6 @@ namespace Acacia.ZPush
                 Tasks.Task(null, "WatchChild", () => WatchChild(subfolder));
             }
         }
-
-        // TODO
-        /*public override void Dispose()
-        {
-            Logger.Instance.Trace(this, "Disposing folder: {0}", _item.Name);
-            Cleanup();
-            base.Dispose();
-            ComRelease.Release(_items);
-            ComRelease.Release(_subFolders);
-        }*/
 
         internal ItemsWatcher ItemsWatcher()
         {
@@ -168,7 +160,7 @@ namespace Acacia.ZPush
             }
 
             // Release the folder if not used
-            ComRelease.Release(child);
+            child.Dispose();
         }
     }
 }

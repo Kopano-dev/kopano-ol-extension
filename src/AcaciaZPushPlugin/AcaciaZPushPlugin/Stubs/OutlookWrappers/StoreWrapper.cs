@@ -36,18 +36,30 @@ namespace Acacia.Stubs.OutlookWrappers
             return new FolderWrapper((NSOutlook.Folder)_item.GetRootFolder());
         }
 
+        private NSOutlook.MAPIFolder GetDefaultFolderObj(DefaultFolder folder)
+        {
+            try
+            {
+                return (NSOutlook.Folder)_item.GetDefaultFolder((NSOutlook.OlDefaultFolders)(int)folder);
+            }
+            catch(Exception)
+            {
+                return null;
+            }
+        }
+
         public IFolder GetDefaultFolder(DefaultFolder folder)
         {
             // FolderWrapper manages the returned Folder
-            return new FolderWrapper((NSOutlook.Folder)_item.GetDefaultFolder((NSOutlook.OlDefaultFolders)(int)folder));
+            return GetDefaultFolderObj(folder).Wrap();
         }
 
         public string GetDefaultFolderId(DefaultFolder folder)
         {
-            NSOutlook.MAPIFolder mapiFolder = _item.GetDefaultFolder((NSOutlook.OlDefaultFolders)(int)folder);
+            NSOutlook.MAPIFolder mapiFolder = GetDefaultFolderObj(folder);
             try
             {
-                return mapiFolder.EntryID;
+                return mapiFolder?.EntryID;
             }
             finally
             {

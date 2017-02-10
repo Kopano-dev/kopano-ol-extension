@@ -37,24 +37,27 @@ namespace Acacia.ZPush
     /// </summary>
     public class ZPushWatcher
     {
+        private readonly IAddIn _addIn;
+
         // TODO: remove
         private readonly NSOutlook.Application _app;
         public readonly ZPushAccounts Accounts;
         public readonly ZPushSync Sync;
-        private NSOutlook.Explorer _explorer;
+        private NSOutlook.Explorer _explorer2;
 
 
         #region Setup
 
         public ZPushWatcher(IAddIn addIn)
         {
+            this._addIn = addIn;
             this._app = addIn.RawApp;
             Sync = new ZPushSync(this, _app);
             Accounts = new ZPushAccounts(this, _app);
 
             // Need to keep a link to keep receiving events
-            _explorer = _app.ActiveExplorer();
-            _explorer.SelectionChange += Explorer_SelectionChange;
+            _explorer2 = _app.ActiveExplorer();
+            _explorer2.SelectionChange += Explorer_SelectionChange;
         }
 
         /// <summary>
@@ -208,17 +211,15 @@ namespace Acacia.ZPush
             {
                 if (ActiveFolderChange != null)
                 {
-                    NSOutlook.MAPIFolder active = _explorer.CurrentFolder;
-                    if (active != null)
+
+                    using (IFolder folder = _addIn.GetActiveExplorer()?.GetCurrentFolder())
                     {
-                        using (IFolder folder = Mapping.Wrap<IFolder>(active))
+                        try
                         {
-                            try
-                            {
+                            if (folder != null)
                                 ActiveFolderChange(folder);
-                            }
-                            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in Explorer_SelectionChange.ActiveFolderChange: {0}", e); }
                         }
+                        catch (System.Exception e) { Logger.Instance.Error(this, "Exception in Explorer_SelectionChange.ActiveFolderChange: {0}", e); }
                     }
                 }
                 // TODO: cache value
@@ -236,17 +237,12 @@ namespace Acacia.ZPush
 
         public ZPushAccount CurrentZPushAccount()
         {
-            if (_explorer.CurrentFolder == null)
-                return null;
-
-            NSOutlook.MAPIFolder folder = _explorer.CurrentFolder;
-            try
+            using (IExplorer explorer = _addIn.GetActiveExplorer())
+            using (IFolder folder = explorer?.GetCurrentFolder())
             {
+                if (folder == null)
+                    return null;
                 return Accounts.GetAccount(folder);
-            }
-            finally
-            {
-                ComRelease.Release(folder);
             }
         }
 
@@ -392,17 +388,8 @@ namespace Acacia.ZPush
             if (!DebugOptions.GetOption(null, DebugOptions.WATCHER_ENABLED))
                 return;
 
-            // Must have a ZPush folder to watch events, create one if necessary
-            ZPushFolder zPushFolder;
-            if (!(folder is ZPushFolder))
-            {
-                // TODO
-                throw new NotImplementedException();
-            }
-            else
-            {
-                zPushFolder = (ZPushFolder)folder;
-            }
+            // Must have a ZPush folder to watch events.
+            ZPushFolder zPushFolder = folder.ZPush;
 
             // Register the handlers
             ItemsWatcher watcher = zPushFolder.ItemsWatcher();

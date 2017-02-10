@@ -106,5 +106,9 @@ namespace Acacia.Stubs
         /// function prevents creating lots of wrappers.
         /// </summary>
         bool IsAtDepth(int depth);
+
+        // TODO: remove this. It's a quick hack to find the events associated with this folder for ZPushWatcher.
+        //       make event watching part of the folder instead
+        ZPushFolder ZPush { get; set; }
     }
 }

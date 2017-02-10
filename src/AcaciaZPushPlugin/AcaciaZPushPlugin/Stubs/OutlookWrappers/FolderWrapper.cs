@@ -467,5 +467,11 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             get { return (ItemType)(int)_item.DefaultItemType; }
         }
+
+        public ZPushFolder ZPush
+        {
+            get;
+            set;
+        }
     }
 }

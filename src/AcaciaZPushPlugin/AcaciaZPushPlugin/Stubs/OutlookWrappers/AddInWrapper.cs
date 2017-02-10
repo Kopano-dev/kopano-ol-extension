@@ -88,10 +88,7 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public IExplorer GetActiveExplorer()
         {
-            using (ComRelease com = new ComRelease())
-            {
-                return new ExplorerWrapper(com.Add(_thisAddIn.Application).ActiveExplorer());
-            }
+            return new ExplorerWrapper(_app.ActiveExplorer());
         }
 
         #region Window handle
