@@ -7,7 +7,7 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs
 {
-    public interface IItemEvents
+    public interface IItemEvents : IComWrapper
     {
         #region Event handlers
 

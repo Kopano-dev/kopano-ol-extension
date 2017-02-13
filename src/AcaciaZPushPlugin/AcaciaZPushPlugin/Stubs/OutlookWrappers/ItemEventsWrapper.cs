@@ -7,13 +7,11 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    class ItemEventsWrapper : IItemEvents
+    class ItemEventsWrapper : ComWrapper<NSOutlook.ItemEvents_10_Event>, IItemEvents
     {
-        private readonly NSOutlook.ItemEvents_10_Event _item;
-
-        internal ItemEventsWrapper(object item)
+        internal ItemEventsWrapper(NSOutlook.ItemEvents_10_Event item) : base(item)
         {
-            this._item = (NSOutlook.ItemEvents_10_Event)item;
+            MustRelease = false;
         }
 
         #region Events

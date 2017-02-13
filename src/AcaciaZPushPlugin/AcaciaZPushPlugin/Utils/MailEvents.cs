@@ -190,8 +190,8 @@ namespace Acacia.Utils
 
         private void OnItemLoad(object item)
         {
-            IItem wrapped = Wrappers.Wrap<IItem>(item);
-            // TODO: check type
+            IItem wrapped = Wrappers.Wrap<IItem>(item, false);
+            // TODO: only register for desired types
             if (wrapped != null)
             {
                 new MailEventHooker(wrapped, this);
@@ -214,40 +214,37 @@ namespace Acacia.Utils
                 HookEvents(true);
             }
 
-            /*~MailEventHooker()
-            {
-            }
-            */
-
             protected override void DoRelease()
             {
                 Logger.Instance.Debug(this, "DoRelease: {0}", _id);
-                // TODO: It looks like release _itemEvents is not only not needed, but causes exceptions.
-                //       If that is really the case, this doesn't need to be a ComWrapper
                 _item.Dispose();
             }
 
             private void HookEvents(bool add)
             {
-                if (add)
+                using (IItemEvents events = _item.GetEvents())
                 {
-                    _item.Events.BeforeDelete += HandleBeforeDelete;
-                    _item.Events.Forward += HandleForward;
-                    _item.Events.Read += HandleRead;
-                    _item.Events.Reply += HandleReply;
-                    _item.Events.ReplyAll += HandleReplyAll;
-                    _item.Events.Unload += HandleUnload;
-                    _item.Events.Write += HandleWrite;
-                }
-                else
-                {
-                    _item.Events.BeforeDelete -= HandleBeforeDelete;
-                    _item.Events.Forward -= HandleForward;
-                    _item.Events.Read -= HandleRead;
-                    _item.Events.Reply -= HandleReply;
-                    _item.Events.ReplyAll -= HandleReplyAll;
-                    _item.Events.Unload -= HandleUnload;
-                    _item.Events.Write -= HandleWrite;
+                    if (add)
+                    {
+
+                        events.BeforeDelete += HandleBeforeDelete;
+                        events.Forward += HandleForward;
+                        events.Read += HandleRead;
+                        events.Reply += HandleReply;
+                        events.ReplyAll += HandleReplyAll;
+                        events.Unload += HandleUnload;
+                        events.Write += HandleWrite;
+                    }
+                    else
+                    {
+                        events.BeforeDelete -= HandleBeforeDelete;
+                        events.Forward -= HandleForward;
+                        events.Read -= HandleRead;
+                        events.Reply -= HandleReply;
+                        events.ReplyAll -= HandleReplyAll;
+                        events.Unload -= HandleUnload;
+                        events.Write -= HandleWrite;
+                    }
                 }
             }
 

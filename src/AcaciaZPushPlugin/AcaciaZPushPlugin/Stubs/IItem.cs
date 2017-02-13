@@ -35,12 +35,9 @@ namespace Acacia.Stubs
         string Subject { get; set; }
 
         /// <summary>
-        /// Returns the events for the item. The same object is returned, it does not need to be disposed.
+        /// Returns the events for the item. The caller is responsible for disposing.
         /// </summary>
-        IItemEvents Events
-        {
-            get;
-        }
+        IItemEvents GetEvents();
 
         #endregion
 

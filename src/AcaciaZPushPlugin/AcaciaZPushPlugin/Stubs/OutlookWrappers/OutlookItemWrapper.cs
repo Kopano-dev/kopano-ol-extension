@@ -16,15 +16,9 @@ namespace Acacia.Stubs.OutlookWrappers
         {
         }
 
-        private ItemEventsWrapper _events;
-        public IItemEvents Events
+        public IItemEvents GetEvents()
         {
-            get
-            {
-                if (_events == null)
-                    _events = new ItemEventsWrapper(_item);
-                return _events;
-            }
+            return new ItemEventsWrapper((NSOutlook.ItemEvents_10_Event)_item);
         }
 
         public Type GetUserProperty<Type>(string name)
