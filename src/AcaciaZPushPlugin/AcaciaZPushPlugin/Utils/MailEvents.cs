@@ -216,11 +216,16 @@ namespace Acacia.Utils
 
         private void OnItemLoad(object item)
         {
+            using (IItem wrapped = Wrappers.Wrap<IItem>(item))
+            {
+            }
+
+            /*
             NSOutlook.ItemEvents_10_Event hasEvents = item as NSOutlook.ItemEvents_10_Event;
             if (hasEvents != null)
             {
                 new MailEventHooker(hasEvents, this);
-            }
+            }*/
         }
 
         private class MailEventHooker : ComWrapper<NSOutlook.ItemEvents_10_Event>
@@ -235,6 +240,11 @@ namespace Acacia.Utils
                 this._id = ++nextId;
                 this._events = events;
                 HookEvents(true);
+            }
+
+            ~MailEventHooker()
+            {
+
             }
 
             protected override void DoRelease()
@@ -302,8 +312,8 @@ namespace Acacia.Utils
             {
                 Logger.Instance.Debug(this, "HandleUnload: {0}", _id);
                 // All events must be unhooked on unload, otherwise a resource leak is created.
-                HookEvents(false);
-                Dispose();
+                //HookEvents(false);
+                //Dispose();
             }
 
             private void HandleWrite(ref bool cancel)

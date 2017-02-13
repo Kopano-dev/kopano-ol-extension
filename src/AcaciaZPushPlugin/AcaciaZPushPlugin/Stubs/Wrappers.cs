@@ -14,5 +14,11 @@ namespace Acacia.Stubs
         {
             return Mapping.WrapOrDefault<IFolder>(obj);
         }
+
+        public static WrapType Wrap<WrapType>(object o, bool mustRelease = true)
+        where WrapType : IBase
+        {
+            return Mapping.Wrap<WrapType>(o, mustRelease);
+        }
     }
 }
