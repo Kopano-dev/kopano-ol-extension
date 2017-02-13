@@ -125,7 +125,7 @@ namespace Acacia
             get { return GetOption(null, HOOK_ITEM_EVENTS); }
             set { SetOption(null, HOOK_ITEM_EVENTS, value); }
         }
-        private static readonly BoolOption HOOK_ITEM_EVENTS = new BoolOption("HookItemEvents", false);
+        private static readonly BoolOption HOOK_ITEM_EVENTS = new BoolOption("HookItemEvents", true);
 
         #region UI Options
 
