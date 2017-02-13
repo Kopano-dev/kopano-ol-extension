@@ -21,7 +21,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Acacia.Stubs;
 using Acacia.Stubs.OutlookWrappers;
-using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Utils
 {
@@ -47,22 +46,18 @@ namespace Acacia.Utils
         public event MailResponseEventHandler Respond;
 
         public event MailResponseEventHandler Reply;
-        private void OnReply(NSOutlook.MailItem mail, NSOutlook.MailItem response)
+        private void OnReply(IMailItem mail, IMailItem response)
         {
             // TODO: check release of first item
             // TODO: release if not sending event
             try
             {
-                if ((Reply != null || Respond != null) && mail != null)
+                if ((Reply != null || Respond != null) && mail != null && response != null)
                 {
-                    using (IMailItem mailWrapped = Mapping.Wrap<IMailItem>(mail, false),
-                                 responseWrapped = Mapping.Wrap<IMailItem>(response))
-                    {
-                        if (Reply != null)
-                            Reply(mailWrapped, responseWrapped);
-                        if (Respond != null)
-                            Respond(mailWrapped, responseWrapped);
-                    }
+                    if (Reply != null)
+                        Reply(mail, response);
+                    if (Respond != null)
+                        Respond(mail, response);
                 }
             }
             catch (System.Exception e)
@@ -72,22 +67,18 @@ namespace Acacia.Utils
         }
 
         public event MailResponseEventHandler ReplyAll;
-        private void OnReplyAll(NSOutlook.MailItem mail, NSOutlook.MailItem response)
+        private void OnReplyAll(IMailItem mail, IMailItem response)
         {
             // TODO: check release of first item
             // TODO: release if not sending event
             try
             {
-                if ((ReplyAll != null || Respond != null) && mail != null)
+                if ((ReplyAll != null || Respond != null) && mail != null && response != null)
                 {
-                    using (IMailItem mailWrapped = Mapping.Wrap<IMailItem>(mail, false),
-                                 responseWrapped = Mapping.Wrap<IMailItem>(response))
-                    {
-                        if (ReplyAll != null)
-                            ReplyAll(mailWrapped, responseWrapped);
-                        if (Respond != null)
-                            Respond(mailWrapped, responseWrapped);
-                    }
+                    if (ReplyAll != null)
+                        ReplyAll(mail, response);
+                    if (Respond != null)
+                        Respond(mail, response);
                 }
             }
             catch (System.Exception e)
@@ -97,22 +88,18 @@ namespace Acacia.Utils
         }
 
         public event MailResponseEventHandler Forward;
-        private void OnForward(NSOutlook.MailItem mail, NSOutlook.MailItem response)
+        private void OnForward(IMailItem mail, IMailItem response)
         {
             // TODO: check release of first item
             // TODO: release if not sending event
             try
             {
-                if ((Forward != null || Respond != null) && mail != null)
+                if ((Forward != null || Respond != null) && mail != null && response != null)
                 {
-                    using (IMailItem mailWrapped = Mapping.Wrap<IMailItem>(mail, false),
-                                 responseWrapped = Mapping.Wrap<IMailItem>(response))
-                    {
-                        if (Forward != null)
-                            Forward(mailWrapped, responseWrapped);
-                        if (Respond != null)
-                            Respond(mailWrapped, responseWrapped);
-                    }
+                    if (Forward != null)
+                        Forward(mail, response);
+                    if (Respond != null)
+                        Respond(mail, response);
                 }
             }
             catch (System.Exception e)
@@ -122,18 +109,13 @@ namespace Acacia.Utils
         }
 
         public event MailEventHandler Read;
-        private void OnRead(NSOutlook.MailItem mail)
+        private void OnRead(IMailItem mail)
         {
-            // TODO: check release of first item
-            // TODO: release if not sending event
             try
             {
                 if (Read != null && mail != null)
                 {
-                    using (IMailItem wrapped = Mapping.Wrap<IMailItem>(mail, false))
-                    {
-                        Read(wrapped);
-                    }
+                    Read(mail);
                 }
             }
             catch (System.Exception e)
@@ -143,17 +125,13 @@ namespace Acacia.Utils
         }
 
         public event CancellableItemEventHandler BeforeDelete;
-        private void OnBeforeDelete(object item, ref bool cancel)
+        private void OnBeforeDelete(IItem item, ref bool cancel)
         {
             try
             {
                 if (BeforeDelete != null && item != null)
                 {
-                    using (IItem wrapped = Mapping.Wrap<IItem>(item, false))
-                    {
-                        if (wrapped != null)
-                            BeforeDelete(wrapped, ref cancel);
-                    }
+                    BeforeDelete(item, ref cancel);
                 }
             }
             catch(System.Exception e)
@@ -164,17 +142,13 @@ namespace Acacia.Utils
 
         // TODO: should this be CancellableMailItemEventHandler?
         public event CancellableItemEventHandler Write;
-        private void OnWrite(object item, ref bool cancel)
+        private void OnWrite(IItem item, ref bool cancel)
         {
             try
             {
                 if (Write != null && item != null)
                 {
-                    using (IItem wrapped = Mapping.Wrap<IItem>(item, false))
-                    {
-                        if (wrapped != null)
-                            Write(wrapped, ref cancel);
-                    }
+                    Write(item, ref cancel);
                 }
             }
             catch (System.Exception e)
@@ -216,104 +190,103 @@ namespace Acacia.Utils
 
         private void OnItemLoad(object item)
         {
-            using (IItem wrapped = Wrappers.Wrap<IItem>(item))
+            IItem wrapped = Wrappers.Wrap<IItem>(item);
+            // TODO: check type
+            if (wrapped != null)
             {
+                new MailEventHooker(wrapped, this);
             }
-
-            /*
-            NSOutlook.ItemEvents_10_Event hasEvents = item as NSOutlook.ItemEvents_10_Event;
-            if (hasEvents != null)
-            {
-                new MailEventHooker(hasEvents, this);
-            }*/
         }
 
-        private class MailEventHooker : ComWrapper<NSOutlook.ItemEvents_10_Event>
+        private class MailEventHooker : DisposableWrapper
         {
+            private IItem _item;
             private readonly MailEvents _events;
             // TODO: remove id and debug logging
             private int _id;
             private static int nextId;
 
-            public MailEventHooker(NSOutlook.ItemEvents_10_Event itemEvents, MailEvents events) : base(itemEvents)
+            public MailEventHooker(IItem item, MailEvents events)
             {
+                this._item = item;
                 this._id = ++nextId;
                 this._events = events;
                 HookEvents(true);
             }
 
-            ~MailEventHooker()
+            /*~MailEventHooker()
             {
-
             }
+            */
 
             protected override void DoRelease()
             {
                 Logger.Instance.Debug(this, "DoRelease: {0}", _id);
                 // TODO: It looks like release _itemEvents is not only not needed, but causes exceptions.
                 //       If that is really the case, this doesn't need to be a ComWrapper
+                _item.Dispose();
             }
 
             private void HookEvents(bool add)
             {
                 if (add)
                 {
-                    _item.BeforeDelete += HandleBeforeDelete;
-                    _item.Forward += HandleForward;
-                    _item.Read += HandleRead;
-                    _item.Reply += HandleReply;
-                    _item.ReplyAll += HandleReplyAll;
-                    _item.Unload += HandleUnload;
-                    _item.Write += HandleWrite;
+                    _item.Events.BeforeDelete += HandleBeforeDelete;
+                    _item.Events.Forward += HandleForward;
+                    _item.Events.Read += HandleRead;
+                    _item.Events.Reply += HandleReply;
+                    _item.Events.ReplyAll += HandleReplyAll;
+                    _item.Events.Unload += HandleUnload;
+                    _item.Events.Write += HandleWrite;
                 }
                 else
                 {
-                    _item.BeforeDelete -= HandleBeforeDelete;
-                    _item.Forward -= HandleForward;
-                    _item.Read -= HandleRead;
-                    _item.Reply -= HandleReply;
-                    _item.ReplyAll -= HandleReplyAll;
-                    _item.Unload -= HandleUnload;
-                    _item.Write -= HandleWrite;
+                    _item.Events.BeforeDelete -= HandleBeforeDelete;
+                    _item.Events.Forward -= HandleForward;
+                    _item.Events.Read -= HandleRead;
+                    _item.Events.Reply -= HandleReply;
+                    _item.Events.ReplyAll -= HandleReplyAll;
+                    _item.Events.Unload -= HandleUnload;
+                    _item.Events.Write -= HandleWrite;
                 }
             }
 
             private void HandleBeforeDelete(object item, ref bool cancel)
             {
                 Logger.Instance.Debug(this, "HandleBeforeDelete: {0}", _id);
-                _events.OnBeforeDelete(item, ref cancel);
+                _events.OnBeforeDelete(item.WrapOrDefault<IItem>(), ref cancel);
             }
 
             private void HandleForward(object response, ref bool cancel)
             {
                 Logger.Instance.Debug(this, "HandleForward: {0}", _id);
-                _events.OnForward(_item as NSOutlook.MailItem, response as NSOutlook.MailItem);
+                _events.OnForward(_item as IMailItem, response.WrapOrDefault<IMailItem>());
             }
 
             private void HandleRead()
             {
                 Logger.Instance.Debug(this, "HandleRead: {0}", _id);
-                _events.OnRead(_item as NSOutlook.MailItem);
+                _events.OnRead(_item as IMailItem);
             }
 
             private void HandleReply(object response, ref bool cancel)
             {
                 Logger.Instance.Debug(this, "HandleReply: {0}", _id);
-                _events.OnReply(_item as NSOutlook.MailItem, response as NSOutlook.MailItem);
+                _events.OnReply(_item as IMailItem, response.WrapOrDefault<IMailItem>());
             }
 
             private void HandleReplyAll(object response, ref bool cancel)
             {
                 Logger.Instance.Debug(this, "HandleReplyAll: {0}", _id);
-                _events.OnReplyAll(_item as NSOutlook.MailItem, response as NSOutlook.MailItem);
+                _events.OnReplyAll(_item as IMailItem, response.WrapOrDefault<IMailItem>());
             }
 
             private void HandleUnload()
             {
                 Logger.Instance.Debug(this, "HandleUnload: {0}", _id);
                 // All events must be unhooked on unload, otherwise a resource leak is created.
-                //HookEvents(false);
-                //Dispose();
+                HookEvents(false);
+                Dispose();
             }
 
             private void HandleWrite(ref bool cancel)

@@ -34,6 +34,14 @@ namespace Acacia.Stubs
         string Body { get; set; }
         string Subject { get; set; }
 
+        /// <summary>
+        /// Returns the events for the item. The same object is returned, it does not need to be disposed.
+        /// </summary>
+        IItemEvents Events
+        {
+            get;
+        }
+
         #endregion
 
         #region User properties

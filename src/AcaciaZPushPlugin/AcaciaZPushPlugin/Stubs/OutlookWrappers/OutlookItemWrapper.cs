@@ -16,6 +16,17 @@ namespace Acacia.Stubs.OutlookWrappers
         {
         }
 
+        private ItemEventsWrapper _events;
+        public IItemEvents Events
+        {
+            get
+            {
+                if (_events == null)
+                    _events = new ItemEventsWrapper(_item);
+                return _events;
+            }
+        }
+
         public Type GetUserProperty<Type>(string name)
         {
             using (ComRelease com = new ComRelease())
