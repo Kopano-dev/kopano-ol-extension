@@ -135,7 +135,7 @@ namespace Acacia.ZPush
                 // Hide the folders that are not custom folders
                 using (IFolder root = store.GetRootFolder())
                 {
-                    foreach(IFolder sub in root.GetSubFolders())
+                    foreach(IFolder sub in root.SubFolders)
                     {
                         using (sub)
                         {

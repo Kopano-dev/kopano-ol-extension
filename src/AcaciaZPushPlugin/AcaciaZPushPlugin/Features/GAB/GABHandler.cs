@@ -336,7 +336,7 @@ namespace Acacia.Features.GAB
             // Scan a few of the newest items, in case there is some junk in the ZPush folder
             // TODO: this shouldn't happen in production.
             int i = 0;
-            foreach(IItem item in Folder.ItemsSorted("LastModificationTime", true))
+            foreach(IItem item in Folder.Items.Sort("LastModificationTime", true))
             {
                 using (item)
                 {

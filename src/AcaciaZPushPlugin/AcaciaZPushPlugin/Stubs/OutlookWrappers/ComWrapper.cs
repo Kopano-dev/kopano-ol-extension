@@ -27,7 +27,7 @@ namespace Acacia.Stubs.OutlookWrappers
 {
     abstract class ComWrapper<ItemType> : DisposableWrapper, IComWrapper
     {
-        protected ItemType _item { get; private set; }
+        protected readonly ItemType _item;
 
         /// <summary>
         /// Creates a wrapper.
@@ -49,7 +49,6 @@ namespace Acacia.Stubs.OutlookWrappers
             if (MustRelease)
             {
                 ComRelease.Release(_item);
-                _item = default(ItemType);
             }
         }
 

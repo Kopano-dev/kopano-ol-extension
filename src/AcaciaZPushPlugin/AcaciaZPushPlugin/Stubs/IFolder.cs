@@ -35,9 +35,7 @@ namespace Acacia.Stubs
 
         bool ShowAsOutlookAB { get; set; }
 
-        IEnumerable<IItem> Items { get; }
-
-        IEnumerable<IItem> ItemsSorted(string field, bool descending);
+        IItems Items { get; }
 
         IItem GetItemById(string id);
 
@@ -58,7 +56,11 @@ namespace Acacia.Stubs
 
         IEnumerable<FolderType> GetSubFolders<FolderType>()
         where FolderType : IFolder;
-        IEnumerable<IFolder> GetSubFolders();
+
+        IFolders SubFolders
+        {
+            get;
+        }
 
         FolderType GetSubFolder<FolderType>(string name)
         where FolderType : IFolder;

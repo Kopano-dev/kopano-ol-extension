@@ -62,7 +62,6 @@ namespace Acacia.Utils
             ComRelease.Release(source);
         }
 
-        // TODO: check this
         public static IEnumerable RawEnum(this IEnumerable source, bool releaseItems = true)
         {
             foreach (object item in source)

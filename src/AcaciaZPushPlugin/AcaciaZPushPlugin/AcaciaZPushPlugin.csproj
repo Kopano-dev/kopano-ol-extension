@@ -286,7 +286,9 @@
     <Compile Include="Stubs\ICommandBars.cs" />
     <Compile Include="Stubs\IComWrapper.cs" />
     <Compile Include="Stubs\IExplorer.cs" />
+    <Compile Include="Stubs\IFolders.cs" />
     <Compile Include="Stubs\IItemEvents.cs" />
+    <Compile Include="Stubs\IItems.cs" />
     <Compile Include="Stubs\IOutlookWindow.cs" />
     <Compile Include="Stubs\IRecipient.cs" />
     <Compile Include="Stubs\IStores.cs" />
@@ -296,7 +298,9 @@
     <Compile Include="Stubs\OutlookWrappers\AddressEntryWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\CommandBarsWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\ExplorerWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\FoldersWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\ItemEventsWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\ItemsWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\OutlookItemWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\RecipientWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\StoresWrapper.cs" />

@@ -27,10 +27,12 @@ namespace Acacia.ZPush
 {
     public class ZPushFolder : DisposableWrapper
     {
-        private IFolder _folder;
-        private ZPushFolder _parent;
+        private readonly IFolder _folder;
+        private readonly IItems_Events _items;
+        private readonly IFolders_Events _subFolders;
+        private readonly ZPushFolder _parent;
         private readonly ZPushWatcher _watcher;
-        private List<ItemsWatcher> _itemsWatchers = new List<ItemsWatcher>();
+        private readonly List<ItemsWatcher> _itemsWatchers = new List<ItemsWatcher>();
 
         /// <summary>
         /// Children folders indexed by EntryID
@@ -50,6 +52,9 @@ namespace Acacia.ZPush
             this._parent = parent;
             this._watcher = watcher;
             this._folder = folder;
+            // We need to keep links to these objects to keep getting events.
+            this._items = folder.Items.GetEvents();
+            this._subFolders = folder.SubFolders.GetEvents();
             folder.ZPush = this;
         }
 
@@ -57,6 +62,13 @@ namespace Acacia.ZPush
         {
             Cleanup();
             _folder.Dispose();
+            _items.Dispose();
+            _subFolders.Dispose();
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
 
         public IFolder Folder { get { return _folder; } }
@@ -71,7 +83,7 @@ namespace Acacia.ZPush
             _watcher.OnFolderDiscovered(this);
 
             // Recurse the children
-            foreach (IFolder subfolder in _folder.GetSubFolders())
+            foreach (IFolder subfolder in _folder.SubFolders)
             {
                 Tasks.Task(null, "WatchChild", () => WatchChild(subfolder));
             }
@@ -94,10 +106,10 @@ namespace Acacia.ZPush
             }
         }
 
+        #region Event handlers
+
         private void HookEvents(bool register)
         {
-            // TODO
-            /*
             if (register)
             {
                 // Item events
@@ -119,8 +131,118 @@ namespace Acacia.ZPush
                 _subFolders.FolderAdd -= SubFolders_FolderAdd;
                 _subFolders.FolderRemove -= SubFolders_FolderRemove;
                 _subFolders.FolderChange -= SubFolders_FolderChange;
-            }*/
+            }
         }
+
+        #region Event handlers
+
+        private void SubFolders_FolderAdd(IFolder folder)
+        {
+            try
+            {
+                Logger.Instance.Debug(this, "Folder added in {0}: {1}", Name, folder.Name);
+                WatchChild(folder);
+            }
+            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderAdd: {0}: {1}", Name, e); }
+        }
+
+        private void SubFolders_FolderRemove()
+        {
+            try
+            {
+                Logger.Instance.Debug(this, "Folder removed from {0}", Name);
+
+                // Helpfully, Outlook doesn't tell us which folder was removed. Could use the BeforeFolderMove event instead,
+                // but that doesn't fire if a folder was removed on the server.
+                // Hence, fetch all the remaining folder ids, and remove any folder that no longer exists.
+                // TODO: move this logic into IFolders?
+                HashSet<string> remaining = new HashSet<string>();
+                foreach (IFolder child in _folder.SubFolders)
+                {
+                    try
+                    {
+                        remaining.Add(child.EntryID);
+                    }
+                    catch (System.Exception e) { Logger.Instance.Warning(this, "Ignoring failed child: {0}", e); }
+                }
+
+                // Find the folders that need to be removed. There should be only one, but with Outlook we can never be sure,
+                // so compare all. We cannot modify the dictionary during iteration, so store entries to be removed in a
+                // temporary list
+                List<KeyValuePair<string, ZPushFolder>> remove = new List<KeyValuePair<string, ZPushFolder>>();
+                foreach (var entry in _children)
+                {
+                    if (!remaining.Contains(entry.Key))
+                    {
+                        remove.Add(entry);
+                    }
+                }
+
+                // Actually remove the folders
+                foreach (var entry in remove)
+                {
+                    Logger.Instance.Debug(this, "Removing subfolder {0}, {1}", Name, entry.Key);
+                    _children.Remove(entry.Key);
+                    entry.Value.Cleanup();
+                }
+            }
+            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderRemove: {0}: {1}", Name, e); }
+        }
+
+        private void SubFolders_FolderChange(IFolder folder)
+        {
+            try
+            {
+                Logger.Instance.Debug(this, "Folder changed in {0}: {1}", Name, folder.Name);
+                ZPushFolder child;
+                if (_children.TryGetValue(folder.EntryID, out child))
+                {
+                    _watcher.OnFolderChanged(child);
+                    // TODO: release folder?
+                }
+                else
+                {
+                    // On a clean profile, we sometimes get a change notification, but not an add notification
+                    // Create it now
+                    // This will send a discover notification if required, which is just as good as a change notification
+                    Logger.Instance.Debug(this, "Folder change on unreported folder in {0}: {1}, {2}, {3}", Name, folder.Name, folder.EntryID, folder.StoreDisplayName);
+                    WatchChild(folder);
+                }
+            }
+            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderChange: {0}: {1}", Name, e); }
+        }
+
+        private void Items_ItemAdd(IItem item)
+        {
+            try
+            {
+                Logger.Instance.Trace(this, "New item {0}: {1}", Name, item.EntryID);
+                foreach (ItemsWatcher watcher in _itemsWatchers)
+                    watcher.OnItemAdd(this, item);
+            }
+            catch (System.Exception e)
+            {
+                Logger.Instance.Trace(this, "ItemAdd exception: {0}: {1}", Name, e);
+            }
+        }
+
+        private void Items_ItemChange(IItem item)
+        {
+            try
+            {
+                Logger.Instance.Trace(this, "Changed item {0}", Name);
+                foreach (ItemsWatcher watcher in _itemsWatchers)
+                    watcher.OnItemChange(this, item);
+            }
+            catch (System.Exception e)
+            {
+                Logger.Instance.Trace(this, "ItemChange exception: {0}: {1}", Name, e);
+            }
+        }
+
+        #endregion
+
+        #endregion
 
         private void Cleanup()
         {

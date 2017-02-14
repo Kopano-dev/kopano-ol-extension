@@ -34,6 +34,13 @@ namespace Acacia.Stubs.OutlookWrappers
         {
         }
 
+        protected override void DoRelease()
+        {
+            base.DoRelease();
+        }
+
+        internal NSOutlook.Folder RawItem { get { return _item; } }
+
         protected override NSOutlook.PropertyAccessor GetPropertyAccessor()
         {
             return _item.PropertyAccessor;
@@ -125,117 +132,14 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public ItemType ItemType { get { return (ItemType)(int)_item.DefaultItemType; } }
 
-        #region Enumeration
 
-        public class ItemsEnumerator<ItemType> : ComWrapper<NSOutlook.Items>, IEnumerator<ItemType>
-        where ItemType : IItem
-        {
-            private IEnumerator _enum;
-            private ItemType _last;
-
-            public ItemsEnumerator(NSOutlook.Folder folder, string field, bool descending) : base(folder.Items)
-            {
-                // TODO: can _items be released here already?
-                if (field != null)
-                {
-                    this._item.Sort("[" + field + "]", descending);
-                }
-                this._enum = _item.GetEnumerator();
-            }
-
-            protected override void DoRelease()
-            {
-                CleanLast();
-                if (_enum != null)
-                {
-                    if (_enum is IDisposable)
-                        ((IDisposable)_enum).Dispose();
-                    ComRelease.Release(_enum);
-                    _enum = null;
-                }
-                base.DoRelease();
-            }
-
-            public ItemType Current
-            {
-                get
-                {
-                    CleanLast();
-                    _last = Mapping.Wrap<ItemType>(_enum.Current);
-                    return _last;
-                }
-            }
-
-            object IEnumerator.Current
-            {
-                get
-                {
-                    return Current;
-                }
-            }
-
-            private void CleanLast()
-            {
-                if (_last != null)
-                {
-                    _last.Dispose();
-                    _last = default(ItemType);
-                }
-            }
-
-            public bool MoveNext()
-            {
-                CleanLast();
-                return _enum.MoveNext();
-            }
-
-            public void Reset()
-            {
-                CleanLast();
-                _enum.Reset();
-            }
-        }
-
-        public class ItemsEnumerable<ItemType> : IEnumerable<ItemType>
-        where ItemType : IItem
-        {
-            // Managed by the caller, not released here
-            private readonly NSOutlook.Folder _folder;
-            private readonly string _field;
-            private readonly bool _descending;
-
-            public ItemsEnumerable(NSOutlook.Folder folder, string field, bool descending)
-            {
-                this._folder = folder;
-                this._field = field;
-                this._descending = descending;
-            }
-
-            public IEnumerator<ItemType> GetEnumerator()
-            {
-                return new ItemsEnumerator<ItemType>(_folder, _field, _descending);
-            }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
-            }
-        }
-
-        public IEnumerable<IItem> Items
+        public IItems Items
         {
             get
             {
-                return new ItemsEnumerable<IItem>(_item, null, false);
+                return new ItemsWrapper(this);
             }
         }
-
-        public IEnumerable<IItem> ItemsSorted(string field, bool descending)
-        {
-            return new ItemsEnumerable<IItem>(_item, field, descending);
-        }
-
-        #endregion
 
         public IItem GetItemById(string entryId)
         {
@@ -289,13 +193,16 @@ namespace Acacia.Stubs.OutlookWrappers
             // Don't release the items, the wrapper manages them
             foreach (NSOutlook.Folder folder in _item.Folders.RawEnum(false))
             {
-                yield return WrapFolder<FolderType>(folder);
+                yield return folder.Wrap<FolderType>();
             };
         }
 
-        public IEnumerable<IFolder> GetSubFolders()
+        public IFolders SubFolders
         {
-            return GetSubFolders<IFolder>();
+            get
+            {
+                return new FoldersWrapper(this);
+            }
         }
 
         public FolderType GetSubFolder<FolderType>(string name)
@@ -319,7 +226,7 @@ namespace Acacia.Stubs.OutlookWrappers
             }
             if (sub == null)
                 return default(FolderType);
-            return WrapFolder<FolderType>(sub);
+            return sub.Wrap<FolderType>();
         }
 
         public FolderType CreateFolder<FolderType>(string name)
@@ -330,34 +237,16 @@ namespace Acacia.Stubs.OutlookWrappers
                 NSOutlook.Folders folders = com.Add(_item.Folders);
                 if (typeof(FolderType) == typeof(IFolder))
                 {
-                    return WrapFolder<FolderType>(folders.Add(name));
+                    return folders.Add(name).Wrap<FolderType>();
                 }
                 else if (typeof(FolderType) == typeof(IAddressBook))
                 {
                     NSOutlook.MAPIFolder newFolder = folders.Add(name, NSOutlook.OlDefaultFolders.olFolderContacts);
                     newFolder.ShowAsOutlookAB = true;
-                    return WrapFolder<FolderType>(newFolder);
+                    return newFolder.Wrap<FolderType>();
                 }
                 else
                     throw new NotSupportedException();
-            }
-        }
-
-        private FolderType WrapFolder<FolderType>(NSOutlook.MAPIFolder folder)
-        where FolderType : IFolder
-        {
-            if (typeof(FolderType) == typeof(IFolder))
-            {
-                return (FolderType)(IFolder)new FolderWrapper(folder);
-            }
-            else if (typeof(FolderType) == typeof(IAddressBook))
-            {
-                return (FolderType)(IFolder)new AddressBookWrapper(folder);
-            }
-            else
-            {
-                ComRelease.Release(folder);
-                throw new NotSupportedException();
             }
         }
 
