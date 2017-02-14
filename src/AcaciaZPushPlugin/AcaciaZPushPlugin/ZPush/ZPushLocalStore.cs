@@ -91,7 +91,7 @@ namespace Acacia.ZPush
                 Logger.Instance.Debug(typeof(ZPushLocalStore), "Created new store: {0}", store.FilePath);
 
                 // Set the display name
-                using (IFolder root = Mapping.Wrap<IFolder>(store.GetRootFolder()))
+                using (IFolder root = store.GetRootFolder())
                 {
                     root.Name = Properties.Resources.LocalStore_DisplayName;
                 }
