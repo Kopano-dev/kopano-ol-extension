@@ -121,7 +121,7 @@ namespace Acacia.Features.GAB
         {
             get
             {
-                using(IStore store = Folder.Store)
+                using(IStore store = Folder.GetStore())
                     return store.DisplayName;
             }
         }

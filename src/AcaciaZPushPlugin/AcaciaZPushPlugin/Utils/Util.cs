@@ -88,5 +88,44 @@ namespace Acacia.Utils
                 GC.WaitForPendingFinalizers();
             }
         }
+
+
+        #region Timers
+
+        public static void Delayed(LogContext log, int millis, System.Action action)
+        {
+            RegisterTimer(log, millis, action, false);
+        }
+
+        public static void Timed(LogContext log, int millis, System.Action action)
+        {
+            RegisterTimer(log, millis, action, true);
+        }
+
+        private static void RegisterTimer(LogContext log, int millis, System.Action action, bool repeat)
+        {
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+            timer.Interval = millis;
+            timer.Tick += (s, eargs) =>
+            {
+                try
+                {
+                    action();
+                    if (!repeat)
+                    {
+                        timer.Enabled = false;
+                        timer.Dispose();
+                    }
+                }
+                catch (System.Exception e)
+                {
+                    Logger.Instance.Trace(log, "Exception in timer: {0}", e);
+                }
+            };
+            timer.Start();
+        }
+
+        #endregion
+
     }
 }

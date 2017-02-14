@@ -146,7 +146,10 @@ namespace Acacia
 
                 // Start watching events
                 if (DebugOptions.GetOption(null, DebugOptions.WATCHER_ENABLED))
+                {
+                    ((AddInWrapper)Instance).Start();
                     Watcher.Start();
+                }
 
                 // Done
                 Logger.Instance.Debug(this, "Startup done");

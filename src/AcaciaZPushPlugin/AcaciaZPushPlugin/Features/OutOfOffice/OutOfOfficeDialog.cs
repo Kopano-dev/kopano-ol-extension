@@ -43,7 +43,7 @@ namespace Acacia.Features.OutOfOffice
             InitializeComponent();
 
             // Add the email address to the title
-            Text = string.Format(Text, account.SmtpAddress);
+            Text = string.Format(Text, account.Account.SmtpAddress);
 
             // Set the time formats
             timeFrom.CustomFormat = CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern;

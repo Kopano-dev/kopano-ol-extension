@@ -44,9 +44,9 @@ namespace Acacia.Stubs
         // TODO: clean this up
 
         /// <summary>
-        /// Sends and receives all accounts.
+        /// Sends and receives all accounts, or a specific account.
         /// </summary>
-        void SendReceive();
+        void SendReceive(IAccount account = null);
 
         /// <summary>
         /// Restarts the application
@@ -63,12 +63,13 @@ namespace Acacia.Stubs
 
         IRecipient ResolveRecipient(string name);
 
-        IStore AddFileStore(string path);
-
         /// <summary>
-        /// Returns the stores. The caller is responsible for disposing.
+        /// Returns the store manager. This is a shared object and must NOT be disposed.
         /// </summary>
-        IEnumerable<IStore> Stores { get; }
+        IStores Stores
+        {
+            get;
+        }
 
         #endregion
     }

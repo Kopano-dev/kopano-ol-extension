@@ -29,7 +29,6 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using Acacia.UI;
 using static Acacia.DebugOptions;
-using Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Features.GAB
 {
@@ -474,7 +473,7 @@ namespace Acacia.Features.GAB
         private void AccountDiscovered(ZPushAccount zpush)
         {
             Logger.Instance.Info(this, "Account discovered: {0}", zpush.DisplayName);
-            _domains.Add(zpush.DomainName);
+            _domains.Add(zpush.Account.DomainName);
 
             zpush.ConfirmedChanged += (z) =>
             {
@@ -606,7 +605,7 @@ namespace Acacia.Features.GAB
         private void RegisterGABAccount(ZPushAccount account, IFolder folder)
         {
             // Determine the domain name
-            string domain = account.DomainName;
+            string domain = account.Account.DomainName;
 
             // Could already be registered if there are multiple accounts on the same domain
             GABHandler gab;
@@ -637,7 +636,7 @@ namespace Acacia.Features.GAB
 
         private void ZPushChannelAvailable(IFolder folder)
         {
-            using (IStore store = folder.Store)
+            using (IStore store = folder.GetStore())
             {
                 Logger.Instance.Debug(this, "Z-Push channel available: {0} on {1}", folder, store.DisplayName);
 

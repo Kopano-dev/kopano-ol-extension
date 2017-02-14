@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NSOutlook = Microsoft.Office.Interop.Outlook;
+using NSOutlookDelegates = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs
 {
@@ -25,10 +25,10 @@ namespace Acacia.Stubs
 
         #region Events
         // TODO: custom delegates
-        event NSOutlook.SyncObjectEvents_OnErrorEventHandler OnError;
-        event NSOutlook.SyncObjectEvents_ProgressEventHandler Progress;
-        event NSOutlook.SyncObjectEvents_SyncEndEventHandler SyncEnd;
-        event NSOutlook.SyncObjectEvents_SyncStartEventHandler SyncStart;
+        event NSOutlookDelegates.SyncObjectEvents_OnErrorEventHandler OnError;
+        event NSOutlookDelegates.SyncObjectEvents_ProgressEventHandler Progress;
+        event NSOutlookDelegates.SyncObjectEvents_SyncEndEventHandler SyncEnd;
+        event NSOutlookDelegates.SyncObjectEvents_SyncStartEventHandler SyncStart;
         #endregion
     }
 }

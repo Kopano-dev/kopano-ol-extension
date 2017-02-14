@@ -53,7 +53,7 @@ namespace Acacia.ZPush
             this._addIn = addIn;
             this._app = addIn.RawApp;
             Sync = new ZPushSync(this, addIn);
-            Accounts = new ZPushAccounts(this, _app);
+            Accounts = new ZPushAccounts(this, addIn);
 
             // Need to keep a link to keep receiving events
             _explorer2 = _app.ActiveExplorer();
@@ -73,43 +73,6 @@ namespace Acacia.ZPush
 
             // Notify any listeners of current selection.
             Explorer_SelectionChange();
-        }
-
-        #endregion
-
-        #region Timers
-
-        public void Delayed(int millis, System.Action action)
-        {
-            RegisterTimer(millis, action, false);
-        }
-
-        public void Timed(int millis, System.Action action)
-        {
-            RegisterTimer(millis, action, true);
-        }
-
-        private void RegisterTimer(int millis, System.Action action, bool repeat)
-        { 
-            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-            timer.Interval = millis;
-            timer.Tick += (s, eargs) =>
-            {
-                try
-                {
-                    action();
-                    if (!repeat)
-                    {
-                        timer.Enabled = false;
-                        timer.Dispose();
-                    }
-                }
-                catch(System.Exception e)
-                {
-                    Logger.Instance.Trace(this, "Exception in timer: {0}", e);
-                }
-            };
-            timer.Start();
         }
 
         #endregion
@@ -134,18 +97,15 @@ namespace Acacia.ZPush
         /// Handles a new account.
         /// </summary>
         /// <param name="account">The account.</param>
-        /// <param name="isExisting">True if the account is an existing account, false if
-        ///                          it is a new account</param>
-        internal void OnAccountDiscovered(ZPushAccount account, bool isExisting)
+        internal void OnAccountDiscovered(ZPushAccount account)
         {
             // Notify any account listeners
-            if (AccountDiscovered != null)
-                AccountDiscovered(account);
+            AccountDiscovered?.Invoke(account);
 
             // Register any events
             HandleFolderWatchers(account);
 
-            if (account.HasPassword)
+            if (account.Account.HasPassword)
             {
                 // Send an OOF request to get the OOF state and capabilities
                 Tasks.Task(null, "ZPushCheck: " + account.DisplayName, () =>
@@ -274,7 +234,7 @@ namespace Acacia.ZPush
         private void HandleFolderWatchers(ZPushAccount account)
         {
             // We need to keep the object alive to keep receiving events
-            _rootFolder = new ZPushFolder(this, account.Store.GetRootFolder());
+            _rootFolder = new ZPushFolder(this, account.Account.Store.GetRootFolder());
         }
 
         public void WatchFolder(FolderRegistration folder, FolderEventHandler handler, FolderEventHandler changedHandler = null)
@@ -367,7 +327,7 @@ namespace Acacia.ZPush
             
             string entryId = folder.EntryID;
 
-            using (IStore store = folder.Store)
+            using (IStore store = folder.GetStore())
             { 
                 foreach(DefaultFolder defaultFolderId in BLACKLISTED_MAIL_FOLDERS)
                 {

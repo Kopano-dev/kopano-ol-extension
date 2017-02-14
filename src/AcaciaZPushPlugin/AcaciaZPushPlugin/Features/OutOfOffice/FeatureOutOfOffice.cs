@@ -232,7 +232,7 @@ namespace Acacia.Features.OutOfOffice
             if (oof.State != ActiveSync.OOFState.Disabled)
             {
                 if (MessageBox.Show(
-                                string.Format(Properties.Resources.OOFStartup_Message, account.SmtpAddress),
+                                string.Format(Properties.Resources.OOFStartup_Message, account.Account.SmtpAddress),
                                 Properties.Resources.OOFStartup_Title,
                                 MessageBoxButtons.YesNo,
                                 MessageBoxIcon.Question

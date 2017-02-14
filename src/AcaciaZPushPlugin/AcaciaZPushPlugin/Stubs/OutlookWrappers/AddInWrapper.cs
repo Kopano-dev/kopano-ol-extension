@@ -17,17 +17,29 @@ namespace Acacia.Stubs.OutlookWrappers
 {
     public class AddInWrapper : IAddIn
     {
+        private readonly NSOutlook.Application _app;
         private readonly ThisAddIn _thisAddIn;
-        private NSOutlook.Application _app;
+        private readonly StoresWrapper _stores;
 
         public AddInWrapper(ThisAddIn thisAddIn)
         {
             this._thisAddIn = thisAddIn;
             this._app = thisAddIn.Application;
+
+            NSOutlook.NameSpace session = _app.Session;
+            try
+            {
+                this._stores = new StoresWrapper(session.Stores);
+            }
+            finally
+            {
+                ComRelease.Release(session);
+            }
         }
 
-        public void SendReceive()
+        public void SendReceive(IAccount account)
         {
+            // TODO: send/receive specific account
             NSOutlook.NameSpace session = _app.Session;
             try
             {
@@ -37,6 +49,11 @@ namespace Acacia.Stubs.OutlookWrappers
             {
                 ComRelease.Release(session);
             }
+        }
+
+        public void Start()
+        {
+            _stores.Start();
         }
 
         public void Restart()
@@ -224,35 +241,9 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public IStore AddFileStore(string path)
+        public IStores Stores
         {
-            using (ComRelease com = new ComRelease())
-            {
-                NSOutlook.NameSpace session = com.Add(_app.Session);
-                
-                // Add the store
-                session.AddStore(path);
-
-                // And fetch it and wrap
-                NSOutlook.Stores stores = com.Add(session.Stores);
-                return Mapping.Wrap(stores[stores.Count]);
-            }
-        }
-
-        public IEnumerable<IStore> Stores
-        {
-            get
-            {
-                using (ComRelease com = new ComRelease())
-                {
-                    NSOutlook.NameSpace session = com.Add(_app.Session);
-                    NSOutlook.Stores stores = com.Add(session.Stores);
-                    foreach (NSOutlook.Store store in stores)
-                    {
-                        yield return Mapping.Wrap(store);
-                    }
-                }
-            }
+            get { return _stores; }
         }
     }
 }

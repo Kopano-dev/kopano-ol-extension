@@ -42,14 +42,13 @@ namespace Acacia.Stubs
 
         /// <summary>
         /// Returns the store. The owner is responsible for disposing. 
-        /// TODO: make method to make disposing clear
         /// </summary>
-        IStore Store { get; }
+        IStore GetStore();
 
         /// <summary>
         /// Quick accessor to Store.Id, to prevent allocating a wrapper for it.
         /// </summary>
-        string StoreId { get; }
+        string StoreID { get; }
 
         /// <summary>
         /// Quick accessor to Store.DisplayName, to prevent allocating a wrapper for it.

@@ -97,19 +97,16 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public IStore Store
+        public IStore GetStore()
         {
-            get
+            using (ComRelease com = new ComRelease())
             {
-                using (ComRelease com = new ComRelease())
-                {
-                    NSOutlook.Folder parent = com.Add(_item.Parent);
-                    return Mapping.Wrap(parent?.Store);
-                }
+                NSOutlook.Folder parent = com.Add(_item.Parent);
+                return Mapping.Wrap(parent?.Store);
             }
         }
 
-        public string StoreId
+        public string StoreID
         {
             get
             {

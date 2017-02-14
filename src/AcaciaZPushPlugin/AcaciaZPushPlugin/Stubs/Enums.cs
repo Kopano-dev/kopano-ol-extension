@@ -45,4 +45,11 @@ namespace Acacia.Stubs
         ManagedEmail = 29,
         SuggestedContacts = 30
     }
+
+    public enum AccountType
+    {
+        // TODO
+        EAS,
+        Other
+    }
 }

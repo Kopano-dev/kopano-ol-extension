@@ -100,15 +100,15 @@ namespace Acacia.Features.WebApp
             // Perform a cached auto discover
             try
             {
-                Logger.Instance.Debug(this, "Starting kdiscover: {0}", account.DomainName);
+                Logger.Instance.Debug(this, "Starting kdiscover: {0}", account.Account.DomainName);
                 string url = PerformAutoDiscover(account);
-                Logger.Instance.Debug(this, "Finished kdiscover: {0}: {1}", account.DomainName, url);
+                Logger.Instance.Debug(this, "Finished kdiscover: {0}: {1}", account.Account.DomainName, url);
                 account.SetFeatureData(this, TXT_KDISCOVER, new URLCached(url));
                 return url;
             }
             catch (System.Exception e)
             {
-                Logger.Instance.Warning(this, "Exception during kdiscover: {0}: {1}", account.DomainName, e);
+                Logger.Instance.Warning(this, "Exception during kdiscover: {0}: {1}", account.Account.DomainName, e);
                 account.SetFeatureData(this, TXT_KDISCOVER, null);
                 return null;
             }
@@ -117,7 +117,7 @@ namespace Acacia.Features.WebApp
         private string PerformAutoDiscover(ZPushAccount account)
         {
             // Fetch the txt record
-            IList<string> txt = DnsUtil.GetTxtRecord(account.DomainName);
+            IList<string> txt = DnsUtil.GetTxtRecord(account.Account.DomainName);
             if (txt == null)
                 return null;
 

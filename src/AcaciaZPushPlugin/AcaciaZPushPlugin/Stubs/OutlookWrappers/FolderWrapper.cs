@@ -100,13 +100,13 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public string EntryID { get { return _item.EntryID; } }
 
-        public IStore Store { get { return Mapping.Wrap(_item.Store); } }
+        public IStore GetStore() { return Mapping.Wrap(_item.Store); }
 
-        public string StoreId
+        public string StoreID
         {
             get
             {
-                using (IStore store = Store)
+                using (IStore store = GetStore())
                 {
                     return store.StoreID;
                 }
@@ -116,7 +116,7 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             get
             {
-                using (IStore store = Store)
+                using (IStore store = GetStore())
                 {
                     return store.DisplayName;
                 }
@@ -241,7 +241,7 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             try
             {
-                using (IStore store = Store)
+                using (IStore store = GetStore())
                 {
                     return store.GetItemFromID(entryId);
                 }

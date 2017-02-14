@@ -23,7 +23,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.ZPush
 {
@@ -88,7 +87,7 @@ namespace Acacia.ZPush
 
                 // Path found, create the store
                 Logger.Instance.Info(typeof(ZPushLocalStore), "Creating new store: {0}", path);
-                store = addIn.AddFileStore(path);
+                store = addIn.Stores.AddFileStore(path);
                 Logger.Instance.Debug(typeof(ZPushLocalStore), "Created new store: {0}", store.FilePath);
 
                 // Set the display name

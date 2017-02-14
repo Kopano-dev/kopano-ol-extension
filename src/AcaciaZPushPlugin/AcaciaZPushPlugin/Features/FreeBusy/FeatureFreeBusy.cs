@@ -103,7 +103,7 @@ namespace Acacia.Features.FreeBusy
 
             set
             {
-                RegistryUtil.SetConfigValue(Name, REG_DEFAULTACCOUNT, value == null ? "" : value.SmtpAddress, RegistryValueKind.String);
+                RegistryUtil.SetConfigValue(Name, REG_DEFAULTACCOUNT, value == null ? "" : value.Account.SmtpAddress, RegistryValueKind.String);
             }
         }
 

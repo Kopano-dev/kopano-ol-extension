@@ -71,7 +71,7 @@ namespace Acacia.Features.SendAs
         private void MailEvents_Respond(IMailItem mail, IMailItem response)
         {
             Logger.Instance.Trace(this, "Responding to mail, checking");
-            using (IStore store = mail.Store)
+            using (IStore store = mail.GetStore())
             {
                 ZPushAccount zpush = Watcher.Accounts.GetAccount(store);
                 Logger.Instance.Trace(this, "Checking ZPush: {0}", zpush);
@@ -114,13 +114,13 @@ namespace Acacia.Features.SendAs
 
         private void MailEvents_ItemSend(IMailItem item, ref bool cancel)
         {
-            using (IStore store = item.Store)
+            using (IStore store = item.GetStore())
             {
                 ZPushAccount zpush = Watcher.Accounts.GetAccount(store);
                 if (zpush != null)
                 {
                     string address = item.SenderEmailAddress;
-                    if (address != null && address != zpush.SmtpAddress)
+                    if (address != null && address != zpush.Account.SmtpAddress)
                     {
                         Logger.Instance.Trace(this, "SendAs: {0}: {1}", address, item.SenderName);
                         item.SetProperty(Constants.ZPUSH_SEND_AS, address);

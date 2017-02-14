@@ -280,6 +280,7 @@
     <Compile Include="Native\IOleWindow.cs" />
     <Compile Include="OutlookConstants.cs" />
     <Compile Include="Stubs\Enums.cs" />
+    <Compile Include="Stubs\IAccount.cs" />
     <Compile Include="Stubs\IAddIn.cs" />
     <Compile Include="Stubs\IAddressEntry.cs" />
     <Compile Include="Stubs\ICommandBars.cs" />
@@ -288,7 +289,9 @@
     <Compile Include="Stubs\IItemEvents.cs" />
     <Compile Include="Stubs\IOutlookWindow.cs" />
     <Compile Include="Stubs\IRecipient.cs" />
+    <Compile Include="Stubs\IStores.cs" />
     <Compile Include="Stubs\ISyncObject.cs" />
+    <Compile Include="Stubs\OutlookWrappers\AccountWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\AddInWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\AddressEntryWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\CommandBarsWrapper.cs" />
@@ -296,6 +299,7 @@
     <Compile Include="Stubs\OutlookWrappers\ItemEventsWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\OutlookItemWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\RecipientWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\StoresWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\SyncObjectWrapper.cs" />
     <Compile Include="Stubs\Wrappers.cs" />
     <Compile Include="UI\Outlook\OutlookImageList.cs" />
