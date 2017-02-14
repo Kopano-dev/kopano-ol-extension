@@ -21,6 +21,7 @@ namespace Acacia.Stubs
         IEnumerable<Feature> Features { get; }
         IEnumerable<KeyValuePair<string,string>> COMAddIns { get; }
         string Version { get; }
+        ISyncObject GetSyncObject();
 
         #region UI
 

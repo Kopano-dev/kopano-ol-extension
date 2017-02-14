@@ -52,7 +52,7 @@ namespace Acacia.ZPush
         {
             this._addIn = addIn;
             this._app = addIn.RawApp;
-            Sync = new ZPushSync(this, _app);
+            Sync = new ZPushSync(this, addIn);
             Accounts = new ZPushAccounts(this, _app);
 
             // Need to keep a link to keep receiving events

@@ -15,6 +15,7 @@
 /// Consult LICENSE file for details
 
 using Acacia.Features;
+using Acacia.Stubs;
 using Acacia.Utils;
 using Acacia.ZPush.Connect;
 using System;
@@ -23,14 +24,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.ZPush
 {
     /// <summary>
     /// Helper for synchronising state with ZPush servers
     /// </summary>
-    public class ZPushSync
+    public class ZPushSync : DisposableWrapper
     {
         #region SyncTask
 
@@ -77,7 +77,7 @@ namespace Acacia.ZPush
 
         #region Setup 
 
-        private readonly NSOutlook.SyncObject _syncObject;
+        private readonly ISyncObject _syncObject;
         private readonly Timer _timer;
         private ZPushWatcher _watcher;
         private bool _started;
@@ -86,7 +86,7 @@ namespace Acacia.ZPush
         public readonly bool Enabled;
         public readonly TimeSpan Period;
 
-        public ZPushSync(ZPushWatcher watcher, NSOutlook.Application app)
+        public ZPushSync(ZPushWatcher watcher, IAddIn addIn)
         {
             // Get the settings
             Enabled = GlobalOptions.INSTANCE.ZPushSync;
@@ -104,10 +104,15 @@ namespace Acacia.ZPush
                 _timer.Start();
 
                 // Need to keep a reference to keep receiving events
-                _syncObject = app.Session.SyncObjects.AppFolders;
+                _syncObject = addIn.GetSyncObject();
                 _syncObject.SyncStart += SyncObject_SyncStart;
                 watcher.AccountDiscovered += Watcher_AccountDiscovered;
             }
+        }
+
+        protected override void DoRelease()
+        {
+            _syncObject.Dispose();
         }
 
         #endregion

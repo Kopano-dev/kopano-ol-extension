@@ -82,6 +82,16 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
+        public ISyncObject GetSyncObject()
+        {
+            using (ComRelease com = new ComRelease())
+            {
+                NSOutlook.NameSpace session = com.Add(_app.Session);
+                NSOutlook.SyncObjects syncObjects = com.Add(session.SyncObjects);
+                return new SyncObjectWrapper(syncObjects.AppFolders);
+            }
+        }
+
         #region UI
 
         public OutlookUI OutlookUI { get { return _thisAddIn.OutlookUI; } }

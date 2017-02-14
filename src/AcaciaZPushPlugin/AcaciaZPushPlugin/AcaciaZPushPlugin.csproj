@@ -288,6 +288,7 @@
     <Compile Include="Stubs\IItemEvents.cs" />
     <Compile Include="Stubs\IOutlookWindow.cs" />
     <Compile Include="Stubs\IRecipient.cs" />
+    <Compile Include="Stubs\ISyncObject.cs" />
     <Compile Include="Stubs\OutlookWrappers\AddInWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\AddressEntryWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\CommandBarsWrapper.cs" />
@@ -295,6 +296,7 @@
     <Compile Include="Stubs\OutlookWrappers\ItemEventsWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\OutlookItemWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\RecipientWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\SyncObjectWrapper.cs" />
     <Compile Include="Stubs\Wrappers.cs" />
     <Compile Include="UI\Outlook\OutlookImageList.cs" />
     <Compile Include="UI\Outlook\RibbonToggleButton.cs" />
