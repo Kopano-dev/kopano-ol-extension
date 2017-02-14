@@ -10,6 +10,8 @@ namespace Acacia.Utils
 {
     abstract public class DisposableWrapper : IDisposable
     {
+        private static Dictionary<Type, int> typeCounts = new Dictionary<Type, int>();
+
         protected DisposableWrapper()
         {
             Interlocked.Increment(ref Statistics.CreatedWrappers);
@@ -25,6 +27,10 @@ namespace Acacia.Utils
                 // Dispose, but don't count auto disposals, so the stats show it.
                 DoRelease();
             }
+            else
+            {
+                --typeCounts[GetType()];
+            }
         }
 
         private bool _isDisposed;
@@ -34,6 +40,11 @@ namespace Acacia.Utils
         {
             if (!_isDisposed)
             {
+                if (!typeCounts.ContainsKey(GetType()))
+                    typeCounts.Add(GetType(), 1);
+                else
+                    ++typeCounts[GetType()];
+
                 Logger.Instance.TraceExtra(this, "Disposing wrapper: {0}", new System.Diagnostics.StackTrace());
                 _isDisposed = true;
                 Interlocked.Increment(ref Statistics.DisposedWrappers);

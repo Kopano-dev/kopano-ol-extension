@@ -141,7 +141,7 @@ namespace Acacia.ZPush
             try
             {
                 Logger.Instance.Debug(this, "Folder added in {0}: {1}", Name, folder.Name);
-                WatchChild(folder);
+                WatchChild(folder.Duplicate());
             }
             catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderAdd: {0}: {1}", Name, e); }
         }
@@ -198,7 +198,6 @@ namespace Acacia.ZPush
                 if (_children.TryGetValue(folder.EntryID, out child))
                 {
                     _watcher.OnFolderChanged(child);
-                    // TODO: release folder?
                 }
                 else
                 {
@@ -206,7 +205,7 @@ namespace Acacia.ZPush
                     // Create it now
                     // This will send a discover notification if required, which is just as good as a change notification
                     Logger.Instance.Debug(this, "Folder change on unreported folder in {0}: {1}, {2}, {3}", Name, folder.Name, folder.EntryID, folder.StoreDisplayName);
-                    WatchChild(folder);
+                    WatchChild(folder.Duplicate());
                 }
             }
             catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderChange: {0}: {1}", Name, e); }
