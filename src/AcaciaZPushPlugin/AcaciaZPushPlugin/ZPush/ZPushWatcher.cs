@@ -145,8 +145,7 @@ namespace Acacia.ZPush
 
         internal void OnAccountsScanned()
         {
-            if (AccountsScanned != null)
-                AccountsScanned();
+            AccountsScanned?.Invoke();
         }
 
         internal void OnAccountRemoved(ZPushAccount account)
