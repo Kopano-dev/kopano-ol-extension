@@ -202,21 +202,16 @@ namespace Acacia.Utils
         {
             private IItem _item;
             private readonly MailEvents _events;
-            // TODO: remove id and debug logging
-            private int _id;
-            private static int nextId;
 
             public MailEventHooker(IItem item, MailEvents events)
             {
                 this._item = item;
-                this._id = ++nextId;
                 this._events = events;
                 HookEvents(true);
             }
 
             protected override void DoRelease()
             {
-                Logger.Instance.Debug(this, "DoRelease: {0}", _id);
                 _item.Dispose();
             }
 
@@ -250,37 +245,31 @@ namespace Acacia.Utils
 
             private void HandleBeforeDelete(object item, ref bool cancel)
             {
-                Logger.Instance.Debug(this, "HandleBeforeDelete: {0}", _id);
                 _events.OnBeforeDelete(item.WrapOrDefault<IItem>(), ref cancel);
             }
 
             private void HandleForward(object response, ref bool cancel)
             {
-                Logger.Instance.Debug(this, "HandleForward: {0}", _id);
                 _events.OnForward(_item as IMailItem, response.WrapOrDefault<IMailItem>());
             }
 
             private void HandleRead()
             {
-                Logger.Instance.Debug(this, "HandleRead: {0}", _id);
                 _events.OnRead(_item as IMailItem);
             }
 
             private void HandleReply(object response, ref bool cancel)
             {
-                Logger.Instance.Debug(this, "HandleReply: {0}", _id);
                 _events.OnReply(_item as IMailItem, response.WrapOrDefault<IMailItem>());
             }
 
             private void HandleReplyAll(object response, ref bool cancel)
             {
-                Logger.Instance.Debug(this, "HandleReplyAll: {0}", _id);
                 _events.OnReplyAll(_item as IMailItem, response.WrapOrDefault<IMailItem>());
             }
 
             private void HandleUnload()
             {
-                Logger.Instance.Debug(this, "HandleUnload: {0}", _id);
                 // All events must be unhooked on unload, otherwise a resource leak is created.
                 HookEvents(false);
                 Dispose();
@@ -288,7 +277,6 @@ namespace Acacia.Utils
 
             private void HandleWrite(ref bool cancel)
             {
-                Logger.Instance.Debug(this, "HandleWrite: {0}", _id);
                 _events.OnWrite(_item, ref cancel);
             }
         }
