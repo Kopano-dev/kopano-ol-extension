@@ -191,7 +191,7 @@ namespace Acacia.Features.SharedFolders
                 ctx.AddBusy(-count);
 
                 // Sync account
-                _account.SendReceive();
+                _account.Account.SendReceive();
 
                 // Show success
                 ShowCompletion(Properties.Resources.SharedFolders_Applying_Success);

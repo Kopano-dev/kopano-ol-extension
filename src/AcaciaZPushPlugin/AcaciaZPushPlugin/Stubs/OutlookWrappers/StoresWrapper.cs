@@ -169,7 +169,6 @@ namespace Acacia.Stubs.OutlookWrappers
                 // And fetch it and wrap
                 return Mapping.Wrap(_item[_item.Count]);
             }
-            throw new NotImplementedException();
         }
 
         public IEnumerator<IStore> GetEnumerator()

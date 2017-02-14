@@ -13,6 +13,8 @@ namespace Acacia.Stubs
 
         IStore Store { get; }
 
+        void SendReceive();
+
         string DisplayName { get; }
 
         string SmtpAddress { get; }

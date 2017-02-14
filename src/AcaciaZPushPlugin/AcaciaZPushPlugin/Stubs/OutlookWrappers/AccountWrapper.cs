@@ -45,12 +45,11 @@ namespace Acacia.Stubs.OutlookWrappers
         }
 
         /// <summary>
-        /// Triggers an Outlook send/receive operation.
+        /// Triggers an Outlook send/receive operation for this account.
         /// </summary>
         public void SendReceive()
         {
-            // TODO: ThisAddIn.Instance.SendReceive();
-            throw new NotImplementedException();
+            ThisAddIn.Instance.SendReceive(this);
         }
 
         #region Properties

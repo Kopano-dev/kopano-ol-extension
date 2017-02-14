@@ -14,6 +14,12 @@ namespace Acacia.Stubs.OutlookWrappers
         {
         }
 
+        public event NSOutlook.ExplorerEvents_10_SelectionChangeEventHandler SelectionChange
+        {
+            add { _item.SelectionChange += value; }
+            remove { _item.SelectionChange -= value; }
+        }
+
         protected override void DoRelease()
         {
             base.DoRelease();
@@ -28,5 +34,7 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             return _item.CurrentFolder.Wrap();
         }
+
+
     }
 }

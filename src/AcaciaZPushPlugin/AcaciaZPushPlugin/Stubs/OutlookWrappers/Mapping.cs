@@ -24,6 +24,7 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
+    // TODO: a clean up is needed, move as much as possible to Wrappers.cs
     public static class Mapping
     {
 
@@ -32,7 +33,6 @@ namespace Acacia.Stubs.OutlookWrappers
         /// </summary>
         /// <param name="o">The Outlook object.</param>
         /// <returns>The IItem wrapper, or null if the object could not be wrapped</returns>
-        // TODO: made this private to see if it's still used
         private static IBase Wrap(object o, bool mustRelease = true)
         {
             if (o == null)

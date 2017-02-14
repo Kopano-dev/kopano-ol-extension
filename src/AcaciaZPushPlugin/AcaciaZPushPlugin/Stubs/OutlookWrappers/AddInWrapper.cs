@@ -91,14 +91,6 @@ namespace Acacia.Stubs.OutlookWrappers
             remove { _app.ItemSend -= value; }
         }
 
-        public NSOutlook.Application RawApp
-        {
-            get
-            {
-                return _app;
-            }
-        }
-
         public ISyncObject GetSyncObject()
         {
             using (ComRelease com = new ComRelease())

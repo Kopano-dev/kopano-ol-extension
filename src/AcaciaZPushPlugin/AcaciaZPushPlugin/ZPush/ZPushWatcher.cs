@@ -26,7 +26,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.ZPush
 {
@@ -35,15 +34,12 @@ namespace Acacia.ZPush
     /// A global watcher is used, as a lot of features are interested in the same accounts,
     /// and it is easier to centralise all event registrations.
     /// </summary>
-    public class ZPushWatcher
+    public class ZPushWatcher : DisposableWrapper
     {
         private readonly IAddIn _addIn;
-
-        // TODO: remove
-        private readonly NSOutlook.Application _app;
         public readonly ZPushAccounts Accounts;
         public readonly ZPushSync Sync;
-        private NSOutlook.Explorer _explorer2;
+        private readonly IExplorer _explorer;
 
 
         #region Setup
@@ -51,13 +47,19 @@ namespace Acacia.ZPush
         public ZPushWatcher(IAddIn addIn)
         {
             this._addIn = addIn;
-            this._app = addIn.RawApp;
             Sync = new ZPushSync(this, addIn);
             Accounts = new ZPushAccounts(this, addIn);
 
             // Need to keep a link to keep receiving events
-            _explorer2 = _app.ActiveExplorer();
-            _explorer2.SelectionChange += Explorer_SelectionChange;
+            _explorer = _addIn.GetActiveExplorer();
+            _explorer.SelectionChange += Explorer_SelectionChange;
+        }
+
+        protected override void DoRelease()
+        {
+            Accounts.Dispose();
+            Sync.Dispose();
+            _explorer.Dispose();
         }
 
         /// <summary>
@@ -150,8 +152,7 @@ namespace Acacia.ZPush
         internal void OnAccountRemoved(ZPushAccount account)
         {
             // Notify any account listeners
-            if (AccountRemoved != null)
-                AccountRemoved(account);
+            AccountRemoved?.Invoke(account);
 
             // TODO: unregister event listeners
         }

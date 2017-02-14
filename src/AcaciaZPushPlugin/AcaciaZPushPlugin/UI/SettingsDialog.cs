@@ -48,7 +48,6 @@ namespace Acacia.UI
             get
             {
                 return null;
-                // TODO return ThisAddIn.Instance.Application;
             }
         }
 

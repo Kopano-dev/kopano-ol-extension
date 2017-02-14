@@ -8,14 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using NSOutlook = Microsoft.Office.Interop.Outlook;
+using NSOutlookDelegates = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs
 {
     public interface IAddIn
     {
-        NSOutlook.Application RawApp { get; } // TODO: remove
-
         ZPushWatcher Watcher { get; }
         MailEvents MailEvents { get; }
         IEnumerable<Feature> Features { get; }
@@ -35,8 +33,8 @@ namespace Acacia.Stubs
         #region Event handlers
 
         // TODO: custom event types
-        event NSOutlook.ApplicationEvents_11_ItemLoadEventHandler ItemLoad;
-        event NSOutlook.ApplicationEvents_11_ItemSendEventHandler ItemSend;
+        event NSOutlookDelegates.ApplicationEvents_11_ItemLoadEventHandler ItemLoad;
+        event NSOutlookDelegates.ApplicationEvents_11_ItemSendEventHandler ItemSend;
 
         #endregion
 

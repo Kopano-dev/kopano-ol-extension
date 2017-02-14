@@ -61,14 +61,6 @@ namespace Acacia.ZPush
             return _account.SmtpAddress;
         }
 
-        /// <summary>
-        /// Triggers an Outlook send/receive operation for this account.
-        /// </summary>
-        public void SendReceive()
-        {
-            ThisAddIn.Instance.SendReceive(Account);
-        }
-
         #endregion
 
         #region Identification and capabilities

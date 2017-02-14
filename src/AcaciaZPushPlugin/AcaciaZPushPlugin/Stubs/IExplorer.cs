@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NSOutlookDelegates = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs
 {
@@ -19,5 +20,11 @@ namespace Acacia.Stubs
         /// </summary>
         /// <returns>The folder. The caller is responsible for disposing.</returns>
         IFolder GetCurrentFolder();
+
+        #region Events
+        // TODO: custom delegates
+        event NSOutlookDelegates.ExplorerEvents_10_SelectionChangeEventHandler SelectionChange;
+
+        #endregion
     }
 }
