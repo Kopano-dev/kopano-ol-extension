@@ -231,14 +231,11 @@ namespace Acacia.UI
                 oper.AddField("urn:schemas:contacts:customerid").SetOperation(SearchOperation.Like, text + "%");
 
                 // Fetch the results up to the limit.
-                // TODO: make limit a property
+                // TODO: make limit a property?
                 List<GABUser> users = new List<GABUser>();
                 foreach (IContactItem result in search.Search(max))
                 {
-                    using (result)
-                    {
-                        users.Add(new GABUser(result.FullName, result.CustomerID));
-                    }
+                    users.Add(new GABUser(result.FullName, result.CustomerID));
                 }
 
                 return users;
@@ -254,13 +251,11 @@ namespace Acacia.UI
                 search.AddField("urn:schemas:contacts:customerid").SetOperation(SearchOperation.Equal, username);
 
                 // Fetch the result, if any.
+                // TODO: make a SearchOne method?
                 List<GABUser> users = new List<GABUser>();
                 foreach (IContactItem result in search.Search(1))
                 {
-                    using (result)
-                    {
-                        return new GABUser(result.FullName, result.CustomerID);
-                    }
+                    return new GABUser(result.FullName, result.CustomerID);
                 }
             }
 

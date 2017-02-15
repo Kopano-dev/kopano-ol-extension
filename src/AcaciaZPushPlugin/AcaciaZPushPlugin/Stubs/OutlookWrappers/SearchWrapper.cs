@@ -176,19 +176,26 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public IEnumerable<ItemType> Search(int maxResults)
         {
-            List<ItemType> values = new List<ItemType>();
             string filter = MakeFilter();
 
+            int count = 0;
             object value = _item.Find(filter);
             while(value != null)
             {
-                if (values.Count < maxResults)
+                if (count < maxResults)
                 {
                     // Wrap and add if it returns an object. If not, WrapOrDefault will release it
                     ItemType wrapped = Mapping.WrapOrDefault<ItemType>(value);
                     if (wrapped != null)
                     {
-                        values.Add(wrapped);
+                        try
+                        {
+                            yield return wrapped;
+                        }
+                        finally
+                        {
+                            wrapped.Dispose();
+                        }
                     }
                 }
                 else
@@ -197,8 +204,8 @@ namespace Acacia.Stubs.OutlookWrappers
                     ComRelease.Release(value);
                 }
                 value = _item.FindNext();
+                ++count;
             }
-            return values;
         }
 
         public ItemType SearchOne()

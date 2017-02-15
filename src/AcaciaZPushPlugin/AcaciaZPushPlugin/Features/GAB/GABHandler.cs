@@ -274,12 +274,8 @@ namespace Acacia.Features.GAB
                         search.AddField(PROP_CHUNK, true).SetOperation(SearchOperation.Equal, index.chunk);
                         foreach (IItem oldItem in search.Search())
                         {
-                            // TODO: Search should handle this, like folder enumeration
-                            using (oldItem)
-                            {
-                                Logger.Instance.Trace(this, "Deleting GAB entry: {0}", oldItem.Subject);
-                                oldItem.Delete();
-                            }
+                            Logger.Instance.Trace(this, "Deleting GAB entry: {0}", oldItem.Subject);
+                            oldItem.Delete();
                         }
                     }
                 }
