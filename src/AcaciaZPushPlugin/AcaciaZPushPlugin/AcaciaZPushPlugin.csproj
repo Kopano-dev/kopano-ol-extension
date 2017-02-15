@@ -125,7 +125,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DefineConstants>VSTO40</DefineConstants>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <!--
@@ -241,6 +241,7 @@
     <Compile Include="Controls\KUITask.cs" />
     <Compile Include="Controls\KUIUtil.cs" />
     <Compile Include="DebugOptions.cs" />
+    <Compile Include="Features\SecondaryContacts\FeatureSecondaryContacts.cs" />
     <Compile Include="Features\DebugSupport\AboutDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -275,13 +276,44 @@
     <Compile Include="Features\SharedFolders\FolderTreeNode.cs" />
     <Compile Include="GlobalOptions.cs" />
     <Compile Include="Logging.cs" />
+    <Compile Include="Native\MAPI.cs" />
+    <Compile Include="Native\IOleWindow.cs" />
     <Compile Include="OutlookConstants.cs" />
+    <Compile Include="Stubs\Enums.cs" />
+    <Compile Include="Stubs\IAccount.cs" />
+    <Compile Include="Stubs\IAddIn.cs" />
+    <Compile Include="Stubs\IAddressEntry.cs" />
+    <Compile Include="Stubs\ICommandBars.cs" />
+    <Compile Include="Stubs\IComWrapper.cs" />
+    <Compile Include="Stubs\IExplorer.cs" />
+    <Compile Include="Stubs\IFolders.cs" />
+    <Compile Include="Stubs\IItemEvents.cs" />
+    <Compile Include="Stubs\IItems.cs" />
+    <Compile Include="Stubs\IOutlookWindow.cs" />
+    <Compile Include="Stubs\IRecipient.cs" />
+    <Compile Include="Stubs\IStores.cs" />
+    <Compile Include="Stubs\ISyncObject.cs" />
+    <Compile Include="Stubs\OutlookWrappers\AccountWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\AddInWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\AddressEntryWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\CommandBarsWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\ExplorerWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\FoldersWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\ItemEventsWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\ItemsWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\OutlookItemWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\RecipientWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\StoresWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\SyncObjectWrapper.cs" />
+    <Compile Include="Stubs\Wrappers.cs" />
     <Compile Include="UI\Outlook\OutlookImageList.cs" />
     <Compile Include="UI\Outlook\RibbonToggleButton.cs" />
     <Compile Include="UI\Outlook\RibbonButton.cs" />
     <Compile Include="UI\Outlook\CommandElement.cs" />
     <Compile Include="UI\Outlook\MenuItem.cs" />
     <Compile Include="UI\Outlook\Types.cs" />
+    <Compile Include="Utils\DisposableWrapper.cs" />
+    <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="Utils\RegistryUtil.cs" />
     <Compile Include="ZPush\API\SharedFolders\AvailableFolder.cs" />
     <Compile Include="ZPush\API\SharedFolders\SharedFolder.cs" />
@@ -306,8 +338,7 @@
     <Compile Include="ZPush\Connect\ZPushRequestEncoder.cs" />
     <Compile Include="ZPush\Connect\Soap\SoapRequestEncoder.cs" />
     <Compile Include="ZPush\Connect\Soap\SoapRequest.cs" />
-    <Compile Include="Stubs\ItemType.cs" />
-    <Compile Include="Stubs\OutlookWrappers\DisposableWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\ComWrapper.cs" />
     <Compile Include="UI\FeatureSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -393,7 +424,6 @@
     <Compile Include="Stubs\INoteItem.cs" />
     <Compile Include="Stubs\ISearch.cs" />
     <Compile Include="Stubs\IStorageItem.cs" />
-    <Compile Include="Stubs\IUserProperty.cs" />
     <Compile Include="Stubs\IZPushItem.cs" />
     <Compile Include="Stubs\OutlookWrappers\AddressBookWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\DistributionListWrapper.cs" />
@@ -408,7 +438,6 @@
     <Compile Include="Stubs\OutlookWrappers\SearchWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\StorageItemWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\StoreWrapper.cs" />
-    <Compile Include="Stubs\OutlookWrappers\UserPropertyWrapper.cs" />
     <Compile Include="Stubs\IStore.cs" />
     <Compile Include="UI\ProgressDialog.cs">
       <SubType>Form</SubType>

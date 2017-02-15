@@ -46,14 +46,14 @@ namespace Acacia.ZPush.Connect
         public ResponseType Execute<ResponseType>(SoapRequest<ResponseType> request)
         {
             // Create the url
-            string url = string.Format(ACTIVESYNC_URL, _connection.Account.ServerURL, "webservice",
+            string url = string.Format(ACTIVESYNC_URL, _connection.Account.Account.ServerURL, "webservice",
                     ServiceName,
                     // TODO: this username is a bit of a quick hack. 
-                    request.UserName ?? _connection.Account.UserName,
+                    request.UserName ?? _connection.Account.Account.UserName,
                     "webservice");
 
             // Set up the encoding
-            SoapRequestEncoder encoder = new SoapRequestEncoder(_connection.Account.ServerURL, ServiceParameters, request);
+            SoapRequestEncoder encoder = new SoapRequestEncoder(_connection.Account.Account.ServerURL, ServiceParameters, request);
             encoder.ServiceName = ServiceName;
 
             // Execute the request
@@ -85,7 +85,7 @@ namespace Acacia.ZPush.Connect
             get
             {
                 SoapParameters parameters = new SoapParameters();
-                parameters.Add("devid", _connection.Account.DeviceId.ToLower());
+                parameters.Add("devid", _connection.Account.Account.DeviceId.ToLower());
                 return parameters;
             }
         }

@@ -1,4 +1,4 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -14,25 +14,22 @@
 /// 
 /// Consult LICENSE file for details
 
+using Acacia.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
-namespace Acacia.Stubs
+namespace Acacia.Stubs.OutlookWrappers
 {
-    public interface IUserProperty<Type>
+    class AddressEntryWrapper : ComWrapper<NSOutlook.AddressEntry>, IAddressEntry
     {
-        #region Properties
-
-        Type Value
+        internal AddressEntryWrapper(NSOutlook.AddressEntry item) : base(item)
         {
-            get;
-            set;
         }
 
-        #endregion
+        internal NSOutlook.AddressEntry RawItem { get { return _item; } }
     }
-
 }

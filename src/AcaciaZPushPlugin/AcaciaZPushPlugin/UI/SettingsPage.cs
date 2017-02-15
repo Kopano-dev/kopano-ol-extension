@@ -25,11 +25,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Acacia.Features;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.UI
 {
     [ComVisible(true)]
-    public partial class SettingsPage : UserControl, Microsoft.Office.Interop.Outlook.PropertyPage
+    public partial class SettingsPage : UserControl, NSOutlook.PropertyPage
     {
         private readonly Dictionary<FeatureSettings, bool> _featuresDirty = new Dictionary<FeatureSettings, bool>();
 
@@ -78,8 +79,8 @@ namespace Acacia.UI
             Dirty = _featuresDirty.Values.Aggregate((a, b) => a | b);
         }
 
-        private Microsoft.Office.Interop.Outlook.PropertyPageSite _propertyPageSite;
-        public Microsoft.Office.Interop.Outlook.PropertyPageSite PropertyPageSite
+        private NSOutlook.PropertyPageSite _propertyPageSite;
+        public NSOutlook.PropertyPageSite PropertyPageSite
         {
             get
             {
@@ -96,7 +97,8 @@ namespace Acacia.UI
                     System.Reflection.MethodInfo methodInfo = oleObjectType.GetMethod("GetClientSite");
                     Object propertyPageSite = methodInfo.Invoke(this, null);
 
-                    _propertyPageSite = (Microsoft.Office.Interop.Outlook.PropertyPageSite)propertyPageSite;
+                    // TODO: does this need to be released?
+                    _propertyPageSite = (NSOutlook.PropertyPageSite)propertyPageSite;
                 }
                 return _propertyPageSite;
             }

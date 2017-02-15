@@ -121,7 +121,7 @@ namespace Acacia.Features.GAB
         {
             get
             {
-                using(IStore store = Folder.Store)
+                using(IStore store = Folder.GetStore())
                     return store.DisplayName;
             }
         }
@@ -136,6 +136,13 @@ namespace Acacia.Features.GAB
 
         private void ClearContacts()
         {
+            if (!_feature.ClearContacts)
+            {
+                using (IStorageItem item = GetIndexItem())
+                    item?.Delete();
+                return;
+            }
+
             if (Contacts != null)
             {
                 try
@@ -193,24 +200,21 @@ namespace Acacia.Features.GAB
                 return;
 
             // Process the messages
-            foreach (IItem item in Folder.Items)
+            foreach (IZPushItem item in Folder.Items.Typed<IZPushItem>())
             {
-                // TODO: make type-checking iterator?
-                if (item is IZPushItem)
+                // Store the entry id to fetch again later, the item will be disposed
+                string entryId = item.EntryID;
+                Logger.Instance.Trace(this, "Checking chunk: {0}", item.Subject);
+                if (_feature.ProcessItems2)
                 {
-                    string entryId = item.EntryId;
-                    Logger.Instance.Trace(this, "Checking chunk: {0}", item.Subject);
-                    if (_feature.ProcessItems2)
+                    Tasks.Task(_feature, "ProcessChunk", () =>
                     {
-                        Tasks.Task(_feature, "ProcessChunk", () =>
+                        using (IItem item2 = Folder.GetItemById(entryId))
                         {
-                            using (IItem item2 = Folder.GetItemById(entryId))
-                            {
-                                if (item2 != null)
-                                    ProcessMessage((IZPushItem)item2);
-                            }
-                        });
-                    }
+                            if (item2 != null)
+                                ProcessMessage((IZPushItem)item2);
+                        }
+                    });
                 }
             }
         }
@@ -261,17 +265,18 @@ namespace Acacia.Features.GAB
             _feature?.BeginProcessing();
             try
             {
-                // Delete the old contacts from this chunk
-                ISearch<IItem> search = Contacts.Search<IItem>();
-                search.AddField(PROP_SEQUENCE, true).SetOperation(SearchOperation.Equal, index.numberOfChunks);
-                search.AddField(PROP_CHUNK, true).SetOperation(SearchOperation.Equal, index.chunk);
-                foreach (IItem oldItem in search.Search())
+                if (_feature.ProcessMessageDeleteExisting)
                 {
-                    // TODO: Search should handle this, like folder enumeration
-                    using (oldItem)
+                    // Delete the old contacts from this chunk
+                    using (ISearch<IItem> search = Contacts.Search<IItem>())
                     {
-                        Logger.Instance.Trace(this, "Deleting GAB entry: {0}", oldItem.Subject);
-                        oldItem.Delete();
+                        search.AddField(PROP_SEQUENCE, true).SetOperation(SearchOperation.Equal, index.numberOfChunks);
+                        search.AddField(PROP_CHUNK, true).SetOperation(SearchOperation.Equal, index.chunk);
+                        foreach (IItem oldItem in search.Search())
+                        {
+                            Logger.Instance.Trace(this, "Deleting GAB entry: {0}", oldItem.Subject);
+                            oldItem.Delete();
+                        }
                     }
                 }
 
@@ -297,7 +302,7 @@ namespace Acacia.Features.GAB
             {
                 using (IStorageItem index = GetIndexItem())
                 {
-                    return index?.GetUserProperty<int>(PROP_CURRENT_SEQUENCE)?.Value;
+                    return index?.GetUserProperty<int?>(PROP_CURRENT_SEQUENCE);
                 }
             }
             set
@@ -306,7 +311,7 @@ namespace Acacia.Features.GAB
                 {
                     if (value != null)
                     {
-                        index.GetUserProperty<int>(PROP_CURRENT_SEQUENCE, true).Value = value.Value;
+                        index.SetUserProperty<int>(PROP_CURRENT_SEQUENCE, value.Value);
                     }
                     else
                     {
@@ -316,22 +321,25 @@ namespace Acacia.Features.GAB
             }
         }
 
-        private IItem FindNewestChunk()
+        private ChunkIndex? FindNewestChunkIndex()
         {
             if (Folder == null)
                 return null;
 
             // Scan a few of the newest items, in case there is some junk in the ZPush folder
-            // TODO: this shouldn't happen in production.
+            // This shouldn't happen in production, but check anyway.
             int i = 0;
-            foreach(IItem item in Folder.ItemsSorted("LastModificationTime", true))
+            foreach(IItem item in Folder.Items.Sort("LastModificationTime", true))
             {
-                if (ChunkIndex.Parse(item.Subject) != null)
-                    return item;
-                item.Dispose();
-                if (i > Constants.ZPUSH_GAB_NEWEST_MAX_CHECK)
-                    return null;
-                ++i;
+                using (item)
+                {
+                    ChunkIndex? index = ChunkIndex.Parse(item.Subject);
+                    if (index != null)
+                        return index;
+                    if (i > Constants.ZPUSH_GAB_NEWEST_MAX_CHECK)
+                        return null;
+                    ++i;
+                }
             }
             return null;
         }
@@ -341,39 +349,39 @@ namespace Acacia.Features.GAB
             try
             {
                 // Find the newest chunk
-                using (IItem newest = FindNewestChunk())
+                ChunkIndex? newestChunkIndex = FindNewestChunkIndex();
+                if (newestChunkIndex == null)
                 {
-                    if (newest == null)
-                        CurrentSequence = null;
-                    else
+                    CurrentSequence = null;
+                }
+                else
+                {
+                    Logger.Instance.Trace(this, "Newest chunk: {0}", newestChunkIndex.Value);
+
+                    int? currentSequence = CurrentSequence;
+                    if (!currentSequence.HasValue || currentSequence.Value != newestChunkIndex?.numberOfChunks)
                     {
-                        Logger.Instance.Trace(this, "Newest chunk: {0}", newest.Subject);
-                        ChunkIndex? newestChunkIndex = ChunkIndex.Parse(newest.Subject);
+                        // Sequence has changed. Delete contacts
+                        Logger.Instance.Trace(this, "Rechunked, deleting contacts");
+                        ClearContacts();
 
-                        if (!CurrentSequence.HasValue || CurrentSequence.Value != newestChunkIndex?.numberOfChunks)
+                        // Determine new sequence
+                        if (newestChunkIndex == null)
                         {
-                            // Sequence has changed. Delete contacts
-                            Logger.Instance.Trace(this, "Rechunked, deleting contacts");
-                            ClearContacts();
-
-                            // Determine new sequence
-                            if (newestChunkIndex == null)
+                            using (IStorageItem index = GetIndexItem())
                             {
-                                using (IStorageItem index = GetIndexItem())
-                                {
-                                    if (index != null)
-                                        index.Delete();
-                                }
+                                if (index != null)
+                                    index.Delete();
                             }
-                            else
+                        }
+                        else
+                        {
+                            int numberOfChunks = newestChunkIndex.Value.numberOfChunks;
+                            using (IStorageItem index = GetIndexItem())
                             {
-                                int numberOfChunks = newestChunkIndex.Value.numberOfChunks;
-                                using (IStorageItem index = GetIndexItem())
-                                {
-                                    index.GetUserProperty<int>(PROP_CURRENT_SEQUENCE, true).Value = numberOfChunks;
-                                    index.GetUserProperty<string>(PROP_LAST_PROCESSED, true).Value = CreateChunkStateString(numberOfChunks);
-                                    index.Save();
-                                }
+                                index.SetUserProperty(PROP_CURRENT_SEQUENCE, numberOfChunks);
+                                index.SetUserProperty(PROP_LAST_PROCESSED, CreateChunkStateString(numberOfChunks));
+                                index.Save();
                             }
                         }
                     }
@@ -402,7 +410,7 @@ namespace Acacia.Features.GAB
             {
                 if (item == null)
                     return null;
-                string state = item.GetUserProperty<string>(PROP_LAST_PROCESSED)?.Value;
+                string state = item.GetUserProperty<string>(PROP_LAST_PROCESSED);
                 if (string.IsNullOrEmpty(state))
                     return null;
 
@@ -420,7 +428,7 @@ namespace Acacia.Features.GAB
         {
             using (IStorageItem item = GetIndexItem())
             {
-                string state = item.GetUserProperty<string>(PROP_LAST_PROCESSED)?.Value;
+                string state = item.GetUserProperty<string>(PROP_LAST_PROCESSED);
                 string[] parts;
                 if (string.IsNullOrEmpty(state))
                     parts = new string[index.numberOfChunks];
@@ -434,7 +442,7 @@ namespace Acacia.Features.GAB
                 parts[index.chunk] = partState;
                 string combined = string.Join(";", parts);
 
-                item.GetUserProperty<string>(PROP_LAST_PROCESSED, true).Value = combined;
+                item.SetUserProperty(PROP_LAST_PROCESSED, combined);
                 item.Save();
             }
         }
@@ -598,7 +606,7 @@ namespace Acacia.Features.GAB
                         {
                             using (IItem item = FindItemById(memberId))
                             {
-                                Logger.Instance.Debug(this, "Finding member {0} of {1}: {2}", memberId, id, item?.EntryId);
+                                Logger.Instance.Debug(this, "Finding member {0} of {1}: {2}", memberId, id, item?.EntryID);
                                 if (item != null)
                                     AddGroupMember(group, item);
                             }
@@ -613,17 +621,19 @@ namespace Acacia.Features.GAB
 
         private IItem FindItemById(string id)
         {
-            ISearch<IItem> search = Contacts.Search<IItem>();
-            search.AddField(PROP_GAB_ID, true).SetOperation(SearchOperation.Equal, id);
-            return search.SearchOne();
+            using (ISearch<IItem> search = Contacts.Search<IItem>())
+            {
+                search.AddField(PROP_GAB_ID, true).SetOperation(SearchOperation.Equal, id);
+                return search.SearchOne();
+            }
         }
 
         private void SetItemStandard(IItem item, string id, Dictionary<string, object> value, ChunkIndex index)
         {
             // Set the chunk data
-            item.GetUserProperty<int>(PROP_SEQUENCE, true).Value = index.numberOfChunks;
-            item.GetUserProperty<int>(PROP_CHUNK, true).Value = index.chunk;
-            item.GetUserProperty<string>(PROP_GAB_ID, true).Value = id;
+            item.SetUserProperty(PROP_SEQUENCE, index.numberOfChunks);
+            item.SetUserProperty(PROP_CHUNK, index.chunk);
+            item.SetUserProperty(PROP_GAB_ID, id);
         }
 
         private void AddGroupMember(IDistributionList group, IItem item)
@@ -653,7 +663,7 @@ namespace Acacia.Features.GAB
                 {
                     using (IItem groupItem = FindItemById(memberOf))
                     {
-                        Logger.Instance.Debug(this, "Finding group {0} for {1}: {2}", memberOf, id, groupItem?.EntryId);
+                        Logger.Instance.Debug(this, "Finding group {0} for {1}: {2}", memberOf, id, groupItem?.EntryID);
                         if (groupItem is IDistributionList)
                         {
                             AddGroupMember((IDistributionList)groupItem, item);

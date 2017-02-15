@@ -22,7 +22,6 @@ using System.Threading.Tasks;
 using Acacia.Stubs;
 using Acacia.Utils;
 using Acacia.ZPush;
-using Microsoft.Office.Interop.Outlook;
 using static Acacia.DebugOptions;
 
 namespace Acacia.Features.ReplyFlags
@@ -48,16 +47,28 @@ namespace Acacia.Features.ReplyFlags
             if (ReadEvent)
             {
                 // As a fallback, add an event handler to update the message when displaying it
-                MailEvents.Read += UpdateReplyStatus;
+                if (MailEvents != null)
+                {
+                    MailEvents.Read += UpdateReplyStatus;
+                }
             }
 
             if (SendEvents)
             {
                 // Hook reply and send events to update local state to server
-                MailEvents.Reply += OnReply;
-                MailEvents.ReplyAll += OnReplyAll;
-                MailEvents.Forward += OnForwarded;
+                if (MailEvents != null)
+                {
+                    MailEvents.Reply += OnReply;
+                    MailEvents.ReplyAll += OnReplyAll;
+                    MailEvents.Forward += OnForwarded;
+                }
             }
+        }
+
+        override public void GetCapabilities(ZPushCapabilities caps)
+        {
+            caps.Add("receiveflags");
+            caps.Add("sendflags");
         }
 
         [AcaciaOption("Enables or disables the handling of update events to mail items. When a mail item is " +

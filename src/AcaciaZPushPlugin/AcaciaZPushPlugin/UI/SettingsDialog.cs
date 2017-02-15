@@ -23,7 +23,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.UI
 {
@@ -48,19 +47,19 @@ namespace Acacia.UI
         {
             get
             {
-                return ThisAddIn.Instance.Application;
+                return null;
             }
         }
 
-        public OlObjectClass Class
+        public Microsoft.Office.Interop.Outlook.OlObjectClass Class
         {
             get
             {
-                return OlObjectClass.olApplication;
+                return Microsoft.Office.Interop.Outlook.OlObjectClass.olApplication;
             }
         }
 
-        public NameSpace Session
+        public Microsoft.Office.Interop.Outlook.NameSpace Session
         {
             get
             {
@@ -68,7 +67,7 @@ namespace Acacia.UI
             }
         }
 
-        dynamic PropertyPageSite.Parent
+        dynamic Microsoft.Office.Interop.Outlook.PropertyPageSite.Parent
         {
             get
             {

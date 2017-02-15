@@ -15,7 +15,6 @@
 /// Consult LICENSE file for details
 
 using Acacia.Features.DebugSupport;
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,56 +22,45 @@ using Acacia.Utils;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
     /// <summary>
     /// Helper for Outlook wrapper implementations
     /// </summary>
-    abstract public class OutlookWrapper<ItemType> : DisposableWrapper
+    abstract class OutlookWrapper<ItemType> : ComWrapper<ItemType>
     {
 
         #region Construction / Destruction
 
-        protected ItemType _item;
-
         /// <summary>
         /// Creates a wrapper.
         /// </summary>
-        internal OutlookWrapper(ItemType item)
-        {
-            this._item = item;
-        }
-
-        ~OutlookWrapper()
+        internal OutlookWrapper(ItemType item) : base(item)
         {
         }
 
         protected override void DoRelease()
         {
+            // Always release props, as we allocated that
             if (_props != null)
             {
                 ComRelease.Release(_props);
                 _props = null;
             }
 
-            if (MustRelease)
-            {
-                if (_item != null)
-                {
-                    ComRelease.Release(_item);
-                    _item = default(ItemType);
-                }
-            }
+            base.DoRelease();
         }
 
         #endregion
 
         #region Properties implementation
 
-        private PropertyAccessor _props;
+        // Assigned in Props, released in DoRelease
+        private NSOutlook.PropertyAccessor _props;
 
-        private PropertyAccessor Props
+        private NSOutlook.PropertyAccessor Props
         {
             get
             {
@@ -88,7 +76,7 @@ namespace Acacia.Stubs.OutlookWrappers
         /// Returns the wrapped item's property accessor.
         /// </summary>
         /// <returns>The property accessor. The caller is responsible for disposing this.</returns>
-        abstract protected PropertyAccessor GetPropertyAccessor();
+        abstract protected NSOutlook.PropertyAccessor GetPropertyAccessor();
 
         #endregion
 
@@ -112,35 +100,18 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             get
             {
-                return Props.GetProperty(OutlookConstants.PR_ATTR_HIDDEN);
+                try
+                {
+                    return Props.GetProperty(OutlookConstants.PR_ATTR_HIDDEN);
+                }
+                catch(System.Exception)
+                {
+                    return false;
+                }
             }
             set
             {
                 Props.SetProperty(OutlookConstants.PR_ATTR_HIDDEN, value);
-            }
-        }
-
-        public DateTime? AttrLastVerbExecutionTime
-        {
-            get
-            {
-                return Props.GetProperty(OutlookConstants.PR_LAST_VERB_EXECUTION_TIME) as DateTime?;
-            }
-            set
-            {
-                Props.SetProperty(OutlookConstants.PR_LAST_VERB_EXECUTION_TIME, value);
-            }
-        }
-
-        public int AttrLastVerbExecuted
-        {
-            get
-            {
-                return Props.GetProperty(OutlookConstants.PR_LAST_VERB_EXECUTED);
-            }
-            set
-            {
-                Props.SetProperty(OutlookConstants.PR_LAST_VERB_EXECUTED, value);
             }
         }
 
@@ -153,7 +124,7 @@ namespace Acacia.Stubs.OutlookWrappers
                     return null;
                 return val;
             }
-            catch(System.Exception) { return null; } // TODO: is this fine everywhere?
+            catch(System.Exception) { return null; }
         }
 
         public void SetProperty(string property, object value)

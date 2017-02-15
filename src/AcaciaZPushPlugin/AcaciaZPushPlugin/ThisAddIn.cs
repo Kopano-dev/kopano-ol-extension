@@ -19,8 +19,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using Outlook = Microsoft.Office.Interop.Outlook;
-using Office = Microsoft.Office.Core;
 using Acacia.Features;
 using System.Threading;
 using System.Windows.Forms;
@@ -29,25 +27,21 @@ using Acacia.UI;
 using Acacia.ZPush;
 using System.Globalization;
 using Acacia.UI.Outlook;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Reflection;
+using Acacia.Native;
+using Acacia.Stubs;
+using Acacia.Stubs.OutlookWrappers;
 
 namespace Acacia
 {
     public partial class ThisAddIn
     {
-
-        public static ThisAddIn Instance
+        public static IAddIn Instance
         {
             get;
             private set;
-        }
-
-        private Control _dispatcher;
-
-        public void InvokeUI(Action action)
-        {
-            // [ZP-992] For some reason using the dispatcher causes a deadlock
-            // since switching to UI-chunked tasks. Running directly works.
-            action();
         }
 
         #region Features
@@ -69,15 +63,20 @@ namespace Acacia
             private set;
         }
 
-        public FeatureType GetFeature<FeatureType>()
-            where FeatureType : Feature
+        private MailEvents _mailEvents;
+        public MailEvents MailEvents
         {
-            foreach(Feature feature in Features)
+            get
             {
-                if (feature is FeatureType)
-                    return (FeatureType)feature;
+                if (_mailEvents == null)
+                {
+                    if (GlobalOptions.INSTANCE.HookItemEvents)
+                    {
+                        _mailEvents = new MailEvents(Instance);
+                    }
+                }
+                return _mailEvents;
             }
-            return default(FeatureType);
         }
 
         #region Startup / Shutdown
@@ -100,15 +99,11 @@ namespace Acacia
                     return;
                 }
 
-                Instance = this;
+                Instance = new AddInWrapper(this);
 
                 // Set the culture info from Outlook's language setting rather than the OS setting
-                int lcid = Application.LanguageSettings.get_LanguageID(Office.MsoAppLanguageID.msoLanguageIDUI);
+                int lcid = Application.LanguageSettings.get_LanguageID(Microsoft.Office.Core.MsoAppLanguageID.msoLanguageIDUI);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(lcid);
-
-                // Create a dispatcher
-                _dispatcher = new Control();
-                _dispatcher.CreateControl();
 
                 // The synchronization context is needed to allow background tasks to jump back to the UI thread.
                 // It's null in older versions of .Net, this fixes that
@@ -118,7 +113,7 @@ namespace Acacia
                 }
 
                 // Create the watcher
-                Watcher = new ZPushWatcher(Application);
+                Watcher = new ZPushWatcher(Instance);
                 OutlookUI.Watcher = Watcher;
 
                 // Allow to features to register whatever they need
@@ -151,11 +146,17 @@ namespace Acacia
 
                 // Start watching events
                 if (DebugOptions.GetOption(null, DebugOptions.WATCHER_ENABLED))
+                {
+                    ((AddInWrapper)Instance).Start();
                     Watcher.Start();
+                }
 
                 // Done
                 Logger.Instance.Debug(this, "Startup done");
                 Acacia.Features.DebugSupport.Statistics.StartupTime.Stop();
+                foreach (Feature feature in Features)
+                    feature.AfterStartup();
+
             }
             catch (System.Exception e)
             {
@@ -172,6 +173,7 @@ namespace Acacia
         {
             try
             {
+                // TODO: is any management of Pages needed here?
                 Pages.Add(new SettingsPage(Features.ToArray()), Properties.Resources.ThisAddIn_Title);
             }
             catch(System.Exception e)

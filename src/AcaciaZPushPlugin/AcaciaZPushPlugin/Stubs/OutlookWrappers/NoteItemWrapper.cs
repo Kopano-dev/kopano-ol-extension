@@ -14,32 +14,44 @@
 /// 
 /// Consult LICENSE file for details
 
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Acacia.Utils;
 using System.Text;
 using System.Threading.Tasks;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    public class NoteItemWrapper : OutlookWrapper<NoteItem>, INoteItem
+    class NoteItemWrapper : OutlookItemWrapper<NSOutlook.NoteItem>, INoteItem
     {
-        internal NoteItemWrapper(NoteItem item)
+        internal NoteItemWrapper(NSOutlook.NoteItem item)
         :
         base(item)
         {
         }
 
-        protected override PropertyAccessor GetPropertyAccessor()
+        #region Wrapper methods
+
+        protected override NSOutlook.UserProperties GetUserProperties()
+        {
+            throw new NotSupportedException("NoteItem does not support user properties");
+        }
+
+        protected override NSOutlook.PropertyAccessor GetPropertyAccessor()
         {
             return _item.PropertyAccessor;
         }
 
-        public override string ToString() { return "Note: " + Subject; }
+        public override string ToString()
+        {
+            return "Note:" + Subject;
+        }
 
-        #region Properties
+        #endregion
+
+        #region IItem implementation
 
         public string Body
         {
@@ -50,48 +62,78 @@ namespace Acacia.Stubs.OutlookWrappers
         public string Subject
         {
             get { return _item.Subject; }
-            set { throw new NotSupportedException(); }
+            set
+            {
+                throw new NotSupportedException("NoteItem does not support setting body");
+            }
         }
 
-        public IStore Store { get { return StoreWrapper.Wrap(_item.Parent?.Store); } }
-        // TODO: release needed
-        public string StoreId { get { return _item.Parent?.Store?.StoreID; } }
-        public string StoreDisplayName { get { return _item.Parent?.Store?.DisplayName; } }
-
-        #endregion
-
-        #region Methods
-
-        public IUserProperty<Type> GetUserProperty<Type>(string name, bool create = false)
-        {
-            throw new NotSupportedException();
-        }
-
-        public void Delete() { _item.Delete(); }
         public void Save() { _item.Save(); }
 
         #endregion
 
+        #region IBase implementation
+
+        public string EntryID { get { return _item.EntryID; } }
+
         public IFolder Parent
-        {
-            get { return (IFolder)Mapping.Wrap(_item.Parent as Folder); }
-        }
-        public string ParentEntryId
         {
             get
             {
-                Folder parent = _item.Parent;
-                try
+                // The wrapper manages the returned folder
+                return Mapping.Wrap<IFolder>(_item.Parent as NSOutlook.Folder);
+            }
+        }
+
+        public string ParentEntryID
+        {
+            get
+            {
+                using (ComRelease com = new ComRelease())
                 {
+                    NSOutlook.Folder parent = com.Add(_item.Parent);
                     return parent?.EntryID;
-                }
-                finally
-                {
-                    ComRelease.Release(parent);
                 }
             }
         }
 
-        public string EntryId { get { return _item.EntryID; } }
+        public IStore GetStore()
+        {
+            using (ComRelease com = new ComRelease())
+            {
+                NSOutlook.Folder parent = com.Add(_item.Parent);
+                return Mapping.Wrap(parent?.Store);
+            }
+        }
+
+        public string StoreID
+        {
+            get
+            {
+                using (ComRelease com = new ComRelease())
+                {
+                    NSOutlook.Folder parent = com.Add(_item.Parent);
+                    NSOutlook.Store store = com.Add(parent?.Store);
+                    return store.StoreID;
+                }
+            }
+        }
+
+        public string StoreDisplayName
+        {
+            get
+            {
+                using (ComRelease com = new ComRelease())
+                {
+                    NSOutlook.Folder parent = com.Add(_item.Parent);
+                    NSOutlook.Store store = com.Add(parent?.Store);
+                    return store.StoreID;
+                }
+            }
+        }
+
+        public void Delete() { _item.Delete(); }
+
+        #endregion
     }
 }

@@ -14,7 +14,6 @@
 /// 
 /// Consult LICENSE file for details
 
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,9 +57,9 @@ namespace Acacia.Features
             return null;
         }
 
-        protected static Microsoft.Office.Interop.Outlook.Application App
+        virtual public void GetCapabilities(ZPushCapabilities caps)
         {
-            get { return ThisAddIn.Instance.Application; }
+            caps.Add(Name.ToLower());
         }
 
         #region Debug options
@@ -195,14 +194,11 @@ namespace Acacia.Features
 
         #region Event helpers
 
-        private static MailEvents _mailEvents;
         protected static MailEvents MailEvents
         {
             get
             {
-                if (_mailEvents == null)
-                    _mailEvents = new MailEvents(App);
-                return _mailEvents;
+                return ThisAddIn.Instance.MailEvents;
             }
         }
         
@@ -223,6 +219,11 @@ namespace Acacia.Features
         /// App
         /// </summary>
         public virtual void Startup()
+        {
+
+        }
+
+        public virtual void AfterStartup()
         {
 
         }

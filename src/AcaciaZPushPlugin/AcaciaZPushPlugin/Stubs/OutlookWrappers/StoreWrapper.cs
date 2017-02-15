@@ -19,51 +19,91 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Office.Interop.Outlook;
 using Acacia.Utils;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    public class StoreWrapper : DisposableWrapper, IStore
+    class StoreWrapper : ComWrapper<NSOutlook.Store>, IStore
     {
-        public static IStore Wrap(Store store)
+        internal StoreWrapper(NSOutlook.Store store) : base(store)
         {
-            return store == null ? null : new StoreWrapper(store);
-        }
-
-        private Store _store;
-
-        private StoreWrapper(Store store)
-        {
-            this._store = store;
-        }
-
-        protected override void DoRelease()
-        {
-            ComRelease.Release(_store);
-            _store = null;
         }
 
         public IFolder GetRootFolder()
         {
-            return new FolderWrapper((Folder)_store.GetRootFolder());
+            // FolderWrapper manages the returned Folder
+            return new FolderWrapper((NSOutlook.Folder)_item.GetRootFolder());
+        }
+
+        private NSOutlook.MAPIFolder GetDefaultFolderObj(DefaultFolder folder)
+        {
+            try
+            {
+                return (NSOutlook.Folder)_item.GetDefaultFolder((NSOutlook.OlDefaultFolders)(int)folder);
+            }
+            catch(Exception)
+            {
+                return null;
+            }
+        }
+
+        public IFolder GetDefaultFolder(DefaultFolder folder)
+        {
+            // FolderWrapper manages the returned Folder
+            return GetDefaultFolderObj(folder).Wrap();
+        }
+
+        public string GetDefaultFolderId(DefaultFolder folder)
+        {
+            NSOutlook.MAPIFolder mapiFolder = GetDefaultFolderObj(folder);
+            try
+            {
+                return mapiFolder?.EntryID;
+            }
+            finally
+            {
+                ComRelease.Release(mapiFolder);
+            }
         }
 
         public IItem GetItemFromID(string id)
         {
-            NameSpace nmspace = _store.Session;
-            try
-            {
+            using (ComRelease com = new ComRelease())
+            { 
+                NSOutlook.NameSpace nmspace = com.Add(_item.Session);
+
+                // Get the item; the wrapper manages it
                 object o = nmspace.GetItemFromID(id);
                 return Mapping.Wrap<IItem>(o);
             }
-            finally
-            {
-                ComRelease.Release(nmspace);
-            }
         }
 
-        public string DisplayName { get { return _store.DisplayName; } }
-        public string StoreID { get { return _store.StoreID; } }
+        public string DisplayName { get { return _item.DisplayName; } }
+        public string StoreID { get { return _item.StoreID; } }
+
+        public bool IsFileStore { get { return _item.IsDataFileStore; } }
+        public string FilePath { get { return _item.FilePath; } }
+
+        public void EmptyDeletedItems()
+        {
+            using (ComRelease com = new ComRelease())
+            {
+                NSOutlook.MAPIFolder f = _item.GetDefaultFolder(NSOutlook.OlDefaultFolders.olFolderDeletedItems);
+                if (f != null)
+                {
+                    com.Add(f);
+
+                    // Normal enumeration fails when deleting. Do it like this.
+                    NSOutlook.Folders folders = com.Add(f.Folders);
+                    for (int i = folders.Count; i > 0; --i)
+                        com.Add(folders[i]).Delete();
+
+                    NSOutlook.Items items = com.Add(f.Items);
+                    for (int i = items.Count; i > 0; --i)
+                        com.Add(items[i]).Delete();
+                }
+            }
+        }
     }
 }

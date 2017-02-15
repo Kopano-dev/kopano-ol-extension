@@ -51,7 +51,7 @@ namespace Acacia
             get { return GetOption(null, THREADING); }
             set { SetOption(null, THREADING, value); }
         }
-        private static readonly EnumOption<Threading> THREADING = new EnumOption<Threading>("Threading");
+        private static readonly EnumOption<Threading> THREADING = new EnumOption<Threading>("Threading", Threading.Background);
 
         [AcaciaOption("Enables or disables ZPush account checking. To enable advanced features, it must be known " + 
                       "which accounts use ZPush servers. This option checks responses from ActiveSync servers to " + 
@@ -117,6 +117,15 @@ namespace Acacia
                 Logger.Instance.SetLevel(value);
             }
         }
+
+        [AcaciaOption("Enables or disables item event hooking." +
+                      "Note that if this is disabled, several features may not work correctly.")]
+        virtual public bool HookItemEvents
+        {
+            get { return GetOption(null, HOOK_ITEM_EVENTS); }
+            set { SetOption(null, HOOK_ITEM_EVENTS, value); }
+        }
+        private static readonly BoolOption HOOK_ITEM_EVENTS = new BoolOption("HookItemEvents", true);
 
         #region UI Options
 

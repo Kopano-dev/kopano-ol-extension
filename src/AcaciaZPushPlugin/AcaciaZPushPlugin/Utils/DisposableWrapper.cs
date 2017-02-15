@@ -1,4 +1,4 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -15,7 +15,6 @@
 /// Consult LICENSE file for details
 
 using Acacia.Features.DebugSupport;
-using Acacia.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,15 +22,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Acacia.Stubs.OutlookWrappers
+namespace Acacia.Utils
 {
-    public abstract class DisposableWrapper : IDisposable
+    abstract public class DisposableWrapper : IDisposable
     {
+        private static Dictionary<Type, int> typeCounts = new Dictionary<Type, int>();
 
-        /// <summary>
-        /// Creates a wrapper.
-        /// </summary>
-        internal DisposableWrapper()
+        protected DisposableWrapper()
         {
             Interlocked.Increment(ref Statistics.CreatedWrappers);
             this._createdTrace = new System.Diagnostics.StackTrace();
@@ -43,9 +40,12 @@ namespace Acacia.Stubs.OutlookWrappers
             if (!_isDisposed)
             {
                 Logger.Instance.Warning(this, "Undisposed wrapper: {0}", _createdTrace);
-                Dispose();
-                // Don't count auto disposals
-                Interlocked.Decrement(ref Statistics.DisposedWrappers);
+                // Dispose, but don't count auto disposals, so the stats show it.
+                DoRelease();
+            }
+            else
+            {
+                --typeCounts[GetType()];
             }
         }
 
@@ -56,6 +56,11 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             if (!_isDisposed)
             {
+                if (!typeCounts.ContainsKey(GetType()))
+                    typeCounts.Add(GetType(), 1);
+                else
+                    ++typeCounts[GetType()];
+
                 Logger.Instance.TraceExtra(this, "Disposing wrapper: {0}", new System.Diagnostics.StackTrace());
                 _isDisposed = true;
                 Interlocked.Increment(ref Statistics.DisposedWrappers);
@@ -63,12 +68,7 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public bool MustRelease
-        {
-            get;
-            set;
-        }
-
         abstract protected void DoRelease();
     }
+
 }

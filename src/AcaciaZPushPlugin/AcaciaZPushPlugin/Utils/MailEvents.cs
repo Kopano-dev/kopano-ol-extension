@@ -14,7 +14,6 @@
 /// 
 /// Consult LICENSE file for details
 
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,20 +46,16 @@ namespace Acacia.Utils
         public event MailResponseEventHandler Respond;
 
         public event MailResponseEventHandler Reply;
-        private void OnReply(MailItem mail, MailItem response)
+        private void OnReply(IMailItem mail, IMailItem response)
         {
             try
             {
-                if ((Reply != null || Respond != null) && mail != null)
+                if ((Reply != null || Respond != null) && mail != null && response != null)
                 {
-                    using (IMailItem mailWrapped = Mapping.Wrap<IMailItem>(mail, false),
-                                 responseWrapped = Mapping.Wrap<IMailItem>(response))
-                    {
-                        if (Reply != null)
-                            Reply(mailWrapped, responseWrapped);
-                        if (Respond != null)
-                            Respond(mailWrapped, responseWrapped);
-                    }
+                    if (Reply != null)
+                        Reply(mail, response);
+                    if (Respond != null)
+                        Respond(mail, response);
                 }
             }
             catch (System.Exception e)
@@ -70,20 +65,16 @@ namespace Acacia.Utils
         }
 
         public event MailResponseEventHandler ReplyAll;
-        private void OnReplyAll(MailItem mail, MailItem response)
+        private void OnReplyAll(IMailItem mail, IMailItem response)
         {
             try
             {
-                if ((ReplyAll != null || Respond != null) && mail != null)
+                if ((ReplyAll != null || Respond != null) && mail != null && response != null)
                 {
-                    using (IMailItem mailWrapped = Mapping.Wrap<IMailItem>(mail, false),
-                                 responseWrapped = Mapping.Wrap<IMailItem>(response))
-                    {
-                        if (ReplyAll != null)
-                            ReplyAll(mailWrapped, responseWrapped);
-                        if (Respond != null)
-                            Respond(mailWrapped, responseWrapped);
-                    }
+                    if (ReplyAll != null)
+                        ReplyAll(mail, response);
+                    if (Respond != null)
+                        Respond(mail, response);
                 }
             }
             catch (System.Exception e)
@@ -93,20 +84,16 @@ namespace Acacia.Utils
         }
 
         public event MailResponseEventHandler Forward;
-        private void OnForward(MailItem mail, MailItem response)
+        private void OnForward(IMailItem mail, IMailItem response)
         {
             try
             {
-                if ((Forward != null || Respond != null) && mail != null)
+                if ((Forward != null || Respond != null) && mail != null && response != null)
                 {
-                    using (IMailItem mailWrapped = Mapping.Wrap<IMailItem>(mail, false),
-                                 responseWrapped = Mapping.Wrap<IMailItem>(response))
-                    {
-                        if (Forward != null)
-                            Forward(mailWrapped, responseWrapped);
-                        if (Respond != null)
-                            Respond(mailWrapped, responseWrapped);
-                    }
+                    if (Forward != null)
+                        Forward(mail, response);
+                    if (Respond != null)
+                        Respond(mail, response);
                 }
             }
             catch (System.Exception e)
@@ -116,16 +103,13 @@ namespace Acacia.Utils
         }
 
         public event MailEventHandler Read;
-        private void OnRead(MailItem mail)
+        private void OnRead(IMailItem mail)
         {
             try
             {
                 if (Read != null && mail != null)
                 {
-                    using (IMailItem wrapped = Mapping.Wrap<IMailItem>(mail, false))
-                    {
-                        Read(wrapped);
-                    }
+                    Read(mail);
                 }
             }
             catch (System.Exception e)
@@ -135,17 +119,13 @@ namespace Acacia.Utils
         }
 
         public event CancellableItemEventHandler BeforeDelete;
-        private void OnBeforeDelete(object item, ref bool cancel)
+        private void OnBeforeDelete(IItem item, ref bool cancel)
         {
             try
             {
                 if (BeforeDelete != null && item != null)
                 {
-                    using (IItem wrapped = Mapping.Wrap<IItem>(item, false))
-                    {
-                        if (wrapped != null)
-                            BeforeDelete(wrapped, ref cancel);
-                    }
+                    BeforeDelete(item, ref cancel);
                 }
             }
             catch(System.Exception e)
@@ -156,17 +136,13 @@ namespace Acacia.Utils
 
         // TODO: should this be CancellableMailItemEventHandler?
         public event CancellableItemEventHandler Write;
-        private void OnWrite(object item, ref bool cancel)
+        private void OnWrite(IItem item, ref bool cancel)
         {
             try
             {
                 if (Write != null && item != null)
                 {
-                    using (IItem wrapped = Mapping.Wrap<IItem>(item, false))
-                    {
-                        if (wrapped != null)
-                            Write(wrapped, ref cancel);
-                    }
+                    Write(item, ref cancel);
                 }
             }
             catch (System.Exception e)
@@ -199,93 +175,102 @@ namespace Acacia.Utils
 
         #region Implementation
 
-        public MailEvents(Application app)
+        public MailEvents(IAddIn app)
         {
             app.ItemLoad += OnItemLoad;
             app.ItemSend += OnItemSend;
         }
 
-        void OnItemLoad(object item)
+        private void OnItemLoad(object item)
         {
-            ItemEvents_10_Event hasEvents = item as ItemEvents_10_Event;
-            if (hasEvents != null)
+            IItem wrapped = Wrappers.Wrap<IItem>(item, false);
+            // TODO: only register for desired types
+            if (wrapped != null)
             {
-                new MailEventHooker(hasEvents, this);
+                new MailEventHooker(wrapped, this);
             }
         }
 
-        private class MailEventHooker
+        private class MailEventHooker : DisposableWrapper
         {
-            private readonly ItemEvents_10_Event item;
-            private readonly MailEvents events;
+            private IItem _item;
+            private readonly MailEvents _events;
 
-            public MailEventHooker(ItemEvents_10_Event item, MailEvents events)
+            public MailEventHooker(IItem item, MailEvents events)
             {
-                this.item = item;
-                this.events = events;
+                this._item = item;
+                this._events = events;
                 HookEvents(true);
+            }
+
+            protected override void DoRelease()
+            {
+                _item.Dispose();
             }
 
             private void HookEvents(bool add)
             {
-                ItemEvents_10_Event events = this.item;
+                using (IItemEvents events = _item.GetEvents())
+                {
+                    if (add)
+                    {
 
-                if (add)
-                {
-                    events.BeforeDelete += HandleBeforeDelete;
-                    events.Forward += HandleForward;
-                    events.Read += HandleRead;
-                    events.Reply += HandleReply;
-                    events.ReplyAll += HandleReplyAll;
-                    events.Unload += HandleUnload;
-                    events.Write += HandleWrite;
-                }
-                else
-                {
-                    events.BeforeDelete -= HandleBeforeDelete;
-                    events.Forward -= HandleForward;
-                    events.Read -= HandleRead;
-                    events.Reply -= HandleReply;
-                    events.ReplyAll -= HandleReplyAll;
-                    events.Unload -= HandleUnload;
-                    events.Write -= HandleWrite;
+                        events.BeforeDelete += HandleBeforeDelete;
+                        events.Forward += HandleForward;
+                        events.Read += HandleRead;
+                        events.Reply += HandleReply;
+                        events.ReplyAll += HandleReplyAll;
+                        events.Unload += HandleUnload;
+                        events.Write += HandleWrite;
+                    }
+                    else
+                    {
+                        events.BeforeDelete -= HandleBeforeDelete;
+                        events.Forward -= HandleForward;
+                        events.Read -= HandleRead;
+                        events.Reply -= HandleReply;
+                        events.ReplyAll -= HandleReplyAll;
+                        events.Unload -= HandleUnload;
+                        events.Write -= HandleWrite;
+                    }
                 }
             }
 
             private void HandleBeforeDelete(object item, ref bool cancel)
             {
-                events.OnBeforeDelete(item, ref cancel);
+                _events.OnBeforeDelete(item.WrapOrDefault<IItem>(), ref cancel);
             }
 
             private void HandleForward(object response, ref bool cancel)
             {
-                events.OnForward(item as MailItem, response as MailItem);
+                _events.OnForward(_item as IMailItem, response.WrapOrDefault<IMailItem>());
             }
 
             private void HandleRead()
             {
-                events.OnRead(item as MailItem);
+                _events.OnRead(_item as IMailItem);
             }
 
             private void HandleReply(object response, ref bool cancel)
             {
-                events.OnReply(item as MailItem, response as MailItem);
+                _events.OnReply(_item as IMailItem, response.WrapOrDefault<IMailItem>());
             }
 
             private void HandleReplyAll(object response, ref bool cancel)
             {
-                events.OnReplyAll(item as MailItem, response as MailItem);
+                _events.OnReplyAll(_item as IMailItem, response.WrapOrDefault<IMailItem>());
             }
 
             private void HandleUnload()
             {
                 // All events must be unhooked on unload, otherwise a resource leak is created.
                 HookEvents(false);
+                Dispose();
             }
 
             private void HandleWrite(ref bool cancel)
             {
-                events.OnWrite(item, ref cancel);
+                _events.OnWrite(_item, ref cancel);
             }
         }
 

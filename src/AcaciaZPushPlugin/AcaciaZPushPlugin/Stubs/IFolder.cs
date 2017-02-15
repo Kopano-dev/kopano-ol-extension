@@ -35,11 +35,13 @@ namespace Acacia.Stubs
 
         bool ShowAsOutlookAB { get; set; }
 
-        IEnumerable<IItem> Items { get; }
-
-        IEnumerable<IItem> ItemsSorted(string field, bool descending);
+        IItems Items { get; }
 
         IItem GetItemById(string id);
+
+        string FullFolderPath { get; }
+
+        ItemType DefaultItemType { get; }
 
         #endregion
 
@@ -54,6 +56,11 @@ namespace Acacia.Stubs
 
         IEnumerable<FolderType> GetSubFolders<FolderType>()
         where FolderType : IFolder;
+
+        IFolders SubFolders
+        {
+            get;
+        }
 
         FolderType GetSubFolder<FolderType>(string name)
         where FolderType : IFolder;
@@ -101,5 +108,11 @@ namespace Acacia.Stubs
         /// function prevents creating lots of wrappers.
         /// </summary>
         bool IsAtDepth(int depth);
+
+        // TODO: remove this. It's a quick hack to find the events associated with this folder for ZPushWatcher.
+        //       make event watching part of the folder instead
+        ZPushFolder ZPush { get; set; }
+
+        IFolder Clone();
     }
 }

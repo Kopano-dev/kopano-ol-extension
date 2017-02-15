@@ -22,9 +22,9 @@ using System.Threading.Tasks;
 
 namespace Acacia.Stubs
 {
-    public interface IBase : IDisposable
+    public interface IBase : IComWrapper
     {
-        #region MAPI properties
+        #region Properties
 
         bool AttrHidden { get; set; }
 
@@ -34,23 +34,35 @@ namespace Acacia.Stubs
 
         #endregion
 
-        string EntryId { get; }
-        IFolder Parent { get; }
-        string ParentEntryId { get; }
+        #region Ids and hierarchy
 
-        IStore Store { get; }
+        string EntryID { get; }
+        IFolder Parent { get; }
+        string ParentEntryID { get; }
+
         /// <summary>
-        /// Quick accessor to Store.Id, to prevent allocation a wrapper for it.
+        /// Returns the store. The owner is responsible for disposing. 
         /// </summary>
-        string StoreId { get; }
+        IStore GetStore();
+
         /// <summary>
-        /// Quick accessor to Store.DisplayName, to prevent allocation a wrapper for it.
+        /// Quick accessor to Store.Id, to prevent allocating a wrapper for it.
+        /// </summary>
+        string StoreID { get; }
+
+        /// <summary>
+        /// Quick accessor to Store.DisplayName, to prevent allocating a wrapper for it.
         /// </summary>
         string StoreDisplayName { get; }
+
+        #endregion
+
+        #region Methods
+
         void Delete();
 
-        bool MustRelease { get; set; }
-
         string ToString();
+
+        #endregion
     }
 }

@@ -29,5 +29,6 @@ namespace Acacia.Stubs
         /// </summary>
         void Clear();
 
+        new IAddressBook Clone();
     }
 }

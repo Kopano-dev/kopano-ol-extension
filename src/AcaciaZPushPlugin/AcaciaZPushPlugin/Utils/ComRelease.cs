@@ -34,6 +34,12 @@ namespace Acacia.Utils
             return t;
         }
 
+        public Type Remove<Type>(Type t)
+        {
+            objects.Remove(t);
+            return t;
+        }
+
         public void Dispose()
         {
             foreach (object o in objects)
@@ -55,11 +61,17 @@ namespace Acacia.Utils
             }
         }
 
+        public static void Release(params object[] objs)
+        {
+            foreach (object o in objs)
+                Release(o);
+        }
+
         public static void Release(object o)
         {
             if (!Enabled)
                 return;
-            if (o == null)
+            if (o == null || !Marshal.IsComObject(o))
                 return;
 
             if (Logger.Instance.IsLevelEnabled(LogLevel.TraceExtra))

@@ -19,7 +19,6 @@ using Acacia.UI.Outlook;
 using Acacia.Utils;
 using Acacia.ZPush;
 using Acacia.ZPush.Connect;
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +45,12 @@ namespace Acacia.Features.OutOfOffice
         {
             _button = RegisterToggleButton(this, "OOF", true, ShowDialog, ZPushBehaviour.Disable);
             Watcher.ZPushAccountChange += Watcher_ZPushAccountChange;
+        }
+
+        override public void GetCapabilities(ZPushCapabilities caps)
+        {
+            caps.Add("oof");
+            caps.Add("ooftime");
         }
 
         private static bool IsOOFEnabled(ActiveSync.SettingsOOF settings)
@@ -227,7 +232,7 @@ namespace Acacia.Features.OutOfOffice
             if (oof.State != ActiveSync.OOFState.Disabled)
             {
                 if (MessageBox.Show(
-                                string.Format(Properties.Resources.OOFStartup_Message, account.SmtpAddress),
+                                string.Format(Properties.Resources.OOFStartup_Message, account.Account.SmtpAddress),
                                 Properties.Resources.OOFStartup_Title,
                                 MessageBoxButtons.YesNo,
                                 MessageBoxIcon.Question

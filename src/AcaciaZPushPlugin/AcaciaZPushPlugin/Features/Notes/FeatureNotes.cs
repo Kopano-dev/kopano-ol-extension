@@ -18,7 +18,6 @@ using Acacia.Stubs;
 using Acacia.Stubs.OutlookWrappers;
 using Acacia.Utils;
 using Acacia.ZPush;
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -84,7 +83,7 @@ namespace Acacia.Features.Notes
             PatchIfConfirmed(folder);
         }
 
-        private bool IsNotesFolder(OutlookConstants.SyncType type)
+        private bool IsNotesFolder(OutlookConstants.SyncType? type)
         {
             return type == OutlookConstants.SyncType.Note || type == OutlookConstants.SyncType.UserNote;
         }
@@ -93,7 +92,7 @@ namespace Acacia.Features.Notes
         {
             // Only patch if on a ZPush server that supports notes. Store the folder as entryId, there have been some
             // issues with the folder object being disposed in the past
-            string folderId = folder.EntryId;
+            string folderId = folder.EntryID;
             ZPushAccount zpush = Watcher.Accounts.GetAccount(folder);
             if (zpush != null)
             {
@@ -122,13 +121,13 @@ namespace Acacia.Features.Notes
             Logger.Instance.Trace(this, "PatchFolder: {0}", folderId);
             try
             {
-                using (IFolder folder = Mapping.GetFolderFromID(folderId))
+                using (IFolder folder = ThisAddIn.Instance.GetFolderFromID(folderId))
                 {
                     if (folder == null)
                         return;
 
                     // Patch if needed
-                    OutlookConstants.SyncType type = FolderUtils.GetFolderSyncType(folder);
+                    OutlookConstants.SyncType? type = FolderUtils.GetFolderSyncType(folder);
                     Logger.Instance.Trace(this, "Notes folder type: {0}", type);
                     if (IsNotesFolder(type))
                     {
@@ -168,13 +167,13 @@ namespace Acacia.Features.Notes
             Logger.Instance.Trace(this, "UnpatchFolder: {0}", folderId);
             try
             {
-                using (IFolder folder = Mapping.GetFolderFromID(folderId))
+                using (IFolder folder = ThisAddIn.Instance.GetFolderFromID(folderId))
                 {
                     if (folder == null)
                         return;
 
                     // Unpatch if needed
-                    OutlookConstants.SyncType type = FolderUtils.GetFolderSyncType(folder, true);
+                    OutlookConstants.SyncType? type = FolderUtils.GetFolderSyncType(folder, true);
                     Logger.Instance.Trace(this, "Notes folder type: {0}", type);
                     // Unpatch only if the original type is a notes folder, but the current type isn't
                     if (IsNotesFolder(type) && !IsNotesFolder(FolderUtils.GetFolderSyncType(folder)))
@@ -220,7 +219,7 @@ namespace Acacia.Features.Notes
             {
                 if ((int)item.GetProperty(OutlookConstants.PR_ICON_INDEX) != 771)
                 {
-                    Logger.Instance.Trace(this, "Patching item: {0}", item.EntryId);
+                    Logger.Instance.Trace(this, "Patching item: {0}", item.EntryID);
 
                     // Patch standard properties
                     item.SetProperties(

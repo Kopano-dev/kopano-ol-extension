@@ -19,27 +19,95 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Office.Interop.Outlook;
 using Acacia.Utils;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    class MailItemWrapper : OutlookWrapper<MailItem>, IMailItem
+    class MailItemWrapper : OutlookItemWrapper<NSOutlook.MailItem>, IMailItem
     {
-        internal MailItemWrapper(MailItem item)
+        internal MailItemWrapper(NSOutlook.MailItem item)
         :
         base(item)
         {
         }
 
-        protected override PropertyAccessor GetPropertyAccessor()
+        #region IMailItem implementation
+
+        public DateTime? AttrLastVerbExecutionTime
+        {
+            get
+            {
+                return GetProperty(OutlookConstants.PR_LAST_VERB_EXECUTION_TIME) as DateTime?;
+            }
+            set
+            {
+                SetProperty(OutlookConstants.PR_LAST_VERB_EXECUTION_TIME, value);
+            }
+        }
+
+        public int AttrLastVerbExecuted
+        {
+            get
+            {
+                return (int)GetProperty(OutlookConstants.PR_LAST_VERB_EXECUTED);
+            }
+            set
+            {
+                SetProperty(OutlookConstants.PR_LAST_VERB_EXECUTED, value);
+            }
+        }
+
+        public string SenderEmailAddress
+        {
+            get
+            {
+                using (ComRelease com = new ComRelease())
+                {
+                    return com.Add(_item.Sender)?.Address;
+                }
+            }
+        }
+
+        public string SenderName
+        {
+            get
+            {
+                using (ComRelease com = new ComRelease())
+                {
+                    return com.Add(_item.Sender)?.Name;
+                }
+            }
+        }
+
+
+        public void SetSender(IAddressEntry addressEntry)
+        {
+            _item.Sender = ((AddressEntryWrapper)addressEntry).RawItem;
+        }
+
+        #endregion
+
+        #region Wrapper methods
+
+        protected override NSOutlook.UserProperties GetUserProperties()
+        {
+            return _item.UserProperties;
+        }
+
+        protected override NSOutlook.PropertyAccessor GetPropertyAccessor()
         {
             return _item.PropertyAccessor;
         }
 
-        public override string ToString() { return "Mail: " + Subject; }
+        public override string ToString()
+        {
+            return "Mail:" + Subject;
+        }
 
-        #region Properties
+        #endregion
+
+        #region IItem implementation
 
         public string Body
         {
@@ -53,37 +121,53 @@ namespace Acacia.Stubs.OutlookWrappers
             set { _item.Subject = value; }
         }
 
-        public IStore Store
+        public void Save() { _item.Save(); }
+
+        #endregion
+
+        #region IBase implementation
+
+        public string EntryID { get { return _item.EntryID; } }
+
+        public IFolder Parent
         {
             get
             {
-                Folder parent = (Folder)_item.Parent;
-                try
+                // The wrapper manages the returned folder
+                return Mapping.Wrap<IFolder>(_item.Parent as NSOutlook.Folder);
+            }
+        }
+
+        public string ParentEntryID
+        {
+            get
+            {
+                using (ComRelease com = new ComRelease())
                 {
-                    return StoreWrapper.Wrap(parent?.Store);
-                }
-                finally
-                {
-                    ComRelease.Release(parent);
+                    NSOutlook.Folder parent = com.Add(_item.Parent);
+                    return parent?.EntryID;
                 }
             }
         }
 
-        public string StoreId
+        public IStore GetStore()
+        {
+            using (ComRelease com = new ComRelease())
+            {
+                NSOutlook.Folder parent = com.Add(_item.Parent);
+                return Mapping.Wrap(parent?.Store);
+            }
+        }
+
+        public string StoreID
         {
             get
             {
-                Folder parent = (Folder)_item.Parent;
-                Store store = null;
-                try
+                using (ComRelease com = new ComRelease())
                 {
-                    store = parent?.Store;
-                    return store?.StoreID;
-                }
-                finally
-                {
-                    ComRelease.Release(parent);
-                    ComRelease.Release(store);
+                    NSOutlook.Folder parent = com.Add(_item.Parent);
+                    NSOutlook.Store store = com.Add(parent?.Store);
+                    return store.StoreID;
                 }
             }
         }
@@ -92,76 +176,17 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             get
             {
-                Folder parent = (Folder)_item.Parent;
-                Store store = null;
-                try
+                using (ComRelease com = new ComRelease())
                 {
-                    store = parent?.Store;
-                    return store?.DisplayName;
-                }
-                finally
-                {
-                    ComRelease.Release(parent);
-                    ComRelease.Release(store);
+                    NSOutlook.Folder parent = com.Add(_item.Parent);
+                    NSOutlook.Store store = com.Add(parent?.Store);
+                    return store.StoreID;
                 }
             }
-        }
-
-        public string SenderEmailAddress
-        {
-            get
-            {
-                // TODO: should Sender be released?
-                return _item.Sender?.Address;
-            }
-        }
-
-        public string SenderName
-        {
-            get { return _item.Sender?.Name; }
-        }
-
-
-        public void SetSender(AddressEntry addressEntry)
-        {
-            _item.Sender = addressEntry;
-        }
-
-
-        #endregion
-
-        #region Methods
-
-        public IUserProperty<Type> GetUserProperty<Type>(string name, bool create = false)
-        {
-            return UserPropertyWrapper<Type>.Get(_item.UserProperties, name, create);
         }
 
         public void Delete() { _item.Delete(); }
-        public void Save() { _item.Save(); }
 
         #endregion
-
-        public IFolder Parent
-        {
-            get { return (IFolder)Mapping.Wrap(_item.Parent as Folder); }
-        }
-        public string ParentEntryId
-        {
-            get
-            {
-                Folder parent = _item.Parent;
-                try
-                {
-                    return parent?.EntryID;
-                }
-                finally
-                {
-                    ComRelease.Release(parent);
-                }
-            }
-        }
-
-        public string EntryId { get { return _item.EntryID; } }
     }
 }

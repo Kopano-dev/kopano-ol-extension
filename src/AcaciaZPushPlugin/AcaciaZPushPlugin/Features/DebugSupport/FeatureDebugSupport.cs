@@ -13,8 +13,6 @@
 /// along with this program.If not, see<http://www.gnu.org/licenses/>.
 /// 
 /// Consult LICENSE file for details
-
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using Acacia.Features.ReplyFlags;
@@ -47,8 +45,16 @@ namespace Acacia.Features.DebugSupport
             RegisterButton(this, "Settings", false, ShowSettings);
         }
 
+
+        public override void AfterStartup()
+        {
+            /*DebugDialog dd = new DebugDialog();
+            dd.Show();
+            dd.DebugCycle(5);*/
+        }
+
         #region About dialog
-        
+
         public void ShowAbout()
         {
             new AboutDialog().ShowDialog();

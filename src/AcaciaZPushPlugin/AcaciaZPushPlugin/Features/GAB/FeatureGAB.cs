@@ -14,7 +14,6 @@
 /// 
 /// Consult LICENSE file for details
 
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +38,7 @@ namespace Acacia.Features.GAB
         private readonly Dictionary<string, GABHandler> _gabsByDomainName = new Dictionary<string, GABHandler>();
         private readonly HashSet<string> _gabFolders = new HashSet<string>();
         private readonly HashSet<string> _domains = new HashSet<string>();
-        private ZPushLocalStore _store;
+        private IStore _store;
         private int _processing;
 
         public FeatureGAB()
@@ -64,8 +63,11 @@ namespace Acacia.Features.GAB
 
         public override void Startup()
         {
-            MailEvents.BeforeDelete += SuppressEventHandler_Delete;
-            MailEvents.Write += SuppressEventHandler_Modify;
+            if (SuppressModifications && MailEvents != null)
+            {
+                MailEvents.BeforeDelete += SuppressEventHandler_Delete;
+                MailEvents.Write += SuppressEventHandler_Modify;
+            }
             Watcher.AccountDiscovered += AccountDiscovered;
             Watcher.AccountRemoved += AccountRemoved;
             Watcher.AccountsScanned += AccountsScanned;
@@ -117,6 +119,15 @@ namespace Acacia.Features.GAB
             set { SetOption(OPTION_PROCESS_MESSAGE, value); }
         }
         private static readonly BoolOption OPTION_PROCESS_MESSAGE = new BoolOption("ProcessMessage", true);
+
+        [AcaciaOption("If disabled, existing contacts are not deleted when a chunk is processed. " +
+                      "This should only be disabled for debug purposes.")]
+        public bool ProcessMessageDeleteExisting
+        {
+            get { return GetOption(OPTION_PROCESS_MESSAGE_DELETE_EXISTING); }
+            set { SetOption(OPTION_PROCESS_MESSAGE_DELETE_EXISTING, value); }
+        }
+        private static readonly BoolOption OPTION_PROCESS_MESSAGE_DELETE_EXISTING = new BoolOption("ProcessMessageDeleteExisting", true);
 
         [AcaciaOption("If disabled, contacts are not created from incoming GAB messages. " +
                       "This should only be disabled for debug purposes.")]
@@ -173,6 +184,42 @@ namespace Acacia.Features.GAB
         }
         private static readonly BoolOption OPTION_CHECK_UNUSED = new BoolOption("CheckUnused", true);
 
+        [AcaciaOption("If disabled, existing contacts are not cleared before new contacts are created. " +
+                      "This should only be disabled for debug purposes.")]
+        public bool ClearContacts
+        {
+            get { return GetOption(OPTION_CLEAR_CONTACTS); }
+            set { SetOption(OPTION_CLEAR_CONTACTS, value); }
+        }
+        private static readonly BoolOption OPTION_CLEAR_CONTACTS = new BoolOption("ClearContacts", true);
+
+        [AcaciaOption("If disabled, existing contact folders are not deleted before new contacts are created. " +
+                      "This should only be disabled for debug purposes.")]
+        public bool DeleteExistingFolder
+        {
+            get { return GetOption(OPTION_DELETE_EXISTING_FOLDER); }
+            set { SetOption(OPTION_DELETE_EXISTING_FOLDER, value); }
+        }
+        private static readonly BoolOption OPTION_DELETE_EXISTING_FOLDER = new BoolOption("DeleteExistingFolder", true);
+
+        [AcaciaOption("If disabled, deleted items are not removed from the waste basket. " +
+                      "This should only be disabled for debug purposes.")]
+        public bool EmptyDeletedItems
+        {
+            get { return GetOption(OPTION_EMPTY_DELETED_ITEMS); }
+            set { SetOption(OPTION_EMPTY_DELETED_ITEMS, value); }
+        }
+        private static readonly BoolOption OPTION_EMPTY_DELETED_ITEMS = new BoolOption("EmptyDeletedItems", true);
+
+        [AcaciaOption("If enabled, modifications to the GAB folder are suppressed. " +
+                      "This should only be disabled for debug purposes.")]
+        public bool SuppressModifications
+        {
+            get { return GetOption(OPTION_SUPPRESS_MODIFICATIONS); }
+            set { SetOption(OPTION_SUPPRESS_MODIFICATIONS, value); }
+        }
+        private static readonly BoolOption OPTION_SUPPRESS_MODIFICATIONS = new BoolOption("SuppressModifications", true);
+
         #endregion
 
         #region Modification suppression
@@ -203,7 +250,7 @@ namespace Acacia.Features.GAB
             if (_processing == 0)
             {
                 // Check parent folder is a GAB contacts folder
-                if (_gabFolders.Contains(item.ParentEntryId) && IsGABItem(item))
+                if (_gabFolders.Contains(item.ParentEntryID) && IsGABItem(item))
                 {
                     DoSuppressEvent(findInspector ? item : null, ref cancel);
                 }
@@ -233,16 +280,19 @@ namespace Acacia.Features.GAB
         /// <param name="cancel"></param>
         private void DoSuppressEvent(IItem item, ref bool cancel)
         {
-            if (item != null)
+            // TODO: Find and close the inspector
+            /*if (item != null)
             {
-                foreach (Inspector inspector in App.Inspectors)
+                foreach (Inspector inspector in ThisAddIn.Instance.Inspectors)
                 {
                     if (item.EntryId == inspector.CurrentItem.EntryID)
                     {
                         break;
                     }
                 }
-            }
+            }*/
+
+            // Show message and cancel event
             MessageBox.Show(StringUtil.GetResourceString("GABEvent_Body"),
                             StringUtil.GetResourceString("GABEvent_Title"),
                             MessageBoxButtons.OK,
@@ -263,16 +313,15 @@ namespace Acacia.Features.GAB
                 BeginProcessing();
 
                 // Delete any contacts folders in the local store
-                using (ZPushLocalStore store = ZPushLocalStore.GetInstance(App))
+                if (DeleteExistingFolder)
                 {
-                    if (store != null)
+                    using (IStore store = ZPushLocalStore.GetInstance(ThisAddIn.Instance))
                     {
-                        using (IFolder root = store.RootFolder)
+                        if (store != null)
                         {
-                            foreach (IFolder folder in root.GetSubFolders<IFolder>())
+                            using (IFolder root = store.GetRootFolder())
                             {
-                                // TODO: let enumerator handle this
-                                using (folder)
+                                foreach (IFolder folder in root.GetSubFolders<IFolder>().DisposeEnum())
                                 {
                                     try
                                     {
@@ -293,10 +342,14 @@ namespace Acacia.Features.GAB
                 }
 
                 // Do the resync
+                int remaining = _gabsByDomainName.Count;
                 foreach (GABHandler gab in _gabsByDomainName.Values)
                 {
                     Logger.Instance.Debug(this, "FullResync: Starting resync: {0}", gab.DisplayName);
-                    Tasks.Task(this, "FullResync", () => gab.FullResync());
+                    Tasks.Task(this, "FullResync", () =>
+                    {
+                        gab.FullResync();
+                    });
                 }
             }
             finally
@@ -353,12 +406,12 @@ namespace Acacia.Features.GAB
                 _store.Dispose();
                 _store = null;
             }
-            _store = ZPushLocalStore.GetInstance(App);
+            _store = ZPushLocalStore.GetInstance(ThisAddIn.Instance);
             if (_store == null)
                 return null;
 
             // Try to find the existing GAB
-            using (IFolder root = _store.RootFolder)
+            using (IFolder root = _store.GetRootFolder())
             {
                 IAddressBook gab = FindGABForDomain(root, domainName);
                 if (gab == null)
@@ -376,13 +429,16 @@ namespace Acacia.Features.GAB
                 gab.AttrHidden = false;
 
                 // Update admin
-                _gabFolders.Add(gab.EntryId);
+                _gabFolders.Add(gab.EntryID);
                 GABInfo gabInfo = GABInfo.Get(gab, domainName);
                 gabInfo.Store(gab);
 
-                // Hook BeforeMove event to prevent modifications
-                // TODO: use ZPushWatcher for this?
-                gab.BeforeItemMove += SuppressMoveEventHandler;
+                if (SuppressModifications)
+                {
+                    // Hook BeforeMove event to prevent modifications
+                    // TODO: use ZPushWatcher for this?
+                    gab.BeforeItemMove += SuppressMoveEventHandler;
+                }
 
                 return gab;
             }
@@ -390,8 +446,11 @@ namespace Acacia.Features.GAB
 
         private void DisposeGABContacts(IAddressBook gab)
         {
-            // Unhook the event to prevent the gab lingering in memory
-            gab.BeforeItemMove -= SuppressMoveEventHandler;
+            if (SuppressModifications)
+            {
+                // Unhook the event to prevent the gab lingering in memory
+                gab.BeforeItemMove -= SuppressMoveEventHandler;
+            }
         }
 
         public static GABInfo GetGABContactsFolderInfo(IFolder folder)
@@ -410,7 +469,7 @@ namespace Acacia.Features.GAB
         private void AccountDiscovered(ZPushAccount zpush)
         {
             Logger.Instance.Info(this, "Account discovered: {0}", zpush.DisplayName);
-            _domains.Add(zpush.DomainName);
+            _domains.Add(zpush.Account.DomainName);
 
             zpush.ConfirmedChanged += (z) =>
             {
@@ -469,12 +528,12 @@ namespace Acacia.Features.GAB
                 _store.Dispose();
                 _store = null;
             }
-            _store = ZPushLocalStore.GetInstance(App);
+            _store = ZPushLocalStore.GetInstance(ThisAddIn.Instance);
             if (_store == null)
                 return;
 
             bool deletedSomething = false;
-            using (IFolder root = _store.RootFolder)
+            using (IFolder root = _store.GetRootFolder())
             {
                 foreach (IFolder subfolder in root.GetSubFolders<IFolder>())
                 {
@@ -484,7 +543,7 @@ namespace Acacia.Features.GAB
                         GABInfo info = GetGABContactsFolderInfo(subfolder);
                         if (info != null && !_domains.Contains(info.Domain))
                         {
-                            Logger.Instance.Info(this, "Unused GAB folder: {0} - {1}", subfolder.EntryId, subfolder.Name);
+                            Logger.Instance.Info(this, "Unused GAB folder: {0} - {1}", subfolder.EntryID, subfolder.Name);
                             try
                             {
                                 deletedSomething = true;
@@ -500,7 +559,7 @@ namespace Acacia.Features.GAB
             }
 
             if (deletedSomething)
-                EmptyDeletedItems();
+                DoEmptyDeletedItems();
         }
 
         private void CheckGABRemoved()
@@ -535,14 +594,14 @@ namespace Acacia.Features.GAB
                     }
                 }
 
-                EmptyDeletedItems();
+                DoEmptyDeletedItems();
             }
         }
 
         private void RegisterGABAccount(ZPushAccount account, IFolder folder)
         {
             // Determine the domain name
-            string domain = account.DomainName;
+            string domain = account.Account.DomainName;
 
             // Could already be registered if there are multiple accounts on the same domain
             GABHandler gab;
@@ -573,7 +632,7 @@ namespace Acacia.Features.GAB
 
         private void ZPushChannelAvailable(IFolder folder)
         {
-            using (IStore store = folder.Store)
+            using (IStore store = folder.GetStore())
             {
                 Logger.Instance.Debug(this, "Z-Push channel available: {0} on {1}", folder, store.DisplayName);
 
@@ -606,7 +665,7 @@ namespace Acacia.Features.GAB
             try
             {
                 gab.Process(item);
-                EmptyDeletedItems();
+                DoEmptyDeletedItems();
             }
             finally
             {
@@ -615,8 +674,11 @@ namespace Acacia.Features.GAB
             }
         }
 
-        private void EmptyDeletedItems()
+        private void DoEmptyDeletedItems()
         {
+            if (!EmptyDeletedItems)
+                return;
+
             if (_store != null)
                 _store.EmptyDeletedItems();
         }

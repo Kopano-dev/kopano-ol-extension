@@ -1,4 +1,6 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿
+using Acacia.Native.MAPI;
+/// Copyright 2016 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -13,7 +15,6 @@
 /// along with this program.If not, see<http://www.gnu.org/licenses/>.
 /// 
 /// Consult LICENSE file for details
-
 using Acacia.UI;
 using Acacia.UI.Outlook;
 using Acacia.Utils;
@@ -73,14 +74,6 @@ namespace Acacia.Features.WebApp
             }
         }
 
-        private void Check_AutoDiscover(ZPushAccount account)
-        {
-            AutoDiscover(account);
-
-            // Update button state
-            AccountChange(account);
-        }
-
         private void OpenWebApp()
         {
             ZPushAccount account = Watcher.CurrentZPushAccount();
@@ -107,15 +100,15 @@ namespace Acacia.Features.WebApp
             // Perform a cached auto discover
             try
             {
-                Logger.Instance.Debug(this, "Starting kdiscover: {0}", account.DomainName);
+                Logger.Instance.Debug(this, "Starting kdiscover: {0}", account.Account.DomainName);
                 string url = PerformAutoDiscover(account);
-                Logger.Instance.Debug(this, "Finished kdiscover: {0}: {1}", account.DomainName, url);
+                Logger.Instance.Debug(this, "Finished kdiscover: {0}: {1}", account.Account.DomainName, url);
                 account.SetFeatureData(this, TXT_KDISCOVER, new URLCached(url));
                 return url;
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
-                Logger.Instance.Warning(this, "Exception during kdiscover: {0}: {1}", account.DomainName, e);
+                Logger.Instance.Warning(this, "Exception during kdiscover: {0}: {1}", account.Account.DomainName, e);
                 account.SetFeatureData(this, TXT_KDISCOVER, null);
                 return null;
             }
@@ -124,7 +117,7 @@ namespace Acacia.Features.WebApp
         private string PerformAutoDiscover(ZPushAccount account)
         {
             // Fetch the txt record
-            IList<string> txt = DnsUtil.GetTxtRecord(account.DomainName);
+            IList<string> txt = DnsUtil.GetTxtRecord(account.Account.DomainName);
             if (txt == null)
                 return null;
 

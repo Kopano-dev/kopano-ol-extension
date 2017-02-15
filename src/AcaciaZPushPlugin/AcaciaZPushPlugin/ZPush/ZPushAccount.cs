@@ -15,9 +15,9 @@
 /// Consult LICENSE file for details
 
 using Acacia.Stubs;
+using Acacia.Stubs.OutlookWrappers;
 using Acacia.Utils;
 using Acacia.ZPush.Connect;
-using Microsoft.Office.Interop.Outlook;
 using Microsoft.Win32;
 using System;
 using System.Collections.Concurrent;
@@ -36,126 +36,29 @@ namespace Acacia.ZPush
     {
         #region Miscellaneous
 
-        private readonly string _regPath;
-        private readonly Store _store;
+        private readonly IAccount _account;
 
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="regPath">They registry key containing the account settings.</param>
-        /// <param name="store">The store this account represents.</param>
-        internal ZPushAccount(string regPath, Store store)
+        internal ZPushAccount(IAccount account)
         {
-            this._regPath = regPath;
-            this._store = store;
-
-            // Cache the SmtpAddress, it is used as the key
-            SmtpAddress = RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_EMAIL, null);
+            this._account = account;
         }
+
+        [Browsable(false)]
+        public IAccount Account { get { return _account; } }
+        public String DisplayName { get { return _account.DisplayName; } }
 
         [Browsable(false)]
         public string LogContextId
         {
             get
             {
-                return "ZPushAccount(" + SmtpAddress + ")";
+                return "ZPushAccount(" + _account.SmtpAddress + ")";
             }
         }
 
         public override string ToString()
         {
-            return SmtpAddress;
-        }
-
-        /// <summary>
-        /// Triggers an Outlook send/receive operation.
-        /// </summary>
-        public void SendReceive()
-        {
-            ThisAddIn.Instance.Application.Session.SendAndReceive(false);
-        }
-
-        #endregion
-
-        #region Properties
-
-        [Browsable(false)]
-        public Store Store
-        {
-            get
-            {
-                return _store;
-            }
-        }
-
-        public string DisplayName
-        {
-            get
-            {
-                return RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_DISPLAYNAME, null);
-            }
-        }
-
-        public string SmtpAddress
-        {
-            get;
-            private set;
-        }
-
-        public string UserName
-        {
-            get
-            {
-                return RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_EAS_USERNAME, null);
-            }
-        }
-
-        public string ServerURL
-        {
-            get
-            {
-                return RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_EAS_SERVER, null);
-            }
-        }
-
-        public string DeviceId
-        {
-            get
-            {
-                return RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_EAS_DEVICEID, null);
-            }
-        }
-
-        [Browsable(false)]
-        public SecureString Password
-        {
-            get
-            {
-                byte[] encrypted = (byte[])Registry.GetValue(_regPath, OutlookConstants.REG_VAL_EAS_PASSWORD, null);
-                return PasswordEncryption.Decrypt(encrypted);
-            }
-        }
-
-        public string StoreID
-        {
-            get { return GetStoreId(_regPath); }
-        }
-
-        public static string GetStoreId(string regPath)
-        {
-            return StringUtil.BytesToHex((byte[])Registry.GetValue(regPath, OutlookConstants.REG_VAL_EAS_STOREID, null));
-        }
-
-        public string DomainName
-        {
-            get
-            {
-                int index = SmtpAddress.IndexOf('@');
-                if (index < 0)
-                    return SmtpAddress;
-                else
-                    return SmtpAddress.Substring(index + 1);
-            }
+            return _account.SmtpAddress;
         }
 
         #endregion
@@ -219,7 +122,7 @@ namespace Acacia.ZPush
 
         public void LinkedGABFolder(IFolder folder)
         {
-            GABFolderLinked = folder.EntryId;
+            GABFolderLinked = folder.EntryID;
         }
 
         internal void OnConfirmationResponse(ZPushConnection.Response response)

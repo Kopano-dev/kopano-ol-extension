@@ -17,7 +17,6 @@
 using Acacia.Stubs;
 using Acacia.Stubs.OutlookWrappers;
 using Acacia.Utils;
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,58 +29,32 @@ namespace Acacia.ZPush
     /// <summary>
     /// Manages a local store in which Z-Push data is stored.
     /// </summary>
-    /// TODO: merge with Store where possible
-    public class ZPushLocalStore : DisposableWrapper
+    public static class ZPushLocalStore
     {
-        private Store _store;
-
-        public IFolder RootFolder
+        /// <summary>
+        /// Returns or creates the local store.
+        /// </summary>
+        /// <returns>The store, or null on error. If a store is returned, the caller is responsible for disposing.</returns>
+        public static IStore GetInstance(IAddIn addIn)
         {
-            get
+            IStore store = OpenOrCreateInstance(addIn);
+            if (store == null)
+                return null;
+
+            try
             {
-                return Mapping.Wrap<IFolder>(_store.GetRootFolder());
+                HideAllFolders(store);
+                return store;
+            }
+            catch(Exception e)
+            {
+                store.Dispose();
+                throw e;
             }
         }
 
-        public string StoreId { get { return _store.StoreID; } }
-
-        private ZPushLocalStore(Store store)
-        {
-            this._store = store;
-            HideAllFolders();
-        }
-
-        protected override void DoRelease()
-        {
-            ComRelease.Release(_store);
-            _store = null;
-        }
-
-        private bool IsCustomFolder(IFolder folder)
-        {
-            return Features.GAB.FeatureGAB.IsGABContactsFolder(folder);
-        }
-
-        private void HideAllFolders()
-        {
-            if (GlobalOptions.INSTANCE.LocalFolders_Hide)
-            {
-                // Hide the folders that are not custom folders
-                using (ComRelease com = new ComRelease())
-                {
-                    foreach (Folder sub in com.Add(com.Add(_store.GetRootFolder()).Folders))
-                    {
-                        using (IFolder wrapped = Mapping.Wrap<IFolder>(sub))
-                        {
-                            wrapped.AttrHidden = !IsCustomFolder(wrapped);
-                        }
-                    }
-                }
-            }
-        }
-
-        public static ZPushLocalStore GetInstance(Application App)
-        {
+        private static IStore OpenOrCreateInstance(IAddIn addIn)
+        { 
             try
             {
                 // Try to find the existing store
@@ -94,9 +67,9 @@ namespace Acacia.ZPush
                 Logger.Instance.Debug(typeof(ZPushLocalStore), "Opening store with prefix {0}", prefix);
 
                 // See if a store with this prefix exists
-                Store store = FindInstance(App, prefix);
+                IStore store = FindInstance(addIn, prefix);
                 if (store != null)
-                    return new ZPushLocalStore(store);
+                    return store;
 
                 // Doesn't exist, create it
                 Logger.Instance.Debug(typeof(ZPushLocalStore), "No existing store found");
@@ -114,18 +87,17 @@ namespace Acacia.ZPush
 
                 // Path found, create the store
                 Logger.Instance.Info(typeof(ZPushLocalStore), "Creating new store: {0}", path);
-                App.Session.AddStore(path);
-                store = App.Session.Stores[App.Session.Stores.Count];
+                store = addIn.Stores.AddFileStore(path);
                 Logger.Instance.Debug(typeof(ZPushLocalStore), "Created new store: {0}", store.FilePath);
 
                 // Set the display name
-                using (IFolder root = Mapping.Wrap<IFolder>(store.GetRootFolder()))
+                using (IFolder root = store.GetRootFolder())
                 {
                     root.Name = Properties.Resources.LocalStore_DisplayName;
                 }
 
                 // Done
-                return new ZPushLocalStore(store);
+                return store;
             }
             catch(System.Exception e)
             {
@@ -134,38 +106,45 @@ namespace Acacia.ZPush
             }
         }
 
-        private static Store FindInstance(Application app, string prefix)
+        private static IStore FindInstance(IAddIn addIn, string prefix)
         {
-            foreach (Store store in app.Session.Stores)
+            foreach (IStore store in addIn.Stores)
             {
-                if (store.IsDataFileStore && store.FilePath.StartsWith(prefix))
+                if (store.IsFileStore && store.FilePath.StartsWith(prefix))
                 {
                     Logger.Instance.Info(typeof(ZPushLocalStore), "Opening existing store: {0}", store.FilePath);
                     return store;
+                }
+                else
+                {
+                    store.Dispose();
                 }
             }
             return null;
         }
 
-        internal void EmptyDeletedItems()
+        private static bool IsCustomFolder(IFolder folder)
         {
-            using (ComRelease com = new ComRelease())
+            return Features.GAB.FeatureGAB.IsGABContactsFolder(folder);
+        }
+
+        private static void HideAllFolders(IStore store)
+        {
+            if (GlobalOptions.INSTANCE.LocalFolders_Hide)
             {
-                MAPIFolder f = _store.GetDefaultFolder(OlDefaultFolders.olFolderDeletedItems);
-                if (f != null)
+                // Hide the folders that are not custom folders
+                using (IFolder root = store.GetRootFolder())
                 {
-                    com.Add(f);
-
-                    // Normal enumeration fails when deleting. Do it like this.
-                    Folders folders = com.Add(f.Folders);
-                    for (int i = folders.Count; i > 0; --i)
-                        com.Add(folders[i]).Delete();
-
-                    Items items = com.Add(f.Items);
-                    for (int i = items.Count; i > 0; --i)
-                        com.Add(items[i]).Delete();
+                    foreach(IFolder sub in root.SubFolders)
+                    {
+                        using (sub)
+                        {
+                            sub.AttrHidden = !IsCustomFolder(sub);
+                        }
+                    }
                 }
             }
         }
+
     }
 }

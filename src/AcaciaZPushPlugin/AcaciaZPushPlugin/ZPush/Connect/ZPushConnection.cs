@@ -147,9 +147,9 @@ namespace Acacia.ZPush.Connect
             // TODO: it would be nice to let the system handle the SecureString for the password. However,
             //       when specifying credentials for an HttpClient, they are only used after a 401 is received
             //       on the first request, basically doubling the number of requests.
-            using (SecureString pass = _account.Password)
+            using (SecureString pass = _account.Account.Password)
             {
-                var byteArray = Encoding.UTF8.GetBytes(_account.UserName + ":" + pass.ConvertToUnsecureString());
+                var byteArray = Encoding.UTF8.GetBytes(_account.Account.UserName + ":" + pass.ConvertToUnsecureString());
                 var header = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
                 _client.DefaultRequestHeaders.Authorization = header;
             }
@@ -278,10 +278,10 @@ namespace Acacia.ZPush.Connect
 
             public Response Execute(ActiveSync.RequestBase request)
             {
-                string url = string.Format(ACTIVESYNC_URL, _account.ServerURL, _account.DeviceId,
-                    request.Command, _account.UserName, "WindowsOutlook");
+                string url = string.Format(ACTIVESYNC_URL, _account.Account.ServerURL, _account.Account.DeviceId,
+                    request.Command, _account.Account.UserName, "WindowsOutlook");
 
-                // Parse the body
+                // Construct the body
                 WBXMLDocument doc = new WBXMLDocument();
                 doc.LoadXml(request.Body);
                 doc.VersionNumber = 1.3;
@@ -291,8 +291,11 @@ namespace Acacia.ZPush.Connect
 
                 using (HttpContent content = new ByteArrayContent(contentBody))
                 {
-                    Logger.Instance.Trace(this, "Sending request: {0} -> {1}", _account.ServerURL, doc.ToXMLString());
+                    Logger.Instance.Trace(this, "Sending request: {0} -> {1}", _account.Account.ServerURL, doc.ToXMLString());
                     content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.ms-sync.wbxml");
+                    string caps = ZPushCapabilities.Client.ToString();
+                    Logger.Instance.Trace(this, "Sending request: {0} -> {1}: {2}", _account.Account.ServerURL, caps, doc.ToXMLString());
+                    content.Headers.Add(Constants.ZPUSH_HEADER_CLIENT_CAPABILITIES, caps);
                     using (HttpResponseMessage response = _client.PostAsync(url, content, _cancel).Result)
                     {
                         return new Response(response);

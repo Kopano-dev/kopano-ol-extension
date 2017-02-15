@@ -73,7 +73,7 @@ namespace Acacia.Utils
                 {
                     AcaciaTask task = _tasks.Dequeue();
                     Logger.Instance.Trace(task.Id, "Beginning task");
-                    task.Execute();
+                    PerformTask(task);
                     Logger.Instance.Info(task.Id, "Ending task: {0}ms", timer.ElapsedMilliseconds);
                     // Execute another task if available and we haven't taken too long.
                 } while (_tasks.Count > 0 && timer.ElapsedMilliseconds < 50);
@@ -99,7 +99,7 @@ namespace Acacia.Utils
         /// </summary>
         /// <param name="name">The name, for debugging and logging.</param>
         /// <param name="action">The action to execute</param>
-        public void ExecuteTask(AcaciaTask task)
+        override protected void EnqueueTask(AcaciaTask task)
         {
             if (_init == InitState.Uninitialised)
             {
@@ -112,6 +112,6 @@ namespace Acacia.Utils
             _tasks.Enqueue(task);
         }
 
-        public string Name { get { return "MainThread"; } }
+        override public string Name { get { return "MainThread"; } }
     }
 }

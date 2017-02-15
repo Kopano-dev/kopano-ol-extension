@@ -28,17 +28,19 @@ namespace Acacia.Utils
 {
     public static class FolderUtils
     {
-        public static OutlookConstants.SyncType GetFolderSyncType(IFolder folder, bool orig = false)
+        public static OutlookConstants.SyncType? GetFolderSyncType(IFolder folder, bool orig = false)
         {
             if (orig)
             {
                 string type = (string)folder.GetProperty(OutlookConstants.PR_EAS_SYNCTYPE_ORIG);
+                if (string.IsNullOrEmpty(type))
+                    return null;
                 return (OutlookConstants.SyncType)int.Parse(type);
             }
             else
             {
-                int type = (int)folder.GetProperty(OutlookConstants.PR_EAS_SYNCTYPE);
-                return (OutlookConstants.SyncType)type;
+                int? type = (int?)folder.GetProperty(OutlookConstants.PR_EAS_SYNCTYPE);
+                return (OutlookConstants.SyncType?)type;
             }
         }
 

@@ -25,6 +25,9 @@ namespace Acacia.Features.DebugSupport
 {
     public static class Statistics
     {
+        public static long StartedTasks;
+        public static long FinishedTasks;
+
         public static long CreatedWrappers;
         public static long DeletedWrappers;
         public static long DisposedWrappers;

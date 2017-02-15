@@ -14,7 +14,6 @@
 /// 
 /// Consult LICENSE file for details
 
-using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,38 +22,65 @@ using System.Threading.Tasks;
 using System.Collections;
 using Acacia.Utils;
 using Acacia.ZPush;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    public class FolderWrapper : OutlookWrapper<Folder>, IFolder
+    class FolderWrapper : OutlookWrapper<NSOutlook.Folder>, IFolder
     {
-        public FolderWrapper(Folder folder)
+        public FolderWrapper(NSOutlook.MAPIFolder folder)
         :
-        base(folder)
+        base((NSOutlook.Folder)folder)
         {
         }
 
-        protected override PropertyAccessor GetPropertyAccessor()
+        protected override void DoRelease()
+        {
+            base.DoRelease();
+        }
+
+        protected NSOutlook.MAPIFolder CloneComObject()
+        {
+            using (ComRelease com = new ComRelease())
+            {
+                NSOutlook.Application app = com.Add(_item.Application);
+                NSOutlook.NameSpace session = com.Add(app.Session);
+                NSOutlook.MAPIFolder folder = session.GetFolderFromID(EntryID);
+                return folder;
+            }
+        }
+
+        virtual public IFolder Clone()
+        {
+            return new FolderWrapper(CloneComObject());
+        }
+
+        internal NSOutlook.Folder RawItem { get { return _item; } }
+
+        protected override NSOutlook.PropertyAccessor GetPropertyAccessor()
         {
             return _item.PropertyAccessor;
         }
 
+        public string FullFolderPath { get { return _item.FullFolderPath; } }
+
         public IFolder Parent
-        {
-            get { return (IFolder)Mapping.Wrap(_item.Parent as Folder); }
-        }
-        public string ParentEntryId
         {
             get
             {
-                Folder parent = _item.Parent;
-                try
+                // The wrapper manages the returned folder
+                return Mapping.Wrap<IFolder>(_item.Parent as NSOutlook.Folder);
+            }
+        }
+
+        public string ParentEntryID
+        {
+            get
+            {
+                using (ComRelease com = new ComRelease())
                 {
+                    NSOutlook.Folder parent = com.Add(_item.Parent);
                     return parent?.EntryID;
-                }
-                finally
-                {
-                    ComRelease.Release(parent);
                 }
             }
         }
@@ -69,17 +95,20 @@ namespace Acacia.Stubs.OutlookWrappers
             using (ComRelease com = new ComRelease())
             {
                 // The parent of the root item is a session, not null. Hence the explicit type checks.
-                Folder current = _item;
+                // _item is managed by this wrapper and does not need to be released.
+                NSOutlook.Folder current = _item;
                 for (int i = 0; i < depth; ++i)
                 {
-                    object parent = current.Parent;
-                    com.Add(parent);
-                    if (!(parent is Folder))
+                    object parent = com.Add(current.Parent);
+
+                    current = parent as NSOutlook.Folder;
+                    if (current == null)
                         return false;
-                    current = (Folder)parent;
                 }
 
-                return !(com.Add(current.Parent) is Folder);
+                // Check if the remaining parent is a folder
+                object finalParent = com.Add(current.Parent);
+                return !(finalParent is NSOutlook.Folder);
             }
         }
 
@@ -92,14 +121,15 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public string EntryId { get { return _item.EntryID; } }
+        public string EntryID { get { return _item.EntryID; } }
 
-        public IStore Store { get { return StoreWrapper.Wrap(_item.Store); } }
-        public string StoreId
+        public IStore GetStore() { return Mapping.Wrap(_item.Store); }
+
+        public string StoreID
         {
             get
             {
-                using (IStore store = Store)
+                using (IStore store = GetStore())
                 {
                     return store.StoreID;
                 }
@@ -109,7 +139,7 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             get
             {
-                using (IStore store = Store)
+                using (IStore store = GetStore())
                 {
                     return store.DisplayName;
                 }
@@ -118,119 +148,20 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public ItemType ItemType { get { return (ItemType)(int)_item.DefaultItemType; } }
 
-        public class IItemsEnumerator<ItemType> : IEnumerator<ItemType>
-        where ItemType : IItem
-        {
-            private Items _items;
-            private IEnumerator _enum;
-            private ItemType _last;
 
-            public IItemsEnumerator(Folder _folder, string field, bool descending)
-            {
-                this._items = _folder.Items;
-                if (field != null)
-                {
-                    this._items.Sort("[" + field + "]", descending);
-                }
-                this._enum = _items.GetEnumerator();
-            }
-
-            public ItemType Current
-            {
-                get
-                {
-                    if (_last != null)
-                    {
-                        _last.Dispose();
-                        _last = default(ItemType);
-                    }
-                    _last = Mapping.Wrap<ItemType>(_enum.Current);
-                    return _last;
-                }
-            }
-
-            object IEnumerator.Current
-            {
-                get
-                {
-                    return Current;
-                }
-            }
-
-            public void Dispose()
-            {
-                if (_enum != null)
-                {
-                    if (_enum is IDisposable)
-                        ((IDisposable)_enum).Dispose();
-                    _enum = null;
-                }
-                if (_items != null)
-                {
-                    ComRelease.Release(_items);
-                    _items = null;
-                }
-            }
-
-            public bool MoveNext()
-            {
-                if (_last != null)
-                {
-                    _last.Dispose();
-                    _last = default(ItemType);
-                }
-                return _enum.MoveNext();
-            }
-
-            public void Reset()
-            {
-                _enum.Reset();
-            }
-        }
-
-        public class IItemsEnumerable<ItemType> : IEnumerable<ItemType>
-        where ItemType : IItem
-        {
-            private readonly Folder _folder;
-            private readonly string _field;
-            private readonly bool _descending;
-
-            public IItemsEnumerable(Folder folder, string field, bool descending)
-            {
-                this._folder = folder;
-                this._field = field;
-                this._descending = descending;
-            }
-
-            public IEnumerator<ItemType> GetEnumerator()
-            {
-                return new IItemsEnumerator<ItemType>(_folder, _field, _descending);
-            }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
-            }
-        }
-
-        public IEnumerable<IItem> Items
+        public IItems Items
         {
             get
             {
-                return new IItemsEnumerable<IItem>(_item, null, false);
+                return new ItemsWrapper(this);
             }
-        }
-
-        public IEnumerable<IItem> ItemsSorted(string field, bool descending)
-        {
-            return new IItemsEnumerable<IItem>(_item, field, descending);
         }
 
         public IItem GetItemById(string entryId)
         {
             try
             {
-                using (IStore store = Store)
+                using (IStore store = GetStore())
                 {
                     return store.GetItemFromID(entryId);
                 }
@@ -270,77 +201,76 @@ namespace Acacia.Stubs.OutlookWrappers
             return new SearchWrapper<ItemType>(_item.Items);
         }
 
+        #region Subfolders
+
         public IEnumerable<FolderType> GetSubFolders<FolderType>()
         where FolderType : IFolder
         {
-            foreach (MAPIFolder folder in _item.Folders)
+            // Don't release the items, the wrapper manages them
+            foreach (NSOutlook.Folder folder in _item.Folders.ComEnum(false))
             {
-                yield return WrapFolder<FolderType>(folder);
+                yield return folder.Wrap<FolderType>();
             };
+        }
+
+        public IFolders SubFolders
+        {
+            get
+            {
+                return new FoldersWrapper(this);
+            }
         }
 
         public FolderType GetSubFolder<FolderType>(string name)
         where FolderType : IFolder
         {
             // Fetching the folder by name throws an exception if not found, loop and find
-            // to prevent exceptions in the log
-            MAPIFolder sub = null;
-            foreach(MAPIFolder folder in _item.Folders)
+            // to prevent exceptions in the log.
+            // Don't release the items in RawEnum, they are release manually or handed to WrapFolders.
+            NSOutlook.Folder sub = null;
+            foreach(NSOutlook.Folder folder in _item.Folders.ComEnum(false))
             {
                 if (folder.Name == name)
                 {
                     sub = folder;
-                    break;
+                    break; // TODO: does this prevent the rest of the objects from getting released?
+                }
+                else
+                {
+                    ComRelease.Release(folder);
                 }
             }
             if (sub == null)
                 return default(FolderType);
-            return WrapFolder<FolderType>(sub);
+            return sub.Wrap<FolderType>();
         }
 
         public FolderType CreateFolder<FolderType>(string name)
         where FolderType : IFolder
         {
-            Folders folders = _item.Folders;
-            try
+            using (ComRelease com = new ComRelease())
             {
+                NSOutlook.Folders folders = com.Add(_item.Folders);
                 if (typeof(FolderType) == typeof(IFolder))
                 {
-                    return WrapFolder<FolderType>(folders.Add(name));
+                    return folders.Add(name).Wrap<FolderType>();
                 }
                 else if (typeof(FolderType) == typeof(IAddressBook))
                 {
-                    MAPIFolder newFolder = folders.Add(name, OlDefaultFolders.olFolderContacts);
+                    NSOutlook.MAPIFolder newFolder = folders.Add(name, NSOutlook.OlDefaultFolders.olFolderContacts);
                     newFolder.ShowAsOutlookAB = true;
-                    return WrapFolder<FolderType>(newFolder);
+                    return newFolder.Wrap<FolderType>();
                 }
                 else
                     throw new NotSupportedException();
             }
-            finally
-            {
-                ComRelease.Release(folders);
-            }
         }
 
-        private FolderType WrapFolder<FolderType>(MAPIFolder folder)
-        where FolderType : IFolder
-        {
-            if (typeof(FolderType) == typeof(IFolder))
-            {
-                return (FolderType)(IFolder)new FolderWrapper((Folder)folder);
-            }
-            else if (typeof(FolderType) == typeof(IAddressBook))
-            {
-                return (FolderType)(IFolder)new AddressBookWrapper((Folder)folder);
-            }
-            else
-                throw new NotSupportedException();
-        }
+        #endregion
 
         public IStorageItem GetStorageItem(string name)
         {
-            StorageItem item = _item.GetStorage(name, OlStorageIdentifierType.olIdentifyBySubject);
+            NSOutlook.StorageItem item = _item.GetStorage(name, NSOutlook.OlStorageIdentifierType.olIdentifyBySubject);
             if (item == null)
                 return null;
             return new StorageItemWrapper(item);
@@ -355,15 +285,11 @@ namespace Acacia.Stubs.OutlookWrappers
         public ItemType Create<ItemType>()
         where ItemType : IItem
         {
-            Items items = _item.Items;
-            try
+            using (ComRelease com = new ComRelease())
             {
+                NSOutlook.Items items = com.Add(_item.Items);
                 object item = items.Add(Mapping.OutlookItemType<ItemType>());
                 return Mapping.Wrap<ItemType>(item);
-            }
-            finally
-            {
-                ComRelease.Release(items);
             }
         }
 
@@ -411,14 +337,14 @@ namespace Acacia.Stubs.OutlookWrappers
                 _item.BeforeItemMove -= HandleBeforeItemMove;
         }
 
-        private void HandleBeforeItemMove(object item, MAPIFolder target, ref bool cancel)
+        private void HandleBeforeItemMove(object item, NSOutlook.MAPIFolder target, ref bool cancel)
         {
             try
             {
                 if (_beforeItemMove != null)
                 {
-                    using (IItem itemWrapped = Mapping.Wrap<IItem>(item))
-                    using (IFolder targetWrapped = Mapping.Wrap<IFolder>(target))
+                    using (IItem itemWrapped = Mapping.Wrap<IItem>(item, false))
+                    using (IFolder targetWrapped = Mapping.Wrap<IFolder>(target, false))
                     {
                         if (itemWrapped != null && targetWrapped != null)
                         {
@@ -435,5 +361,15 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #endregion
 
+        public ItemType DefaultItemType
+        {
+            get { return (ItemType)(int)_item.DefaultItemType; }
+        }
+
+        public ZPushFolder ZPush
+        {
+            get;
+            set;
+        }
     }
 }

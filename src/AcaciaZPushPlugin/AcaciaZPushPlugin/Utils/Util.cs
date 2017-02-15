@@ -15,8 +15,8 @@
 /// Consult LICENSE file for details
 
 using Acacia.ZPush;
-using Microsoft.Office.Interop.Outlook;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -44,5 +44,123 @@ namespace Acacia.Utils
 
             return a.Equals(b);
         }
+
+        #region Enumeration helpers
+
+        /// <summary>
+        /// Extension for a Com enumeration. Disposes the enumerated object and - optionally - the returned elements.
+        /// </summary>
+        /// <param name="source">The object to be enumerated. This will be released.</param>
+        /// <param name="releaseElements">If true (the default), elements will also be released.</param>
+        /// <returns></returns>
+        public static IEnumerable<T> ComEnum<T>(this IEnumerable<T> source, bool releaseElements = true)
+        {
+            foreach (T item in source)
+            {
+                try
+                {
+                    yield return item;
+                }
+                finally
+                {
+                    if (releaseElements)
+                        ComRelease.Release(item);
+                }
+            }
+            ComRelease.Release(source);
+        }
+
+        /// <summary>
+        /// Extension for a Com enumeration. Disposes the enumerated object and - optionally - the returned elements.
+        /// </summary>
+        /// <param name="source">The object to be enumerated. This will be released.</param>
+        /// <param name="releaseElements">If true (the default), elements will also be released.</param>
+        /// <returns></returns>
+        public static IEnumerable ComEnum(this IEnumerable source, bool releaseElements = true)
+        {
+            foreach (object item in source)
+            {
+                try
+                {
+                    yield return item;
+                }
+                finally
+                {
+                    if (releaseElements)
+                        ComRelease.Release(item);
+                }
+            }
+            ComRelease.Release(source);
+        }
+
+        /// <summary>
+        /// Helper for enumeration that disposes the returned items. Note that source will not be disposed,
+        /// as that is normally done by foreach.
+        /// </summary>
+        public static IEnumerable<T> DisposeEnum<T>(this IEnumerable<T> source)
+            where T : IDisposable
+        {
+            foreach (T item in source)
+            {
+                try
+                {
+                    yield return item;
+                }
+                finally
+                {
+                    item.Dispose();
+                }
+            }
+        }
+
+        #endregion
+
+        public static void GarbageCollect()
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
+
+
+        #region Timers
+
+        public static void Delayed(LogContext log, int millis, System.Action action)
+        {
+            RegisterTimer(log, millis, action, false);
+        }
+
+        public static void Timed(LogContext log, int millis, System.Action action)
+        {
+            RegisterTimer(log, millis, action, true);
+        }
+
+        private static void RegisterTimer(LogContext log, int millis, System.Action action, bool repeat)
+        {
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+            timer.Interval = millis;
+            timer.Tick += (s, eargs) =>
+            {
+                try
+                {
+                    action();
+                    if (!repeat)
+                    {
+                        timer.Enabled = false;
+                        timer.Dispose();
+                    }
+                }
+                catch (System.Exception e)
+                {
+                    Logger.Instance.Trace(log, "Exception in timer: {0}", e);
+                }
+            };
+            timer.Start();
+        }
+
+        #endregion
+
     }
 }

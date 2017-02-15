@@ -24,11 +24,11 @@ namespace Acacia.Utils
 {
     public class TasksSynchronous : TaskExecutor
     {
-        public void ExecuteTask(AcaciaTask task)
+        protected override void EnqueueTask(AcaciaTask task)
         {
-            task.Execute();
+            PerformTask(task);
         }
 
-        public string Name { get { return "Synchronous"; } }
+        override public string Name { get { return "Synchronous"; } }
     }
 }

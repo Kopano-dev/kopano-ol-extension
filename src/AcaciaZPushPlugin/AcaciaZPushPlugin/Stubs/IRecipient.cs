@@ -1,4 +1,4 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -22,17 +22,16 @@ using System.Threading.Tasks;
 
 namespace Acacia.Stubs
 {
-    public enum ItemType
+    public interface IRecipient : IComWrapper
     {
-        MailItem = 0,
-        AppointmentItem = 1,
-        ContactItem = 2,
-        TaskItem = 3,
-        JournalItem = 4,
-        NoteItem = 5,
-        PostItem = 6,
-        DistributionListItem = 7,
-        MobileItemSMS = 11,
-        MobileItemMMS = 12
+        bool IsResolved { get; }
+
+        string Name { get; }
+        string Address { get; }
+
+        /// <summary>
+        /// Returns the address entry. The caller is responsible for disposing it.
+        /// </summary>
+        IAddressEntry GetAddressEntry();
     }
 }

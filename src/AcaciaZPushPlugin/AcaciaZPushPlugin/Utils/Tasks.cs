@@ -15,9 +15,11 @@
 /// Consult LICENSE file for details
 
 using Acacia.Features;
+using Acacia.Features.DebugSupport;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Acacia.Utils
@@ -64,10 +66,29 @@ namespace Acacia.Utils
 
     }
 
-    public interface TaskExecutor
+    public abstract class TaskExecutor
     {
-        string Name { get; }
-        void ExecuteTask(AcaciaTask task);
+        public abstract string Name { get; }
+
+        public void AddTask(AcaciaTask task)
+        {
+            Interlocked.Increment(ref Statistics.StartedTasks);
+            EnqueueTask(task);
+        }
+
+        abstract protected void EnqueueTask(AcaciaTask task);
+
+        protected void PerformTask(AcaciaTask task)
+        {
+            try
+            {
+                task.Execute();
+            }
+            finally
+            {
+                Interlocked.Increment(ref Statistics.FinishedTasks);
+            }
+        }
     }
 
     public static class Tasks
@@ -103,12 +124,12 @@ namespace Acacia.Utils
 
         public static void Task(Feature owner, string name, Action action)
         {
-            Executor.ExecuteTask(new AcaciaTask(owner, name, action));
+            Task(new AcaciaTask(owner, name, action));
         }
 
         public static void Task(AcaciaTask task)
         {
-            Executor.ExecuteTask(task);
+            Executor.AddTask(task);
         }
     }
 }

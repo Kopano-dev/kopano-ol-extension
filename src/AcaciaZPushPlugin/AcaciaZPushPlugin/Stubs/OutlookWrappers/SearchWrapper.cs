@@ -19,12 +19,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Office.Interop.Outlook;
 using Acacia.Utils;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    class SearchWrapper<ItemType> : ISearch<ItemType>
+    class SearchWrapper<ItemType> : ComWrapper<NSOutlook.Items>, ISearch<ItemType>
     where ItemType : IItem
     {
         private interface SearchTerm
@@ -151,11 +151,13 @@ namespace Acacia.Stubs.OutlookWrappers
         }
 
         private readonly List<SearchTerm> terms = new List<SearchTerm>();
-        private readonly Items _items;
 
-        public SearchWrapper(Items items)
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="items">The items to search. The new object takes ownership</param>
+        public SearchWrapper(NSOutlook.Items items) : base(items)
         {
-            this._items = items;
         }
 
         public ISearchOperator AddOperator(SearchOperator oper)
@@ -174,31 +176,42 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public IEnumerable<ItemType> Search(int maxResults)
         {
-            List<ItemType> values = new List<ItemType>();
             string filter = MakeFilter();
-            object value = _items.Find(filter);
+
+            int count = 0;
+            object value = _item.Find(filter);
             while(value != null)
             {
-                if (values.Count < maxResults)
+                if (count < maxResults)
                 {
+                    // Wrap and add if it returns an object. If not, WrapOrDefault will release it
                     ItemType wrapped = Mapping.WrapOrDefault<ItemType>(value);
                     if (wrapped != null)
                     {
-                        values.Add(wrapped);
+                        try
+                        {
+                            yield return wrapped;
+                        }
+                        finally
+                        {
+                            wrapped.Dispose();
+                        }
                     }
                 }
                 else
                 {
+                    // Release if not returned. Keep looping to release any others
                     ComRelease.Release(value);
                 }
-                value = _items.FindNext();
+                value = _item.FindNext();
+                ++count;
             }
-            return values;
         }
 
         public ItemType SearchOne()
         {
-            object value = _items.Find(MakeFilter());
+            // Wrap manages com object in value
+            object value = _item.Find(MakeFilter());
             if (value == null)
                 return default(ItemType);
             return Mapping.Wrap<ItemType>(value);

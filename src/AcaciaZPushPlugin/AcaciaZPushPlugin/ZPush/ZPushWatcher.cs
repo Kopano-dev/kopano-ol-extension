@@ -19,9 +19,9 @@ using Acacia.Stubs;
 using Acacia.Stubs.OutlookWrappers;
 using Acacia.Utils;
 using Acacia.ZPush.Connect;
-using Microsoft.Office.Interop.Outlook;
 using Microsoft.Win32;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,25 +35,32 @@ namespace Acacia.ZPush
     /// A global watcher is used, as a lot of features are interested in the same accounts,
     /// and it is easier to centralise all event registrations.
     /// </summary>
-    public class ZPushWatcher
+    public class ZPushWatcher : DisposableWrapper
     {
-        private readonly Application _app;
+        private readonly IAddIn _addIn;
         public readonly ZPushAccounts Accounts;
         public readonly ZPushSync Sync;
-        private Explorer _explorer;
+        private readonly IExplorer _explorer;
 
 
         #region Setup
 
-        public ZPushWatcher(Application app)
+        public ZPushWatcher(IAddIn addIn)
         {
-            this._app = app;
-            Sync = new ZPushSync(this, app);
-            Accounts = new ZPushAccounts(this, app);
+            this._addIn = addIn;
+            Sync = new ZPushSync(this, addIn);
+            Accounts = new ZPushAccounts(this, addIn);
 
             // Need to keep a link to keep receiving events
-            _explorer = app.ActiveExplorer();
+            _explorer = _addIn.GetActiveExplorer();
             _explorer.SelectionChange += Explorer_SelectionChange;
+        }
+
+        protected override void DoRelease()
+        {
+            Accounts.Dispose();
+            Sync.Dispose();
+            _explorer.Dispose();
         }
 
         /// <summary>
@@ -69,43 +76,6 @@ namespace Acacia.ZPush
 
             // Notify any listeners of current selection.
             Explorer_SelectionChange();
-        }
-
-        #endregion
-
-        #region Timers
-
-        public void Delayed(int millis, System.Action action)
-        {
-            RegisterTimer(millis, action, false);
-        }
-
-        public void Timed(int millis, System.Action action)
-        {
-            RegisterTimer(millis, action, true);
-        }
-
-        private void RegisterTimer(int millis, System.Action action, bool repeat)
-        { 
-            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-            timer.Interval = millis;
-            timer.Tick += (s, eargs) =>
-            {
-                try
-                {
-                    action();
-                    if (!repeat)
-                    {
-                        timer.Enabled = false;
-                        timer.Dispose();
-                    }
-                }
-                catch(System.Exception e)
-                {
-                    Logger.Instance.Trace(this, "Exception in timer: {0}", e);
-                }
-            };
-            timer.Start();
         }
 
         #endregion
@@ -130,48 +100,58 @@ namespace Acacia.ZPush
         /// Handles a new account.
         /// </summary>
         /// <param name="account">The account.</param>
-        /// <param name="isExisting">True if the account is an existing account, false if
-        ///                          it is a new account</param>
-        internal void OnAccountDiscovered(ZPushAccount account, bool isExisting)
+        internal void OnAccountDiscovered(ZPushAccount account)
         {
             // Notify any account listeners
-            if (AccountDiscovered != null)
-                AccountDiscovered(account);
+            AccountDiscovered?.Invoke(account);
 
             // Register any events
             HandleFolderWatchers(account);
 
-            // Send an OOF request to get the OOF state and capabilities
-            Tasks.Task(null, "ZPushCheck: " + account.DisplayName, () =>
+            if (account.Account.HasPassword)
             {
-                // TODO: if this fails, retry?
-                ActiveSync.SettingsOOF oof;
-                using (ZPushConnection connection = new ZPushConnection(account, new System.Threading.CancellationToken(false)))
+                // Send an OOF request to get the OOF state and capabilities
+                Tasks.Task(null, "ZPushCheck: " + account.DisplayName, () =>
                 {
-                    oof = connection.Execute(new ActiveSync.SettingsOOFGet());
-                }
-                account.OnConfirmationResponse(oof.RawResponse);
+                    // TODO: if this fails, retry?
+                    ActiveSync.SettingsOOF oof;
+                    using (ZPushConnection connection = new ZPushConnection(account, new System.Threading.CancellationToken(false)))
+                    {
+                        oof = connection.Execute(new ActiveSync.SettingsOOFGet());
+                    }
+                    account.OnConfirmationResponse(oof.RawResponse);
 
-                // [ZO-109] Always update the current selection, it might have changed.
-                Explorer_SelectionChange();
+                    // [ZO-109] Always update the current selection, it might have changed.
+                    Explorer_SelectionChange();
 
-                // Notify the OOF feature.
-                // TODO: this coupling is pretty hideous
-                ThisAddIn.Instance.GetFeature<FeatureOutOfOffice>()?.OnOOFSettings(account, oof);
-            });
+                    // Notify the OOF feature.
+                    // TODO: this coupling is pretty hideous
+                    ThisAddIn.Instance.GetFeature<FeatureOutOfOffice>()?.OnOOFSettings(account, oof);
+                });
+            }
+            else
+            {
+                ThisAddIn.Instance.InvokeUI(() =>
+                {
+                    Logger.Instance.Warning(this, "Password not available for account: {0}", account);
+                    System.Windows.Forms.MessageBox.Show(ThisAddIn.Instance.Window,
+                        string.Format(Properties.Resources.AccountNoPassword_Body, account.DisplayName),
+                        Properties.Resources.AccountNoPassword_Title,
+                        System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information
+                    );
+                });
+            }
         }
 
         internal void OnAccountsScanned()
         {
-            if (AccountsScanned != null)
-                AccountsScanned();
+            AccountsScanned?.Invoke();
         }
 
         internal void OnAccountRemoved(ZPushAccount account)
         {
             // Notify any account listeners
-            if (AccountRemoved != null)
-                AccountRemoved(account);
+            AccountRemoved?.Invoke(account);
 
             // TODO: unregister event listeners
         }
@@ -191,20 +171,18 @@ namespace Acacia.ZPush
             {
                 if (ActiveFolderChange != null)
                 {
-                    MAPIFolder active = _explorer.CurrentFolder;
-                    if (active != null)
+
+                    using (IFolder folder = _addIn.GetActiveExplorer()?.GetCurrentFolder())
                     {
-                        using (IFolder folder = Mapping.Wrap<IFolder>(active))
+                        try
                         {
-                            try
-                            {
+                            if (folder != null)
                                 ActiveFolderChange(folder);
-                            }
-                            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in Explorer_SelectionChange.ActiveFolderChange: {0}", e); }
                         }
+                        catch (System.Exception e) { Logger.Instance.Error(this, "Exception in Explorer_SelectionChange.ActiveFolderChange: {0}", e); }
                     }
                 }
-                // TODO: cache value
+                // TODO: cache value?
                 if (ZPushAccountChange != null)
                 {
                     try
@@ -219,17 +197,12 @@ namespace Acacia.ZPush
 
         public ZPushAccount CurrentZPushAccount()
         {
-            if (_explorer.CurrentFolder == null)
-                return null;
-
-            MAPIFolder folder = _explorer.CurrentFolder;
-            try
+            using (IExplorer explorer = _addIn.GetActiveExplorer())
+            using (IFolder folder = explorer?.GetCurrentFolder())
             {
+                if (folder == null)
+                    return null;
                 return Accounts.GetAccount(folder);
-            }
-            finally
-            {
-                ComRelease.Release(folder);
             }
         }
 
@@ -255,13 +228,13 @@ namespace Acacia.ZPush
             }
         }
 
-        private readonly Dictionary<FolderRegistration, FolderWatcher> _folderWatchers = new Dictionary<FolderRegistration, FolderWatcher>();
+        private readonly ConcurrentDictionary<FolderRegistration, FolderWatcher> _folderWatchers = new ConcurrentDictionary<FolderRegistration, FolderWatcher>();
         private ZPushFolder _rootFolder;
 
         private void HandleFolderWatchers(ZPushAccount account)
         {
             // We need to keep the object alive to keep receiving events
-            _rootFolder = new ZPushFolder(this, (Folder)account.Store.GetRootFolder());
+            _rootFolder = new ZPushFolder(this, account.Account.Store.GetRootFolder());
         }
 
         public void WatchFolder(FolderRegistration folder, FolderEventHandler handler, FolderEventHandler changedHandler = null)
@@ -273,7 +246,7 @@ namespace Acacia.ZPush
             if (!_folderWatchers.TryGetValue(folder, out watcher))
             {
                 watcher = new FolderWatcher();
-                _folderWatchers.Add(folder, watcher);
+                _folderWatchers.TryAdd(folder, watcher);
             }
 
             watcher.Discovered += handler;
@@ -283,7 +256,7 @@ namespace Acacia.ZPush
             // Check existing folders for events
             foreach(ZPushFolder existing in _allFolders)
             {
-                if (folder.IsApplicable(existing))
+                if (folder.IsApplicable(existing.Folder))
                 {
                     DispatchFolderEvent(folder, watcher, existing, true);
                 }
@@ -310,7 +283,7 @@ namespace Acacia.ZPush
             // See if anybody is interested
             foreach (KeyValuePair<FolderRegistration, FolderWatcher> entry in _folderWatchers)
             {
-                if (entry.Key.IsApplicable(folder))
+                if (entry.Key.IsApplicable(folder.Folder))
                 {
                     DispatchFolderEvent(entry.Key, entry.Value, folder, isNew);
                 }
@@ -321,17 +294,17 @@ namespace Acacia.ZPush
         {
             Logger.Instance.Debug(this, "Folder event: {0}, {1}, {2}", folder, reg, isNew);
             if (isNew)
-                watcher.OnDiscovered(folder);
+                watcher.OnDiscovered(folder.Folder);
             else
-                watcher.OnChanged(folder);
+                watcher.OnChanged(folder.Folder);
         }
 
-        internal bool ShouldFolderBeWatched(ZPushFolder parent, Folder child)
+        internal bool ShouldFolderBeWatched(ZPushFolder parent, IFolder child)
         {
-            if (parent.IsAtDepth(0))
+            if (parent.Folder.IsAtDepth(0))
             {
                 // Special mail folders cause issues, they are disallowed
-                if (child.DefaultItemType != OlItemType.olMailItem)
+                if (child.DefaultItemType != ItemType.MailItem)
                     return true;
 
                 return !IsBlackListedMailFolder(child);
@@ -339,30 +312,27 @@ namespace Acacia.ZPush
             return true;
         }
 
-        private static readonly OlDefaultFolders[] BLACKLISTED_MAIL_FOLDERS =
+        private static readonly DefaultFolder[] BLACKLISTED_MAIL_FOLDERS =
         {
-            OlDefaultFolders.olFolderOutbox,
-            OlDefaultFolders.olFolderDrafts,
-            OlDefaultFolders.olFolderConflicts,
-            OlDefaultFolders.olFolderSyncIssues,
-            OlDefaultFolders.olFolderRssFeeds,
-            OlDefaultFolders.olFolderManagedEmail
+            DefaultFolder.Outbox,
+            DefaultFolder.Drafts,
+            DefaultFolder.Conflicts,
+            DefaultFolder.SyncIssues,
+            DefaultFolder.RssFeeds,
+            DefaultFolder.ManagedEmail
         };
 
-        private static bool IsBlackListedMailFolder(Folder folder)
+        private static bool IsBlackListedMailFolder(IFolder folder)
         {
+            
             string entryId = folder.EntryID;
-            using (ComRelease com = new ComRelease())
-            {
-                Store store = com.Add(folder.Store);
-                foreach(OlDefaultFolders defaultFolder in BLACKLISTED_MAIL_FOLDERS)
+
+            using (IStore store = folder.GetStore())
+            { 
+                foreach(DefaultFolder defaultFolderId in BLACKLISTED_MAIL_FOLDERS)
                 {
-                    try
-                    {
-                        if (entryId == com.Add(store.GetDefaultFolder(defaultFolder)).EntryID)
-                            return true;
-                    }
-                    catch (System.Exception) { }
+                    if (entryId == store.GetDefaultFolderId(defaultFolderId))
+                        return true;
                 }
             }
             return false;
@@ -378,17 +348,8 @@ namespace Acacia.ZPush
             if (!DebugOptions.GetOption(null, DebugOptions.WATCHER_ENABLED))
                 return;
 
-            // Must have a ZPush folder to watch events, create one if necessary
-            ZPushFolder zPushFolder;
-            if (!(folder is ZPushFolder))
-            {
-                // TODO
-                throw new NotImplementedException();
-            }
-            else
-            {
-                zPushFolder = (ZPushFolder)folder;
-            }
+            // Must have a ZPush folder to watch events.
+            ZPushFolder zPushFolder = folder.ZPush;
 
             // Register the handlers
             ItemsWatcher watcher = zPushFolder.ItemsWatcher();

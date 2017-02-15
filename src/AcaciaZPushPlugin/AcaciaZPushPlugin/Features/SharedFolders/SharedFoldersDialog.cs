@@ -71,7 +71,7 @@ namespace Acacia.Features.SharedFolders
                 ).Images;
 
             // Add the email address to the title
-            Text = string.Format(Text, account.SmtpAddress);
+            Text = string.Format(Text, account.Account.SmtpAddress);
 
             // Set up options
             ShowOptions(new KTreeNode[0]);
@@ -191,7 +191,7 @@ namespace Acacia.Features.SharedFolders
                 ctx.AddBusy(-count);
 
                 // Sync account
-                _account.SendReceive();
+                _account.Account.SendReceive();
 
                 // Show success
                 ShowCompletion(Properties.Resources.SharedFolders_Applying_Success);

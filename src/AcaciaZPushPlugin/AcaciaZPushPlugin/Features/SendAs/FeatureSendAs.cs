@@ -22,7 +22,6 @@ using System.Threading.Tasks;
 using Acacia.Stubs;
 using Acacia.Utils;
 using Acacia.ZPush;
-using Microsoft.Office.Interop.Outlook;
 using Acacia.Features.SharedFolders;
 using Acacia.ZPush.API.SharedFolders;
 using static Acacia.DebugOptions;
@@ -30,7 +29,7 @@ using static Acacia.DebugOptions;
 namespace Acacia.Features.SendAs
 {
     [AcaciaOption("Provides the ability to select different senders for Z-Push accounts.")]
-    public class FeatureSendAs : FeatureDisabled
+    public class FeatureSendAs : Feature
     {
         private FeatureSharedFolders _sharedFolders;
 
@@ -50,7 +49,10 @@ namespace Acacia.Features.SendAs
 
         public override void Startup()
         {
-            MailEvents.ItemSend += MailEvents_ItemSend;
+            if (MailEvents != null)
+            {
+                MailEvents.ItemSend += MailEvents_ItemSend;
+            }
 
             if (SendAsOwner)
             {
@@ -58,7 +60,10 @@ namespace Acacia.Features.SendAs
                 _sharedFolders = ThisAddIn.Instance.GetFeature<FeatureSharedFolders>();
                 if (_sharedFolders != null)
                 {
-                    MailEvents.Respond += MailEvents_Respond;
+                    if (MailEvents != null)
+                    {
+                        MailEvents.Respond += MailEvents_Respond;
+                    }
                 }
             }
         }
@@ -66,7 +71,7 @@ namespace Acacia.Features.SendAs
         private void MailEvents_Respond(IMailItem mail, IMailItem response)
         {
             Logger.Instance.Trace(this, "Responding to mail, checking");
-            using (IStore store = mail.Store)
+            using (IStore store = mail.GetStore())
             {
                 ZPushAccount zpush = Watcher.Accounts.GetAccount(store);
                 Logger.Instance.Trace(this, "Checking ZPush: {0}", zpush);
@@ -85,17 +90,21 @@ namespace Acacia.Features.SendAs
                         {
                             Logger.Instance.Trace(this, "Checking, Shared folder owner: {0}", shared.Store.UserName);
                             // It's a shared folder, use the owner as the sender if possible
-                            // TODO: make a wrapper for this
-                            var recip = ThisAddIn.Instance.Application.Session.CreateRecipient(shared.Store.UserName);
-                            Logger.Instance.Trace(this, "Checking, Shared folder owner recipient: {0}", recip.Name);
-                            if (recip != null && recip.Resolve())
+                            using (IRecipient recip = ThisAddIn.Instance.ResolveRecipient(shared.Store.UserName))
                             {
-                                Logger.Instance.Trace(this, "Sending as: {0}", recip.AddressEntry.Address);
-                                response.SetSender(recip.AddressEntry);
-                            }
-                            else
-                            {
-                                Logger.Instance.Trace(this, "Unable to resolve sender");
+                                Logger.Instance.Trace(this, "Checking, Shared folder owner recipient: {0}", recip.Name);
+                                if (recip != null && recip.IsResolved)
+                                {
+                                    Logger.Instance.Trace(this, "Sending as: {0}", recip.Address);
+                                    using (IAddressEntry address = recip.GetAddressEntry())
+                                    {
+                                        response.SetSender(address);
+                                    }
+                                }
+                                else
+                                {
+                                    Logger.Instance.Trace(this, "Unable to resolve sender");
+                                }
                             }
                         }
                     }
@@ -105,13 +114,13 @@ namespace Acacia.Features.SendAs
 
         private void MailEvents_ItemSend(IMailItem item, ref bool cancel)
         {
-            using (IStore store = item.Store)
+            using (IStore store = item.GetStore())
             {
                 ZPushAccount zpush = Watcher.Accounts.GetAccount(store);
                 if (zpush != null)
                 {
                     string address = item.SenderEmailAddress;
-                    if (address != null && address != zpush.SmtpAddress)
+                    if (address != null && address != zpush.Account.SmtpAddress)
                     {
                         Logger.Instance.Trace(this, "SendAs: {0}: {1}", address, item.SenderName);
                         item.SetProperty(Constants.ZPUSH_SEND_AS, address);

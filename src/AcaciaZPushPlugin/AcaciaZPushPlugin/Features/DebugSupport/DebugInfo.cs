@@ -32,6 +32,7 @@ namespace Acacia.Features.DebugSupport
     {
         Version,
         Memory,
+        Tasks,
         Wrappers,
         Misc,
         System,
@@ -101,9 +102,9 @@ namespace Acacia.Features.DebugSupport
                 }
 
                 // Add Add-ins
-                foreach (COMAddIn addin in ThisAddIn.Instance.Application.COMAddIns)
+                foreach (KeyValuePair<string,string> addin in ThisAddIn.Instance.COMAddIns)
                 {
-                    PropertyDescriptor p = new CustomPropertyDescriptor<string, DebugInfo>(addin.ProgId, DebugCategory.AddIns, addin.Description);
+                    PropertyDescriptor p = new CustomPropertyDescriptor<string, DebugInfo>(addin.Key, DebugCategory.AddIns, addin.Value);
                     properties.Add(p);
                 }
             }
@@ -130,6 +131,25 @@ namespace Acacia.Features.DebugSupport
 
         [DebugCategory(DebugCategory.Memory)]
         public string TotalMemory { get { return MemoryToString(GC.GetTotalMemory(false)); } }
+
+        #endregion
+
+        #region Tasks
+
+        [DebugCategory(DebugCategory.Tasks)]
+        public string Threading
+        {
+            get { return Tasks.Executor.Name; }
+        }
+
+        [DebugCategory(DebugCategory.Tasks)]
+        public long ActiveTasks { get { return Statistics.StartedTasks - Statistics.FinishedTasks; } }
+
+        [DebugCategory(DebugCategory.Tasks)]
+        public long StartedTasks { get { return Statistics.StartedTasks; } }
+
+        [DebugCategory(DebugCategory.Tasks)]
+        public long FinishedTasks { get { return Statistics.FinishedTasks; } }
 
         #endregion
 
@@ -161,12 +181,6 @@ namespace Acacia.Features.DebugSupport
             {
                 Logger.Instance.SetLevel(value);
             }
-        }
-
-        [DebugCategory(DebugCategory.Misc)]
-        public string Threading
-        {
-            get { return Tasks.Executor.Name; }
         }
 
         [DebugCategory(DebugCategory.Misc)]
@@ -227,14 +241,14 @@ namespace Acacia.Features.DebugSupport
 
         #endregion
 
-#region Outlook
+        #region Outlook
 
         [DebugCategory(DebugCategory.System)]
         public string OutlookVersion
         {
             get
             {
-                return ThisAddIn.Instance.Application.Version;
+                return ThisAddIn.Instance.Version;
             }
         }
 
@@ -247,7 +261,7 @@ namespace Acacia.Features.DebugSupport
             }
         }
 
-#endregion
+        #endregion
 
 #region Helpers
 

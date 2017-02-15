@@ -224,23 +224,22 @@ namespace Acacia.UI
         public List<GABUser> Lookup(string text, int max)
         {
             // Begin GAB lookup, search on full name or username
-            ISearch<IContactItem> search = _gab.Contacts.Search<IContactItem>();
-            ISearchOperator oper = search.AddOperator(SearchOperator.Or);
-            oper.AddField("urn:schemas:contacts:cn").SetOperation(SearchOperation.Like, text + "%");
-            oper.AddField("urn:schemas:contacts:customerid").SetOperation(SearchOperation.Like, text + "%");
-
-            // Fetch the results up to the limit.
-            // TODO: make limit a property
-            List<GABUser> users = new List<GABUser>();
-            foreach (IContactItem result in search.Search(max))
+            using (ISearch<IContactItem> search = _gab.Contacts.Search<IContactItem>())
             {
-                using (result)
+                ISearchOperator oper = search.AddOperator(SearchOperator.Or);
+                oper.AddField("urn:schemas:contacts:cn").SetOperation(SearchOperation.Like, text + "%");
+                oper.AddField("urn:schemas:contacts:customerid").SetOperation(SearchOperation.Like, text + "%");
+
+                // Fetch the results up to the limit.
+                // TODO: make limit a property?
+                List<GABUser> users = new List<GABUser>();
+                foreach (IContactItem result in search.Search(max))
                 {
                     users.Add(new GABUser(result.FullName, result.CustomerID));
                 }
-            }
 
-            return users;
+                return users;
+            }
         }
 
         public GABUser LookupExact(string username)
@@ -252,13 +251,11 @@ namespace Acacia.UI
                 search.AddField("urn:schemas:contacts:customerid").SetOperation(SearchOperation.Equal, username);
 
                 // Fetch the result, if any.
+                // TODO: make a SearchOne method?
                 List<GABUser> users = new List<GABUser>();
                 foreach (IContactItem result in search.Search(1))
                 {
-                    using (result)
-                    {
-                        return new GABUser(result.FullName, result.CustomerID);
-                    }
+                    return new GABUser(result.FullName, result.CustomerID);
                 }
             }
 

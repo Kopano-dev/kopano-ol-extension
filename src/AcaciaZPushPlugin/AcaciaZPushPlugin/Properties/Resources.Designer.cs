@@ -61,6 +61,24 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The password for account &apos;{0}&apos; is not available. Advanced Z-Push features will not work..
+        /// </summary>
+        internal static string AccountNoPassword_Body {
+            get {
+                return ResourceManager.GetString("AccountNoPassword_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password unavailable.
+        /// </summary>
+        internal static string AccountNoPassword_Title {
+            get {
+                return ResourceManager.GetString("AccountNoPassword_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Support.
         /// </summary>
         internal static string Feature_DebugSupport {
@@ -782,6 +800,24 @@ namespace Acacia.Properties {
             get {
                 object obj = ResourceManager.GetObject("Ribbon_WebMeetings_Small", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To synchronise the contacts folder &apos;{0}&apos;, Outlook must be restarted. Click &apos;Yes&apos; to restart Outlook now, or &apos;No&apos; if you plan to restart Outlook later..
+        /// </summary>
+        internal static string SecondaryContactsPatched_Body {
+            get {
+                return ResourceManager.GetString("SecondaryContactsPatched_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contacts folder.
+        /// </summary>
+        internal static string SecondaryContactsPatched_Title {
+            get {
+                return ResourceManager.GetString("SecondaryContactsPatched_Title", resourceCulture);
             }
         }
         
