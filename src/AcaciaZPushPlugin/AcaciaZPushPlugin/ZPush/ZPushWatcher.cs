@@ -130,7 +130,6 @@ namespace Acacia.ZPush
             }
             else
             {
-                // TODO
                 ThisAddIn.Instance.InvokeUI(() =>
                 {
                     Logger.Instance.Warning(this, "Password not available for account: {0}", account);
@@ -182,7 +181,7 @@ namespace Acacia.ZPush
                         catch (System.Exception e) { Logger.Instance.Error(this, "Exception in Explorer_SelectionChange.ActiveFolderChange: {0}", e); }
                     }
                 }
-                // TODO: cache value
+                // TODO: cache value?
                 if (ZPushAccountChange != null)
                 {
                     try

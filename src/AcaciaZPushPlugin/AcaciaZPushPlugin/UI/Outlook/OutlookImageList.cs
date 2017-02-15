@@ -43,7 +43,6 @@ namespace Acacia.UI.Outlook
             Images.ColorDepth = ColorDepth.Depth32Bit;
             Images.ImageSize = new Size(16, 16);
 
-            // TODO: memory management
             using (IExplorer explorer = ThisAddIn.Instance.GetActiveExplorer())
             using (ICommandBars cmdBars = explorer.GetCommandBars())
             {

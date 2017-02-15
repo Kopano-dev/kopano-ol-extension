@@ -48,8 +48,6 @@ namespace Acacia.Utils
         public event MailResponseEventHandler Reply;
         private void OnReply(IMailItem mail, IMailItem response)
         {
-            // TODO: check release of first item
-            // TODO: release if not sending event
             try
             {
                 if ((Reply != null || Respond != null) && mail != null && response != null)
@@ -69,8 +67,6 @@ namespace Acacia.Utils
         public event MailResponseEventHandler ReplyAll;
         private void OnReplyAll(IMailItem mail, IMailItem response)
         {
-            // TODO: check release of first item
-            // TODO: release if not sending event
             try
             {
                 if ((ReplyAll != null || Respond != null) && mail != null && response != null)
@@ -90,8 +86,6 @@ namespace Acacia.Utils
         public event MailResponseEventHandler Forward;
         private void OnForward(IMailItem mail, IMailItem response)
         {
-            // TODO: check release of first item
-            // TODO: release if not sending event
             try
             {
                 if ((Forward != null || Respond != null) && mail != null && response != null)
@@ -162,7 +156,6 @@ namespace Acacia.Utils
         {
             try
             {
-                // TODO: release item if event not sent
                 if (ItemSend != null && item != null)
                 {
                     using (IMailItem wrapped = Mapping.WrapOrDefault<IMailItem>(item, false))
