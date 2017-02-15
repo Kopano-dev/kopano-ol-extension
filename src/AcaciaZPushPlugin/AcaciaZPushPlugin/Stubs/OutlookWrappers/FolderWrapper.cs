@@ -343,21 +343,14 @@ namespace Acacia.Stubs.OutlookWrappers
             {
                 if (_beforeItemMove != null)
                 {
-                    // TODO: there is a tiny potential for a leak here, if there is an exception in the wrap methods. Should
-                    //       only happen if Outlook sends the wrong type object though
-                    using (IItem itemWrapped = Mapping.Wrap<IItem>(item))
-                    using (IFolder targetWrapped = Mapping.Wrap<IFolder>(target))
+                    using (IItem itemWrapped = Mapping.Wrap<IItem>(item, false))
+                    using (IFolder targetWrapped = Mapping.Wrap<IFolder>(target, false))
                     {
                         if (itemWrapped != null && targetWrapped != null)
                         {
                             _beforeItemMove(this, itemWrapped, targetWrapped, ref cancel);
                         }
                     }
-                }
-                else
-                {
-                    // TODO: check this
-                    ComRelease.Release(item, target);
                 }
             }
             catch(System.Exception e)

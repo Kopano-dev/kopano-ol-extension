@@ -49,16 +49,17 @@ namespace Acacia.Stubs.OutlookWrappers
         public void Start()
         {
             // Check existing stores
-            // TODO: do this in background?
             foreach(NSOutlook.Store store in _item)
             {
-                StoreAdded(store);
+                Tasks.Task(null, "AddStore", () =>
+                {
+                    StoreAdded(store);
+                });
             }
 
             // Register for new stores
             // The store remove event is not sent, so don't bother registering for that
             _item.StoreAdd += StoreAdded;
-
 
             if (GlobalOptions.INSTANCE.AccountTimer)
             {
@@ -70,42 +71,59 @@ namespace Acacia.Stubs.OutlookWrappers
         /// <summary>
         /// Event handler for Stores.StoreAdded event.
         /// </summary>
-        private void StoreAdded(NSOutlook.Store s)
+        private void Event_StoreAdded(NSOutlook.Store _)
         {
-            IStore store = null;
             try
             {
                 // Accessing the store object causes random crashes, simply iterate to find new stores
-                Logger.Instance.Trace(this, "StoreAdded: {0}", s.StoreID);
+                Logger.Instance.Trace(this, "StoreAdded");
                 foreach (NSOutlook.Store rawStore in _item)
                 {
                     if (!_accountsByStoreId.ContainsKey(rawStore.StoreID))
                     {
-                        store = new StoreWrapper(rawStore);
-                        Logger.Instance.Trace(this, "New store: {0}", rawStore.DisplayName);
-                        AccountWrapper account = TryCreateFromRegistry(store);
-                        if (account == null)
-                        {
-                            // Add it to the cache so it is not evaluated again.
-                            _accountsByStoreId.Add(store.StoreID, null);
-                            Logger.Instance.Trace(this, "Not an account store: {0}", store.DisplayName);
-                            store.Dispose();
-                        }
-                        else
-                        {
-                            // Account has taken ownership of the store
-                            Logger.Instance.Trace(this, "New account store: {0}: {1}", store.DisplayName, account);
-                            OnAccountDiscovered(account);
-                        }
+                        StoreAdded(rawStore);
                     }
                     else ComRelease.Release(rawStore);
                 }
             }
             catch (System.Exception e)
             {
-                Logger.Instance.Error(this, "StoreAdded Exception: {0}", e);
-                if (store != null)
-                    store.Dispose();
+                Logger.Instance.Error(this, "Event_StoreAdded Exception: {0}", e);
+            }
+        }
+
+        /// <summary>
+        /// Performs the actions required to handle a new store.
+        /// </summary>
+        /// <param name="rawStore">The new store. Ownership is transferred</param>
+        private void StoreAdded(NSOutlook.Store rawStore)
+        {
+            IStore store = new StoreWrapper(rawStore);
+            try
+            {
+                Logger.Instance.Trace(this, "New store: {0}", rawStore.DisplayName);
+                AccountWrapper account = TryCreateFromRegistry(store);
+                if (account == null)
+                {
+                    // Add it to the cache so it is not evaluated again.
+                    _accountsByStoreId.Add(store.StoreID, null);
+                    Logger.Instance.Trace(this, "Not an account store: {0}", store.DisplayName);
+                }
+                else
+                {
+                    Logger.Instance.Trace(this, "New account store: {0}: {1}", store.DisplayName, account);
+                    // Account has taken ownership of the store
+                    store = null;
+                    OnAccountDiscovered(account);
+                }
+            }
+            catch (System.Exception e)
+            {
+                Logger.Instance.Error(this, "Event_StoreAdded Exception: {0}", e);
+            }
+            finally
+            {
+                store?.Dispose();
             }
         }
 

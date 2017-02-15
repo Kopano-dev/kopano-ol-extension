@@ -124,7 +124,7 @@ namespace Acacia.Stubs.OutlookWrappers
                     return null;
                 return val;
             }
-            catch(System.Exception) { return null; } // TODO: is this fine everywhere?
+            catch(System.Exception) { return null; }
         }
 
         public void SetProperty(string property, object value)

@@ -105,7 +105,7 @@ namespace Acacia.Stubs.OutlookWrappers
             if (wrapped is Type)
                 return (Type)wrapped;
 
-            // TODO: release if required
+            // Release if required
             if (wrapped != null)
                 wrapped.Dispose();
             return default(Type);

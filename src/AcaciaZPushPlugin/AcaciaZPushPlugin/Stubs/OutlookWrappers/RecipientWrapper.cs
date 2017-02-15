@@ -37,7 +37,6 @@ namespace Acacia.Stubs.OutlookWrappers
             get
             {
                 return _item.Address;
-                // TODO:? return _item.AddressEntry.Address
             }
         }
 
