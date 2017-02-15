@@ -160,9 +160,12 @@ namespace Acacia.Stubs.OutlookWrappers
                 foreach (KeyValuePair<string, AccountWrapper> remove in removed)
                 {
                     Logger.Instance.Debug(this, "Account removed: {0} - {1}", remove.Value, remove.Key);
-                    _accountsBySmtp.Remove(remove.Value.SmtpAddress);
                     _accountsByStoreId.Remove(remove.Key);
-                    OnAccountRemoved(remove.Value);
+                    if (remove.Value != null)
+                    {
+                        _accountsBySmtp.Remove(remove.Value.SmtpAddress);
+                        OnAccountRemoved(remove.Value);
+                    }
                 }
             }
             catch (System.Exception e)

@@ -21,6 +21,7 @@ using Acacia.Utils;
 using Acacia.ZPush.Connect;
 using Microsoft.Win32;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -227,7 +228,7 @@ namespace Acacia.ZPush
             }
         }
 
-        private readonly Dictionary<FolderRegistration, FolderWatcher> _folderWatchers = new Dictionary<FolderRegistration, FolderWatcher>();
+        private readonly ConcurrentDictionary<FolderRegistration, FolderWatcher> _folderWatchers = new ConcurrentDictionary<FolderRegistration, FolderWatcher>();
         private ZPushFolder _rootFolder;
 
         private void HandleFolderWatchers(ZPushAccount account)
@@ -245,7 +246,7 @@ namespace Acacia.ZPush
             if (!_folderWatchers.TryGetValue(folder, out watcher))
             {
                 watcher = new FolderWatcher();
-                _folderWatchers.Add(folder, watcher);
+                _folderWatchers.TryAdd(folder, watcher);
             }
 
             watcher.Discovered += handler;
