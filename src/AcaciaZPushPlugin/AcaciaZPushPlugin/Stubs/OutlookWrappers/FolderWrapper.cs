@@ -39,6 +39,22 @@ namespace Acacia.Stubs.OutlookWrappers
             base.DoRelease();
         }
 
+        protected NSOutlook.MAPIFolder CloneComObject()
+        {
+            using (ComRelease com = new ComRelease())
+            {
+                NSOutlook.Application app = com.Add(_item.Application);
+                NSOutlook.NameSpace session = com.Add(app.Session);
+                NSOutlook.MAPIFolder folder = session.GetFolderFromID(EntryID);
+                return folder;
+            }
+        }
+
+        virtual public IFolder Clone()
+        {
+            return new FolderWrapper(CloneComObject());
+        }
+
         internal NSOutlook.Folder RawItem { get { return _item; } }
 
         protected override NSOutlook.PropertyAccessor GetPropertyAccessor()

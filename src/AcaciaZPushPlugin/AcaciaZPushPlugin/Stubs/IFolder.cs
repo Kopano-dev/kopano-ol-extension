@@ -112,5 +112,7 @@ namespace Acacia.Stubs
         // TODO: remove this. It's a quick hack to find the events associated with this folder for ZPushWatcher.
         //       make event watching part of the folder instead
         ZPushFolder ZPush { get; set; }
+
+        IFolder Clone();
     }
 }

@@ -85,7 +85,7 @@ namespace Acacia.ZPush
             // Recurse the children
             foreach (IFolder subfolder in _folder.SubFolders)
             {
-                Tasks.Task(null, "WatchChild", () => WatchChild(subfolder));
+                Tasks.Task(null, "WatchChild", () => WatchChild(subfolder, true));
             }
         }
 
@@ -141,7 +141,7 @@ namespace Acacia.ZPush
             try
             {
                 Logger.Instance.Debug(this, "Folder added in {0}: {1}", Name, folder.Name);
-                WatchChild(folder.Duplicate());
+                WatchChild(folder, false);
             }
             catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderAdd: {0}: {1}", Name, e); }
         }
@@ -205,7 +205,7 @@ namespace Acacia.ZPush
                     // Create it now
                     // This will send a discover notification if required, which is just as good as a change notification
                     Logger.Instance.Debug(this, "Folder change on unreported folder in {0}: {1}, {2}, {3}", Name, folder.Name, folder.EntryID, folder.StoreDisplayName);
-                    WatchChild(folder.Duplicate());
+                    WatchChild(folder, false);
                 }
             }
             catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderChange: {0}: {1}", Name, e); }
@@ -259,7 +259,7 @@ namespace Acacia.ZPush
         /// Watches the child folder.
         /// </summary>
         /// <param name="child">The child folder. Ownership will be taken.</param>
-        private void WatchChild(IFolder child)
+        private void WatchChild(IFolder child, bool takeOwnership)
         {
             if (!_children.ContainsKey(child.EntryID))
             {
@@ -267,9 +267,10 @@ namespace Acacia.ZPush
                 {
                     Logger.Instance.Trace(this, "Registering child on {0}: {1}", this, child.FullFolderPath);
 
-                    // Make sure we register the entry id actually before registering any listerners.
+                    // Make sure we register the entry id actually before registering any listeners.
                     // That will cause change notifications, which require the entryid to be registered.
-                    ZPushFolder folder = new ZPushFolder(_watcher, this, child);
+                    IFolder childEffective = takeOwnership ? child : child.Clone();
+                    ZPushFolder folder = new ZPushFolder(_watcher, this, childEffective);
                     _children.Add(child.EntryID, folder);
                     folder.Initialise();
                     return;
@@ -280,8 +281,11 @@ namespace Acacia.ZPush
                 }
             }
 
-            // Release the folder if not used
-            child.Dispose();
+            if (takeOwnership)
+            {
+                // Release the folder if not used
+                child.Dispose();
+            }
         }
     }
 }

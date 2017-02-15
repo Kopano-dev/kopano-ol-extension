@@ -33,6 +33,17 @@ namespace Acacia.Stubs.OutlookWrappers
 
         }
 
+        // TODO: it would be nice if this could return IAddressBook
+        public override IFolder Clone()
+        {
+            return new AddressBookWrapper(CloneComObject());
+        }
+
+        IAddressBook IAddressBook.Clone()
+        {
+            return new AddressBookWrapper(CloneComObject());
+        }
+
         public void Clear()
         {
             foreach(dynamic item in _item.Items.RawEnum())
