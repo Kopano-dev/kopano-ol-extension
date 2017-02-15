@@ -27,10 +27,6 @@ using Acacia.UI;
 using Acacia.ZPush;
 using System.Globalization;
 using Acacia.UI.Outlook;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Reflection;
-using Acacia.Native;
 using Acacia.Stubs;
 using Acacia.Stubs.OutlookWrappers;
 
