@@ -26,6 +26,12 @@ namespace Acacia.Stubs
         IItems Sort(string field, bool descending);
 
         /// <summary>
+        /// Filters the items for a specific type.
+        /// </summary>
+        /// <returns>An enumerable for items of the specified type.</returns>
+        IEnumerable<T> Typed<T>() where T : IItem;
+
+        /// <summary>
         /// Returns an events subscribption object.
         /// </summary>
         /// <returns>The events. The caller is responsible for disposing</returns>

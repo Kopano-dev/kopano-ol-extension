@@ -321,23 +321,19 @@ namespace Acacia.Features.GAB
                         {
                             using (IFolder root = store.GetRootFolder())
                             {
-                                foreach (IFolder folder in root.GetSubFolders<IFolder>())
+                                foreach (IFolder folder in root.GetSubFolders<IFolder>().DisposeEnum())
                                 {
-                                    // TODO: let enumerator handle this
-                                    using (folder)
+                                    try
                                     {
-                                        try
+                                        if (IsGABContactsFolder(folder))
                                         {
-                                            if (IsGABContactsFolder(folder))
-                                            {
-                                                Logger.Instance.Debug(this, "FullResync: Deleting contacts folder: {0}", folder.Name);
-                                                folder.Delete();
-                                            }
+                                            Logger.Instance.Debug(this, "FullResync: Deleting contacts folder: {0}", folder.Name);
+                                            folder.Delete();
                                         }
-                                        catch (System.Exception e)
-                                        {
-                                            Logger.Instance.Error(this, "FullResync: Exception deleting contacts folder: {0}", e);
-                                        }
+                                    }
+                                    catch (System.Exception e)
+                                    {
+                                        Logger.Instance.Error(this, "FullResync: Exception deleting contacts folder: {0}", e);
                                     }
                                 }
                             }

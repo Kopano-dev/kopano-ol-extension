@@ -45,7 +45,15 @@ namespace Acacia.Utils
             return a.Equals(b);
         }
 
-        public static IEnumerable<T> RawEnum<T>(this IEnumerable<T> source, bool releaseItems = true)
+        #region Enumeration helpers
+
+        /// <summary>
+        /// Extension for a Com enumeration. Disposes the enumerated object and - optionally - the returned elements.
+        /// </summary>
+        /// <param name="source">The object to be enumerated. This will be released.</param>
+        /// <param name="releaseElements">If true (the default), elements will also be released.</param>
+        /// <returns></returns>
+        public static IEnumerable<T> ComEnum<T>(this IEnumerable<T> source, bool releaseElements = true)
         {
             foreach (T item in source)
             {
@@ -55,14 +63,20 @@ namespace Acacia.Utils
                 }
                 finally
                 {
-                    if (releaseItems)
+                    if (releaseElements)
                         ComRelease.Release(item);
                 }
             }
             ComRelease.Release(source);
         }
 
-        public static IEnumerable RawEnum(this IEnumerable source, bool releaseItems = true)
+        /// <summary>
+        /// Extension for a Com enumeration. Disposes the enumerated object and - optionally - the returned elements.
+        /// </summary>
+        /// <param name="source">The object to be enumerated. This will be released.</param>
+        /// <param name="releaseElements">If true (the default), elements will also be released.</param>
+        /// <returns></returns>
+        public static IEnumerable ComEnum(this IEnumerable source, bool releaseElements = true)
         {
             foreach (object item in source)
             {
@@ -72,12 +86,34 @@ namespace Acacia.Utils
                 }
                 finally
                 {
-                    if (releaseItems)
+                    if (releaseElements)
                         ComRelease.Release(item);
                 }
             }
             ComRelease.Release(source);
         }
+
+        /// <summary>
+        /// Helper for enumeration that disposes the returned items. Note that source will not be disposed,
+        /// as that is normally done by foreach.
+        /// </summary>
+        public static IEnumerable<T> DisposeEnum<T>(this IEnumerable<T> source)
+            where T : IDisposable
+        {
+            foreach (T item in source)
+            {
+                try
+                {
+                    yield return item;
+                }
+                finally
+                {
+                    item.Dispose();
+                }
+            }
+        }
+
+        #endregion
 
         public static void GarbageCollect()
         {

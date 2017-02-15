@@ -200,24 +200,21 @@ namespace Acacia.Features.GAB
                 return;
 
             // Process the messages
-            foreach (IItem item in Folder.Items)
+            foreach (IZPushItem item in Folder.Items.Typed<IZPushItem>())
             {
-                // TODO: make type-checking iterator?
-                if (item is IZPushItem)
+                // Store the entry id to fetch again later, the item will be disposed
+                string entryId = item.EntryID;
+                Logger.Instance.Trace(this, "Checking chunk: {0}", item.Subject);
+                if (_feature.ProcessItems2)
                 {
-                    string entryId = item.EntryID;
-                    Logger.Instance.Trace(this, "Checking chunk: {0}", item.Subject);
-                    if (_feature.ProcessItems2)
+                    Tasks.Task(_feature, "ProcessChunk", () =>
                     {
-                        Tasks.Task(_feature, "ProcessChunk", () =>
+                        using (IItem item2 = Folder.GetItemById(entryId))
                         {
-                            using (IItem item2 = Folder.GetItemById(entryId))
-                            {
-                                if (item2 != null)
-                                    ProcessMessage((IZPushItem)item2);
-                            }
-                        });
-                    }
+                            if (item2 != null)
+                                ProcessMessage((IZPushItem)item2);
+                        }
+                    });
                 }
             }
         }

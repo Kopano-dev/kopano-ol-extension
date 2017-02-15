@@ -22,7 +22,7 @@ namespace Acacia.Stubs.OutlookWrappers
         public IEnumerator<IFolder> GetEnumerator()
         {
             // Don't release the items, the wrapper manages them
-            foreach (NSOutlook.Folder folder in _folder.RawItem.Folders.RawEnum(false))
+            foreach (NSOutlook.Folder folder in _folder.RawItem.Folders.ComEnum(false))
             {
                 yield return folder.Wrap<IFolder>();
             };
@@ -31,7 +31,7 @@ namespace Acacia.Stubs.OutlookWrappers
         IEnumerator IEnumerable.GetEnumerator()
         {
             // Don't release the items, the wrapper manages them
-            foreach (NSOutlook.Folder folder in _folder.RawItem.Folders.RawEnum(false))
+            foreach (NSOutlook.Folder folder in _folder.RawItem.Folders.ComEnum(false))
             {
                 yield return folder.Wrap<IFolder>();
             };

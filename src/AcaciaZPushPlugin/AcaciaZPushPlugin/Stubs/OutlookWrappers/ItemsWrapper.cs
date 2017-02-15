@@ -13,6 +13,7 @@ namespace Acacia.Stubs.OutlookWrappers
     {
         // Managed by the caller, not released here
         private readonly FolderWrapper _folder;
+
         private string _field;
         private bool _descending;
 
@@ -28,6 +29,21 @@ namespace Acacia.Stubs.OutlookWrappers
             return this;
         }
 
+        public IEnumerable<T> Typed<T>() where T: IItem
+        {
+            foreach(IItem item in this)
+            {
+                if (typeof(T).IsInstanceOfType(item))
+                {
+                    yield return (T)item;
+                }
+                else
+                {
+                    item.Dispose();
+                }
+            }
+        }
+
         private NSOutlook.Items GetItems()
         {
             return _folder.RawItem.Items;
@@ -35,7 +51,7 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public IEnumerator<IItem> GetEnumerator()
         {
-            return new ItemsEnumerator<IItem>(this, _field, _descending);
+            return new ItemsEnumerator<IItem>(this);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -51,13 +67,15 @@ namespace Acacia.Stubs.OutlookWrappers
             private IEnumerator _enum;
             private ItemType _last;
 
-            public ItemsEnumerator(ItemsWrapper items, string field, bool descending) : base(items.GetItems())
+            public ItemsEnumerator(ItemsWrapper items) : base(items.GetItems())
             {
-                // TODO: can _items be released here already?
-                if (field != null)
+                // Apply any sort options
+                if (items._field != null)
                 {
-                    this._item.Sort("[" + field + "]", descending);
+                    this._item.Sort("[" + items._field + "]", items._descending);
                 }
+
+                // Get the enumerator
                 this._enum = _item.GetEnumerator();
             }
 

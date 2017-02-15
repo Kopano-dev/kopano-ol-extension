@@ -46,7 +46,7 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public void Clear()
         {
-            foreach(dynamic item in _item.Items.RawEnum())
+            foreach(dynamic item in _item.Items.ComEnum())
             {
                 item.Delete();
             }

@@ -207,7 +207,7 @@ namespace Acacia.Stubs.OutlookWrappers
         where FolderType : IFolder
         {
             // Don't release the items, the wrapper manages them
-            foreach (NSOutlook.Folder folder in _item.Folders.RawEnum(false))
+            foreach (NSOutlook.Folder folder in _item.Folders.ComEnum(false))
             {
                 yield return folder.Wrap<FolderType>();
             };
@@ -228,7 +228,7 @@ namespace Acacia.Stubs.OutlookWrappers
             // to prevent exceptions in the log.
             // Don't release the items in RawEnum, they are release manually or handed to WrapFolders.
             NSOutlook.Folder sub = null;
-            foreach(NSOutlook.Folder folder in _item.Folders.RawEnum(false))
+            foreach(NSOutlook.Folder folder in _item.Folders.ComEnum(false))
             {
                 if (folder.Name == name)
                 {
