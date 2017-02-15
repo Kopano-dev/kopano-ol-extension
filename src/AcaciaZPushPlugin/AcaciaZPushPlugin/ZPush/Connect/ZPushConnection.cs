@@ -293,9 +293,7 @@ namespace Acacia.ZPush.Connect
                 {
                     Logger.Instance.Trace(this, "Sending request: {0} -> {1}", _account.Account.ServerURL, doc.ToXMLString());
                     content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.ms-sync.wbxml");
-                    string caps = ZPushCapabilities.Client.ToString();
-                    Logger.Instance.Trace(this, "Sending request: {0} -> {1}: {2}", _account.Account.ServerURL, caps, doc.ToXMLString());
-                    content.Headers.Add(Constants.ZPUSH_HEADER_CLIENT_CAPABILITIES, caps);
+                    Logger.Instance.Trace(this, "Sending request: {0} -> {1}", _account.Account.ServerURL, doc.ToXMLString());
                     using (HttpResponseMessage response = _client.PostAsync(url, content, _cancel).Result)
                     {
                         return new Response(response);

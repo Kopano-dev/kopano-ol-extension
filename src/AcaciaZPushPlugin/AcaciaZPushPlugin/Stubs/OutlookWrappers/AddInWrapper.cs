@@ -71,25 +71,7 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             _stores.Start();
         }
-
-        public void Restart()
-        {
-            // Can not use the assembly location, as that is in the GAC
-            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-            UriBuilder uri = new UriBuilder(codeBase);
-            string path = Uri.UnescapeDataString(uri.Path);
-            // Create the path to the restarter
-            path = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(path), "OutlookRestarter.exe");
-
-            // Run that
-            Process process = new Process();
-            process.StartInfo = new ProcessStartInfo(path, Environment.CommandLine);
-            process.Start();
-
-            // And close us
-            _app.Quit();
-        }
-
+        
         public void Quit()
         {
             _app.Quit();

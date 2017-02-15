@@ -62,10 +62,6 @@ namespace Acacia.Stubs
         /// </summary>
         void SendReceive(IAccount account = null);
 
-        /// <summary>
-        /// Restarts the application
-        /// </summary>
-        void Restart();
         void Quit();
 
         void InvokeUI(Action action);
