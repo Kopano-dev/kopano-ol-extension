@@ -62,6 +62,13 @@ namespace Acacia.Stubs
         SuggestedContacts = 30
     }
 
+    // Replacement for OlSpecialFolders
+    public enum SpecialFolder
+    {
+        AllTasks = 0,
+        Reminders = 1
+    }
+
     public enum AccountType
     {
         // TODO

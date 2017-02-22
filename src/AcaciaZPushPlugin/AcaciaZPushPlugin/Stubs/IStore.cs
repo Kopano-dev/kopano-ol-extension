@@ -40,6 +40,12 @@ namespace Acacia.Stubs
         /// </summary>
         string GetDefaultFolderId(DefaultFolder folder);
 
+        /// <summary>
+        /// Returns a special folder.
+        /// </summary>
+        /// <returns>The special folder. The caller is responsible for disposing.</returns>
+        IFolder GetSpecialFolder(SpecialFolder folder);
+
         IItem GetItemFromID(string id);
         string DisplayName { get; }
         string StoreID { get; }
