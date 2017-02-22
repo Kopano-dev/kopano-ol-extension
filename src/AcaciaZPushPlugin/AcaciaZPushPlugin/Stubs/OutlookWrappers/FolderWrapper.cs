@@ -24,6 +24,7 @@ using Acacia.Utils;
 using Acacia.ZPush;
 using NSOutlook = Microsoft.Office.Interop.Outlook;
 using Acacia.Native.MAPI;
+using stdole;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
@@ -54,6 +55,19 @@ namespace Acacia.Stubs.OutlookWrappers
         virtual public IFolder Clone()
         {
             return new FolderWrapper(CloneComObject());
+        }
+
+        public void Save()
+        {
+            IMAPIFolder imapi = _item.MAPIOBJECT as IMAPIFolder;
+            try
+            {
+                imapi.SaveChanges(SaveChangesFlags.FORCE_SAVE);
+            }
+            finally
+            {
+                ComRelease.Release(imapi);
+            }
         }
 
         internal NSOutlook.Folder RawItem { get { return _item; } }
@@ -360,6 +374,11 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
+        public void SetCustomIcon(IPicture icon)
+        {
+            _item.SetCustomIcon(((PictureWrapper)icon).RawItem as StdPicture);
+        }
+
         #endregion
 
         public ItemType DefaultItemType
@@ -395,7 +414,8 @@ namespace Acacia.Stubs.OutlookWrappers
 
             set
             {
-
+                // TODO
+                throw new NotImplementedException();
             }
         }
     }

@@ -25,6 +25,7 @@ namespace Acacia.Stubs
 {
     public interface IMSOCommand
     {
+        IPicture GetPicture(Size imageSize);
         Bitmap GetImage(Size imageSize);
     }
 

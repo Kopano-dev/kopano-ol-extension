@@ -39,6 +39,11 @@ namespace Acacia.Stubs.OutlookWrappers
                 this._id = id;
             }
 
+            public IPicture GetPicture(Size imageSize)
+            {
+                return _commands._item.GetImageMso(_id, imageSize.Width, imageSize.Height).Wrap();
+            }
+
             public Bitmap GetImage(Size imageSize)
             {
                 IPictureDisp pict = _commands._item.GetImageMso(_id, imageSize.Width, imageSize.Height);

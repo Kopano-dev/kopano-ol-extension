@@ -87,6 +87,15 @@ namespace Acacia.Stubs.OutlookWrappers
             return wrapped;
         }
 
+        public static IPicture Wrap(stdole.IPictureDisp obj, bool mustRelease = true)
+        {
+            if (obj == null)
+                return null;
+            PictureWrapper wrapped = new PictureWrapper(obj);
+            wrapped.MustRelease = mustRelease;
+            return wrapped;
+        }
+
         // TODO: extension methods for this
         public static IStore Wrap(NSOutlook.Store obj, bool mustRelease = true)
         {

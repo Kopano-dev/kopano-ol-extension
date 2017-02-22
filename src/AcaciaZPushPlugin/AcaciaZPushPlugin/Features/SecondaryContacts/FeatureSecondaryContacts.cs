@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -68,8 +69,7 @@ namespace Acacia.Features.SecondaryContacts
 
         public override void Startup()
         {
-            Watcher.WatchFolder(new FolderRegistrationSecondaryContacts(this),
-                                OnUnpatchedFolderDiscovered);
+            Watcher.WatchFolder(new FolderRegistrationSecondaryContacts(this), OnUnpatchedFolderDiscovered);
         }
         
         private void OnUnpatchedFolderDiscovered(IFolder folder)
@@ -93,7 +93,7 @@ namespace Acacia.Features.SecondaryContacts
                 // Stage 1
 
                 // Sync type
-                Logger.Instance.Trace(this, "Setting sync type");
+                Logger.Instance.Trace(this, "Settin7g sync type");
                 folder.SetProperty(OutlookConstants.PR_EAS_SYNCTYPE, (int)OutlookConstants.SyncType.UserContact);
 
                 // Container type
@@ -102,15 +102,42 @@ namespace Acacia.Features.SecondaryContacts
 
                 // Make it invisible.
                 folder.AttrHidden = true;
+                folder.Save();
 
                 Logger.Instance.Debug(this, "Patched secondary contacts folder: {0}", strippedName);
-                // Register and show a warning, if not already done.
-                // Note that patching may be done multiple times.
-                if (!_warnedFolders.Contains(folder.EntryID))
-                {
-                    _warnedFolders.Add(folder.EntryID);
+                WarnRestart(folder);
+            }
+            // If _warnedFolders does not contain the folder (and it's hidden), this means Outlook was restarted.
+            else if (!_warnedFolders.Contains(folder.EntryID))
+            {
+                // Stage 2
 
-                    if (MessageBox.Show(StringUtil.GetResourceString("SecondaryContactsPatched_Body", strippedName),
+                // Patch the name
+                 Logger.Instance.Trace(this, "Patching name");
+                 folder.Name = strippedName;
+
+                 // Show it
+                 folder.AttrHidden = false;
+                 Logger.Instance.Debug(this, "Shown secondary contacts folder: {0}", strippedName);
+            }
+            Logger.Instance.Debug(this, "Patching done: {0}: {1}", strippedName, folder.AttrHidden);
+        }
+
+        private DateTime? _lastWarning;
+
+        private void WarnRestart(IFolder folder)
+        {
+            // Register and show a warning, if not already done.
+            // Note that patching may be done multiple times.
+            if (!_warnedFolders.Contains(folder.EntryID))
+            {
+                _warnedFolders.Add(folder.EntryID);
+
+                // TODO: configurable constant for warning time
+                if (_lastWarning == null || DateTime.Now - _lastWarning >= TimeSpan.FromHours(1))
+                {
+                    _lastWarning = DateTime.Now;
+                    if (MessageBox.Show(StringUtil.GetResourceString("SecondaryContactsPatched_Body", folder.Name),
                                     StringUtil.GetResourceString("SecondaryContactsPatched_Title"),
                                     MessageBoxButtons.YesNo,
                                     MessageBoxIcon.Warning
@@ -119,19 +146,6 @@ namespace Acacia.Features.SecondaryContacts
                         ThisAddIn.Instance.Restart();
                     }
                 }
-            }
-            // If _warnedFolders does not contain the folder (and it's hidden), this means Outlook was restarted.
-            else if (!_warnedFolders.Contains(folder.EntryID))
-            {
-                // Stage 2
-
-                // Patch the name
-                Logger.Instance.Trace(this, "Patching name");
-                folder.Name = strippedName;
-
-                // Show it
-                folder.AttrHidden = false;
-                Logger.Instance.Debug(this, "Shown secondary contacts folder: {0}", strippedName);
             }
         }
     }
