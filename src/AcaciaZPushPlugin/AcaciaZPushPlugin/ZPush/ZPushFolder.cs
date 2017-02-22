@@ -157,7 +157,7 @@ namespace Acacia.ZPush
                 // Hence, fetch all the remaining folder ids, and remove any folder that no longer exists.
                 // TODO: move this logic into IFolders?
                 HashSet<string> remaining = new HashSet<string>();
-                foreach (IFolder child in _folder.SubFolders)
+                foreach (IFolder child in _folder.SubFolders.DisposeEnum())
                 {
                     try
                     {
