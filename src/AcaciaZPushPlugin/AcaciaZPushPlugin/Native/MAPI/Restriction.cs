@@ -1,6 +1,5 @@
 ﻿
 using Acacia.Stubs;
-using Acacia.Utils;
 /// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
@@ -70,14 +69,14 @@ namespace Acacia.Native.MAPI
 
     unsafe public struct ContentRestriction
     {
-        public FuzzyLevel ulFuzzyLevel;
+        public FuzzyLevel fuzzy;
         public PropTag ulPropTag;
         public PropValue* prop;
 
         public string ToString(int depth)
         {
             string indent = new string(' ', depth);
-            string s = indent + ulFuzzyLevel + ":" + ulPropTag.ToString();
+            string s = indent + fuzzy + ":" + ulPropTag.ToString();
             s += ":" + prop->ToString();
             s += "\n";
             return s;
@@ -86,8 +85,7 @@ namespace Acacia.Native.MAPI
         public SearchQuery ToSearchQuery()
         {
             return new SearchQuery.PropertyContent(ulPropTag.ToPropertyIdentifier(),
-                (SearchQuery.ContentMatchOperation)((uint)ulFuzzyLevel & 0xF),
-                (SearchQuery.ContentMatchModifiers)(((uint)ulFuzzyLevel & 0xF0000) >> 16),
+                (uint)fuzzy, // TODO
                 prop->ToObject());
         }
     }
@@ -176,7 +174,7 @@ namespace Acacia.Native.MAPI
 
         public SearchQuery ToSearchQuery()
         {
-            return new SearchQuery.PropertyBitMask(prop.ToPropertyIdentifier(), (SearchQuery.BitMaskOperation)(int)bmr, mask);
+            return new SearchQuery.PropertyBitMask(prop.ToPropertyIdentifier(), bmr == BMR.EQZ, mask);
         }
     }
 
@@ -303,145 +301,6 @@ namespace Acacia.Native.MAPI
             }
             s += indent + "}\n";
             return s;
-        }
-    }
-
-    /// <summary>
-    /// Encodes a search as an SRestriction. Note that as memory needs to be managed for the miscellaneous structures,
-    /// the SRestriction is only valid until RestrictionEncoder is disposed.
-    /// </summary>
-    unsafe public class RestrictionEncoder : NativeEncoder, ISearchEncoder
-    {
-        private class EncodingStack
-        {
-            public SRestriction[] array;
-            public int index;
-            public SRestriction* ptr;
-
-            public EncodingStack(int count, Allocation<SRestriction[]> alloc)
-            {
-                array = alloc.Object;
-                index = 0;
-                ptr = (SRestriction*)alloc.Pointer;
-            }
-        }
-        private readonly Stack<EncodingStack> _current = new Stack<EncodingStack>();
-        private readonly EncodingStack _root;
-
-        public RestrictionEncoder()
-        {
-            // Create an object for the root element
-            _root = Begin(1);
-        }
-
-        protected override void DoRelease()
-        {
-            // TODO
-        }
-
-        public SRestriction Restriction
-        {
-            get { return _root.array[0]; }
-        }
-
-        private SRestriction* Current
-        {
-            get
-            {
-                EncodingStack top = _current.Peek();
-                return top.ptr + top.index;
-            }
-        }
-
-        public void Encode(SearchQuery.PropertyExists part)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Encode(SearchQuery.Or part)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Encode(SearchQuery.PropertyIdentifier part)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Encode(SearchQuery.Not part)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Encode(SearchQuery.And part)
-        {
-            Current->rt = RestrictionType.AND;
-            Current->sub.cb = (uint)part.Operands.Count;
-            Current->sub.ptr = EncodePointer(part.Operands);
-        }
-
-        private SRestriction* EncodePointer(IEnumerable<SearchQuery> operands)
-        {
-            EncodingStack alloc = Begin(operands.Count());
-            try
-            {
-                foreach (SearchQuery operand in operands)
-                {
-                    operand.Encode(this);
-                    ++alloc.index;
-                }
-            }
-            finally
-            {
-                End();
-            }
-            return alloc.ptr;
-        }
-
-        private EncodingStack Begin(int count)
-        {
-            // Allocate and push the array
-            EncodingStack alloc = new EncodingStack(count, Allocate(new SRestriction[count]));
-            _current.Push(alloc);
-
-            return alloc;
-        }
-
-        private void End()
-        {
-            _current.Pop();
-        }
-
-        public void Encode(SearchQuery.PropertyContent part)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Encode(SearchQuery.PropertyCompare part)
-        {
-            Current->rt = RestrictionType.PROPERTY;
-            Current->prop.relop = (SearchOperation)part.Operation;
-            Current->prop.ulPropTag = part.Property.Tag;
-            Current->prop.prop = PropValue.FromObject(this, part.Value);
-        }
-
-        public void Encode(SearchQuery.PropertyBitMask part)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public static class RestrictionExensions
-    {
-        /// <summary>
-        /// Encodes the search as an SRestriction.
-        /// </summary>
-        /// <returns>The encoder containing the restriction. The caller is responsible for disposing.</returns>
-        public static RestrictionEncoder ToRestriction(this SearchQuery search)
-        {
-            RestrictionEncoder encoder = new RestrictionEncoder();
-            search.Encode(encoder);
-            return encoder;
         }
     }
 

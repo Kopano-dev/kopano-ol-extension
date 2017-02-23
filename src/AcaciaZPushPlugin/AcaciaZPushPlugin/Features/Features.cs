@@ -35,6 +35,7 @@ namespace Acacia.Features
             typeof(Notes.FeatureNotes),
             typeof(SecondaryContacts.FeatureSecondaryContacts),
             typeof(SendAs.FeatureSendAs),
+            typeof(Signatures.FeatureSignatures),
             typeof(DebugSupport.FeatureDebugSupport)
         };
     }

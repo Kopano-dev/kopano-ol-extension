@@ -52,7 +52,7 @@ namespace Acacia.Native.MAPI
 
         public SearchQuery.PropertyIdentifier ToPropertyIdentifier()
         {
-            return new SearchQuery.PropertyIdentifier(this);
+            return SearchQuery.PropertyIdentifier.FromTag(prop, (ushort)type);
         }
     }
 
@@ -130,11 +130,6 @@ namespace Acacia.Native.MAPI
                     // return lpszW.ToString();
             }
             return null;
-        }
-
-        public static PropValue* FromObject(NativeEncoder encoder, object value)
-        {
-            throw new NotImplementedException();
         }
     }
 }

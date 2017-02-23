@@ -32,7 +32,6 @@ namespace Acacia
         void Encode(SearchQuery.And part);
         void Encode(SearchQuery.Or part);
         void Encode(SearchQuery.Not part);
-        void Encode(SearchQuery.PropertyIdentifier part);
     }
 
     public class ToStringEncoder : ISearchEncoder
@@ -47,20 +46,21 @@ namespace Acacia
 
         public void Encode(SearchQuery.And part)
         {
-            EncodeMulti("AND", part.Operands);
+            EncodeMulti(part, "AND");
         }
 
         public void Encode(SearchQuery.Or part)
         {
-            EncodeMulti("OR", part.Operands);
+            EncodeMulti(part, "OR");
         }
 
         public void Encode(SearchQuery.Not part)
         {
-            EncodeMulti("NOT", new[] { part.Operand });
+            _builder.Append("NOT ");
+            part.Operand.Encode(this);
         }
 
-        private void EncodeMulti(string oper, IEnumerable<SearchQuery> parts)
+        private void EncodeMulti(SearchQuery.MultiOperator part, string oper)
         {
             Indent();
             _builder.Append(oper).Append("\n");
@@ -69,7 +69,7 @@ namespace Acacia
 
             ++_indent;
 
-            foreach (SearchQuery operand in parts)
+            foreach (SearchQuery operand in part.Operands)
                 operand.Encode(this);
 
             --_indent;
@@ -80,59 +80,22 @@ namespace Acacia
 
         public void Encode(SearchQuery.PropertyBitMask part)
         {
-            Indent();
-            _builder.Append("BITMASK{");
-            part.Property.Encode(this);
-            _builder.Append(" ").Append(part.Operation).Append(" ");
-            _builder.Append(part.Mask.ToString("X8"));
-            _builder.Append("}\n");
+            _builder.Append("BITMASK:").Append(part.Property); // TODO: operator/value
         }
-
-        private static readonly string[] COMPARISON_OPERATORS = {"<", "<=", ">", ">=", "==", "!=", "LIKE"};
 
         public void Encode(SearchQuery.PropertyCompare part)
         {
-            Indent();
-            _builder.Append("COMPARE{");
-            part.Property.Encode(this);
-            _builder.Append(" ").Append(COMPARISON_OPERATORS[(int)part.Operation]).Append(" ");
-            _builder.Append(part.Value);
-            _builder.Append("}\n"); 
+            _builder.Append("COMPARE:").Append(part.Property); // TODO: operator/value
         }
 
         public void Encode(SearchQuery.PropertyContent part)
         {
-            Indent();
-            _builder.Append("CONTENT{");
-            part.Property.Encode(this);
-
-            List<string> options = new List<string>();
-            if (part.Operation != SearchQuery.ContentMatchOperation.Full)
-                options.Add(part.Operation.ToString());
-
-            if (part.Modifiers != SearchQuery.ContentMatchModifiers.None)
-            {
-                options.Add(part.Modifiers.ToString());
-            }
-
-            string optionsString = options.Count == 0 ? "" : ("(" + string.Join(",", options) + ")");
-
-            _builder.Append(" ==").Append(optionsString).Append(" ");
-            _builder.Append(part.Content);
-            _builder.Append("}\n");
+            _builder.Append("CONTENT:").Append(part.Property); // TODO: operator/value
         }
 
         public void Encode(SearchQuery.PropertyExists part)
         {
-            Indent();
-            _builder.Append("EXISTS{");
-            part.Property.Encode(this);
-            _builder.Append("}\n");
-        }
-
-        public void Encode(SearchQuery.PropertyIdentifier part)
-        {
-            _builder.Append(part.Id);
+            _builder.Append("EXISTS:").Append(part.Property);
         }
 
         public string GetValue()
@@ -170,7 +133,7 @@ namespace Acacia
                 _operands.Add(operand);
             }
 
-            public ICollection<SearchQuery> Operands
+            public IEnumerable<SearchQuery> Operands
             {
                 get { return _operands; }
             }
@@ -217,23 +180,16 @@ namespace Acacia
         /// </summary>
         public class PropertyIdentifier
         {
-            public string Id { get; private set; }
-            public PropTag Tag { get; private set; }
+            private string _id;
 
-            public PropertyIdentifier(PropTag tag)
+            public PropertyIdentifier(string id)
             {
-                this.Tag = tag;
-                Id = string.Format("{0:X4}{1:X4}", tag.prop, (int)tag.type);
+                this._id = id;
             }
 
-            public void Encode(ISearchEncoder encoder)
+            public static PropertyIdentifier FromTag(ushort prop, ushort type)
             {
-                encoder.Encode(this);
-            }
-
-            public override string ToString()
-            {
-                return Id;
+                return new PropertyIdentifier(string.Format("{0:4X}{1:4X}", prop, type));
             }
         }
 
@@ -291,44 +247,11 @@ namespace Acacia
             }
         }
 
-        public enum ContentMatchOperation
-        {
-            /// <summary>
-            /// Match full content
-            /// </summary>
-            Full,
-
-            /// <summary>
-            /// Match part of the content
-            /// </summary>
-            SubString,
-
-            /// <summary>
-            /// Match the start of the content
-            /// </summary>
-            Prefix
-        }
-
-        [Flags]
-        public enum ContentMatchModifiers
-        {
-            None = 0,
-            CaseInsensitive = 1,
-            IgnoreNonSpace = 2,
-            Loose = 4
-        }
-
         public class PropertyContent : PropertyQuery
         {
-            public ContentMatchOperation Operation { get; set; }
-            public ContentMatchModifiers Modifiers { get; set; }
-            public object Content { get; set; }
-
-            public PropertyContent(PropertyIdentifier property, ContentMatchOperation operation, ContentMatchModifiers modifiers, object content) : base(property)
+            public PropertyContent(PropertyIdentifier property, uint options, object content) : base(property)
             {
-                this.Operation = operation;
-                this.Modifiers = modifiers;
-                this.Content = content;
+                // TODO
             }
 
             public override void Encode(ISearchEncoder encoder)
@@ -337,20 +260,11 @@ namespace Acacia
             }
         }
 
-        public enum BitMaskOperation
-        {
-            EQZ, NEZ
-        }
-
         public class PropertyBitMask : PropertyQuery
         {
-            public BitMaskOperation Operation { get; set; }
-            public uint Mask { get; set; }
-
-            public PropertyBitMask(PropertyIdentifier property, BitMaskOperation operation, uint mask) : base(property)
+            public PropertyBitMask(PropertyIdentifier property, bool wantZero, uint mask) : base(property)
             {
-                this.Operation = operation;
-                this.Mask = mask;
+                // TODO
             }
 
             public override void Encode(ISearchEncoder encoder)
