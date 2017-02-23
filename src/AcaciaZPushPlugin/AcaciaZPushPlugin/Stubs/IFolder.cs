@@ -120,5 +120,9 @@ namespace Acacia.Stubs
             get;
             set;
         }
+
+        void Save();
+
+        void SetCustomIcon(IPicture icon);
     }
 }

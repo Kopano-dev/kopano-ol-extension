@@ -62,5 +62,10 @@ namespace Acacia.Stubs
         {
             return Mapping.WrapOrDefault<WrapType>(o, mustRelease);
         }
+
+        public static IPicture Wrap(this stdole.IPictureDisp picture)
+        {
+            return Mapping.Wrap(picture);
+        }
     }
 }
