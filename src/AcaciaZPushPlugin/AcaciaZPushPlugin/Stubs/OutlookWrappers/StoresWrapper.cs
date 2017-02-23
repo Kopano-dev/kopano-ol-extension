@@ -67,7 +67,7 @@ namespace Acacia.Stubs.OutlookWrappers
             // Check existing stores
             foreach(NSOutlook.Store store in _item)
             {
-                Tasks.Task(null, "AddStore", () =>
+                Tasks.Task(null, null, "AddStore", () =>
                 {
                     StoreAdded(store);
                 });

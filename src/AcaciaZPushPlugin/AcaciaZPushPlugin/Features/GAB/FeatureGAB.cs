@@ -45,6 +45,14 @@ namespace Acacia.Features.GAB
         {
         }
 
+        public delegate void GABSyncFinishedHandler(GABHandler gab);
+        public event GABSyncFinishedHandler SyncFinished;
+
+        public void OnGabSyncFinished(GABHandler gab)
+        {
+            SyncFinished?.Invoke(gab);
+        }
+
         public static GABHandler FindGABForAccount(ZPushAccount account)
         {
             FeatureGAB gab = ThisAddIn.Instance.GetFeature<FeatureGAB>();
@@ -305,7 +313,7 @@ namespace Acacia.Features.GAB
 
         #region Resync
 
-        internal void FullResync()
+        internal void FullResync(CompletionTracker completion)
         {
             try
             {
@@ -345,10 +353,12 @@ namespace Acacia.Features.GAB
                 int remaining = _gabsByDomainName.Count;
                 foreach (GABHandler gab in _gabsByDomainName.Values)
                 {
+                    CompletionTracker partCompletion = new CompletionTracker(() => OnGabSyncFinished(gab));
+                    // TODO: merge partCompletion into total completion
                     Logger.Instance.Debug(this, "FullResync: Starting resync: {0}", gab.DisplayName);
-                    Tasks.Task(this, "FullResync", () =>
+                    Tasks.Task(partCompletion, this, "FullResync", () =>
                     {
-                        gab.FullResync();
+                        gab.FullResync(partCompletion);
                     });
                 }
             }
@@ -662,15 +672,20 @@ namespace Acacia.Features.GAB
 
             ++_processing;
             Logger.Instance.Trace(this, "Processing GAB message: {0} - {1}", account, _processing);
-            try
+            CompletionTracker completion = new CompletionTracker(() => OnGabSyncFinished(gab));
+            using (completion.Begin())
             {
-                gab.Process(item);
-                DoEmptyDeletedItems();
-            }
-            finally
-            {
-                Logger.Instance.Trace(this, "Processed GAB message: {0} - {1}", account, _processing);
-                --_processing;
+                try
+                {
+                    gab.Process(completion, item);
+                    // TODO: this will probably run while still processing, use completion tracker
+                    DoEmptyDeletedItems();
+                }
+                finally
+                {
+                    Logger.Instance.Trace(this, "Processed GAB message: {0} - {1}", account, _processing);
+                    --_processing;
+                }
             }
         }
 

@@ -147,7 +147,7 @@ namespace Acacia.Features.FreeBusy
                         TcpClient client = listener.AcceptTcpClient();
                         Interlocked.Increment(ref _requestCount);
                         // And handle it in the UI thread to allow GAB access
-                        Tasks.Task(this, "FreeBusyHandler", () => server.HandleRequest(client));
+                        Tasks.Task(null, this, "FreeBusyHandler", () => server.HandleRequest(client));
                     }
                 }
                 catch (Exception e)

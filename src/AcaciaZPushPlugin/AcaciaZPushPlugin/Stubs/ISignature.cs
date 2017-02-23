@@ -16,5 +16,7 @@ namespace Acacia.Stubs
     {
         void Delete();
         void SetContent(string content, ISignatureFormat format);
+        void SetContentTemplate(string content, ISignatureFormat format);
+        string GetContentTemplate(ISignatureFormat format);
     }
 }

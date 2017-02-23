@@ -200,6 +200,7 @@ namespace Acacia.Native.MAPI
         }
     }
 
+    // TODO: check this on 32 bit machines
     [StructLayout(LayoutKind.Explicit)]
     unsafe public struct SRestriction
     {

@@ -50,7 +50,7 @@ namespace Acacia.Features.GAB
             // Allow null feature for designer
             if (_feature != null)
             {
-                _feature.FullResync();
+                _feature.FullResync(null);
             }
         }
     }

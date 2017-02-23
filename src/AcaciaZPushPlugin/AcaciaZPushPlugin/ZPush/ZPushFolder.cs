@@ -85,7 +85,7 @@ namespace Acacia.ZPush
             // Recurse the children
             foreach (IFolder subfolder in _folder.SubFolders)
             {
-                Tasks.Task(null, "WatchChild", () => WatchChild(subfolder, true));
+                Tasks.Task(null, null, "WatchChild", () => WatchChild(subfolder, true));
             }
         }
 

@@ -111,7 +111,7 @@ namespace Acacia.ZPush
             if (account.Account.HasPassword)
             {
                 // Send an OOF request to get the OOF state and capabilities
-                Tasks.Task(null, "ZPushCheck: " + account.DisplayName, () =>
+                Tasks.Task(null, null, "ZPushCheck: " + account.DisplayName, () =>
                 {
                     // TODO: if this fails, retry?
                     ActiveSync.SettingsOOF oof;

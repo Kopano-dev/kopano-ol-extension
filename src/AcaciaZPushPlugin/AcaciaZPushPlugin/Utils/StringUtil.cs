@@ -108,20 +108,32 @@ namespace Acacia.Utils
 
         #region Formatting / Replacement
 
-        public static string ReplacePercentStrings(this string s, Dictionary<string, string> replacements)
+        public delegate string TokenReplacer(string token);
+
+        public static string ReplaceStringTokens(this string s, string open, string close, TokenReplacer replacer)
         {
-            return Regex.Replace(s, @"%(\w+)%", (m) => 
+            return Regex.Replace(s, Regex.Escape(open) + @"(\w+)" + Regex.Escape(close), (m) =>
             {
-                string replacement;
                 var key = m.Groups[1].Value;
-                if (replacements.TryGetValue(key, out replacement))
-                {
-                    return Convert.ToString(replacement);
-                }
-                else
+                string replacement = replacer(key);
+                if (replacement == null)
                 {
                     return m.Groups[0].Value;
                 }
+                else
+                {
+                    return replacement;
+                }
+            });
+        }
+
+        public static string ReplaceStringTokens(this string s, string open, string close, Dictionary<string, string> replacements)
+        {
+            return s.ReplaceStringTokens(open, close, (token) =>
+            {
+                string replacement = null;
+                replacements.TryGetValue(token, out replacement);
+                return replacement;
             });
         }
 

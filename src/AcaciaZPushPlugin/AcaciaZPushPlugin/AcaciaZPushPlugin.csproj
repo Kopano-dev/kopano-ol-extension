@@ -326,6 +326,7 @@
     <Compile Include="UI\Outlook\CommandElement.cs" />
     <Compile Include="UI\Outlook\MenuItem.cs" />
     <Compile Include="UI\Outlook\Types.cs" />
+    <Compile Include="Utils\CompletionTracker.cs" />
     <Compile Include="Utils\DisposableWrapper.cs" />
     <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="Utils\RegistryUtil.cs" />

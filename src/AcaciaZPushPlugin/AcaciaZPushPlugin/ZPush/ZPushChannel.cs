@@ -85,7 +85,7 @@ namespace Acacia.ZPush
             // Notify any listeners
             if (Available != null)
             {
-                Tasks.Task(null, "Watcher_WatchingFolder", () => Available(folder));
+                Tasks.Task(null, null, "Watcher_WatchingFolder", () => Available(folder));
             }
         }
 

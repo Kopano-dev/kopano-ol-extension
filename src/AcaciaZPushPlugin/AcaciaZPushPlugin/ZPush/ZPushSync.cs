@@ -57,7 +57,7 @@ namespace Acacia.ZPush
             {
                 if (_actionConnection != null)
                 {
-                    return new AcaciaTask(_owner, _name, () =>
+                    return new AcaciaTask(null, _owner, _name, () =>
                     {
                         // TODO: reuse connections
                         using (ZPushConnection con = account.Connect())
@@ -68,7 +68,7 @@ namespace Acacia.ZPush
                 }
                 else
                 {
-                    return new AcaciaTask(_owner, _name, () => _action(account));
+                    return new AcaciaTask(null, _owner, _name, () => _action(account));
                 }
             }
         }

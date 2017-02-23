@@ -26,12 +26,15 @@ namespace Acacia.Utils
 {
     public class AcaciaTask
     {
+        private readonly CompletionTracker _completion;
         public readonly Feature Owner;
         public readonly string Name;
         public readonly Action Action;
 
-        public AcaciaTask(Feature owner, string name, Action action)
+        public AcaciaTask(CompletionTracker completion, Feature owner, string name, Action action)
         {
+            this._completion = completion;
+            completion?.Begin();
             Owner = owner;
             Name = name;
             Action = action;
@@ -61,6 +64,10 @@ namespace Acacia.Utils
             {
                 Logger.Instance.Error(Owner, "Exception in task {0}: {1}", Name, e);
                 return false;
+            }
+            finally
+            {
+                _completion?.End();
             }
         }
 
@@ -122,9 +129,9 @@ namespace Acacia.Utils
             }
         }
 
-        public static void Task(Feature owner, string name, Action action)
+        public static void Task(CompletionTracker completion, Feature owner, string name, Action action)
         {
-            Task(new AcaciaTask(owner, name, action));
+            Task(new AcaciaTask(completion, owner, name, action));
         }
 
         public static void Task(AcaciaTask task)

@@ -97,9 +97,10 @@ namespace Acacia.Features.DebugSupport
 
             private void DebugCycle()
             {
-                Tasks.Task(gab, "DebugCycle", () =>
+                // TODO: use completiontracker
+                Tasks.Task(null, gab, "DebugCycle", () =>
                 {
-                    gab.FullResync();
+                    gab.FullResync(null);
                 });
             }
 

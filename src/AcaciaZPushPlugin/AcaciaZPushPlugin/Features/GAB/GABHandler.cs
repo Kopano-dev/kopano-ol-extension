@@ -128,10 +128,10 @@ namespace Acacia.Features.GAB
 
         #region Processing
 
-        public void FullResync()
+        public void FullResync(CompletionTracker completion)
         {
             ClearContacts();
-            Process(null);
+            Process(completion, null);
         }
 
         private void ClearContacts()
@@ -167,27 +167,30 @@ namespace Acacia.Features.GAB
         /// Processes the GAB message(s).
         /// </summary>
         /// <param name="item">If specified, this item has changed. If null, means a global check should be performed</param>
-        public void Process(IZPushItem item)
+        public void Process(CompletionTracker completion, IZPushItem item)
         {
-            try
+            using (CompletionTracker.Step step = completion?.Begin())
             {
-                if (item == null)
+                try
                 {
-                    if (Folder != null)
-                        ProcessMessages();
+                    if (item == null)
+                    {
+                        if (Folder != null)
+                            ProcessMessages(completion);
+                    }
+                    else
+                    {
+                        ProcessMessage(completion, item);
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    ProcessMessage(item);
+                    Logger.Instance.Error(this, "Exception in GAB.Process: {0}", e);
                 }
-            }
-            catch(Exception e)
-            {
-                Logger.Instance.Error(this, "Exception in GAB.Process: {0}", e);
             }
         }
 
-        private void ProcessMessages()
+        private void ProcessMessages(CompletionTracker completion)
         {
             if (!_feature.ProcessFolder)
                 return;
@@ -207,12 +210,12 @@ namespace Acacia.Features.GAB
                 Logger.Instance.Trace(this, "Checking chunk: {0}", item.Subject);
                 if (_feature.ProcessItems2)
                 {
-                    Tasks.Task(_feature, "ProcessChunk", () =>
+                    Tasks.Task(completion, _feature, "ProcessChunk", () =>
                     {
                         using (IItem item2 = Folder.GetItemById(entryId))
                         {
                             if (item2 != null)
-                                ProcessMessage((IZPushItem)item2);
+                                ProcessMessage(completion, (IZPushItem)item2);
                         }
                     });
                 }
@@ -225,7 +228,7 @@ namespace Acacia.Features.GAB
         public const string PROP_GAB_ID = "ZPushId";
         public const string PROP_CURRENT_SEQUENCE = "ZPushCurrentSequence";
 
-        private void ProcessMessage(IZPushItem item)
+        private void ProcessMessage(CompletionTracker completion, IZPushItem item)
         {
             if (!_feature.ProcessMessage)
                 return;
@@ -281,7 +284,7 @@ namespace Acacia.Features.GAB
                 }
 
                 // Create the new contacts
-                ProcessChunkBody(item, index);
+                ProcessChunkBody(completion, item, index);
 
                 // Update the state
                 SetChunkStateString(index, item.Location);
@@ -460,14 +463,14 @@ namespace Acacia.Features.GAB
             return value as ValueType;
         }
 
-        private void ProcessChunkBody(IZPushItem item, ChunkIndex index)
+        private void ProcessChunkBody(CompletionTracker completion, IZPushItem item, ChunkIndex index)
         {
             // Process the body
             foreach (var entry in JSONUtils.Deserialise(item.Body))
             {
                 string id = entry.Key;
                 Dictionary<string, object> value = (Dictionary<string, object>)entry.Value;
-                Tasks.Task(_feature, "CreateItem", () => CreateObject(index, id, value));
+                Tasks.Task(completion, _feature, "CreateItem", () => CreateObject(index, id, value));
             }
         }
 

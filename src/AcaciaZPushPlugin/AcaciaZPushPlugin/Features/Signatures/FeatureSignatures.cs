@@ -1,4 +1,6 @@
-﻿/// Copyright 2017 Kopano b.v.
+﻿
+using Acacia.Features.GAB;
+/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -13,7 +15,6 @@
 /// along with this program.If not, see<http://www.gnu.org/licenses/>.
 /// 
 /// Consult LICENSE file for details
-
 using Acacia.Stubs;
 using Acacia.Stubs.OutlookWrappers;
 using Acacia.Utils;
@@ -48,9 +49,16 @@ namespace Acacia.Features.Signatures
 
         #endregion
 
+        private FeatureGAB _gab;
+
         public override void Startup()
         {
             Watcher.AccountDiscovered += Watcher_AccountDiscovered;
+            _gab = ThisAddIn.Instance.GetFeature<FeatureGAB>();
+            if (_gab != null)
+            {
+                _gab.SyncFinished += GAB_SyncFinished;
+            }
         }
 
         private void Watcher_AccountDiscovered(ZPushAccount account)
@@ -146,11 +154,7 @@ namespace Acacia.Features.Signatures
 
         private string StoreSignature(ISignatures signatures, ZPushAccount account, Signature signatureInfo)
         {
-            string name = SignatureLocalName.ReplacePercentStrings(new Dictionary<string, string>
-            {
-                { "account", account.DisplayName },
-                { "name", signatureInfo.name }
-            });
+            string name = GetSignatureName(signatures, account, signatureInfo.name);
 
             // Remove any existing signature
             try
@@ -176,11 +180,129 @@ namespace Acacia.Features.Signatures
             // Create the new signature
             using (ISignature signature = signatures.Add(name))
             {
-                signature.SetContent(signatureInfo.content, signatureInfo.isHTML ? ISignatureFormat.HTML : ISignatureFormat.Text);
-                // TODO: generate text version if we get an HTML?
+                if (!HasPlaceholders(signatureInfo))
+                {
+                    // Simple, set signature straight away
+                    signature.SetContent(signatureInfo.content, signatureInfo.isHTML ? ISignatureFormat.HTML : ISignatureFormat.Text);
+                }
+                else
+                {
+                    // There are placeholders. Create a template and hook into the GAB for patching
+                    signature.SetContentTemplate(signatureInfo.content, signatureInfo.isHTML ? ISignatureFormat.HTML : ISignatureFormat.Text);
+
+                    // Try replacing straight away
+                    GABHandler gab = FeatureGAB.FindGABForAccount(account);
+                    if (gab != null)    
+                        ReplacePlaceholders(gab, name);
+                }
             }
 
             return name;
+        }
+
+        private string GetSignatureName(ISignatures signatures, ZPushAccount account, string name)
+        {
+            return SignatureLocalName.ReplaceStringTokens("%", "%", new Dictionary<string, string>
+            {
+                { "account", account.DisplayName },
+                { "name", name }
+            });
+        }
+
+        private bool HasPlaceholders(Signature signature)
+        {
+            return signature.content.IndexOf("{%") >= 0;
+        }
+
+        private void GAB_SyncFinished(GABHandler gab)
+        {
+            ReplacePlaceholders(gab, gab.ActiveAccount.Account.SignatureNewMessage, gab.ActiveAccount.Account.SignatureNewMessage);
+        }
+
+        private void ReplacePlaceholders(GABHandler gab, params string[] signatures)
+        { 
+            IContactItem us = null;
+            try
+            {
+                IAccount account = gab.ActiveAccount.Account;
+
+                // Look for the email address. If found, use the account associated with the GAB
+                using (ISearch<IContactItem> search = gab.Contacts.Search<IContactItem>())
+                {
+                    search.AddField("urn:schemas:contacts:email1").SetOperation(SearchOperation.Equal, account.SmtpAddress);
+                    IItem result = search.SearchOne();
+                    us = result as IContactItem;
+                    if (result != null && result != us)
+                        result.Dispose();
+                }
+
+                foreach (string signatureName in signatures)
+                {
+                    ReplacePlaceholders(gab.ActiveAccount, us, signatureName);
+                }
+            }
+            catch(Exception e)
+            {
+                Logger.Instance.Error(this, "Exception in ReplacePlaceholders: {0}", e);
+            }
+            finally
+            {
+                if (us != null)
+                    us.Dispose();
+            }
+        }
+
+        private void ReplacePlaceholders(ZPushAccount account, IContactItem us, string signatureName)
+        {
+            if (string.IsNullOrEmpty(signatureName))
+                return;
+
+            using (ISignatures signatures = ThisAddIn.Instance.GetSignatures())
+            {
+                using (ISignature signature = signatures.Get(signatureName))
+                {
+                    if (signature == null)
+                        return;
+
+                    foreach (ISignatureFormat format in Enum.GetValues(typeof(ISignatureFormat)))
+                    {
+                        string template = signature.GetContentTemplate(format);
+                        if (template != null)
+                        {
+                            string replaced = template.ReplaceStringTokens("{%", "}", (token) =>
+                            {
+                                // TODO: generalise this
+                                if (token == "firstname") return us.FirstName ?? "";
+                                if (token == "initials") return us.Initials ?? "";
+                                if (token == "lastname") return us.LastName ?? "";
+                                if (token == "displayname") return us.FullName ?? "";
+                                if (token == "title") return us.Title ?? "";
+                                if (token == "company") return us.CompanyName ?? "";
+                                // TODO if (token == "department") return us.;
+                                if (token == "office") return us.OfficeLocation ?? "";
+                                // if (token == "assistant") return us.;
+                                if (token == "phone") return us.BusinessTelephoneNumber ?? us.MobileTelephoneNumber ?? "";
+                                if (token == "primary_email") return us.Email1Address ?? "";
+                                if (token == "address") return us.BusinessAddress ?? "";
+                                if (token == "city") return us.BusinessAddressCity ?? "";
+                                if (token == "state") return us.BusinessAddressState ?? "";
+                                if (token == "zipcode") return us.BusinessAddressPostalCode ?? "";
+                                if (token == "country") return us.BusinessAddressState ?? "";
+                                if (token == "phone_business") return us.BusinessTelephoneNumber ?? "";
+                                // TODO if (token == "phone_business2") return us.BusinessTelephoneNumber;
+                                if (token == "phone_fax") return us.BusinessFaxNumber ?? "";
+                                // TODO if (token == "phone_assistant") return us.FirstName;
+                                if (token == "phone_home") return us.HomeTelephoneNumber ?? "";
+                                //if (token == "phone_home2") return us.HomeTelephoneNumber;
+                                if (token == "phone_mobile") return us.MobileTelephoneNumber ?? "";
+                                if (token == "phone_pager") return us.PagerNumber ?? "";
+                                return "";
+                            });
+                            signature.SetContent(replaced, format);
+                        }
+                    }
+                }
+            }
         }
     }
 }

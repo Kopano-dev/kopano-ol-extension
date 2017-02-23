@@ -68,13 +68,13 @@ namespace Acacia.ZPush
                 // Process existing accounts
                 foreach (IAccount account in _stores.Accounts)
                 {
-                    Tasks.Task(null, "AccountCheck", () =>
+                    Tasks.Task(null, null, "AccountCheck", () =>
                     {
                         AccountAdded(account);
                     });
                 }
 
-                Tasks.Task(null, "AccountCheckDone", () =>
+                Tasks.Task(null, null, "AccountCheckDone", () =>
                 {
                     _watcher.OnAccountsScanned();
                 });

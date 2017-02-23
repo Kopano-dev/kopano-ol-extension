@@ -12,7 +12,9 @@ namespace Acacia.Stubs.OutlookWrappers
     {
         private static readonly string[] SUFFIXES =
         {
-            "htm", "html", "rtf", "txt"
+            "htm", "html", "rtf", "txt",
+            "htm.template", "html.template", "rtf.template", "txt.template",
+
         };
 
         private static string BasePath
@@ -63,18 +65,44 @@ namespace Acacia.Stubs.OutlookWrappers
             // TODO: additional files folder? We never create it
         }
 
-        public void SetContent(string content, ISignatureFormat format)
+        private string GetPath(ISignatureFormat format, bool template)
         {
             // Determine suffix
             string suffix = "txt";
-            switch(format)
+            switch (format)
             {
                 case ISignatureFormat.HTML: suffix = "htm"; break;
             }
 
-            // Write
-            string path = GetPath(_name, suffix);
+            if (template)
+                suffix += ".template";
+
+            return GetPath(_name, suffix);
+        }
+
+        public void SetContent(string content, ISignatureFormat format)
+        {
+            string path = GetPath(format, false);
             File.WriteAllText(path, content);
+        }
+
+        public void SetContentTemplate(string content, ISignatureFormat format)
+        {
+            string path = GetPath(format, true);
+            File.WriteAllText(path, content);
+        }
+
+        public string GetContentTemplate(ISignatureFormat format)
+        {
+            string path = GetPath(format, true);
+            try
+            {
+                return File.ReadAllText(path);
+            }
+            catch(Exception)
+            {
+                return null;
+            }
         }
     }
 }
