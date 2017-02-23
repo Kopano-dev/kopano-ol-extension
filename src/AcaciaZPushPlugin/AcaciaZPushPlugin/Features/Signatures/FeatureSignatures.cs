@@ -229,16 +229,19 @@ namespace Acacia.Features.Signatures
                 // Look for the email address. If found, use the account associated with the GAB
                 using (ISearch<IContactItem> search = gab.Contacts.Search<IContactItem>())
                 {
-                    search.AddField("urn:schemas:contacts:email1").SetOperation(SearchOperation.Equal, account.SmtpAddress);
+                    search.AddField("urn:schemas:contacts:customerid").SetOperation(SearchOperation.Equal, account.UserName);
                     IItem result = search.SearchOne();
                     us = result as IContactItem;
                     if (result != null && result != us)
                         result.Dispose();
                 }
 
-                foreach (string signatureName in signatures)
+                if (us != null)
                 {
-                    ReplacePlaceholders(gab.ActiveAccount, us, signatureName);
+                    foreach (string signatureName in signatures)
+                    {
+                        ReplacePlaceholders(gab.ActiveAccount, us, signatureName);
+                    }
                 }
             }
             catch(Exception e)
