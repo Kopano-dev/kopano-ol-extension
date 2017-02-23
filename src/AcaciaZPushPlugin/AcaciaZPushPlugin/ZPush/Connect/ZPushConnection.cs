@@ -204,6 +204,12 @@ namespace Acacia.ZPush.Connect
                 private set;
             }
 
+            public string SignaturesHash
+            {
+                get;
+                private set;
+            }
+
             private string GetStringHeader(HttpResponseMessage response, string name)
             {
                 IEnumerable<string> values;
@@ -227,6 +233,7 @@ namespace Acacia.ZPush.Connect
 
                 Capabilities = ZPushCapabilities.Parse(GetStringHeader(response, Constants.ZPUSH_HEADER_CAPABILITIES));
                 ZPushVersion = GetStringHeader(response, Constants.ZPUSH_HEADER_VERSION);
+                SignaturesHash = GetStringHeader(response, Constants.ZPUSH_HEADER_SIGNATURES_HASH);
 
                 // Check for success
                 Success = response.IsSuccessStatusCode;

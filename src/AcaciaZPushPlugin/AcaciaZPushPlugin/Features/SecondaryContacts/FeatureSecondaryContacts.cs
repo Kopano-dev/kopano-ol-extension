@@ -87,7 +87,6 @@ namespace Acacia.Features.SecondaryContacts
             // So, when the folder is detected, we make it invisible and perform steps 1 and 2. We issue a warning
             // that Outlook must be restarted. When the folder is detected again and is invisible, that means we've restarted
             // At this point the name is patched and the folder is made visible. 
-
             if (!folder.AttrHidden)
             {
                 // Stage 1
@@ -113,12 +112,12 @@ namespace Acacia.Features.SecondaryContacts
                 // Stage 2
 
                 // Patch the name
-                 Logger.Instance.Trace(this, "Patching name");
-                 folder.Name = strippedName;
+                Logger.Instance.Trace(this, "Patching name");
+                folder.Name = strippedName;
 
-                 // Show it
-                 folder.AttrHidden = false;
-                 Logger.Instance.Debug(this, "Shown secondary contacts folder: {0}", strippedName);
+                // Show it
+                folder.AttrHidden = false;
+                Logger.Instance.Debug(this, "Shown secondary contacts folder: {0}", strippedName);
             }
             Logger.Instance.Debug(this, "Patching done: {0}: {1}", strippedName, folder.AttrHidden);
         }

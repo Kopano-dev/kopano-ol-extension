@@ -101,13 +101,6 @@ namespace Acacia
                 int lcid = Application.LanguageSettings.get_LanguageID(Microsoft.Office.Core.MsoAppLanguageID.msoLanguageIDUI);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(lcid);
 
-                // The synchronization context is needed to allow background tasks to jump back to the UI thread.
-                // It's null in older versions of .Net, this fixes that
-                if (SynchronizationContext.Current == null)
-                {
-                    SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
-                }
-
                 // Create the watcher
                 Watcher = new ZPushWatcher(Instance);
                 OutlookUI.Watcher = Watcher;

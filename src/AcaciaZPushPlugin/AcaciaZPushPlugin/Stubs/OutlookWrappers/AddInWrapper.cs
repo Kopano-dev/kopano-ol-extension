@@ -25,17 +25,19 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    public class AddInWrapper : IAddIn
+    class AddInWrapper : IAddIn
     {
         private readonly NSOutlook.Application _app;
         private readonly ThisAddIn _thisAddIn;
         private readonly StoresWrapper _stores;
+        private readonly SynchronizationContext _sync;
 
         public AddInWrapper(ThisAddIn thisAddIn)
         {
@@ -51,6 +53,38 @@ namespace Acacia.Stubs.OutlookWrappers
             {
                 ComRelease.Release(session);
             }
+
+            // The synchronization context is needed to allow background tasks to jump back to the UI thread.
+            // It's null in older versions of .Net, this fixes that
+            if (SynchronizationContext.Current == null)
+            {
+                SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
+            }
+            _sync = SynchronizationContext.Current;
+        }
+
+        public ISignatures GetSignatures()
+        {
+            return new SignaturesWrapper();
+        }
+
+        public void InUI(Action action)
+        {
+            Exception x = null;
+            _sync.Send((_) =>
+            {
+                try
+                {
+                    action();
+                }
+                catch(Exception e)
+                {
+                    x = e;
+                }
+            }, null);
+
+            if (x != null)
+                throw x;
         }
 
         public void SendReceive(IAccount account)

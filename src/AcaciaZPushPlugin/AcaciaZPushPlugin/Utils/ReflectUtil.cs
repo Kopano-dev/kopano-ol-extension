@@ -43,8 +43,13 @@ namespace Acacia.Utils
         public static object Convert(this Type type, object value)
         {
             // For value types, null becomes a default instance
-            if (value == null && type.IsValueType)
-                return Activator.CreateInstance(type);
+            if (value == null)
+            {
+                if (type.IsValueType)
+                    return Activator.CreateInstance(type);
+                else
+                    return null;
+            }
 
             // Check if we need a conversion
             if (!type.IsAssignableFrom(value.GetType()))
@@ -89,10 +94,26 @@ namespace Acacia.Utils
 
         public static Type[] GetGenericArguments(this Type type, Type _base)
         {
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == _base)
+                return type.GetGenericArguments();
+
             IEnumerable<Type> bases = _base.IsInterface ? type.GetInterfaces() : type.AllBaseTypes();
             return bases.Select(x =>
                 (x.IsGenericType && x.GetGenericTypeDefinition() == _base) ? x.GetGenericArguments() : null
             ).FirstOrDefault();
+
+        }
+
+        public static IEnumerable<string> DebugComTypeNames(object o)
+        {
+            foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                foreach (Type type in assembly.GetTypes())
+                {
+                    if (type.IsInstanceOfType(o))
+                        yield return type.FullName;
+                }
+            }
 
         }
     }

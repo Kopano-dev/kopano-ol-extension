@@ -49,5 +49,23 @@ namespace Acacia.Stubs
 
         string DomainName { get; }
 
+        // TODO: this is really a Z-Push thing, but it's here to store it in the registry
+        string LocalSignaturesHash
+        {
+            get;
+            set;
+        }
+
+        string SignatureNewMessage
+        {
+            get;
+            set;
+        }
+
+        string SignatureReplyForwardMessage
+        {
+            get;
+            set;
+        }
     }
 }

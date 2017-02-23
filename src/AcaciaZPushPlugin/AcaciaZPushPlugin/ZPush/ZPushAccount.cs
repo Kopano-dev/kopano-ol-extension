@@ -120,6 +120,13 @@ namespace Acacia.ZPush
             private set;
         }
 
+        public string ServerSignaturesHash
+        {
+            get;
+            private set;
+        }
+
+
         public void LinkedGABFolder(IFolder folder)
         {
             GABFolderLinked = folder.EntryID;
@@ -128,13 +135,14 @@ namespace Acacia.ZPush
         internal void OnConfirmationResponse(ZPushConnection.Response response)
         {
             Capabilities = response.Capabilities;
+            // TODO: move these properties to the features? Though it's nice to have them here for the debug dialog
             GABFolder = response.GABName;
             ZPushVersion = response.ZPushVersion;
+            ServerSignaturesHash = response.SignaturesHash;
             Confirmed = Capabilities == null ? ConfirmationType.IsNotZPush : ConfirmationType.IsZPush;
             Logger.Instance.Info(this, "ZPush confirmation: {0} -> {1}, {2}", Confirmed, Capabilities, GABFolder);
 
-            if (_confirmedChanged != null)
-                _confirmedChanged(this);
+            _confirmedChanged?.Invoke(this);
         }
 
         #endregion

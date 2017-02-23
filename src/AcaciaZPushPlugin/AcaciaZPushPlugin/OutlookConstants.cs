@@ -41,6 +41,10 @@ namespace Acacia
         public const string REG_VAL_DELIVERY_STORE = "Delivery Store EntryID";
         public const string REG_VAL_DELIVERY_FOLDER = "Delivery Folder EntryID";
 
+        public const string REG_VAL_NEW_SIGNATURE = "New Signature";
+        public const string REG_VAL_REPLY_FORWARD_SIGNATURE = "Reply-Forward Signature";
+        public const string REG_VAL_CURRENT_SIGNATURE = "KOE Signature Digest";
+
         public const string REG_VAL_NEXT_ACCOUNT_ID = "NextAccountID";
 
         #endregion

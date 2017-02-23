@@ -1,4 +1,7 @@
-﻿/// Copyright 2017 Kopano b.v.
+﻿
+using Acacia.Native;
+using Acacia.Native.MAPI;
+/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -13,26 +16,29 @@
 /// along with this program.If not, see<http://www.gnu.org/licenses/>.
 /// 
 /// Consult LICENSE file for details
-
 using Acacia.Utils;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
     [TypeConverter(typeof(ExpandableObjectConverter))]
-    class AccountWrapper : DisposableWrapper, IAccount, LogContext
+    class AccountWrapper : ComWrapper<NSOutlook.Application>, IAccount, LogContext
     {
         private readonly string _regPath;
         private readonly IStore _store;
 
-        internal AccountWrapper(string regPath, IStore store)
+        internal AccountWrapper(NSOutlook.Application item, string regPath, IStore store) : base(item)
         {
             this._regPath = regPath;
             this._store = store;
@@ -44,6 +50,7 @@ namespace Acacia.Stubs.OutlookWrappers
         protected override void DoRelease()
         {
             _store.Dispose();
+            base.DoRelease();
         }
 
         [Browsable(false)]
@@ -160,6 +167,83 @@ namespace Acacia.Stubs.OutlookWrappers
                     return SmtpAddress;
                 else
                     return SmtpAddress.Substring(index + 1);
+            }
+        }
+
+        public string LocalSignaturesHash
+        {
+            get
+            {
+                return RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_CURRENT_SIGNATURE, null);
+            }
+            set
+            {
+                RegistryUtil.SetValueString(_regPath, OutlookConstants.REG_VAL_CURRENT_SIGNATURE, value);
+            }
+        }
+        public string SignatureNewMessage
+        {
+            get
+            {
+                return RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_NEW_SIGNATURE, null);
+            }
+            set
+            {
+                // TODO: constant for account
+                SetAccountProp(PropTag.FromInt(0x0016001F), value);
+            }
+        }
+
+        unsafe private void SetAccountProp(PropTag propTag, string value)
+        {
+            // Use IOlkAccount to notify while we're running
+            // IOlkAccount can only be accessed on main thread
+            ThisAddIn.Instance.InUI(() =>
+            {
+                using (ComRelease com = new ComRelease())
+                {
+                    NSOutlook.Account account = com.Add(FindAccountObject());
+                    IOlkAccount olk = com.Add(account.IOlkAccount);
+
+                    fixed (char* ptr = value.ToCharArray())
+                    {
+                        ACCT_VARIANT val = new ACCT_VARIANT()
+                        {
+                            dwType = (uint)PropType.UNICODE,
+                            lpszW = ptr
+                        };
+                        olk.SetProp(propTag, &val);
+                        olk.SaveChanges(0);
+                    }
+                }
+            });
+        }
+
+        private NSOutlook.Account FindAccountObject()
+        {
+            using (ComRelease com = new ComRelease())
+            {
+                NSOutlook.NameSpace session = com.Add(_item.Session);
+                foreach(NSOutlook.Account account in session.Accounts.ComEnum(false))
+                {
+                    if (account.SmtpAddress == this.SmtpAddress)
+                        return account;
+                    else
+                        com.Add(account);
+                }
+            }
+            return null;
+        }
+
+        public string SignatureReplyForwardMessage
+        {
+            get
+            {
+                return RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_REPLY_FORWARD_SIGNATURE, null);
+            }
+            set
+            {
+                SetAccountProp(PropTag.FromInt(0x0017001F), value);
             }
         }
 

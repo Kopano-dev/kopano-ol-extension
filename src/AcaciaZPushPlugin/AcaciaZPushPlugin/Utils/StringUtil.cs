@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -105,5 +106,25 @@ namespace Acacia.Utils
 
         #endregion
 
+        #region Formatting / Replacement
+
+        public static string ReplacePercentStrings(this string s, Dictionary<string, string> replacements)
+        {
+            return Regex.Replace(s, @"%(\w+)%", (m) => 
+            {
+                string replacement;
+                var key = m.Groups[1].Value;
+                if (replacements.TryGetValue(key, out replacement))
+                {
+                    return Convert.ToString(replacement);
+                }
+                else
+                {
+                    return m.Groups[0].Value;
+                }
+            });
+        }
+
+        #endregion
     }
 }

@@ -247,7 +247,7 @@ namespace Acacia.Stubs.OutlookWrappers
             {
                 if (baseKey == null)
                     return null;
-                AccountWrapper account = new AccountWrapper(baseKey.Name, store);
+                AccountWrapper account = new AccountWrapper(_item.Application, baseKey.Name, store);
                 Register(account);
                 return account;
             }

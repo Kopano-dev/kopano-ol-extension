@@ -86,5 +86,9 @@ namespace Acacia.Stubs
         }
 
         #endregion
+
+        ISignatures GetSignatures();
+
+        void InUI(Action action);
     }
 }

@@ -34,11 +34,15 @@ namespace Acacia.Utils
             return RegToString(o);
         }
 
-        // TODO: remove, also above
         public static string GetValueString(string keyPath, string valueName, string defaultValue)
         {
             object o = Registry.GetValue(keyPath, valueName, defaultValue);
             return RegToString(o);
+        }
+
+        public static void SetValueString(string keyPath, string valueName, string value)
+        {
+            Registry.SetValue(keyPath, valueName, value);
         }
 
         public static string RegToString(object o)

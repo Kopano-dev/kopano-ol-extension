@@ -274,16 +274,17 @@
     </Compile>
     <Compile Include="Features\SendAs\FeatureSendAs.cs" />
     <Compile Include="Features\SharedFolders\FolderTreeNode.cs" />
+    <Compile Include="Features\Signatures\FeatureSignatures.cs" />
     <Compile Include="GlobalOptions.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Native\IOleWindow.cs" />
+    <Compile Include="Native\IOlkAccount.cs" />
     <Compile Include="Native\MAPI\Binary.cs" />
     <Compile Include="Native\MAPI\IMAPIContainer.cs" />
     <Compile Include="Native\MAPI\IMAPIFolder.cs" />
     <Compile Include="Native\MAPI\IMAPIProp.cs" />
     <Compile Include="Native\MAPI\Property.cs" />
     <Compile Include="Native\MAPI\Restriction.cs" />
-    <Compile Include="Native\NativeEncoder.cs" />
     <Compile Include="OutlookConstants.cs" />
     <Compile Include="SearchQuery.cs" />
     <Compile Include="Stubs\Enums.cs" />
@@ -299,6 +300,8 @@
     <Compile Include="Stubs\IOutlookWindow.cs" />
     <Compile Include="Stubs\IPicture.cs" />
     <Compile Include="Stubs\IRecipient.cs" />
+    <Compile Include="Stubs\ISignature.cs" />
+    <Compile Include="Stubs\ISignatures.cs" />
     <Compile Include="Stubs\IStores.cs" />
     <Compile Include="Stubs\ISyncObject.cs" />
     <Compile Include="Stubs\OutlookWrappers\AccountWrapper.cs" />
@@ -312,6 +315,8 @@
     <Compile Include="Stubs\OutlookWrappers\OutlookItemWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\PictureWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\RecipientWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\SignaturesWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\SignatureWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\StoresWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\SyncObjectWrapper.cs" />
     <Compile Include="Stubs\Wrappers.cs" />

@@ -142,6 +142,38 @@ namespace Acacia
 
         }
 
+        public class StringOption : Option<string>
+        {
+            private readonly string _defaultValue;
+
+            public StringOption(string token, string defaultValue)
+            :
+            base(token)
+            {
+                this._defaultValue = defaultValue;
+            }
+
+            public override string GetToken(string value)
+            {
+                if (value.Equals(_defaultValue))
+                    return null;
+                return Token + "=" + value.ToString();
+            }
+
+            public override string GetValue(string value)
+            {
+                if (string.IsNullOrEmpty(value))
+                    return _defaultValue;
+                else
+                {
+                    if (value.ToLower().StartsWith(Token.ToLower() + "="))
+                        value = value.Substring(Token.Length + 1);
+                    return value;
+                }
+            }
+
+        }
+
         // General
         public static readonly BoolOption ENABLED = new BoolOption("", true);
         public static readonly BoolOption FEATURE_DISABLED_DEFAULT = new BoolOption("", false);
