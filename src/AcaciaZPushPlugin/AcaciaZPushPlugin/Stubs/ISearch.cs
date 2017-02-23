@@ -53,10 +53,14 @@ namespace Acacia.Stubs
         ISearchField AddField(string name, bool isUserField = false);
     }
 
-    public interface ISearch<ItemType> : ISearchOperator, IDisposable
-    where ItemType : IItem
+    public interface ISearchQuery : ISearchOperator
     {
         ISearchOperator AddOperator(SearchOperator oper);
+    }
+
+    public interface ISearch<ItemType> : ISearchQuery, IDisposable
+    where ItemType : IItem
+    {
 
         IEnumerable<ItemType> Search(int maxResults = int.MaxValue);
 

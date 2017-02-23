@@ -1,4 +1,7 @@
-﻿/// Copyright 2017 Kopano b.v.
+﻿
+using Acacia.Stubs;
+using Acacia.Utils;
+/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -13,8 +16,6 @@
 /// along with this program.If not, see<http://www.gnu.org/licenses/>.
 /// 
 /// Consult LICENSE file for details
-
-using Acacia.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,167 +25,6 @@ using System.Threading.Tasks;
 
 namespace Acacia.Native.MAPI
 {
-    [Flags]
-    public enum SaveChangesFlags : UInt32
-    {
-        NONE = 0,
-        KEEP_OPEN_READONLY = 1,
-        KEEP_OPEN_READWRITE = 2,
-        FORCE_SAVE = 4,
-        MAPI_DEFERRED_ERRORS = 8
-    }
-
-    [ComImport]
-    [Guid("00020303-0000-0000-C000-000000000046")]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    public interface IMAPIProp
-    {
-        void GetLastError(Int32 hResult, UInt32 flags, out IntPtr ptr);
-        void SaveChanges(SaveChangesFlags flags);
-        void GetProps();
-        void GetPropList();
-        void OpenProperty();
-        void SetProps();
-        void DeleteProps();
-        void CopyTo();
-        void CopyProps();
-        void GetNamesFromIDs();
-        void GetIDsFromNames();
-    }
-
-    unsafe public struct SBinary
-    {
-        public uint cb;
-        public byte* ptr;
-
-        public byte[] Unmarshal()
-        {
-            byte[] result = new byte[cb];
-            Marshal.Copy((IntPtr)ptr, result, 0, result.Length);
-            return result;
-        }
-
-        public override string ToString()
-        {
-            byte[] b = Unmarshal();
-            return b.Length.ToString() + ":" + StringUtil.BytesToHex(b);
-        }
-    }
-
-    unsafe public struct SBinaryArray
-    {
-        public uint count;
-        public SBinary* ptr;
-
-        public byte[][] Unmarshal()
-        {
-            byte[][] result = new byte[count][];
-            for (uint i = 0; i < count; ++i)
-            {
-                result[i] = ptr[i].Unmarshal();
-            }
-            return result;
-        }
-    }
-
-    public enum PropType : ushort
-    {
-        BOOLEAN = 0x000B,
-        BINARY = 0x0102,
-        MV_BINARY = 1102,
-        DOUBLE = 0x0005,
-        LONG = 0x0003,
-        OBJECT = 0x000D,
-        STRING8 = 0x001E,
-        MV_STRING8 = 0x101E,
-        SYSTIME = 0x0040,
-        UNICODE = 0x001F,
-        MV_UNICODE = 0x101f
-    }
-
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public struct PropTag
-    {
-        public PropType type;
-        public ushort prop;
-
-        public override string ToString()
-        {
-            return "<" + prop.ToString("X4") + ":" + type + ">";
-        }
-    }
-
-    
-
-    [StructLayout(LayoutKind.Explicit)]
-    unsafe public struct PropValue
-    {
-        [FieldOffset(0)]
-        public PropTag ulPropTag;
-
-        [FieldOffset(4)]
-        public uint dwAlignPad;
-
-        //	short int			i;			/* case PT_I2 */
-        //	LONG				l;			/* case PT_LONG */
-        //	ULONG				ul;			/* alias for PT_LONG */
-        //	LPVOID				lpv;		/* alias for PT_PTR */
-        //	float				flt;		/* case PT_R4 */
-        //	double				dbl;		/* case PT_DOUBLE */
-        //	unsigned short int	b;			/* case PT_BOOLEAN */
-        [FieldOffset(8), MarshalAs(UnmanagedType.U2)]
-        public bool b;
-
-        //	CURRENCY			cur;		/* case PT_CURRENCY */
-        //	double				at;			/* case PT_APPTIME */
-        //	FILETIME			ft;			/* case PT_SYSTIME */
-
-        //	LPSTR				lpszA;		/* case PT_STRING8 */
-        [FieldOffset(8), MarshalAs(UnmanagedType.LPStr)]
-        public sbyte* lpszA;
-
-        //	SBinary				bin;		/* case PT_BINARY */
-        [FieldOffset(8)]
-        public SBinary bin;
-
-        //	LPWSTR				lpszW;		/* case PT_UNICODE */
-        [FieldOffset(8), MarshalAs(UnmanagedType.LPWStr)]
-        public char* lpszW;
-
-        //	LPGUID				lpguid;		/* case PT_CLSID */
-        //	LARGE_INTEGER		li;			/* case PT_I8 */
-        //	SShortArray			MVi;		/* case PT_MV_I2 */
-        //	SLongArray			MVl;		/* case PT_MV_LONG */
-        //	SRealArray			MVflt;		/* case PT_MV_R4 */
-        //	SDoubleArray		MVdbl;		/* case PT_MV_DOUBLE */
-        //	SCurrencyArray		MVcur;		/* case PT_MV_CURRENCY */
-        //	SAppTimeArray		MVat;		/* case PT_MV_APPTIME */
-        //	SDateTimeArray		MVft;		/* case PT_MV_SYSTIME */
-        //	SBinaryArray		MVbin;		/* case PT_MV_BINARY */
-        //	SLPSTRArray			MVszA;		/* case PT_MV_STRING8 */
-        //	SWStringArray		MVszW;		/* case PT_MV_UNICODE */
-
-        //	SGuidArray			MVguid;		/* case PT_MV_CLSID */
-        //	SLargeIntegerArray	MVli;		/* case PT_MV_I8 */
-        //	SCODE				err;		/* case PT_ERROR */
-        //	LONG				x;			/* case PT_NULL, PT_OBJECT (no usable value) */
-
-        public override string ToString()
-        {
-            switch(ulPropTag.type)
-            {
-                case PropType.BOOLEAN:
-                    return b.ToString();
-                case PropType.STRING8:
-                    return new string(lpszA);
-                case PropType.BINARY:
-                    return bin.ToString();
-                //case PropType.UNICODE:
-                   // return lpszW.ToString();
-            }
-            return "<unknown>";
-        }
-    }
 
     unsafe public struct CommentRestriction
     {
@@ -207,6 +47,13 @@ namespace Acacia.Native.MAPI
             s += "\n";
             return s;
         }
+
+        public SearchQuery ToSearchQuery()
+        {
+            return new SearchQuery.PropertyCompare(ulPropTag.ToPropertyIdentifier(),
+                (SearchQuery.ComparisonOperation)(int)relop,
+                prop->ToObject());
+        }
     }
 
     [Flags]
@@ -223,17 +70,25 @@ namespace Acacia.Native.MAPI
 
     unsafe public struct ContentRestriction
     {
-        public FuzzyLevel fuzzy;
+        public FuzzyLevel ulFuzzyLevel;
         public PropTag ulPropTag;
         public PropValue* prop;
 
         public string ToString(int depth)
         {
             string indent = new string(' ', depth);
-            string s = indent + fuzzy + ":" + ulPropTag.ToString();
+            string s = indent + ulFuzzyLevel + ":" + ulPropTag.ToString();
             s += ":" + prop->ToString();
             s += "\n";
             return s;
+        }
+
+        public SearchQuery ToSearchQuery()
+        {
+            return new SearchQuery.PropertyContent(ulPropTag.ToPropertyIdentifier(),
+                (SearchQuery.ContentMatchOperation)((uint)ulFuzzyLevel & 0xF),
+                (SearchQuery.ContentMatchModifiers)(((uint)ulFuzzyLevel & 0xF0000) >> 16),
+                prop->ToObject());
         }
     }
 
@@ -269,6 +124,16 @@ namespace Acacia.Native.MAPI
             }
             return s;
         }
+
+        public SearchQuery ToSearchQuery(bool and)
+        {
+            SearchQuery.MultiOperator oper = and ? (SearchQuery.MultiOperator)new SearchQuery.And() : new SearchQuery.Or(); ;
+            for (uint i = 0; i < cb; ++i)
+            {
+                oper.Add(ptr[i].ToSearchQuery());
+            }
+            return oper;
+        }
     }
 
     unsafe public struct NotRestriction
@@ -279,6 +144,11 @@ namespace Acacia.Native.MAPI
         public string ToString(int depth)
         {
             return ptr->ToString(depth);
+        }
+
+        public SearchQuery ToSearchQuery()
+        {
+            return new SearchQuery.Not(ptr->ToSearchQuery());
         }
     }
 
@@ -303,6 +173,11 @@ namespace Acacia.Native.MAPI
             string indent = new string(' ', depth);
             return indent + ToString() + "\n";
         }
+
+        public SearchQuery ToSearchQuery()
+        {
+            return new SearchQuery.PropertyBitMask(prop.ToPropertyIdentifier(), (SearchQuery.BitMaskOperation)(int)bmr, mask);
+        }
     }
 
     unsafe public struct ExistRestriction
@@ -320,6 +195,11 @@ namespace Acacia.Native.MAPI
             string indent = new string(' ', depth);
             return indent + prop.ToString() + "\n";
         }
+
+        public SearchQuery ToSearchQuery()
+        {
+            return new SearchQuery.PropertyExists(prop.ToPropertyIdentifier());
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
@@ -328,6 +208,7 @@ namespace Acacia.Native.MAPI
         [FieldOffset(0)]
         public RestrictionType rt;
 
+        // And/Or
         [FieldOffset(8)]
         public SubRestriction sub;
 
@@ -349,6 +230,37 @@ namespace Acacia.Native.MAPI
         [FieldOffset(8)]
         public CommentRestriction comment;
 
+        public SearchQuery ToSearchQuery()
+        {
+            switch (rt)
+            {
+                case RestrictionType.AND:
+                    return sub.ToSearchQuery(true);
+                case RestrictionType.OR:
+                    return sub.ToSearchQuery(false);
+                case RestrictionType.NOT:
+                    return not.ToSearchQuery();
+                case RestrictionType.CONTENT:
+                    return content.ToSearchQuery();
+                case RestrictionType.PROPERTY:
+                    return prop.ToSearchQuery();
+                case RestrictionType.BITMASK:
+                    return bitMask.ToSearchQuery();
+                case RestrictionType.EXIST:
+                    return exist.ToSearchQuery();
+
+                    /* TODO        COMPAREPROPS,
+                            BITMASK,
+                            SIZE,
+                            SUBRESTRICTION,
+                            COMMENT,
+                            COUNT,
+                            ANNOTATION*/
+
+            }
+            return null;
+        }
+
         public override string ToString()
         {
             return ToString(0);
@@ -358,7 +270,7 @@ namespace Acacia.Native.MAPI
         {
             string indent = new string(' ', depth);
             string s = indent + rt.ToString() + "\n" + indent + "{\n";
-            switch(rt)
+            switch (rt)
             {
                 case RestrictionType.AND:
                 case RestrictionType.OR:
@@ -394,69 +306,143 @@ namespace Acacia.Native.MAPI
         }
     }
 
-    [Flags]
-    public enum GetSearchCriteriaState : UInt32
+    /// <summary>
+    /// Encodes a search as an SRestriction. Note that as memory needs to be managed for the miscellaneous structures,
+    /// the SRestriction is only valid until RestrictionEncoder is disposed.
+    /// </summary>
+    unsafe public class RestrictionEncoder : NativeEncoder, ISearchEncoder
     {
-        NONE = 0,
-        SEARCH_RUNNING = 1,
-        SEARCH_REBUILD = 2,
-        SEARCH_RECURSIVE = 4,
-        SEARCH_FOREGROUND = 8
+        private class EncodingStack
+        {
+            public SRestriction[] array;
+            public int index;
+            public SRestriction* ptr;
+
+            public EncodingStack(int count, Allocation<SRestriction[]> alloc)
+            {
+                array = alloc.Object;
+                index = 0;
+                ptr = (SRestriction*)alloc.Pointer;
+            }
+        }
+        private readonly Stack<EncodingStack> _current = new Stack<EncodingStack>();
+        private readonly EncodingStack _root;
+
+        public RestrictionEncoder()
+        {
+            // Create an object for the root element
+            _root = Begin(1);
+        }
+
+        protected override void DoRelease()
+        {
+            // TODO
+        }
+
+        public SRestriction Restriction
+        {
+            get { return _root.array[0]; }
+        }
+
+        private SRestriction* Current
+        {
+            get
+            {
+                EncodingStack top = _current.Peek();
+                return top.ptr + top.index;
+            }
+        }
+
+        public void Encode(SearchQuery.PropertyExists part)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Encode(SearchQuery.Or part)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Encode(SearchQuery.PropertyIdentifier part)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Encode(SearchQuery.Not part)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Encode(SearchQuery.And part)
+        {
+            Current->rt = RestrictionType.AND;
+            Current->sub.cb = (uint)part.Operands.Count;
+            Current->sub.ptr = EncodePointer(part.Operands);
+        }
+
+        private SRestriction* EncodePointer(IEnumerable<SearchQuery> operands)
+        {
+            EncodingStack alloc = Begin(operands.Count());
+            try
+            {
+                foreach (SearchQuery operand in operands)
+                {
+                    operand.Encode(this);
+                    ++alloc.index;
+                }
+            }
+            finally
+            {
+                End();
+            }
+            return alloc.ptr;
+        }
+
+        private EncodingStack Begin(int count)
+        {
+            // Allocate and push the array
+            EncodingStack alloc = new EncodingStack(count, Allocate(new SRestriction[count]));
+            _current.Push(alloc);
+
+            return alloc;
+        }
+
+        private void End()
+        {
+            _current.Pop();
+        }
+
+        public void Encode(SearchQuery.PropertyContent part)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Encode(SearchQuery.PropertyCompare part)
+        {
+            Current->rt = RestrictionType.PROPERTY;
+            Current->prop.relop = (SearchOperation)part.Operation;
+            Current->prop.ulPropTag = part.Property.Tag;
+            Current->prop.prop = PropValue.FromObject(this, part.Value);
+        }
+
+        public void Encode(SearchQuery.PropertyBitMask part)
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    [Flags]
-    public enum SetSearchCriteriaFlags : UInt32
+    public static class RestrictionExensions
     {
-        NONE = 0,
-        STOP_SEARCH				= 0x00000001,
-        RESTART_SEARCH			= 0x00000002,
-        RECURSIVE_SEARCH		= 0x00000004,
-        SHALLOW_SEARCH			= 0x00000008,
-        FOREGROUND_SEARCH		= 0x00000010,
-        BACKGROUND_SEARCH		= 0x00000020,
-    }
-
-    [ComImport]
-    [Guid("0002030B-0000-0000-C000-000000000046")]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    unsafe public interface IMAPIContainer// TODO : IMAPIProp
-    {
-        // IMAPIProp
-        void GetLastError(Int32 hResult, UInt32 flags, out IntPtr ptr);
-        void SaveChanges(SaveChangesFlags flags);
-        void GetProps();
-        void GetPropList();
-        void OpenProperty();
-        void SetProps();
-        void DeleteProps();
-        void CopyTo();
-        void CopyProps();
-        void GetNamesFromIDs();
-        void GetIDsFromNames();
-
-        void GetContentsTable(UInt32 flags, out IntPtr table);
-        void GetHierarchyTable();
-        void OpenEntry();
-        void SetSearchCriteria(SRestriction* lppRestriction, SBinaryArray* lppContainerList, SetSearchCriteriaFlags flags);
-        void GetSearchCriteria(UInt32 flags, SRestriction** lppRestriction, SBinaryArray** lppContainerList, out GetSearchCriteriaState state);
-    }
-
-    [ComImport]
-    [Guid("0002030C-0000-0000-C000-000000000046")]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    public interface IMAPIFolder : IMAPIContainer
-    {
-        void CreateMessage();
-        void CopyMessages();
-        void DeleteMessages();
-        void CreateFolder();
-        void CopyFolder();
-        void DeleteFolder();
-        void SetReadFlags();
-        void GetMessageStatus();
-        void SetMessageStatus();
-        void SaveContentsSort();
-        void EmptyFolder();
+        /// <summary>
+        /// Encodes the search as an SRestriction.
+        /// </summary>
+        /// <returns>The encoder containing the restriction. The caller is responsible for disposing.</returns>
+        public static RestrictionEncoder ToRestriction(this SearchQuery search)
+        {
+            RestrictionEncoder encoder = new RestrictionEncoder();
+            search.Encode(encoder);
+            return encoder;
+        }
     }
 
     /* Example search code

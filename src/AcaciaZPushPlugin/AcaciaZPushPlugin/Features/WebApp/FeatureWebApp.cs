@@ -1,5 +1,6 @@
 ﻿
 using Acacia.Native.MAPI;
+using Acacia.Stubs;
 /// Copyright 2016 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
@@ -80,13 +81,21 @@ namespace Acacia.Features.WebApp
             if (account == null)
                 return;
 
+            using (IFolder reminders = account.Account.Store.GetSpecialFolder(SpecialFolder.Reminders))
+            {
+                Logger.Instance.Trace(this, "REMINDERS:\n{0}", reminders.SearchCriteria);
+                using (RestrictionEncoder res = reminders.SearchCriteria.ToRestriction())
+                    Logger.Instance.Trace(this, "REMINDERS2:\n{0}", res.Restriction);
+
+            }
+            /*
             // Get the url
             string url = AutoDiscover(account);
             if (url == null)
                 return;
 
             // Open the browser
-            System.Diagnostics.Process.Start(url);
+            System.Diagnostics.Process.Start(url);*/
         }
 
         private string AutoDiscover(ZPushAccount account)

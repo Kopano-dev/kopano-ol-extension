@@ -114,5 +114,11 @@ namespace Acacia.Stubs
         ZPushFolder ZPush { get; set; }
 
         IFolder Clone();
+
+        SearchQuery SearchCriteria
+        {
+            get;
+            set;
+        }
     }
 }

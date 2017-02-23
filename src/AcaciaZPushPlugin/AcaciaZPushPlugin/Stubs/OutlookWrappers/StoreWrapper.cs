@@ -67,6 +67,18 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
+        public IFolder GetSpecialFolder(SpecialFolder folder)
+        {
+            try
+            {
+                return _item.GetSpecialFolder((NSOutlook.OlSpecialFolders)(int)folder).Wrap();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public IItem GetItemFromID(string id)
         {
             using (ComRelease com = new ComRelease())

@@ -276,9 +276,16 @@
     <Compile Include="Features\SharedFolders\FolderTreeNode.cs" />
     <Compile Include="GlobalOptions.cs" />
     <Compile Include="Logging.cs" />
-    <Compile Include="Native\MAPI.cs" />
     <Compile Include="Native\IOleWindow.cs" />
+    <Compile Include="Native\MAPI\Binary.cs" />
+    <Compile Include="Native\MAPI\IMAPIContainer.cs" />
+    <Compile Include="Native\MAPI\IMAPIFolder.cs" />
+    <Compile Include="Native\MAPI\IMAPIProp.cs" />
+    <Compile Include="Native\MAPI\Property.cs" />
+    <Compile Include="Native\MAPI\Restriction.cs" />
+    <Compile Include="Native\NativeEncoder.cs" />
     <Compile Include="OutlookConstants.cs" />
+    <Compile Include="SearchQuery.cs" />
     <Compile Include="Stubs\Enums.cs" />
     <Compile Include="Stubs\IAccount.cs" />
     <Compile Include="Stubs\IAddIn.cs" />

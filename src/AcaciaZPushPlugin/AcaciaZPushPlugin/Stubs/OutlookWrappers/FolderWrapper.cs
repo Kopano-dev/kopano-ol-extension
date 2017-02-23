@@ -23,6 +23,7 @@ using System.Collections;
 using Acacia.Utils;
 using Acacia.ZPush;
 using NSOutlook = Microsoft.Office.Interop.Outlook;
+using Acacia.Native.MAPI;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
@@ -370,6 +371,32 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             get;
             set;
+        }
+
+        unsafe public SearchQuery SearchCriteria
+        {
+            get
+            {
+                IMAPIFolder imapi = _item.MAPIOBJECT as IMAPIFolder;
+                try
+                {
+                    SearchCriteriaState state;
+                    SBinaryArray* sb1;
+                    SRestriction* restrict;
+                    imapi.GetSearchCriteria(0, &restrict, &sb1, out state);
+                    Logger.Instance.Warning(this, "SEARCH:\n{0}", restrict->ToString());
+                    return restrict->ToSearchQuery();
+                }
+                finally
+                {
+                    ComRelease.Release(imapi);
+                }
+            }
+
+            set
+            {
+
+            }
         }
     }
 }
