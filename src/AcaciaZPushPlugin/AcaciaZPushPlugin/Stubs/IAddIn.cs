@@ -90,5 +90,7 @@ namespace Acacia.Stubs
         ISignatures GetSignatures();
 
         void InUI(Action action);
+
+        bool IsOffline { get; }
     }
 }

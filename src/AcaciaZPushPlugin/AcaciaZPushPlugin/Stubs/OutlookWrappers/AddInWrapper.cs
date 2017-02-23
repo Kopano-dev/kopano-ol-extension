@@ -68,6 +68,22 @@ namespace Acacia.Stubs.OutlookWrappers
             return new SignaturesWrapper();
         }
 
+        public bool IsOffline
+        {
+            get
+            {
+                NSOutlook.NameSpace session = _app.Session;
+                try
+                {
+                    return session.Offline;
+                }
+                finally
+                {
+                    ComRelease.Release(session);
+                }
+            }
+        }
+
         public void InUI(Action action)
         {
             Exception x = null;

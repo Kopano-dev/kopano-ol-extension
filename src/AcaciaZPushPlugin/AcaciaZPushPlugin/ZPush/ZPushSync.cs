@@ -178,6 +178,9 @@ namespace Acacia.ZPush
         /// </summary>
         private void ExecuteTasks()
         {
+            if (ThisAddIn.Instance.IsOffline)
+                return;
+
             foreach (ZPushAccount account in _watcher.Accounts.GetAccounts())
                 ExecuteTasks(account);
         }
