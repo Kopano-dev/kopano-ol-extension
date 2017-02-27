@@ -65,8 +65,8 @@ namespace Acacia.Stubs
         /// <summary>
         /// Restarts the application
         /// </summary>
-        void Restart();
-        void Quit();
+        void Restart(bool closeWindows);
+        void Quit(bool closeWindows);
 
         void InvokeUI(Action action);
 
@@ -89,7 +89,7 @@ namespace Acacia.Stubs
 
         ISignatures GetSignatures();
 
-        void InUI(Action action);
+        void InUI(Action action, bool synchronous = true);
 
         bool IsOffline { get; }
     }

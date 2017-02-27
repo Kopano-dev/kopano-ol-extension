@@ -84,23 +84,40 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public void InUI(Action action)
+        public void InUI(Action action, bool synchronous = true)
         {
-            Exception x = null;
-            _sync.Send((_) =>
+            if (synchronous)
             {
-                try
+                Exception x = null;
+                _sync.Send((_) =>
                 {
-                    action();
-                }
-                catch(Exception e)
-                {
-                    x = e;
-                }
-            }, null);
+                    try
+                    {
+                        action();
+                    }
+                    catch (Exception e)
+                    {
+                        x = e;
+                    }
+                }, null);
 
-            if (x != null)
-                throw x;
+                if (x != null)
+                    throw x;
+            }
+            else
+            {
+                _sync.Post((_) =>
+                {
+                    try
+                    {
+                        action();
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Instance.Error(this, "Unhandled exception in UI post: {0}", e);
+                    }
+                }, null);
+            }
         }
 
         public void SendReceive(IAccount account)
@@ -122,7 +139,7 @@ namespace Acacia.Stubs.OutlookWrappers
             _stores.Start();
         }
 
-        public void Restart()
+        public void Restart(bool closeWindows)
         {
             // Can not use the assembly location, as that is in the GAC
             string codeBase = Assembly.GetExecutingAssembly().CodeBase;
@@ -136,12 +153,22 @@ namespace Acacia.Stubs.OutlookWrappers
             process.StartInfo = new ProcessStartInfo(path, Environment.CommandLine);
             process.Start();
 
-            // And close us
-            _app.Quit();
+            // And close us and any other windows
+            Quit(closeWindows);
         }
 
-        public void Quit()
+        public void Quit(bool closeWindows)
         {
+            if (closeWindows)
+            {
+                List<Form> openForms = new List<Form>();
+                foreach (Form f in Application.OpenForms)
+                    openForms.Add(f);
+
+                foreach (Form f in openForms)
+                    f.Close();
+            }
+
             _app.Quit();
         }
 

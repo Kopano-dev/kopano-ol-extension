@@ -432,7 +432,7 @@
     <value>Shows the about dialog, which contains licensing and version information.</value>
   </data>
   <data name="SecondaryContactsPatched_Body" xml:space="preserve">
-    <value>To synchronise the contacts folder '{0}', Outlook must be restarted. Click 'Yes' to restart Outlook now, or 'No' if you plan to restart Outlook later.</value>
+    <value>The contacts folder '{0}' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click 'Yes' to restart Outlook now, or 'No' if you plan to restart Outlook later.</value>
     <comment>Shown when a secondary contact folder is detected, to inform the user that a restart is required</comment>
   </data>
   <data name="SecondaryContactsPatched_Title" xml:space="preserve">

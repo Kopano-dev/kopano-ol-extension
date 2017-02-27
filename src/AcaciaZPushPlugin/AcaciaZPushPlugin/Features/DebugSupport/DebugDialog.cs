@@ -79,7 +79,7 @@ namespace Acacia.Features.DebugSupport
                             {
                                 timer.Stop();
                                 dlg.Hide();
-                                ThisAddIn.Instance.Quit();
+                                ThisAddIn.Instance.Quit(false);
                             }
                             else
                             {

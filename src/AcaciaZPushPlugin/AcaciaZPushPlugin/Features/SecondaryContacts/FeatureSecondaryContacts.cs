@@ -34,6 +34,19 @@ namespace Acacia.Features.SecondaryContacts
     [AcaciaOption("Provides the possibility to synchronise multiple contacts folders to and from a Z-Push server.")]
     public class FeatureSecondaryContacts : Feature
     {
+        #region Debug options
+
+        [AcaciaOption("If set (the default), a warning will be shown when a secondary contact folder is discovered, " +
+                      "which shows that Outlook must be restarted to add it to the proper list.")]
+        public bool WarnRestart
+        {
+            get { return GetOption(OPTION_WARN_RESTART); }
+            set { SetOption(OPTION_WARN_RESTART, value); }
+        }
+        private static readonly BoolOption OPTION_WARN_RESTART = new BoolOption("WarnRestart", true);
+
+        #endregion
+
         private const string SUFFIX_CONTACTS = "\x200B";
 
         private class FolderRegistrationSecondaryContacts : FolderRegistration
@@ -71,7 +84,7 @@ namespace Acacia.Features.SecondaryContacts
         {
             Watcher.WatchFolder(new FolderRegistrationSecondaryContacts(this), OnUnpatchedFolderDiscovered);
         }
-        
+
         private void OnUnpatchedFolderDiscovered(IFolder folder)
         {
             string strippedName = folder.Name.StripSuffix(SUFFIX_CONTACTS);
@@ -84,10 +97,9 @@ namespace Acacia.Features.SecondaryContacts
             // Note that the above steps need to be done in this order and individually for this to work.
             //
             // At some point after 2 we also need to restart Outlook to make it appear in the list of contact folders.
-            // So, when the folder is detected, we make it invisible and perform steps 1 and 2. We issue a warning
-            // that Outlook must be restarted. When the folder is detected again and is invisible, that means we've restarted
-            // At this point the name is patched and the folder is made visible. 
-            if (!folder.AttrHidden)
+
+            // Somehow some properties fail if we do it in the event handler, post to ui thread
+            ThisAddIn.Instance.InUI(() =>
             {
                 // Stage 1
 
@@ -99,33 +111,37 @@ namespace Acacia.Features.SecondaryContacts
                 Logger.Instance.Trace(this, "Setting container class");
                 folder.SetProperty(OutlookConstants.PR_CONTAINER_CLASS, "IPF.Contact");
 
-                // Make it invisible.
-                folder.AttrHidden = true;
-                folder.Save();
-
-                Logger.Instance.Debug(this, "Patched secondary contacts folder: {0}", strippedName);
-                WarnRestart(folder);
-            }
-            // If _warnedFolders does not contain the folder (and it's hidden), this means Outlook was restarted.
-            else if (!_warnedFolders.Contains(folder.EntryID))
-            {
-                // Stage 2
+                // Update the icon.
+                using (IExplorer explorer = ThisAddIn.Instance.GetActiveExplorer())
+                using (ICommandBars cmdBars = explorer.GetCommandBars())
+                {
+                    folder.SetCustomIcon(cmdBars.GetMso("ShowContactPage").GetPicture(new Size(16, 16)));
+                }
 
                 // Patch the name
                 Logger.Instance.Trace(this, "Patching name");
                 folder.Name = strippedName;
+                folder.ShowAsOutlookAB = true;
 
-                // Show it
-                folder.AttrHidden = false;
-                Logger.Instance.Debug(this, "Shown secondary contacts folder: {0}", strippedName);
-            }
-            Logger.Instance.Debug(this, "Patching done: {0}: {1}", strippedName, folder.AttrHidden);
+                // Save the folder
+                folder.Save();
+
+                // Do another send receive to start syncing
+                ThisAddIn.Instance.SendReceive();
+
+                // Warn about a restart
+                DoWarnRestart(folder);
+            }, false);
+
         }
 
         private DateTime? _lastWarning;
 
-        private void WarnRestart(IFolder folder)
+        private bool DoWarnRestart(IFolder folder)
         {
+            if (!WarnRestart)
+                return false;
+
             // Register and show a warning, if not already done.
             // Note that patching may be done multiple times.
             if (!_warnedFolders.Contains(folder.EntryID))
@@ -139,13 +155,15 @@ namespace Acacia.Features.SecondaryContacts
                     if (MessageBox.Show(StringUtil.GetResourceString("SecondaryContactsPatched_Body", folder.Name),
                                     StringUtil.GetResourceString("SecondaryContactsPatched_Title"),
                                     MessageBoxButtons.YesNo,
-                                    MessageBoxIcon.Warning
+                                    MessageBoxIcon.Information
                                 ) == DialogResult.Yes)
                     {
-                        ThisAddIn.Instance.Restart();
+                        ThisAddIn.Instance.Restart(true);
+                        return true;
                     }
                 }
             }
+            return false;
         }
     }
 }

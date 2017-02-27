@@ -813,7 +813,7 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To synchronise the contacts folder &apos;{0}&apos;, Outlook must be restarted. Click &apos;Yes&apos; to restart Outlook now, or &apos;No&apos; if you plan to restart Outlook later..
+        ///   Looks up a localized string similar to The contacts folder &apos;{0}&apos; has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click &apos;Yes&apos; to restart Outlook now, or &apos;No&apos; if you plan to restart Outlook later..
         /// </summary>
         internal static string SecondaryContactsPatched_Body {
             get {
