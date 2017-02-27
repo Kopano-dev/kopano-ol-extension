@@ -130,11 +130,14 @@ namespace Acacia.ZPush.Connect
             {
                 // Content
                 using (HttpContent content = request.GetContent())
-                using (HttpResponseMessage response = _client.PostAsync(url, content, _cancel ?? CancellationToken.None).Result)
-                using (HttpContent responseContent = response.Content)
                 {
-                    Logger.Instance.Debug(this, "Response: {0}", responseContent.ReadAsStringAsync().Result);
-                    return request.ParseResponse(responseContent.ReadAsStreamAsync().Result);
+                    Logger.Instance.Trace(this, "Request: {0}", content.ReadAsStringAsync().Result);
+                    using (HttpResponseMessage response = _client.PostAsync(url, content, _cancel ?? CancellationToken.None).Result)
+                    using (HttpContent responseContent = response.Content)
+                    {
+                        Logger.Instance.Trace(this, "Response: {0}", responseContent.ReadAsStringAsync().Result);
+                        return request.ParseResponse(responseContent.ReadAsStreamAsync().Result);
+                    }
                 }
             }
         }

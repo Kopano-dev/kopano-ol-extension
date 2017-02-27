@@ -17,6 +17,7 @@ using Acacia.Features.GAB;
 /// Consult LICENSE file for details
 using Acacia.Stubs;
 using Acacia.Stubs.OutlookWrappers;
+using Acacia.UI;
 using Acacia.Utils;
 using Acacia.ZPush;
 using Acacia.ZPush.Connect;
@@ -39,6 +40,15 @@ namespace Acacia.Features.Signatures
     {
         #region Debug options
 
+        [AcaciaOption("If set, the local signature is always set to the server signature. If not set, the local signature will be set " +
+                      "only if it is unspecified. ")]
+        public bool AlwaysSetLocal
+        {
+            get { return GetOption(OPTION_ALWAYS_SET_LOCAL); }
+            set { SetOption(OPTION_ALWAYS_SET_LOCAL, value); }
+        }
+        private static readonly BoolOption OPTION_ALWAYS_SET_LOCAL = new BoolOption("AlwaysSetLocal", false);
+
         [AcaciaOption("The format for local names of synchronised signatures, to prevent overwriting local signatures. May contain %account% and %name%.")]
         public string SignatureLocalName
         {
@@ -59,6 +69,7 @@ namespace Acacia.Features.Signatures
             {
                 _gab.SyncFinished += GAB_SyncFinished;
             }
+            Watcher.Sync.AddTask(this, Name, Periodic_Sync);
         }
 
         private void Watcher_AccountDiscovered(ZPushAccount account)
@@ -70,32 +81,76 @@ namespace Acacia.Features.Signatures
         {
             // TODO: make a helper to register for all zpush accounts with specific capabilities, best even
             //       the feature's capabilities
-            if (account.Confirmed == ZPushAccount.ConfirmationType.IsZPush &&
-                account.Capabilities.Has("signatures"))
+            if (account.Confirmed == ZPushAccount.ConfirmationType.IsZPush)
             {
-                Logger.Instance.Trace(this, "Checking signature hash for account {0}: {1}", account, account.ServerSignaturesHash);
+                SyncSignatures(account, account.ServerSignaturesHash);
+            }
+        }
 
-                // Fetch signatures if there is a change
-                if (account.ServerSignaturesHash != account.Account.LocalSignaturesHash)
+        private void Periodic_Sync(ZPushConnection connection)
+        {
+            try
+            {
+                // TODO: merge this into ZPushAccount, allow periodic rechecking of Z-Push confirmation. That was other 
+                //       features can be updated too, e.g. OOF status. That's pretty easy to do, only need to check if
+                //       no other features will break if the ConfirmedChanged event is raised multiple times
+                ActiveSync.SettingsOOF oof = connection.Execute(new ActiveSync.SettingsOOFGet());
+                SyncSignatures(connection.Account, oof.RawResponse.SignaturesHash);
+            }
+            catch(System.Exception e)
+            {
+                Logger.Instance.Error(this, "Error fetching signature hash: {0}", e);
+            }
+        }
+
+
+        internal void ResyncAll()
+        {
+            foreach(ZPushAccount account in Watcher.Accounts.GetAccounts())
+            {
+                if (account.Confirmed == ZPushAccount.ConfirmationType.IsZPush)
                 {
-                    try
-                    {
-                        Logger.Instance.Debug(this, "Updating signatures: {0}", account);
-                        FetchSignatures(account);
-
-                        // Store updated hash
-                        account.Account.LocalSignaturesHash = account.ServerSignaturesHash;
-                        Logger.Instance.Debug(this, "Updated signatures: {0}", account);
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.Instance.Error(this, "Error fetching signatures: {0}: {1}", account, e);
-                    }
+                    SyncSignatures(account, null);
                 }
             }
         }
 
-    
+        /// <summary>
+        /// Syncs the signatures for the account.
+        /// </summary>
+        /// <param name="account">The account</param>
+        /// <param name="serverSignatureHash">The signature hash. If null, the hash will not be checked and a hard sync will be done.</param>
+        private void SyncSignatures(ZPushAccount account, string serverSignatureHash)
+        {
+            if (!account.Capabilities.Has("signatures"))
+                return;
+
+            // Check hash if needed
+            if (serverSignatureHash != null)
+            {
+                Logger.Instance.Trace(this, "Checking signature hash for account {0}: {1}", account, serverSignatureHash);
+                if (serverSignatureHash == account.Account.LocalSignaturesHash)
+                    return;
+            }
+
+            // Fetch signatures if there is a change
+            try
+            {
+                Logger.Instance.Debug(this, "Updating signatures: {0}", account);
+                string hash = FetchSignatures(account);
+
+                // Store updated hash
+                account.Account.LocalSignaturesHash = hash;
+                Logger.Instance.Debug(this, "Updated signatures: {0}: {1}", account, hash);
+            }
+            catch (Exception e)
+            {
+                Logger.Instance.Error(this, "Error fetching signatures: {0}: {1}", account, e);
+            }
+        }
+
+        #region API
+
         // Prevent field assignment warnings
         #pragma warning disable 0649
 
@@ -121,7 +176,12 @@ namespace Acacia.Features.Signatures
         {
         }
 
-        private void FetchSignatures(ZPushAccount account)
+        /// <summary>
+        /// Fetches the signatures for the account.
+        /// </summary>
+        /// <param name="account">The account.</param>
+        /// <returns>The signature hash</returns>
+        private string FetchSignatures(ZPushAccount account)
         {
             Logger.Instance.Debug(this, "Fetching signatures for account {0}", account);
             using (ZPushConnection connection = account.Connect())
@@ -141,16 +201,26 @@ namespace Acacia.Features.Signatures
                 }
 
                 // Set default signatures if available and none are set
-                if (!string.IsNullOrEmpty(result.new_message) && string.IsNullOrEmpty(account.Account.SignatureNewMessage))
+                if (!string.IsNullOrEmpty(result.new_message) && ShouldSetSignature(account.Account.SignatureNewMessage))
                 {
                     account.Account.SignatureNewMessage = fullNames[result.new_message];
                 }
-                if (!string.IsNullOrEmpty(result.replyforward_message) && string.IsNullOrEmpty(account.Account.SignatureReplyForwardMessage))
+                if (!string.IsNullOrEmpty(result.replyforward_message) && ShouldSetSignature(account.Account.SignatureReplyForwardMessage))
                 {
                     account.Account.SignatureReplyForwardMessage = fullNames[result.replyforward_message];
                 }
+
+                return result.hash;
             }
         }
+
+        private bool ShouldSetSignature(string currentSignature)
+        {
+            return string.IsNullOrEmpty(currentSignature) || AlwaysSetLocal;
+        }
+
+
+        #endregion
 
         private string StoreSignature(ISignatures signatures, ZPushAccount account, Signature signatureInfo)
         {
@@ -204,7 +274,7 @@ namespace Acacia.Features.Signatures
         {
             return SignatureLocalName.ReplaceStringTokens("%", "%", new Dictionary<string, string>
             {
-                { "account", account.DisplayName },
+                { "account", account.Account.SmtpAddress },
                 { "name", name }
             });
         }
@@ -307,5 +377,14 @@ namespace Acacia.Features.Signatures
                 }
             }
         }
+
+        #region Settings 
+
+        public override FeatureSettings GetSettings()
+        {
+            return new SignaturesSettings(this);
+        }
+
+        #endregion
     }
 }

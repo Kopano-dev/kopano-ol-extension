@@ -220,6 +220,18 @@ msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\$this.
 msgid "Shared Folders - {0}"
 msgstr ""
 
+#: AcaciaZPushPlugin\Features\Signatures\SignaturesSettings\checkForceSet.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\Signatures\\SignaturesSettings\\checkForceSet.Text"
+msgid "Override local signatures"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\Signatures\SignaturesSettings\buttonResync.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\Signatures\\SignaturesSettings\\buttonResync.Text"
+msgid "Resynchronise signatures"
+msgstr ""
+
 #: AcaciaZPushPlugin\Properties\Resources\OOFGet_Failed
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFGet_Failed"
@@ -680,6 +692,24 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Title"
 msgid "Password unavailable"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\Feature_Signatures
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_Signatures"
+msgid "Signatures"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SignaturesSync_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SignaturesSync_Label"
+msgid "The signatures are being synchronised."
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SignaturesSync_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SignaturesSync_Title"
+msgid "Signatures"
 msgstr ""
 
 #: AcaciaZPushPlugin\UI\ProgressDialog\labelMessage.Text

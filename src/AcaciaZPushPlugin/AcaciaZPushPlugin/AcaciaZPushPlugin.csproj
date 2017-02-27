@@ -275,6 +275,12 @@
     <Compile Include="Features\SendAs\FeatureSendAs.cs" />
     <Compile Include="Features\SharedFolders\FolderTreeNode.cs" />
     <Compile Include="Features\Signatures\FeatureSignatures.cs" />
+    <Compile Include="Features\Signatures\SignaturesSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Features\Signatures\SignaturesSettings.Designer.cs">
+      <DependentUpon>SignaturesSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalOptions.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Native\IOleWindow.cs" />
@@ -548,6 +554,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Features\SharedFolders\SharedFoldersDialog.resx">
       <DependentUpon>SharedFoldersDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\Signatures\SignaturesSettings.resx">
+      <DependentUpon>SignaturesSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -133,6 +133,15 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Signatures.
+        /// </summary>
+        internal static string Feature_Signatures {
+            get {
+                return ResourceManager.GetString("Feature_Signatures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Address Book for {0}.
         /// </summary>
         internal static string GAB_FolderFormat {
@@ -1016,6 +1025,24 @@ namespace Acacia.Properties {
         internal static string SharedFolders_Unsaved_Changes {
             get {
                 return ResourceManager.GetString("SharedFolders_Unsaved_Changes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The signatures are being synchronised..
+        /// </summary>
+        internal static string SignaturesSync_Label {
+            get {
+                return ResourceManager.GetString("SignaturesSync_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signatures.
+        /// </summary>
+        internal static string SignaturesSync_Title {
+            get {
+                return ResourceManager.GetString("SignaturesSync_Title", resourceCulture);
             }
         }
         
