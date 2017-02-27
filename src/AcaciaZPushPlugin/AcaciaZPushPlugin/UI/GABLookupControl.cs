@@ -247,15 +247,17 @@ namespace Acacia.UI
             if (_gab?.Contacts != null)
             {
                 // Begin GAB lookup, search on full name or username
-                ISearch<IContactItem> search = _gab.Contacts.Search<IContactItem>();
-                search.AddField("urn:schemas:contacts:customerid").SetOperation(SearchOperation.Equal, username);
-
-                // Fetch the result, if any.
-                // TODO: make a SearchOne method?
-                List<GABUser> users = new List<GABUser>();
-                foreach (IContactItem result in search.Search(1))
+                using (ISearch<IContactItem> search = _gab.Contacts.Search<IContactItem>())
                 {
-                    return new GABUser(result.FullName, result.CustomerID);
+                    search.AddField("urn:schemas:contacts:customerid").SetOperation(SearchOperation.Equal, username);
+
+                    // Fetch the result, if any.
+                    List<GABUser> users = new List<GABUser>();
+                    using (IContactItem result = search.SearchOne())
+                    {
+                        if (result != null)
+                            return new GABUser(result.FullName, result.CustomerID);
+                    }
                 }
             }
 
