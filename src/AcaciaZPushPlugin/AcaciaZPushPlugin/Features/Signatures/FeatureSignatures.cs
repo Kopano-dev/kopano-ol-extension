@@ -122,7 +122,7 @@ namespace Acacia.Features.Signatures
         /// <param name="serverSignatureHash">The signature hash. If null, the hash will not be checked and a hard sync will be done.</param>
         private void SyncSignatures(ZPushAccount account, string serverSignatureHash)
         {
-            if (account == null || !account.Capabilities.Has("signatures"))
+            if (account?.Capabilities == null || !account.Capabilities.Has("signatures"))
                 return;
 
             // Check hash if needed

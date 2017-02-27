@@ -33,8 +33,20 @@ namespace Acacia.Native.MAPI
         public byte[] Unmarshal()
         {
             byte[] result = new byte[cb];
-            Marshal.Copy((IntPtr)ptr, result, 0, result.Length);
+            System.Runtime.InteropServices.Marshal.Copy((IntPtr)ptr, result, 0, result.Length);
             return result;
+        }
+
+        /// <summary>
+        /// Returns an instance with the data allocated in the enocder.
+        /// </summary>
+        public SBinary Marshal(NativeEncoder encoder)
+        {
+            return new SBinary()
+            {
+                cb = cb,
+                ptr = (byte*)encoder.Allocate(Unmarshal())
+            };
         }
 
         public override string ToString()

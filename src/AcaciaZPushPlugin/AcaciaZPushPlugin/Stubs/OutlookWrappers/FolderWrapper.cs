@@ -403,7 +403,6 @@ namespace Acacia.Stubs.OutlookWrappers
                     SBinaryArray* sb1;
                     SRestriction* restrict;
                     imapi.GetSearchCriteria(0, &restrict, &sb1, out state);
-                    Logger.Instance.Warning(this, "SEARCH:\n{0}", restrict->ToString());
                     return restrict->ToSearchQuery();
                 }
                 finally
@@ -414,8 +413,19 @@ namespace Acacia.Stubs.OutlookWrappers
 
             set
             {
-                // TODO
-                throw new NotImplementedException();
+                IMAPIFolder imapi = _item.MAPIOBJECT as IMAPIFolder;
+                try
+                {
+                    using (RestrictionEncoder res = value.ToRestriction())
+                    {
+                        SRestriction restrict = res.Restriction;
+                        imapi.SetSearchCriteria(&restrict, null, SearchCriteriaFlags.NONE);
+                    }
+                }
+                finally
+                {
+                    ComRelease.Release(imapi);
+                }
             }
         }
     }

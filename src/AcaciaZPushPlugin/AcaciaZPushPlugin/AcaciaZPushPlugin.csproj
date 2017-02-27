@@ -274,6 +274,7 @@
     </Compile>
     <Compile Include="Features\SendAs\FeatureSendAs.cs" />
     <Compile Include="Features\SharedFolders\FolderTreeNode.cs" />
+    <Compile Include="Features\SharedFolders\SharedCalendarReminders.cs" />
     <Compile Include="Features\Signatures\FeatureSignatures.cs" />
     <Compile Include="Features\Signatures\SignaturesSettings.cs">
       <SubType>UserControl</SubType>
@@ -291,6 +292,7 @@
     <Compile Include="Native\MAPI\IMAPIProp.cs" />
     <Compile Include="Native\MAPI\Property.cs" />
     <Compile Include="Native\MAPI\Restriction.cs" />
+    <Compile Include="Native\NativeEncoder.cs" />
     <Compile Include="OutlookConstants.cs" />
     <Compile Include="SearchQuery.cs" />
     <Compile Include="Stubs\Enums.cs" />

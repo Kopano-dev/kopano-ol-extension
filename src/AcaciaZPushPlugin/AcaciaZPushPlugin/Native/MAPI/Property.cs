@@ -20,6 +20,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using static Acacia.Native.NativeEncoder;
 
 namespace Acacia.Native.MAPI
 {
@@ -52,7 +53,7 @@ namespace Acacia.Native.MAPI
 
         public SearchQuery.PropertyIdentifier ToPropertyIdentifier()
         {
-            return SearchQuery.PropertyIdentifier.FromTag(prop, (ushort)type);
+            return new SearchQuery.PropertyIdentifier(this);
         }
 
         public static PropTag FromInt(int v)
@@ -65,80 +66,110 @@ namespace Acacia.Native.MAPI
         }
     }
 
-
-
-    [StructLayout(LayoutKind.Explicit)]
-    unsafe public struct PropValue
+    // TODO: align is probably wrong for 32-bit
+    [StructLayout(LayoutKind.Sequential)]
+    public struct PropValue
     {
-        [FieldOffset(0)]
-        public PropTag ulPropTag;
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Header
+        {
+            public PropTag ulPropTag;
+        }
 
-        [FieldOffset(4)]
-        public uint dwAlignPad;
+        [StructLayout(LayoutKind.Explicit)]
+        unsafe public struct Data
+        {
+            //	short int			i;			/* case PT_I2 */
+            //	LONG				l;			/* case PT_LONG */
+            //	ULONG				ul;			/* alias for PT_LONG */
+            //	LPVOID				lpv;		/* alias for PT_PTR */
+            //	float				flt;		/* case PT_R4 */
+            //	double				dbl;		/* case PT_DOUBLE */
+            //	unsigned short int	b;			/* case PT_BOOLEAN */
+            [FieldOffset(0), MarshalAs(UnmanagedType.U2)]
+            public bool b;
 
-        //	short int			i;			/* case PT_I2 */
-        //	LONG				l;			/* case PT_LONG */
-        //	ULONG				ul;			/* alias for PT_LONG */
-        //	LPVOID				lpv;		/* alias for PT_PTR */
-        //	float				flt;		/* case PT_R4 */
-        //	double				dbl;		/* case PT_DOUBLE */
-        //	unsigned short int	b;			/* case PT_BOOLEAN */
-        [FieldOffset(8), MarshalAs(UnmanagedType.U2)]
-        public bool b;
+            //	CURRENCY			cur;		/* case PT_CURRENCY */
+            //	double				at;			/* case PT_APPTIME */
+            //	FILETIME			ft;			/* case PT_SYSTIME */
 
-        //	CURRENCY			cur;		/* case PT_CURRENCY */
-        //	double				at;			/* case PT_APPTIME */
-        //	FILETIME			ft;			/* case PT_SYSTIME */
+            //	LPSTR				lpszA;		/* case PT_STRING8 */
+            [FieldOffset(0), MarshalAs(UnmanagedType.LPStr)]
+            public sbyte* lpszA;
 
-        //	LPSTR				lpszA;		/* case PT_STRING8 */
-        [FieldOffset(8), MarshalAs(UnmanagedType.LPStr)]
-        public sbyte* lpszA;
+            //	SBinary				bin;		/* case PT_BINARY */
+            [FieldOffset(0)]
+            public SBinary bin;
 
-        //	SBinary				bin;		/* case PT_BINARY */
-        [FieldOffset(8)]
-        public SBinary bin;
+            //	LPWSTR				lpszW;		/* case PT_UNICODE */
+            [FieldOffset(0), MarshalAs(UnmanagedType.LPWStr)]
+            public char* lpszW;
 
-        //	LPWSTR				lpszW;		/* case PT_UNICODE */
-        [FieldOffset(8), MarshalAs(UnmanagedType.LPWStr)]
-        public char* lpszW;
+            //	LPGUID				lpguid;		/* case PT_CLSID */
+            //	LARGE_INTEGER		li;			/* case PT_I8 */
+            //	SShortArray			MVi;		/* case PT_MV_I2 */
+            //	SLongArray			MVl;		/* case PT_MV_LONG */
+            //	SRealArray			MVflt;		/* case PT_MV_R4 */
+            //	SDoubleArray		MVdbl;		/* case PT_MV_DOUBLE */
+            //	SCurrencyArray		MVcur;		/* case PT_MV_CURRENCY */
+            //	SAppTimeArray		MVat;		/* case PT_MV_APPTIME */
+            //	SDateTimeArray		MVft;		/* case PT_MV_SYSTIME */
+            //	SBinaryArray		MVbin;		/* case PT_MV_BINARY */
+            //	SLPSTRArray			MVszA;		/* case PT_MV_STRING8 */
+            //	SWStringArray		MVszW;		/* case PT_MV_UNICODE */
 
-        //	LPGUID				lpguid;		/* case PT_CLSID */
-        //	LARGE_INTEGER		li;			/* case PT_I8 */
-        //	SShortArray			MVi;		/* case PT_MV_I2 */
-        //	SLongArray			MVl;		/* case PT_MV_LONG */
-        //	SRealArray			MVflt;		/* case PT_MV_R4 */
-        //	SDoubleArray		MVdbl;		/* case PT_MV_DOUBLE */
-        //	SCurrencyArray		MVcur;		/* case PT_MV_CURRENCY */
-        //	SAppTimeArray		MVat;		/* case PT_MV_APPTIME */
-        //	SDateTimeArray		MVft;		/* case PT_MV_SYSTIME */
-        //	SBinaryArray		MVbin;		/* case PT_MV_BINARY */
-        //	SLPSTRArray			MVszA;		/* case PT_MV_STRING8 */
-        //	SWStringArray		MVszW;		/* case PT_MV_UNICODE */
+            //	SGuidArray			MVguid;		/* case PT_MV_CLSID */
+            //	SLargeIntegerArray	MVli;		/* case PT_MV_I8 */
+            //	SCODE				err;		/* case PT_ERROR */
+            //	LONG				x;			/* case PT_NULL, PT_OBJECT (no usable value) */
+        }
 
-        //	SGuidArray			MVguid;		/* case PT_MV_CLSID */
-        //	SLargeIntegerArray	MVli;		/* case PT_MV_I8 */
-        //	SCODE				err;		/* case PT_ERROR */
-        //	LONG				x;			/* case PT_NULL, PT_OBJECT (no usable value) */
+        public Header header;
+        public Data data;
 
         public override string ToString()
         {
             return ToObject()?.ToString() ?? "<unknown>";
         }
 
-        public object ToObject()
+        unsafe public object ToObject()
         {
-            switch (ulPropTag.type)
+            switch (header.ulPropTag.type)
             {
                 case PropType.BOOLEAN:
-                    return b;
+                    return data.b;
                 case PropType.STRING8:
-                    return new string(lpszA);
+                    return new string(data.lpszA);
+                case PropType.UNICODE:
+                    return new string(data.lpszW);
                 case PropType.BINARY:
-                    return bin;
-                    //case PropType.UNICODE:
-                    // return lpszW.ToString();
+                    return data.bin;
             }
-            return null;
+            throw new NotImplementedException();
+        }
+
+        unsafe public static IntPtr MarshalFromObject(NativeEncoder encoder, PropTag prop, object value)
+        {
+            PropValue obj = new PropValue();
+            obj.header.ulPropTag = prop;
+
+            switch (prop.type)
+            {
+                case PropType.BOOLEAN:
+                    obj.data.b = (bool)value;
+                    return encoder.Allocate(obj.header, obj.data.b);
+                case PropType.STRING8:
+                    IntPtr ptrA = encoder.Allocate(Encoding.ASCII.GetBytes((string)value), new byte[] { 0 });
+                    return encoder.Allocate(obj.header, ptrA);
+                case PropType.UNICODE:
+                    IntPtr ptrW = encoder.Allocate(Encoding.Unicode.GetBytes((string)value), new byte[] { 0, 0 });
+                    return encoder.Allocate(obj.header, ptrW);
+                case PropType.BINARY:
+                    obj.data.bin = ((SBinary)value).Marshal(encoder);
+                    return encoder.Allocate(obj.header, obj.data.bin);
+                default:
+                    throw new NotImplementedException();
+            }
         }
     }
 }
