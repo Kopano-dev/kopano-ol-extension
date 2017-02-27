@@ -17,6 +17,7 @@ using Acacia.Features.GAB;
 /// Consult LICENSE file for details
 using Acacia.Stubs;
 using Acacia.Stubs.OutlookWrappers;
+using Acacia.UI;
 using Acacia.Utils;
 using Acacia.ZPush;
 using Acacia.ZPush.Connect;
@@ -38,6 +39,15 @@ namespace Acacia.Features.Signatures
     public class FeatureSignatures : Feature
     {
         #region Debug options
+
+        [AcaciaOption("If set, the local signature is always set to the server signature. If not set, the local signature will be set " +
+                      "only if it is unspecified. ")]
+        public bool AlwaysSetLocal
+        {
+            get { return GetOption(OPTION_ALWAYS_SET_LOCAL); }
+            set { SetOption(OPTION_ALWAYS_SET_LOCAL, value); }
+        }
+        private static readonly BoolOption OPTION_ALWAYS_SET_LOCAL = new BoolOption("AlwaysSetLocal", false);
 
         [AcaciaOption("The format for local names of synchronised signatures, to prevent overwriting local signatures. May contain %account% and %name%.")]
         public string SignatureLocalName
@@ -93,29 +103,49 @@ namespace Acacia.Features.Signatures
             }
         }
 
+
+        internal void ResyncAll()
+        {
+            foreach(ZPushAccount account in Watcher.Accounts.GetAccounts())
+            {
+                if (account.Confirmed == ZPushAccount.ConfirmationType.IsZPush)
+                {
+                    SyncSignatures(account, null);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Syncs the signatures for the account.
+        /// </summary>
+        /// <param name="account">The account</param>
+        /// <param name="serverSignatureHash">The signature hash. If null, the hash will not be checked and a hard sync will be done.</param>
         private void SyncSignatures(ZPushAccount account, string serverSignatureHash)
         {
             if (!account.Capabilities.Has("signatures"))
                 return;
 
-            Logger.Instance.Trace(this, "Checking signature hash for account {0}: {1}", account, serverSignatureHash);
+            // Check hash if needed
+            if (serverSignatureHash != null)
+            {
+                Logger.Instance.Trace(this, "Checking signature hash for account {0}: {1}", account, serverSignatureHash);
+                if (serverSignatureHash == account.Account.LocalSignaturesHash)
+                    return;
+            }
 
             // Fetch signatures if there is a change
-            if (serverSignatureHash != account.Account.LocalSignaturesHash)
+            try
             {
-                try
-                {
-                    Logger.Instance.Debug(this, "Updating signatures: {0}", account);
-                    FetchSignatures(account);
+                Logger.Instance.Debug(this, "Updating signatures: {0}", account);
+                string hash = FetchSignatures(account);
 
-                    // Store updated hash
-                    account.Account.LocalSignaturesHash = serverSignatureHash;
-                    Logger.Instance.Debug(this, "Updated signatures: {0}", account);
-                }
-                catch (Exception e)
-                {
-                    Logger.Instance.Error(this, "Error fetching signatures: {0}: {1}", account, e);
-                }
+                // Store updated hash
+                account.Account.LocalSignaturesHash = hash;
+                Logger.Instance.Debug(this, "Updated signatures: {0}: {1}", account, hash);
+            }
+            catch (Exception e)
+            {
+                Logger.Instance.Error(this, "Error fetching signatures: {0}: {1}", account, e);
             }
         }
 
@@ -146,7 +176,12 @@ namespace Acacia.Features.Signatures
         {
         }
 
-        private void FetchSignatures(ZPushAccount account)
+        /// <summary>
+        /// Fetches the signatures for the account.
+        /// </summary>
+        /// <param name="account">The account.</param>
+        /// <returns>The signature hash</returns>
+        private string FetchSignatures(ZPushAccount account)
         {
             Logger.Instance.Debug(this, "Fetching signatures for account {0}", account);
             using (ZPushConnection connection = account.Connect())
@@ -166,16 +201,24 @@ namespace Acacia.Features.Signatures
                 }
 
                 // Set default signatures if available and none are set
-                if (!string.IsNullOrEmpty(result.new_message) && string.IsNullOrEmpty(account.Account.SignatureNewMessage))
+                if (!string.IsNullOrEmpty(result.new_message) && ShouldSetSignature(account.Account.SignatureNewMessage))
                 {
                     account.Account.SignatureNewMessage = fullNames[result.new_message];
                 }
-                if (!string.IsNullOrEmpty(result.replyforward_message) && string.IsNullOrEmpty(account.Account.SignatureReplyForwardMessage))
+                if (!string.IsNullOrEmpty(result.replyforward_message) && ShouldSetSignature(account.Account.SignatureReplyForwardMessage))
                 {
                     account.Account.SignatureReplyForwardMessage = fullNames[result.replyforward_message];
                 }
+
+                return result.hash;
             }
         }
+
+        private bool ShouldSetSignature(string currentSignature)
+        {
+            return string.IsNullOrEmpty(currentSignature) || AlwaysSetLocal;
+        }
+
 
         #endregion
 
@@ -334,5 +377,14 @@ namespace Acacia.Features.Signatures
                 }
             }
         }
+
+        #region Settings 
+
+        public override FeatureSettings GetSettings()
+        {
+            return new SignaturesSettings(this);
+        }
+
+        #endregion
     }
 }
