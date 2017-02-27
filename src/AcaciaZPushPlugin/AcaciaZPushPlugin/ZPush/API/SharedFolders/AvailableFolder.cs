@@ -73,9 +73,23 @@ namespace Acacia.ZPush.API.SharedFolders
 
         public SyncId ServerId { get { return _data.ServerId; } }
         public SyncId ParentId { get { return _data.ParentId; } }
+        public BackendId ParentIdAsBackend { get { return Parent?.BackendId ?? BackendId.NONE; } }
         public BackendId BackendId { get { return _data.BackendId; } }
 
         public string Name { get { return _data.DisplayName; } }
+
+        public string DefaultName
+        {
+            get
+            {
+                // Default include the store name in root folders
+                if (ParentId.IsNone)
+                    return Name + " - " + Store.UserName;
+                else
+                    return Name;
+            }
+        }
+
         public OutlookConstants.SyncType Type { get { return _data.Type; } }
 
         public GABUser Store { get; private set; }

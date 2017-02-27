@@ -55,13 +55,16 @@ namespace Acacia.ZPush.API.SharedFolders
                     return false;
                 SoapData rhs = (SoapData)o;
 
+                // TODO: this isn't really a full equality test, as flags is masked. This is because Equals is only used
+                //       to test if there are changes that need to be applied. It would be nicer to rename this, and
+                //       equals in SharedFolder to something like NeedsApply.
                 return
                     store == rhs.store &&
                     folderid == rhs.folderid &&
                     parentid == rhs.parentid &&
                     name == rhs.name &&
                     type == rhs.type &&
-                    flags == rhs.flags;
+                    (flags & ShareFlags.Mask_Apply) == (rhs.flags & ShareFlags.Mask_Apply);
             }
 
             public override int GetHashCode()
@@ -86,6 +89,17 @@ namespace Acacia.ZPush.API.SharedFolders
             return _data;
         }
 
+        /// <summary>
+        /// Patches in any information that is available on AvailableFolder, but not SharedFolder. This is specifically the parent id.
+        /// </summary>
+        public SharedFolder PatchInformation(AvailableFolder folder)
+        {
+            if (folder.ParentIdAsBackend != _data.parentid)
+            {
+                _data.parentid = folder.ParentIdAsBackend;
+            }
+            return this;
+        }
 
         #endregion
 
@@ -100,8 +114,8 @@ namespace Acacia.ZPush.API.SharedFolders
             {
                 store = folder.Store.UserName,
                 folderid = folder.BackendId,
-                parentid = folder.Parent?.BackendId ?? BackendId.NONE,
-                name = folder.Name,
+                parentid = folder.ParentIdAsBackend,
+                name = folder.DefaultName,
                 type = OutlookConstants.USER_SYNC_TYPES[(int)folder.Type],
                 flags = folder.IsMailFolder ? ShareFlags.SendAsOwner : ShareFlags.None
             };
@@ -161,6 +175,7 @@ namespace Acacia.ZPush.API.SharedFolders
         }
 
         public bool FlagSendAsOwner { get { return Flags.HasFlag(ShareFlags.SendAsOwner); } }
+        public bool FlagUpdateShareName { get { return Flags.HasFlag(ShareFlags.TrackShareName); } }
 
         /// <summary>
         /// Returns a copy with the specified 'send as owner' flag.
@@ -168,6 +183,14 @@ namespace Acacia.ZPush.API.SharedFolders
         public SharedFolder WithFlagSendAsOwner(bool value)
         {
             return WithFlags(value ? (_data.flags | ShareFlags.SendAsOwner) : (_data.flags & ~ShareFlags.SendAsOwner));
+        }
+
+        /// <summary>
+        /// Returns a copy with the specified 'update share name' flag.
+        /// </summary>
+        public SharedFolder WithFlagUpdateShareName(bool value)
+        {
+            return WithFlags(value ? (_data.flags | ShareFlags.TrackShareName) : (_data.flags & ~ShareFlags.TrackShareName));
         }
 
         #endregion

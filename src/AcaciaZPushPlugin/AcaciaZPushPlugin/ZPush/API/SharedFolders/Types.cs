@@ -29,7 +29,22 @@ namespace Acacia.ZPush.API.SharedFolders
     public enum ShareFlags
     {
         None = 0,
+
+        /// <summary>
+        /// Mails from folders containing this flag will be sent as the owner of the share, not the user.
+        /// </summary>
         SendAsOwner = 1,
+
+        /// <summary>
+        /// Folders with this flag will be renamed when the original folder is renamed.
+        /// </summary>
+        TrackShareName = 2,
+
+        /// <summary>
+        /// The mask indicating which flag changes cause an Apply to become needed. I.e. flags not in the mask
+        /// are updated only if other changes are made.
+        /// </summary>
+        Mask_Apply = 1
     }
 
     /// <summary>

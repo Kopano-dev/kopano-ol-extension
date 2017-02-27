@@ -169,7 +169,21 @@ namespace Acacia.ZPush.Connect.Soap
         }
         private class TypeHandlerInt : TypeHandler
         {
-            public TypeHandlerInt() : base(SoapConstants.XMLNS_XSD, "int", typeof(long)) { }
+            public TypeHandlerInt() : base(SoapConstants.XMLNS_XSD, null, typeof(int)) { }
+
+            public override void Serialize(string name, object value, StringBuilder s)
+            {
+                s.Append(string.Format("<{0} xsi:type=\"xsd:int\">{1}</{0}>", name, value));
+            }
+
+            protected override object DeserializeContents(XmlNode node, Type expectedType)
+            {
+                return long.Parse(node.InnerText);
+            }
+        }
+        private class TypeHandlerLong : TypeHandler
+        {
+            public TypeHandlerLong() : base(SoapConstants.XMLNS_XSD, "int", typeof(long)) { }
 
             public override void Serialize(string name, object value, StringBuilder s)
             {
@@ -439,6 +453,8 @@ namespace Acacia.ZPush.Connect.Soap
         static SoapSerializer()
         {
             RegisterTypeHandler(new TypeHandlerBoolean());
+            // What is called an int in soap might actually be a long here.
+            RegisterTypeHandler(new TypeHandlerLong());
             RegisterTypeHandler(new TypeHandlerInt());
             RegisterTypeHandler(new TypeHandlerString());
             RegisterTypeHandler(new TypeHandlerList());

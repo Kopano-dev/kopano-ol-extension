@@ -301,6 +301,17 @@ namespace Acacia.Features.SharedFolders
                 textName.Text = value ?? "";
             }
         }
+        private bool? OptionTrackName
+        {
+            get { return textName.Visible ? !_labelName.Enabled : (bool?)null; }
+            set
+            {
+                if (value != null)
+                {
+                    _labelName.Enabled = !value.Value;
+                }
+            }
+        }
         private FolderTreeNode _optionNameNode;
 
         private CheckState? OptionSendAs
@@ -367,6 +378,7 @@ namespace Acacia.Features.SharedFolders
                 _optionSendAsInitial.Clear();
                 _optionPermissionNodes.Clear();
                 OptionName = null;
+                OptionTrackName = null;
                 OptionSendAs = null;
                 OptionPermissions = null;
 
@@ -406,6 +418,7 @@ namespace Acacia.Features.SharedFolders
                 if (_optionNameNode != null && nodes.Length == 1)
                 {
                     OptionName = _optionNameNode.SharedFolder.Name;
+                    OptionTrackName = _optionNameNode.SharedFolder.FlagUpdateShareName;
                 }
                 else
                 {
@@ -461,6 +474,10 @@ namespace Acacia.Features.SharedFolders
             if (_optionNameNode != null)
             {
                 _optionNameNode.SharedFolder = _optionNameNode.SharedFolder.WithName(textName.Text);
+
+                // If the share name matches the folder name, track update
+                bool track = _optionNameNode.SharedFolder.Name == _optionNameNode.AvailableFolder.DefaultName;
+                _optionNameNode.SharedFolder = _optionNameNode.SharedFolder.WithFlagUpdateShareName(track);
             }
         }
 

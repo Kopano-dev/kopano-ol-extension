@@ -85,7 +85,7 @@ namespace Acacia.Features.SharedFolders
         internal SharedFolder AddShare(AvailableFolder folder, SharedFolder state)
         {
             state = state ?? CreateDefaultShare(folder);
-            _currentShares[folder.BackendId] = state;
+            _currentShares[folder.BackendId] = state.PatchInformation(folder);
             CheckDirty();
             return state;
         }
@@ -97,10 +97,6 @@ namespace Acacia.Features.SharedFolders
             // Default send as for mail folders
             if (folder.IsMailFolder)
                 share = share.WithFlagSendAsOwner(true);
-
-            // Default include the store name in root folders
-            if (folder.ParentId.IsNone)
-                share = share.WithName(folder.Name + " - " + folder.Store.UserName);
 
             return share;
         }
@@ -118,6 +114,12 @@ namespace Acacia.Features.SharedFolders
             SharedFolder state;
             if (_initialShares.TryGetValue(folder.BackendId, out state))
             {
+                // If the folder has been renamed, update if we're tracing it.
+                if (state.Name != folder.DefaultName)
+                {
+                    if (state.FlagUpdateShareName)
+                        state = state.WithName(folder.DefaultName);
+                }
                 return state;
             }
             return null;
