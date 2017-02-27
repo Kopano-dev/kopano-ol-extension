@@ -128,11 +128,15 @@ namespace Acacia.ZPush.API.SharedFolders
         public GABUser Store { get { return new GABUser(_data.store); } }
         public BackendId BackendId { get { return _data.folderid; } }
         public SyncId SyncId { get { return _data.syncfolderid; } }
+        public bool IsSynced { get { return SyncId != null; } }
 
-        public Permission Permissions
+        public Permission? Permissions
         {
             get
             {
+                if (!IsSynced)
+                    return null;
+
                 Permission p = Permission.None;
                 if (_data.readable)
                     p |= Permission.Read;

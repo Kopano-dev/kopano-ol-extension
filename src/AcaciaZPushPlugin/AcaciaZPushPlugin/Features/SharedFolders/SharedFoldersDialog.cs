@@ -428,7 +428,7 @@ namespace Acacia.Features.SharedFolders
                 // Permissions shown if all are the same
                 if (_optionPermissionNodes.Count > 0)
                 {
-                    Permission permissions = _optionPermissionNodes.First().SharedFolder.Permissions;
+                    Permission? permissions = _optionPermissionNodes.First().SharedFolder.Permissions;
                     if (_optionPermissionNodes.All(x => x.SharedFolder.Permissions == permissions))
                         OptionPermissions = permissions;
                 }
