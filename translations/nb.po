@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-12 16:12+0000\n"
-"PO-Revision-Date: 2017-01-14 09:53+0000\n"
+"PO-Revision-Date: 2017-02-25 13:42+0000\n"
 "Last-Translator: Klaus <klaus@linuxavdelingen.no>\n"
 "Language-Team: Norwegian Bokmål <http://translate.kopano.io/projects/kopano"
 "/kopano-ol-extension/nb/>\n"
@@ -132,13 +132,13 @@ msgstr "Bruk konto: "
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\GAB\\GABSettings\\buttonGABResync.Text"
 msgid "Resynchronise Global Address Books"
-msgstr ""
+msgstr "Synkroniser på nytt Global Adresse bok"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\chkEnable.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\chkEnable.Text"
 msgid "Enable out-of-office auto-responding"
-msgstr ""
+msgstr "Skru på automatisk fraværsmelding"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\radioNoTime.Text
 #, csharp-format
@@ -198,7 +198,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\labelSelectUser.Text"
 msgid "Open folders for user"
-msgstr ""
+msgstr "Åpne mappe for bruker"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\buttonOpenUser.Text
 #, csharp-format
@@ -216,7 +216,7 @@ msgstr "Del som"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelSendAs.Text"
 msgid "Send as owner"
-msgstr ""
+msgstr "Send som eier"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelPermissions.Text
 #, csharp-format
@@ -234,7 +234,7 @@ msgstr "Tillatelser"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\$this.Text"
 msgid "Shared Folders - {0}"
-msgstr ""
+msgstr "Delte mapper - {0}"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFGet_Failed
 #, csharp-format
