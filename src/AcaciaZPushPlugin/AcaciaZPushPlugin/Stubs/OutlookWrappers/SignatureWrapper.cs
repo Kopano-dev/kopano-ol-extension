@@ -50,7 +50,7 @@ namespace Acacia.Stubs.OutlookWrappers
 
         private static string GetPath(string name, string suffix)
         {
-            return Path.ChangeExtension(Path.Combine(BasePath, name), suffix);
+            return Path.Combine(BasePath, name) + "." + suffix;
         }
 
         public void Delete()

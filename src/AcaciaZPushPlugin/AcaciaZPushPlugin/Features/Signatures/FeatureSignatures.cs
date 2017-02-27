@@ -59,6 +59,7 @@ namespace Acacia.Features.Signatures
             {
                 _gab.SyncFinished += GAB_SyncFinished;
             }
+            Watcher.Sync.AddTask(this, Name, Periodic_Sync);
         }
 
         private void Watcher_AccountDiscovered(ZPushAccount account)
@@ -70,32 +71,56 @@ namespace Acacia.Features.Signatures
         {
             // TODO: make a helper to register for all zpush accounts with specific capabilities, best even
             //       the feature's capabilities
-            if (account.Confirmed == ZPushAccount.ConfirmationType.IsZPush &&
-                account.Capabilities.Has("signatures"))
+            if (account.Confirmed == ZPushAccount.ConfirmationType.IsZPush)
             {
-                Logger.Instance.Trace(this, "Checking signature hash for account {0}: {1}", account, account.ServerSignaturesHash);
+                SyncSignatures(account, account.ServerSignaturesHash);
+            }
+        }
 
-                // Fetch signatures if there is a change
-                if (account.ServerSignaturesHash != account.Account.LocalSignaturesHash)
+        private void Periodic_Sync(ZPushConnection connection)
+        {
+            try
+            {
+                // TODO: merge this into ZPushAccount, allow periodic rechecking of Z-Push confirmation. That was other 
+                //       features can be updated too, e.g. OOF status. That's pretty easy to do, only need to check if
+                //       no other features will break if the ConfirmedChanged event is raised multiple times
+                ActiveSync.SettingsOOF oof = connection.Execute(new ActiveSync.SettingsOOFGet());
+                SyncSignatures(connection.Account, oof.RawResponse.SignaturesHash);
+            }
+            catch(System.Exception e)
+            {
+                Logger.Instance.Error(this, "Error fetching signature hash: {0}", e);
+            }
+        }
+
+        private void SyncSignatures(ZPushAccount account, string serverSignatureHash)
+        {
+            if (!account.Capabilities.Has("signatures"))
+                return;
+
+            Logger.Instance.Trace(this, "Checking signature hash for account {0}: {1}", account, serverSignatureHash);
+
+            // Fetch signatures if there is a change
+            if (serverSignatureHash != account.Account.LocalSignaturesHash)
+            {
+                try
                 {
-                    try
-                    {
-                        Logger.Instance.Debug(this, "Updating signatures: {0}", account);
-                        FetchSignatures(account);
+                    Logger.Instance.Debug(this, "Updating signatures: {0}", account);
+                    FetchSignatures(account);
 
-                        // Store updated hash
-                        account.Account.LocalSignaturesHash = account.ServerSignaturesHash;
-                        Logger.Instance.Debug(this, "Updated signatures: {0}", account);
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.Instance.Error(this, "Error fetching signatures: {0}: {1}", account, e);
-                    }
+                    // Store updated hash
+                    account.Account.LocalSignaturesHash = serverSignatureHash;
+                    Logger.Instance.Debug(this, "Updated signatures: {0}", account);
+                }
+                catch (Exception e)
+                {
+                    Logger.Instance.Error(this, "Error fetching signatures: {0}: {1}", account, e);
                 }
             }
         }
 
-    
+        #region API
+
         // Prevent field assignment warnings
         #pragma warning disable 0649
 
@@ -152,6 +177,8 @@ namespace Acacia.Features.Signatures
             }
         }
 
+        #endregion
+
         private string StoreSignature(ISignatures signatures, ZPushAccount account, Signature signatureInfo)
         {
             string name = GetSignatureName(signatures, account, signatureInfo.name);
@@ -204,7 +231,7 @@ namespace Acacia.Features.Signatures
         {
             return SignatureLocalName.ReplaceStringTokens("%", "%", new Dictionary<string, string>
             {
-                { "account", account.DisplayName },
+                { "account", account.Account.SmtpAddress },
                 { "name", name }
             });
         }
