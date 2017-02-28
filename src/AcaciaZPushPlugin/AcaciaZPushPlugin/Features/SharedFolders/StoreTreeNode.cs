@@ -41,7 +41,7 @@ namespace Acacia.Features.SharedFolders
         private readonly Dictionary<BackendId, SharedFolder> _initialShares;
         private readonly Dictionary<BackendId, SharedFolder> _currentShares;
 
-        public StoreTreeNode(ZPushAccount account, GABUser user, string text, Dictionary<BackendId, SharedFolder> currentFolders)
+        public StoreTreeNode(SharedFoldersManager folders, GABUser user, string text, Dictionary<BackendId, SharedFolder> currentFolders)
         :
         base(text)
         {
@@ -51,7 +51,7 @@ namespace Acacia.Features.SharedFolders
             // cleaning up automatically any obsolote shares.
             this._currentShares = new Dictionary<BackendId, SharedFolder>();
 
-            ChildLoader = new UserFolderLoader(this, account, user);
+            ChildLoader = new UserFolderLoader(this, folders, user);
             ChildLoader.ReloadOnCloseOpen = true;
             HasCheckBox = false;
 
@@ -95,7 +95,7 @@ namespace Acacia.Features.SharedFolders
             SharedFolder share = new SharedFolder(folder);
             
             // Default send as for mail folders
-            if (folder.IsMailFolder)
+            if (folder.Type.IsMail())
                 share = share.WithFlagSendAsOwner(true);
 
             return share;
@@ -167,21 +167,18 @@ namespace Acacia.Features.SharedFolders
 
         public class UserFolderLoader : KTreeNodeLoader
         {
-            private readonly ZPushAccount _account;
+            private readonly SharedFoldersManager _folders;
             public GABUser User { get; private set; }
 
-            public UserFolderLoader(StoreTreeNode parent, ZPushAccount account, GABUser user) : base(parent)
+            public UserFolderLoader(StoreTreeNode parent, SharedFoldersManager folders, GABUser user) : base(parent)
             {
-                this._account = account;
+                this._folders = folders;
                 this.User = user;
             }
 
             protected override object DoLoadChildren(KTreeNode node)
             {
-                using (SharedFoldersAPI folders = new SharedFoldersAPI(_account))
-                {
-                    return folders.GetUserFolders(User);
-                }
+                return _folders.GetStoreFolders(User);
             }
 
             private class FolderComparer : IComparer<AvailableFolder>

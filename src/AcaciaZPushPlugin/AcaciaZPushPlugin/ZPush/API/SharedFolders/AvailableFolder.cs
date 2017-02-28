@@ -94,8 +94,6 @@ namespace Acacia.ZPush.API.SharedFolders
 
         public GABUser Store { get; private set; }
 
-        public bool IsMailFolder { get { return OutlookConstants.IsMailType(Type); } }
-
         #endregion
 
         #region Tree structure

@@ -170,7 +170,7 @@ namespace Acacia
                 _operands.Add(operand);
             }
 
-            public ICollection<SearchQuery> Operands
+            public IList<SearchQuery> Operands
             {
                 get { return _operands; }
             }

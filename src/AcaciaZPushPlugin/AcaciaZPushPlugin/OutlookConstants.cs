@@ -199,7 +199,7 @@ namespace Acacia
             SyncType.RecipientCache, // RecipientCache = 19
         };
         
-        public static bool IsMailType(SyncType type)
+        public static bool IsMail(this SyncType type)
         {
             return USER_SYNC_TYPES[(int)type] == SyncType.UserMail;
         }
@@ -244,6 +244,11 @@ namespace Acacia
 
         #endregion
 
+
+        public static bool IsAppointment(this SyncType type)
+        {
+            return USER_SYNC_TYPES[(int)type] == SyncType.UserAppointment;
+        }
 
         #region Message classes
 

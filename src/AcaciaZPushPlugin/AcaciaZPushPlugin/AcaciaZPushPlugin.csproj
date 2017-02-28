@@ -274,7 +274,8 @@
     </Compile>
     <Compile Include="Features\SendAs\FeatureSendAs.cs" />
     <Compile Include="Features\SharedFolders\FolderTreeNode.cs" />
-    <Compile Include="Features\SharedFolders\SharedCalendarReminders.cs" />
+    <Compile Include="Features\SharedFolders\RemindersQuery.cs" />
+    <Compile Include="Features\SharedFolders\SharedFoldersManager.cs" />
     <Compile Include="Features\Signatures\FeatureSignatures.cs" />
     <Compile Include="Features\Signatures\SignaturesSettings.cs">
       <SubType>UserControl</SubType>

@@ -16,10 +16,8 @@
 
 using Acacia.Controls;
 using Acacia.Features.GAB;
-using Acacia.Stubs;
 using Acacia.UI;
 using Acacia.UI.Outlook;
-using Acacia.Utils;
 using Acacia.ZPush;
 using Acacia.ZPush.API.SharedFolders;
 using System;
@@ -34,21 +32,20 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Serialization;
-using static Acacia.ZPush.API.SharedFolders.SharedFoldersAPI;
 
 namespace Acacia.Features.SharedFolders
 {
     public partial class SharedFoldersDialog : KDialogNew
     {
         private readonly ZPushAccount _account;
-        private SyncId _initialSyncId;
+        private readonly SharedFoldersManager _folders;
+        private readonly SyncId _initialSyncId;
         private SharedFolder _initialFolder;
 
-        public SharedFoldersDialog(ZPushAccount account, SyncId initial = null)
+        public SharedFoldersDialog(FeatureSharedFolders feature, ZPushAccount account, SyncId initial = null)
         {
             this._account = account;
+            this._folders = feature.Manage(account);
             this._initialSyncId = initial;
 
             InitializeComponent();
@@ -77,7 +74,7 @@ namespace Acacia.Features.SharedFolders
             ShowOptions(new KTreeNode[0]);
 
             // Set up user selector
-            gabLookup.GAB = FeatureGAB.FindGABForAccount(_account);
+            gabLookup.GAB = FeatureGAB.FindGABForAccount(account);
         }
 
         #region Load and store
@@ -88,21 +85,18 @@ namespace Acacia.Features.SharedFolders
             KUITask
                 .New((ctx) =>
                 {
-                    using (SharedFoldersAPI api = new SharedFoldersAPI(_account))
-                    {
-                        // TODO: bind cancellation token to Cancel button
-                        // Fetch current shares
-                        ICollection<SharedFolder> folders = api.GetCurrentShares(ctx.CancellationToken);
+                    // TODO: bind cancellation token to Cancel button
+                    // Fetch current shares
+                    ICollection<SharedFolder> folders = _folders.GetCurrentShares(ctx.CancellationToken);
 
-                        // Find the initial folder if required
-                        if (_initialSyncId != null)
-                            _initialFolder = folders.FirstOrDefault(f => f.SyncId == _initialSyncId);
+                    // Find the initial folder if required
+                    if (_initialSyncId != null)
+                        _initialFolder = folders.FirstOrDefault(f => f.SyncId == _initialSyncId);
 
-                        // Group by store and folder id
-                        return folders.GroupBy(f => f.Store)
-                                    .ToDictionary(group => group.Key,
-                                                  group => group.ToDictionary(folder => folder.BackendId));
-                    }
+                    // Group by store and folder id
+                    return folders.GroupBy(f => f.Store)
+                                .ToDictionary(group => group.Key,
+                                                group => group.ToDictionary(folder => folder.BackendId));
                 })
                 .OnSuccess(InitialiseTree, true)
                 .OnError((e) =>
@@ -163,27 +157,25 @@ namespace Acacia.Features.SharedFolders
             BusyText = Properties.Resources.SharedFolders_Applying_Label;
             KUITask.New((ctx) =>
             {
-                using (SharedFoldersAPI folders = new SharedFoldersAPI(_account))
+                // We reuse the same busy indicationg for all calls. A count is kept to ensure it's removed.
+                int count = 0;
+
+                foreach (StoreTreeNode storeNode in _userFolders.Values)
                 {
-                    // We reuse the same busy indicationg for all calls. A count is kept to ensure it's removed.
-                    int count = 0;
-
-                    foreach (StoreTreeNode storeNode in _userFolders.Values)
+                    if (storeNode.IsDirty)
                     {
-                        if (storeNode.IsDirty)
-                        {
-                            ctx.AddBusy(1);
-                            ++count;
+                        ctx.AddBusy(1);
+                        ++count;
 
-                            folders.SetCurrentShares(storeNode.User, storeNode.CurrentShares, ctx.CancellationToken);
-                        }
+                        _folders.SetSharesForStore(storeNode.User, storeNode.CurrentShares, ctx.CancellationToken);
                     }
-
-                    return count;
                 }
+
+                return count;
             })
             .OnSuccess((ctx, count) =>
             {
+                // Update UI state
                 foreach (StoreTreeNode storeNode in _userFolders.Values)
                     if (storeNode.IsDirty)
                         storeNode.ChangesApplied();
@@ -255,7 +247,7 @@ namespace Acacia.Features.SharedFolders
                 }
 
                 // Add the node
-                node = new StoreTreeNode(_account, user, user.DisplayName, currentShares ?? new Dictionary<BackendId, SharedFolder>());
+                node = new StoreTreeNode(_folders, user, user.DisplayName, currentShares ?? new Dictionary<BackendId, SharedFolder>());
                 node.DirtyChanged += UserSharesChanged;
                 _userFolders.Add(user, node);
                 kTreeFolders.RootNodes.Add(node);
@@ -333,6 +325,25 @@ namespace Acacia.Features.SharedFolders
         private readonly List<FolderTreeNode> _optionSendAsNodes = new List<FolderTreeNode>();
         private readonly List<bool> _optionSendAsInitial = new List<bool>();
 
+        private CheckState? OptionReminders
+        {
+            get
+            {
+                if (checkReminders.Visible)
+                    return checkReminders.CheckState;
+                return null;
+            }
+
+            set
+            {
+                _labelReminders.Visible = checkReminders.Visible = value != null;
+                if (value != null)
+                    checkReminders.CheckState = value.Value;
+            }
+        }
+        private readonly List<FolderTreeNode> _optionRemindersNodes = new List<FolderTreeNode>();
+        private readonly List<bool> _optionRemindersInitial = new List<bool>();
+
         private Permission? _optionPermissions;
         private Permission? OptionPermissions
         {
@@ -376,10 +387,13 @@ namespace Acacia.Features.SharedFolders
                 _optionNameNode = null;
                 _optionSendAsNodes.Clear();
                 _optionSendAsInitial.Clear();
+                _optionRemindersNodes.Clear();
+                _optionRemindersInitial.Clear();
                 _optionPermissionNodes.Clear();
                 OptionName = null;
                 OptionTrackName = null;
                 OptionSendAs = null;
+                OptionReminders = null;
                 OptionPermissions = null;
 
                 foreach (KTreeNode node in nodes)
@@ -399,11 +413,17 @@ namespace Acacia.Features.SharedFolders
                     // Assume we will edit the name for this node; cleared below if there are multiple
                     _optionNameNode = folderNode;
 
-                    // Show send as if there are any mail folders
-                    if (folder.IsMailFolder)
+                    if (folder.Type.IsMail())
                     {
+                        // Show send as if there are any mail folders
                         _optionSendAsNodes.Add(folderNode);
                         _optionSendAsInitial.Add(folderNode.SharedFolder.FlagSendAsOwner);
+                    }
+                    else if (folder.Type.IsAppointment())
+                    {
+                        // Show reminders for appointment folders
+                        _optionRemindersNodes.Add(folderNode);
+                        _optionRemindersInitial.Add(folderNode.SharedFolder.FlagCalendarReminders);
                     }
 
                     // Show permissions for all shared nodes
@@ -448,6 +468,21 @@ namespace Acacia.Features.SharedFolders
                         checkSendAs.ThreeState = true;
                     }
                 }
+                // Reminders shown if any node supports it
+                if (_optionRemindersNodes.Count > 0)
+                {
+                    bool reminders = _optionRemindersNodes.First().SharedFolder.FlagCalendarReminders;
+                    if (_optionRemindersNodes.All(x => x.SharedFolder.FlagCalendarReminders == reminders))
+                    {
+                        OptionReminders = reminders ? CheckState.Checked : CheckState.Unchecked;
+                        checkReminders.ThreeState = false;
+                    }
+                    else
+                    {
+                        OptionReminders = CheckState.Indeterminate;
+                        checkReminders.ThreeState = true;
+                    }
+                }
             }
             finally
             {
@@ -477,7 +512,7 @@ namespace Acacia.Features.SharedFolders
 
                 // If the share name matches the folder name, track update
                 bool track = _optionNameNode.SharedFolder.Name == _optionNameNode.AvailableFolder.DefaultName;
-                _optionNameNode.SharedFolder = _optionNameNode.SharedFolder.WithFlagUpdateShareName(track);
+                _optionNameNode.SharedFolder = _optionNameNode.SharedFolder.WithFlagTrackShareName(track);
             }
         }
 
@@ -503,6 +538,26 @@ namespace Acacia.Features.SharedFolders
                     {
                         desc.SharedFolder = desc.SharedFolder.WithFlagSendAsOwner(sendAs);
                     }
+                }
+            }
+        }
+
+        private void checkReminders_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < _optionRemindersNodes.Count; ++i)
+            {
+                FolderTreeNode node = _optionRemindersNodes[i];
+                bool reminders = false;
+                switch (checkReminders.CheckState)
+                {
+                    case CheckState.Checked: reminders = true; break;
+                    case CheckState.Indeterminate: reminders = _optionRemindersInitial[i]; break;
+                    case CheckState.Unchecked: reminders = false; break;
+                }
+
+                if (node.SharedFolder.FlagCalendarReminders != reminders)
+                {
+                    node.SharedFolder = node.SharedFolder.WithFlagCalendarReminders(reminders);
                 }
             }
         }

@@ -41,10 +41,15 @@ namespace Acacia.ZPush.API.SharedFolders
         TrackShareName = 2,
 
         /// <summary>
+        /// Applicable to calendars only. Set to enable reminders on the shared calendar.
+        /// </summary>
+        CalendarReminders = 4,
+
+        /// <summary>
         /// The mask indicating which flag changes cause an Apply to become needed. I.e. flags not in the mask
         /// are updated only if other changes are made.
         /// </summary>
-        Mask_Apply = 1
+        Mask_Apply = 0xFFFF & ~(TrackShareName)
     }
 
     /// <summary>

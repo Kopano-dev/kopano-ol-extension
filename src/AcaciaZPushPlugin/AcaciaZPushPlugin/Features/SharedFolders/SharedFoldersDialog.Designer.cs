@@ -47,6 +47,8 @@
             this._labelPermissions = new System.Windows.Forms.Label();
             this.labelPermissionsValue = new System.Windows.Forms.Label();
             this.dialogButtons = new Acacia.Controls.KDialogButtons();
+            this._labelReminders = new System.Windows.Forms.Label();
+            this.checkReminders = new System.Windows.Forms.CheckBox();
             this._layout.SuspendLayout();
             this._mainBusyHider.SuspendLayout();
             this._layoutMain.SuspendLayout();
@@ -137,8 +139,10 @@
             this._layoutOptions.Controls.Add(this.textName, 1, 0);
             this._layoutOptions.Controls.Add(this._labelSendAs, 0, 1);
             this._layoutOptions.Controls.Add(this.checkSendAs, 1, 1);
-            this._layoutOptions.Controls.Add(this._labelPermissions, 0, 2);
-            this._layoutOptions.Controls.Add(this.labelPermissionsValue, 1, 2);
+            this._layoutOptions.Controls.Add(this._labelPermissions, 0, 3);
+            this._layoutOptions.Controls.Add(this.labelPermissionsValue, 1, 3);
+            this._layoutOptions.Controls.Add(this._labelReminders, 0, 2);
+            this._layoutOptions.Controls.Add(this.checkReminders, 1, 2);
             this._layoutOptions.Name = "_layoutOptions";
             // 
             // _labelName
@@ -185,6 +189,18 @@
             this.dialogButtons.Name = "dialogButtons";
             this.dialogButtons.Apply += new System.EventHandler(this.dialogButtons_Apply);
             // 
+            // _labelReminders
+            // 
+            resources.ApplyResources(this._labelReminders, "_labelReminders");
+            this._labelReminders.Name = "_labelReminders";
+            // 
+            // checkReminders
+            // 
+            resources.ApplyResources(this.checkReminders, "checkReminders");
+            this.checkReminders.Name = "checkReminders";
+            this.checkReminders.UseVisualStyleBackColor = true;
+            this.checkReminders.CheckedChanged += new System.EventHandler(this.checkReminders_CheckedChanged);
+            // 
             // SharedFoldersDialog
             // 
             resources.ApplyResources(this, "$this");
@@ -228,5 +244,7 @@
         private Controls.KDialogButtons dialogButtons;
         private System.Windows.Forms.TableLayoutPanel _layoutCenterGABLookup;
         private UI.GABLookupControl gabLookup;
+        private System.Windows.Forms.Label _labelReminders;
+        private System.Windows.Forms.CheckBox checkReminders;
     }
 }

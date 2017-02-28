@@ -117,7 +117,7 @@ namespace Acacia.ZPush.API.SharedFolders
                 parentid = folder.ParentIdAsBackend,
                 name = folder.DefaultName,
                 type = OutlookConstants.USER_SYNC_TYPES[(int)folder.Type],
-                flags = folder.IsMailFolder ? ShareFlags.SendAsOwner : ShareFlags.None
+                flags = folder.Type.IsMail() ? ShareFlags.SendAsOwner : ShareFlags.None
             };
         }
 
@@ -129,6 +129,7 @@ namespace Acacia.ZPush.API.SharedFolders
         public BackendId BackendId { get { return _data.folderid; } }
         public SyncId SyncId { get { return _data.syncfolderid; } }
         public bool IsSynced { get { return SyncId != null; } }
+        public OutlookConstants.SyncType SyncType { get { return _data.type; } }
 
         public Permission? Permissions
         {
@@ -180,6 +181,7 @@ namespace Acacia.ZPush.API.SharedFolders
 
         public bool FlagSendAsOwner { get { return Flags.HasFlag(ShareFlags.SendAsOwner); } }
         public bool FlagUpdateShareName { get { return Flags.HasFlag(ShareFlags.TrackShareName); } }
+        public bool FlagCalendarReminders { get { return Flags.HasFlag(ShareFlags.CalendarReminders); } }
 
         /// <summary>
         /// Returns a copy with the specified 'send as owner' flag.
@@ -192,9 +194,17 @@ namespace Acacia.ZPush.API.SharedFolders
         /// <summary>
         /// Returns a copy with the specified 'update share name' flag.
         /// </summary>
-        public SharedFolder WithFlagUpdateShareName(bool value)
+        public SharedFolder WithFlagTrackShareName(bool value)
         {
             return WithFlags(value ? (_data.flags | ShareFlags.TrackShareName) : (_data.flags & ~ShareFlags.TrackShareName));
+        }
+
+        /// <summary>
+        /// Returns a copy with the specified 'calendar reminders' flag.
+        /// </summary>
+        public SharedFolder WithFlagCalendarReminders(bool value)
+        {
+            return WithFlags(value ? (_data.flags | ShareFlags.CalendarReminders) : (_data.flags & ~ShareFlags.CalendarReminders));
         }
 
         #endregion

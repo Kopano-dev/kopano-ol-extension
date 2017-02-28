@@ -58,7 +58,7 @@ namespace Acacia.Features.SharedFolders
             ZPushAccount account = Watcher.Accounts.GetAccount(folder);
             if (account != null)
             {
-                new SharedFoldersDialog(account, folder.SyncId).ShowDialog();
+                new SharedFoldersDialog(this, account, folder.SyncId).ShowDialog();
             }
         }
 
@@ -67,8 +67,17 @@ namespace Acacia.Features.SharedFolders
             ZPushAccount account = Watcher.CurrentZPushAccount();
             if (account != null)
             {
-                new SharedFoldersDialog(account).ShowDialog();
+                new SharedFoldersDialog(this, account).ShowDialog();
             }
+        }
+
+        #endregion
+
+        #region Folder management
+
+        internal SharedFoldersManager Manage(ZPushAccount account)
+        {
+            return new SharedFoldersManager(this, account);
         }
 
         #endregion
