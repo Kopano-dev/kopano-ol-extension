@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Acacia.DebugOptions;
 
 namespace Acacia.Features.SharedFolders
 {
@@ -34,6 +35,19 @@ namespace Acacia.Features.SharedFolders
     :
     Feature, FeatureWithRibbon, FeatureWithContextMenu
     {
+        #region Debug options
+
+        [AcaciaOption("Disables the update of the reminders query. If this is disabled, the reminders flag on " +
+                       "shared folders will be ignored.")]
+        public bool Reminders
+        {
+            get { return GetOption(OPTION_REMINDERS); }
+            set { SetOption(OPTION_REMINDERS, value); }
+        }
+        private static readonly BoolOption OPTION_REMINDERS = new BoolOption("Reminders", true);
+
+        #endregion
+
         public override void Startup()
         {
             RegisterButton(this, "SharedFolders", true, ManageFolders, ZPushBehaviour.Disable);

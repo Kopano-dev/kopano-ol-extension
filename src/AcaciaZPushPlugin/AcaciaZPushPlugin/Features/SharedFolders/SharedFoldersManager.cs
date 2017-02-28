@@ -62,15 +62,18 @@ namespace Acacia.Features.SharedFolders
             // Fetch the shares
             ICollection<SharedFolder> shares = _api.GetCurrentShares(cancel);
 
-            // Make sure reminders are disabled as soon as possible
-            UpdateReminders(shares);
+            if (_feature.Reminders)
+            {
+                // Make sure reminders are disabled as soon as possible
+                UpdateReminders(shares);
 
-            // Remove any reminders from the shares that are not wanted, they are stale
-            OpenQuery()?.RemoveStaleReminders(
-                shares
-                    .Where(x => x.IsSynced && x.SyncType.IsAppointment() && x.FlagCalendarReminders)
-                    .Select(x => x.SyncId)
-                );
+                // Remove any reminders from the shares that are not wanted, they are stale
+                OpenQuery()?.RemoveStaleReminders(
+                    shares
+                        .Where(x => x.IsSynced && x.SyncType.IsAppointment() && x.FlagCalendarReminders)
+                        .Select(x => x.SyncId)
+                    );
+            }
 
             // Commit changes
             if (_query != null)
@@ -90,12 +93,15 @@ namespace Acacia.Features.SharedFolders
 
         private void UpdateReminders(ICollection<SharedFolder> shares)
         {
-            foreach(SharedFolder share in shares)
+            if (_feature.Reminders)
             {
-                Logger.Instance.Debug(this, "UpdateReminders: {0}", share);
-                if (share.IsSynced && share.SyncType.IsAppointment())
+                foreach (SharedFolder share in shares)
                 {
-                    OpenQuery()?.UpdateReminders(share.SyncId, share.FlagCalendarReminders);
+                    Logger.Instance.Debug(this, "UpdateReminders: {0}", share);
+                    if (share.IsSynced && share.SyncType.IsAppointment())
+                    {
+                        OpenQuery()?.UpdateReminders(share.SyncId, share.FlagCalendarReminders);
+                    }
                 }
             }
         }
@@ -104,14 +110,17 @@ namespace Acacia.Features.SharedFolders
         {
             if (_query == null)
             {
-                RemindersQuery query = new RemindersQuery(_feature, _account.Account.Store);
-                if (query.Open())
+                if (_feature.Reminders)
                 {
-                    _query = query;
-                }
-                else
-                {
-                    query.Dispose();
+                    RemindersQuery query = new RemindersQuery(_feature, _account.Account.Store);
+                    if (query.Open())
+                    {
+                        _query = query;
+                    }
+                    else
+                    {
+                        query.Dispose();
+                    }
                 }
             }
             return _query;
