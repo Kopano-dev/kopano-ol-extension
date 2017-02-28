@@ -134,27 +134,40 @@ namespace Acacia.Native
 
             int size = 0;
             int[] starts = new int[all.Length];
+            object[] encode = new object[all.Length];
+            int used = 0;
+            int align = -1;
             for (int i = 0; i < all.Length; ++i)
             {
-                starts[i] = Align(size);
+                if (all[i] is int)
+                {
+                    align = (int)all[i];
+                    ++i;
+                }
+
+                starts[used] = Align(size, align);
                 int thisSize = Marshal.SizeOf(all[i]);
-                size = starts[i] + thisSize;
+                size = starts[used] + thisSize;
+                encode[used] = all[i];
+                align = -1;
+                ++used;
             }
 
             AllocationBase alloc = Allocate(size);
             IntPtr ptr = alloc.Pointer;
-            for (int i = 0; i < all.Length; ++i)
+            for (int i = 0; i < used; ++i)
             {
-                Marshal.StructureToPtr(all[i], ptr + starts[i], false);
+                Marshal.StructureToPtr(encode[i], ptr + starts[i], false);
             }
             return alloc.Pointer;
         }
 
 
 
-        private int Align(int size)
+        private int Align(int size, int align)
         {
-            int align = Marshal.SizeOf<IntPtr>();
+            if (align < 0)
+                align = Marshal.SizeOf<IntPtr>();
             int additional = (align - (size % align)) % align;
             return size + additional;
         }

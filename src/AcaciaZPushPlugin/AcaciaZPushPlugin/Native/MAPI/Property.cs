@@ -66,8 +66,7 @@ namespace Acacia.Native.MAPI
         }
     }
 
-    // TODO: align is probably wrong for 32-bit
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Explicit)]
     public struct PropValue
     {
         [StructLayout(LayoutKind.Sequential)]
@@ -124,7 +123,9 @@ namespace Acacia.Native.MAPI
             //	LONG				x;			/* case PT_NULL, PT_OBJECT (no usable value) */
         }
 
+        [FieldOffset(0)]
         public Header header;
+        [FieldOffset(8)]
         public Data data;
 
         public override string ToString()
@@ -160,13 +161,13 @@ namespace Acacia.Native.MAPI
                     return encoder.Allocate(obj.header, obj.data.b);
                 case PropType.STRING8:
                     IntPtr ptrA = encoder.Allocate(Encoding.ASCII.GetBytes((string)value), new byte[] { 0 });
-                    return encoder.Allocate(obj.header, ptrA);
+                    return encoder.Allocate(obj.header, 8, ptrA);
                 case PropType.UNICODE:
                     IntPtr ptrW = encoder.Allocate(Encoding.Unicode.GetBytes((string)value), new byte[] { 0, 0 });
-                    return encoder.Allocate(obj.header, ptrW);
+                    return encoder.Allocate(obj.header, 8, ptrW);
                 case PropType.BINARY:
                     obj.data.bin = ((SBinary)value).Marshal(encoder);
-                    return encoder.Allocate(obj.header, obj.data.bin);
+                    return encoder.Allocate(obj.header, 8, obj.data.bin);
                 default:
                     throw new NotImplementedException();
             }

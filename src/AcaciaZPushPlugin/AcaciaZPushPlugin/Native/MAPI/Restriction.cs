@@ -207,53 +207,62 @@ namespace Acacia.Native.MAPI
         }
     }
 
-    // TODO: check this on 32 bit machines
-    [StructLayout(LayoutKind.Explicit)]
+    [StructLayout(LayoutKind.Sequential)]
     unsafe public struct SRestriction
     {
-        [FieldOffset(0)]
-        public RestrictionType rt;
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Header
+        {
+            public RestrictionType rt;
+        }
 
-        // And/Or
-        [FieldOffset(8)]
-        public SubRestriction sub;
+        [StructLayout(LayoutKind.Explicit)]
+        unsafe public struct Data
+        {
+            // And/Or
+            [FieldOffset(0)]
+            public SubRestriction sub;
 
-        [FieldOffset(8)]
-        public NotRestriction not;
+            [FieldOffset(0)]
+            public NotRestriction not;
 
-        [FieldOffset(8)]
-        public ContentRestriction content;
+            [FieldOffset(0)]
+            public ContentRestriction content;
 
-        [FieldOffset(8)]
-        public PropertyRestriction prop;
+            [FieldOffset(0)]
+            public PropertyRestriction prop;
 
-        [FieldOffset(8)]
-        public BitMaskRestriction bitMask;
+            [FieldOffset(0)]
+            public BitMaskRestriction bitMask;
 
-        [FieldOffset(8)]
-        public ExistRestriction exist;
+            [FieldOffset(0)]
+            public ExistRestriction exist;
 
-        [FieldOffset(8)]
-        public CommentRestriction comment;
+            [FieldOffset(0)]
+            public CommentRestriction comment;
+        }
+
+        public Header header;
+        public Data data;
 
         public SearchQuery ToSearchQuery()
         {
-            switch (rt)
+            switch (header.rt)
             {
                 case RestrictionType.AND:
-                    return sub.ToSearchQuery(true);
+                    return data.sub.ToSearchQuery(true);
                 case RestrictionType.OR:
-                    return sub.ToSearchQuery(false);
+                    return data.sub.ToSearchQuery(false);
                 case RestrictionType.NOT:
-                    return not.ToSearchQuery();
+                    return data.not.ToSearchQuery();
                 case RestrictionType.CONTENT:
-                    return content.ToSearchQuery();
+                    return data.content.ToSearchQuery();
                 case RestrictionType.PROPERTY:
-                    return prop.ToSearchQuery();
+                    return data.prop.ToSearchQuery();
                 case RestrictionType.BITMASK:
-                    return bitMask.ToSearchQuery();
+                    return data.bitMask.ToSearchQuery();
                 case RestrictionType.EXIST:
-                    return exist.ToSearchQuery();
+                    return data.exist.ToSearchQuery();
 
                     /* TODO        COMPAREPROPS,
                             BITMASK,
@@ -275,27 +284,27 @@ namespace Acacia.Native.MAPI
         public string ToString(int depth)
         {
             string indent = new string(' ', depth);
-            string s = indent + rt.ToString() + "\n" + indent + "{\n";
-            switch (rt)
+            string s = indent + header.rt.ToString() + "\n" + indent + "{\n";
+            switch (header.rt)
             {
                 case RestrictionType.AND:
                 case RestrictionType.OR:
-                    s += sub.ToString(depth + 1);
+                    s += data.sub.ToString(depth + 1);
                     break;
                 case RestrictionType.NOT:
-                    s += not.ToString(depth + 1);
+                    s += data.not.ToString(depth + 1);
                     break;
                 case RestrictionType.CONTENT:
-                    s += content.ToString(depth + 1);
+                    s += data.content.ToString(depth + 1);
                     break;
                 case RestrictionType.PROPERTY:
-                    s += prop.ToString(depth + 1);
+                    s += data.prop.ToString(depth + 1);
                     break;
                 case RestrictionType.BITMASK:
-                    s += bitMask.ToString(depth + 1);
+                    s += data.bitMask.ToString(depth + 1);
                     break;
                 case RestrictionType.EXIST:
-                    s += exist.ToString(depth + 1);
+                    s += data.exist.ToString(depth + 1);
                     break;
 
                     /* TODO        COMPAREPROPS,
@@ -361,15 +370,15 @@ namespace Acacia.Native.MAPI
 
         public void Encode(SearchQuery.PropertyExists part)
         {
-            Current->rt = RestrictionType.EXIST;
-            Current->exist.prop = part.Property.Tag;
+            Current->header.rt = RestrictionType.EXIST;
+            Current->data.exist.prop = part.Property.Tag;
         }
 
         public void Encode(SearchQuery.Or part)
         {
-            Current->rt = RestrictionType.OR;
-            Current->sub.cb = (uint)part.Operands.Count;
-            Current->sub.ptr = EncodePointer(part.Operands);
+            Current->header.rt = RestrictionType.OR;
+            Current->data.sub.cb = (uint)part.Operands.Count;
+            Current->data.sub.ptr = EncodePointer(part.Operands);
         }
 
         public void Encode(SearchQuery.PropertyIdentifier part)
@@ -380,15 +389,15 @@ namespace Acacia.Native.MAPI
 
         public void Encode(SearchQuery.Not part)
         {
-            Current->rt = RestrictionType.NOT;
-            Current->not.ptr = EncodePointer(new[] { part.Operand });
+            Current->header.rt = RestrictionType.NOT;
+            Current->data.not.ptr = EncodePointer(new[] { part.Operand });
         }
 
         public void Encode(SearchQuery.And part)
         {
-            Current->rt = RestrictionType.AND;
-            Current->sub.cb = (uint)part.Operands.Count;
-            Current->sub.ptr = EncodePointer(part.Operands);
+            Current->header.rt = RestrictionType.AND;
+            Current->data.sub.cb = (uint)part.Operands.Count;
+            Current->data.sub.ptr = EncodePointer(part.Operands);
         }
 
         private SRestriction* EncodePointer(IEnumerable<SearchQuery> operands)
@@ -425,26 +434,26 @@ namespace Acacia.Native.MAPI
 
         public void Encode(SearchQuery.PropertyContent part)
         {
-            Current->rt = RestrictionType.CONTENT;
-            Current->content.ulFuzzyLevel = ContentRestriction.FuzzyLevelFromSearchQuery(part);
-            Current->content.ulPropTag = part.Property.Tag;
-            Current->content.prop = (PropValue*)PropValue.MarshalFromObject(this, part.Property.Tag, part.Content);
+            Current->header.rt = RestrictionType.CONTENT;
+            Current->data.content.ulFuzzyLevel = ContentRestriction.FuzzyLevelFromSearchQuery(part);
+            Current->data.content.ulPropTag = part.Property.Tag;
+            Current->data.content.prop = (PropValue*)PropValue.MarshalFromObject(this, part.Property.Tag, part.Content);
         }
 
         public void Encode(SearchQuery.PropertyCompare part)
         {
-            Current->rt = RestrictionType.PROPERTY;
-            Current->prop.relop = (SearchOperation)part.Operation;
-            Current->prop.ulPropTag = part.Property.Tag;
-            Current->prop.prop = (PropValue*)PropValue.MarshalFromObject(this, part.Property.Tag, part.Value);
+            Current->header.rt = RestrictionType.PROPERTY;
+            Current->data.prop.relop = (SearchOperation)part.Operation;
+            Current->data.prop.ulPropTag = part.Property.Tag;
+            Current->data.prop.prop = (PropValue*)PropValue.MarshalFromObject(this, part.Property.Tag, part.Value);
         }
 
         public void Encode(SearchQuery.PropertyBitMask part)
         {
-            Current->rt = RestrictionType.BITMASK;
-            Current->bitMask.bmr = (BMR)(int)part.Operation;
-            Current->bitMask.prop = part.Property.Tag;
-            Current->bitMask.mask = part.Mask;
+            Current->header.rt = RestrictionType.BITMASK;
+            Current->data.bitMask.bmr = (BMR)(int)part.Operation;
+            Current->data.bitMask.prop = part.Property.Tag;
+            Current->data.bitMask.mask = part.Mask;
         }
     }
 
