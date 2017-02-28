@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Acacia.ZPush.API.SharedFolders.SharedFoldersAPI;
 
 namespace Acacia.ZPush.API.SharedFolders
 {

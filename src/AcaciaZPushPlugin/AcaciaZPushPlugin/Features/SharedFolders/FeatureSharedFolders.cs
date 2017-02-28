@@ -88,11 +88,12 @@ namespace Acacia.Features.SharedFolders
 
         private void AdditionalFolders_Sync(ZPushConnection connection)
         {
-            Logger.Instance.Debug(this, "Starting sync for account {0}", connection.Account);
-            using (SharedFoldersAPI api = new SharedFoldersAPI(connection))
+            using (SharedFoldersManager manager = Manage(connection.Account))
             {
+                Logger.Instance.Debug(this, "Starting sync for account {0}", connection.Account);
+
                 // Fetch the current shares
-                ICollection<SharedFolder> shares = api.GetCurrentShares();
+                ICollection<SharedFolder> shares = manager.GetCurrentShares(null);
                 Logger.Instance.Trace(this, "AdditionalFolders_Sync: {0}", shares.Count);
 
                 // Convert to dictionary

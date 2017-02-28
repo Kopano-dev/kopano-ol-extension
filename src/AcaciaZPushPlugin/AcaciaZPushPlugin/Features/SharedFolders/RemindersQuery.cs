@@ -98,6 +98,8 @@ namespace Acacia.Features.SharedFolders
         {
             Logger.Instance.Trace(this, "Setting reminders for folder {0}: {1}", wantReminders, folderId);
             string prefix = MakeFolderPrefix(folderId);
+            if (prefix == null)
+                return;
 
             // Find existing
             for (int i = 0; i < _queryCustom.Operands.Count;)
@@ -131,7 +133,11 @@ namespace Acacia.Features.SharedFolders
             // Collect the valid prefixes
             HashSet<string> prefixes = new HashSet<string>();
             foreach (SyncId id in wanted)
-                prefixes.Add(MakeFolderPrefix(id));
+            {
+                string prefix = MakeFolderPrefix(id);
+                if (prefix != null)
+                    prefixes.Add(prefix);
+            }
 
             // Remove all operands for which we do not want the prefix
             for (int i = 0; i < _queryCustom.Operands.Count;)
@@ -155,6 +161,10 @@ namespace Acacia.Features.SharedFolders
 
         private string MakeFolderPrefix(SyncId folderId)
         {
+            // Sanity check. The check for shared folders also excludes any weird ids; e.g. if permissions are wrong,
+            // this will not be a sync id, but a backend id.
+            if (folderId == null || !folderId.IsShared)
+                return null;
             return folderId.ToString() + ":";
         }
     }
