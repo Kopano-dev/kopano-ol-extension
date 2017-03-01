@@ -88,18 +88,6 @@ namespace Acacia.ZPush.API.SharedFolders
             return _data;
         }
 
-        /// <summary>
-        /// Patches in any information that is available on AvailableFolder, but not SharedFolder. This is specifically the parent id.
-        /// </summary>
-        public SharedFolder PatchInformation(AvailableFolder folder)
-        {
-            if (folder.ParentIdAsBackend != _data.parentid)
-            {
-                _data.parentid = folder.ParentIdAsBackend;
-            }
-            return this;
-        }
-
         #endregion
 
         #region Setup

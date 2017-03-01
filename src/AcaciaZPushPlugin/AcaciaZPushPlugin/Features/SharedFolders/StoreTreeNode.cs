@@ -85,7 +85,7 @@ namespace Acacia.Features.SharedFolders
         internal SharedFolder AddShare(AvailableFolder folder, SharedFolder state)
         {
             state = state ?? CreateDefaultShare(folder);
-            _currentShares[folder.BackendId] = state.PatchInformation(folder);
+            _currentShares[folder.BackendId] = state;
             CheckDirty();
             return state;
         }
