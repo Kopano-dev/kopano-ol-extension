@@ -17,20 +17,45 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OutlookRestarter
 {
     class Program
     {
+
+        /// <summary>
+        /// Entry point.
+        /// Arguments:
+        /// 0 - parent pid
+        /// 1 - parent path
+        /// 2 - arguments
+        /// n - ...
+        /// </summary>
+        /// <param name="args"></param>
         [STAThread]
         static void Main(string[] args)
         {
-            Process process = new Process();
-            process.StartInfo = new ProcessStartInfo(args[0], string.Join(" ", args.Skip(1)));
-            process.Start();
+            string procPath = args[1];
+            var procArgs = args.Skip(2);
+            try
+            {
+                // Attempt waiting for the process to finish
+                int procId = int.Parse(args[0]);
+                Process proc = Process.GetProcessById(procId);
+                proc.WaitForExit(15000);
+            }
+            finally
+            {
+                // Start the process
+                Process process = new Process();
+                process.StartInfo = new ProcessStartInfo(procPath, string.Join(" ", procArgs));
+                process.Start();
+            }
         }
     }
 }

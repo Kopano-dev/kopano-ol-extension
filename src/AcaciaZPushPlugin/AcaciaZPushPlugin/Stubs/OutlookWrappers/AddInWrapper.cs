@@ -150,7 +150,7 @@ namespace Acacia.Stubs.OutlookWrappers
 
             // Run that
             Process process = new Process();
-            process.StartInfo = new ProcessStartInfo(path, Environment.CommandLine);
+            process.StartInfo = new ProcessStartInfo(path, Process.GetCurrentProcess().Id + " " + Environment.CommandLine);
             process.Start();
 
             // And close us and any other windows
