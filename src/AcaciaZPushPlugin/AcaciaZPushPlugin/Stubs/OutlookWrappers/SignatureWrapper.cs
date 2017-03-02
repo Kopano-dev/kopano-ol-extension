@@ -82,14 +82,27 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public void SetContent(string content, ISignatureFormat format)
         {
-            string path = GetPath(format, false);
-            File.WriteAllText(path, content);
+            WriteContent(content, format, false);
         }
 
         public void SetContentTemplate(string content, ISignatureFormat format)
         {
-            string path = GetPath(format, true);
-            File.WriteAllText(path, content);
+            WriteContent(content, format, true);
+        }
+
+        private void WriteContent(string content, ISignatureFormat format, bool isTemplate)
+        {
+            string path = GetPath(format, isTemplate);
+
+            if (format == ISignatureFormat.HTML)
+            {
+                // [KOE-70] If the html file does not have a BOM, it sometimes gives encoding errors.
+                File.WriteAllText(path, content, new UTF8Encoding(true));
+            }
+            else
+            {
+                File.WriteAllText(path, content);
+            }
         }
 
         public string GetContentTemplate(ISignatureFormat format)
