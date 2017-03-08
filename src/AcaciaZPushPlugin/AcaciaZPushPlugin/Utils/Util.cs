@@ -162,5 +162,16 @@ namespace Acacia.Utils
 
         #endregion
 
+        #region Command line
+
+        /// <summary>
+        /// Quotes a single command line argument
+        /// </summary>
+        public static string QuoteCommandLine(string arg)
+        {
+            return "\"" + Regex.Replace(arg, @"(\\*)" + "\"", @"$1$1\" + "\"") + "\"";
+        }
+
+        #endregion
     }
 }

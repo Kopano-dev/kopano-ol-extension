@@ -87,6 +87,16 @@ namespace Acacia.Utils
             }
         }
 
+        private static string CombineKeys(string prefix, string suffix)
+        {
+            // Cannot use Path.Combine, as that throws on characters that are not allowed in paths, but may be
+            // allowed in the registry.
+            string key = prefix.StripSuffix("\\");
+            key += "\\";
+            key += suffix.StripPrefix("\\");
+            return key;
+        }
+
         public static RegistryKey OpenKeyImpl(string baseKeyPath, string suffix, bool localMachine, RegistryKeyPermissionCheck permissions)
         {
             // Add the suffix
@@ -94,7 +104,7 @@ namespace Acacia.Utils
             if (string.IsNullOrEmpty(suffix))
                 keyPath = baseKeyPath;
             else
-                keyPath = System.IO.Path.Combine(baseKeyPath, suffix);
+                keyPath = CombineKeys(baseKeyPath, suffix);
 
             // Open the key.
             using (RegistryKey hive = RegistryKey.OpenBaseKey(localMachine ? RegistryHive.LocalMachine : RegistryHive.CurrentUser, RegistryView.Registry64))

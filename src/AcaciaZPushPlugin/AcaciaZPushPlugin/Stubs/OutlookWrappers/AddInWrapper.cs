@@ -84,6 +84,22 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
+        public string ProfileName
+        {
+            get
+            {
+                NSOutlook.NameSpace session = _app.Session;
+                try
+                {
+                    return session.CurrentProfileName;
+                }
+                finally
+                {
+                    ComRelease.Release(session);
+                }
+            }
+        }
+
         public void InUI(Action action, bool synchronous = true)
         {
             if (synchronous)
@@ -148,9 +164,19 @@ namespace Acacia.Stubs.OutlookWrappers
             // Create the path to the restarter
             path = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(path), "OutlookRestarter.exe");
 
+            // Use the current command line, with a profile command if not specified
+            string commandLine = Environment.CommandLine;
+            // This selects both /profile and /profiles. In that case we don't specify the profile, otherwise
+            // we specify the current profile
+            // It seems to be impossible to escape a profile name with a quote, so in that case ignore it
+            if (!commandLine.ToLower().Contains("/profile") && !ProfileName.Contains("\""))
+            {
+                commandLine += " /profile " + Util.QuoteCommandLine(ProfileName);
+            }
+
             // Run that
             Process process = new Process();
-            process.StartInfo = new ProcessStartInfo(path, Process.GetCurrentProcess().Id + " " + Environment.CommandLine);
+            process.StartInfo = new ProcessStartInfo(path, Process.GetCurrentProcess().Id + " " + commandLine);
             process.Start();
 
             // And close us and any other windows
