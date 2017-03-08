@@ -92,5 +92,6 @@ namespace Acacia.Stubs
         void InUI(Action action, bool synchronous = true);
 
         bool IsOffline { get; }
+        string ProfileName { get; }
     }
 }
