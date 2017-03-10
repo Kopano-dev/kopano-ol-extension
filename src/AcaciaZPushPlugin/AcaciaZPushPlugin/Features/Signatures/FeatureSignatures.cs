@@ -349,7 +349,7 @@ namespace Acacia.Features.Signatures
                                 if (token == "initials") return us.Initials ?? "";
                                 if (token == "lastname") return us.LastName ?? "";
                                 if (token == "displayname") return us.FullName ?? "";
-                                if (token == "title") return us.Title ?? "";
+                                if (token == "title") return us.JobTitle ?? "";
                                 if (token == "company") return us.CompanyName ?? "";
                                 // TODO if (token == "department") return us.;
                                 if (token == "office") return us.OfficeLocation ?? "";
