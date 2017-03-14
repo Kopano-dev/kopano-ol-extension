@@ -45,7 +45,9 @@ namespace Acacia.ZPush
 
         [Browsable(false)]
         public IAccount Account { get { return _account; } }
-        public String DisplayName { get { return _account.DisplayName; } }
+
+        public string DisplayName { get { return _account.DisplayName; } }
+        public string DeviceId { get { return _account.DeviceId; } }
 
         [Browsable(false)]
         public string LogContextId
