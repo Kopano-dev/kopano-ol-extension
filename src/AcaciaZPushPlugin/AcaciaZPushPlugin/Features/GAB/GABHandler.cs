@@ -580,7 +580,6 @@ namespace Acacia.Features.GAB
                 // Update the groups
                 AddItemToGroups(contact, id, value, index);
             }
-
         }
 
         private void CreateGroup(string id, Dictionary<string, object> value, ChunkIndex index)
