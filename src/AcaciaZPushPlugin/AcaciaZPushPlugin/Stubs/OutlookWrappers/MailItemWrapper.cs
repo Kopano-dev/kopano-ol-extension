@@ -34,6 +34,8 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #region IMailItem implementation
 
+        #region Reply verbs
+
         public DateTime? AttrLastVerbExecutionTime
         {
             get
@@ -57,6 +59,10 @@ namespace Acacia.Stubs.OutlookWrappers
                 SetProperty(OutlookConstants.PR_LAST_VERB_EXECUTED, value);
             }
         }
+
+        #endregion
+
+        #region Sender
 
         public string SenderEmailAddress
         {
@@ -85,6 +91,35 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             _item.Sender = ((AddressEntryWrapper)addressEntry).RawItem;
         }
+
+        #endregion
+
+        #region Recipients
+
+        public string To
+        {
+            get { return _item.To; }
+            set { _item.To = value; }
+        }
+
+        public string CC
+        {
+            get { return _item.CC; }
+            set { _item.CC = value; }
+        }
+
+        public string BCC
+        {
+            get { return _item.BCC; }
+            set { _item.BCC = value; }
+        }
+
+        public IRecipients Recipients
+        {
+            get { return new RecipientsWrapper(_item.Recipients); }
+        }
+
+        #endregion
 
         #endregion
 

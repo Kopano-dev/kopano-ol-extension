@@ -75,4 +75,13 @@ namespace Acacia.Stubs
         EAS,
         Other
     }
+
+    // Replacement for OlMailRecipientType
+    public enum MailRecipientType
+    {
+        Originator = 0,
+        To = 1,
+        CC = 2,
+        BCC = 3
+    }
 }

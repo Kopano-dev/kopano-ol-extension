@@ -49,6 +49,7 @@ namespace Acacia.Utils
             return _this;
         }
 
+
         #endregion
 
         #region Hex strings
@@ -112,19 +113,43 @@ namespace Acacia.Utils
 
         public static string ReplaceStringTokens(this string s, string open, string close, TokenReplacer replacer)
         {
-            return Regex.Replace(s, Regex.Escape(open) + @"(\w+)" + Regex.Escape(close), (m) =>
+            StringBuilder replaced = new StringBuilder();
+
+            int start = 0;
+            for(;;)
             {
-                var key = m.Groups[1].Value;
+                // Find open token
+                int newStart = s.IndexOf(open, start);
+
+                // Not found, append rest and done
+                if (newStart < 0)
+                {
+                    replaced.Append(s.Substring(start));
+                    break;
+                }
+
+                // Append current text
+                replaced.Append(s.Substring(start, newStart - start));
+
+                // Find the close token
+                int keyStart = newStart + open.Length;
+                int newClose = s.IndexOf(close, keyStart);
+                if (newClose < 0)
+                {
+                    break;
+                }
+                
+                // Add the replacement
+                string key = s.Substring(keyStart, newClose - keyStart);
                 string replacement = replacer(key);
-                if (replacement == null)
-                {
-                    return m.Groups[0].Value;
-                }
-                else
-                {
-                    return replacement;
-                }
-            });
+                if (replacement != null)
+                    replaced.Append(replacement);
+
+                // Next
+                start = newClose + close.Length;
+            }
+
+            return replaced.ToString();
         }
 
         public static string ReplaceStringTokens(this string s, string open, string close, Dictionary<string, string> replacements)
@@ -138,5 +163,14 @@ namespace Acacia.Utils
         }
 
         #endregion
+
+
+        public static string DecodeQuotedPrintable(this string _this)
+        {
+            return ReplaceStringTokens(_this, "=?", "?=", (token) =>
+                System.Net.Mail.Attachment.CreateAttachmentFromString("", "=?" + token + "?=").Name
+            );
+        }
+
     }
 }

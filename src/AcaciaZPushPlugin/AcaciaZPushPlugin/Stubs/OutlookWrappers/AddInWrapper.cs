@@ -347,8 +347,9 @@ namespace Acacia.Stubs.OutlookWrappers
                 NSOutlook.Recipient recipient = com.Add(session.CreateRecipient(name));
                 if (recipient == null)
                     return null;
-                recipient.Resolve();
-                return Mapping.Wrap(com.Remove(recipient));
+                IRecipient wrapped = Mapping.Wrap(com.Remove(recipient));
+                wrapped.Resolve();
+                return wrapped;
             }
         }
 

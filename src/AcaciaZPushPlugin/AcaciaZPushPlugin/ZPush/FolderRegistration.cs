@@ -57,4 +57,30 @@ namespace Acacia.ZPush
             return Feature.Name + ":" + _itemType.ToString();
         }
     }
+
+    public class FolderRegistrationDefault : FolderRegistration
+    {
+        private readonly DefaultFolder _folder;
+
+        public FolderRegistrationDefault(Feature feature, DefaultFolder folder)
+        :
+        base(feature)
+        {
+            this._folder = folder;
+        }
+
+        public override bool IsApplicable(IFolder folder)
+        {
+            // TODO: cache folder id per store
+            using (IStore store = folder.GetStore())
+            {
+                return folder.EntryID == store.GetDefaultFolderId(_folder);
+            }
+        }
+
+        public override string ToString()
+        {
+            return Feature.Name + ":" + _folder.ToString();
+        }
+    }
 }
