@@ -29,6 +29,7 @@ using System.Globalization;
 using Acacia.UI.Outlook;
 using Acacia.Stubs;
 using Acacia.Stubs.OutlookWrappers;
+using Microsoft.Office.Tools.Ribbon;
 
 namespace Acacia
 {
@@ -77,7 +78,16 @@ namespace Acacia
 
         #region Startup / Shutdown
 
-        private void ThisAddIn_Startup(object sender, System.EventArgs args)
+        private void InternalStartup()
+        {
+            // Do nothing
+        }
+
+        /// <summary>
+        /// [KOE-87] Use this event rather than Startup, as that is invoked after the ribbon UI is queried, which leads
+        /// to an empty - and therefore invisible - ribbon.
+        /// </summary>
+        public override void BeginInit()
         {
             try
             {
@@ -145,7 +155,6 @@ namespace Acacia
                 Acacia.Features.DebugSupport.Statistics.StartupTime.Stop();
                 foreach (Feature feature in Features)
                     feature.AfterStartup();
-
             }
             catch (System.Exception e)
             {
@@ -169,12 +178,6 @@ namespace Acacia
             {
                 Logger.Instance.Error(this, "Exception in App_OptionsPagesAdd: {0}", e);
             }
-        }
-
-        private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
-        {
-            // Note: Outlook no longer raises this event. If you have code that 
-            //    must run when Outlook shuts down, see http://go.microsoft.com/fwlink/?LinkId=506785
         }
 
         #endregion
@@ -209,19 +212,6 @@ namespace Acacia
         }
 
         #endregion
-
-        #region VSTO generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InternalStartup()
-        {
-            this.Startup += new System.EventHandler(ThisAddIn_Startup);
-            this.Shutdown += new System.EventHandler(ThisAddIn_Shutdown);
-        }
-        
-        #endregion
+       
     }
 }
