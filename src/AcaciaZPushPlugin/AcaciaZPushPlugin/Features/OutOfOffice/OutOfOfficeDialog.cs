@@ -34,9 +34,13 @@ namespace Acacia.Features.OutOfOffice
     public partial class OutOfOfficeDialog : KopanoDialog
     {
         private ActiveSync.SettingsOOF _settings;
-        private readonly bool haveTimes;
+        private readonly bool _haveTimes;
+        /// <summary>
+        /// Set if an old date is fetched from the settings. In this case, the date limit is relaxed to allow setting it.
+        /// </summary>
+        private readonly bool _haveOldDate;
 
-        public OutOfOfficeDialog(ZPushAccount account, ActiveSync.SettingsOOF settings)
+        public OutOfOfficeDialog(FeatureOutOfOffice owner, ZPushAccount account, ActiveSync.SettingsOOF settings)
         {
             this._settings = settings;
 
@@ -64,14 +68,14 @@ namespace Acacia.Features.OutOfOffice
             radioTime_CheckedChanged(radioTime, null);
 
             // Hide time options, only if it is known that these are not supported
-            haveTimes = _settings.SupportsTimes != false;
-            if (!haveTimes)
+            _haveTimes = _settings.SupportsTimes != false;
+            if (!_haveTimes)
             {
                 tableDates.Visible = false;
             }
 
             // Load settings
-            switch(settings.State)
+            switch(owner.GetEffectiveState(settings))
             {
                 case ActiveSync.OOFState.Disabled:
                     chkEnable.Checked = false;
@@ -83,8 +87,11 @@ namespace Acacia.Features.OutOfOffice
                 case ActiveSync.OOFState.EnabledTimeBased:
                     chkEnable.Checked = true;
                     radioTime.Checked = true;
+                    
+                    _haveOldDate = settings.Till.Value.CompareTo(DateTime.Today) <= 0;
                     dateFrom.Value = settings.From.Value;
                     timeFrom.Value = settings.From.Value;
+
                     dateTill.Value = settings.Till.Value;
                     timeTill.Value = settings.Till.Value;
                     break;
@@ -116,7 +123,7 @@ namespace Acacia.Features.OutOfOffice
 
             if (chkEnable.Checked)
             {
-                if (radioNoTime.Checked || !haveTimes)
+                if (radioNoTime.Checked || !_haveTimes)
                 {
                     _settings.State = ActiveSync.OOFState.Enabled;
                 }
@@ -174,8 +181,9 @@ namespace Acacia.Features.OutOfOffice
 
         private void SetTillTimeLimit()
         {
-            // Don't allow setting till to before from, or before now
-            dateTill.MinDate = new DateTime(Math.Max(dateFrom.Value.Ticks, DateTime.Today.Ticks));
+            // Don't allow setting till to before from, or before now (unless we got an old date from the server).
+            DateTime minDate = _haveOldDate ? dateFrom.Value : new DateTime(Math.Max(dateFrom.Value.Ticks, DateTime.Today.Ticks));
+            dateTill.MinDate = minDate;
 
             if (dateTill.Value.Date == dateFrom.Value.Date)
             {

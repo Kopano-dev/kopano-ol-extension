@@ -26,6 +26,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Acacia.DebugOptions;
 
 namespace Acacia.Features.OutOfOffice
 {
@@ -34,6 +35,19 @@ namespace Acacia.Features.OutOfOffice
     :
     Feature, FeatureWithRibbon
     {
+        #region Debug options
+
+        [AcaciaOption("Enables or disables the handling of expired time-based Out-of-Office. If enabled (the default) " +
+                      "an expired Out-of-Office is treated as disabled. Otherwise it's treated as enabled.")]
+        public bool IgnoreExpired
+        {
+            get { return GetOption(OPTION_IGNORE_EXPIRED); }
+            set { SetOption(OPTION_IGNORE_EXPIRED, value); }
+        }
+        private static readonly BoolOption OPTION_IGNORE_EXPIRED = new BoolOption("IgnoreExpired", true);
+
+        #endregion
+
         private RibbonToggleButton _button;
 
         public FeatureOutOfOffice()
@@ -53,11 +67,29 @@ namespace Acacia.Features.OutOfOffice
             caps.Add("ooftime");
         }
 
-        private static bool IsOOFEnabled(ActiveSync.SettingsOOF settings)
+        internal bool IsOOFEnabled(ActiveSync.SettingsOOF settings)
         {
+            return GetEffectiveState(settings) != ActiveSync.OOFState.Disabled;
+        }
+
+        internal ActiveSync.OOFState GetEffectiveState(ActiveSync.SettingsOOF settings)
+        { 
             if (settings == null)
-                return false;
-            return settings.State != ActiveSync.OOFState.Disabled;
+                return ActiveSync.OOFState.Disabled;
+
+            if (settings.State == ActiveSync.OOFState.Disabled)
+                return ActiveSync.OOFState.Disabled;
+
+            // If there's a time-based OOF, and it has expired, OOF if effectively disabled
+            if (settings.State == ActiveSync.OOFState.EnabledTimeBased && IgnoreExpired)
+            {
+                if (settings.Till != null && settings.Till.Value.CompareTo(DateTime.Now) < 0)
+                {
+                    return ActiveSync.OOFState.Disabled;
+                }
+            }
+
+            return settings.State;
         }
 
         private void Watcher_ZPushAccountChange(ZPushAccount account)
@@ -135,7 +167,7 @@ namespace Acacia.Features.OutOfOffice
         {
 
             // Show dialog
-            if (new OutOfOfficeDialog(account, settings).ShowDialog() != DialogResult.OK)
+            if (new OutOfOfficeDialog(this, account, settings).ShowDialog() != DialogResult.OK)
                 return;
 
             try
@@ -229,7 +261,7 @@ namespace Acacia.Features.OutOfOffice
             StoreOOFSettings(account, oof);
 
             // Show a message if OOF is enabled
-            if (oof.State != ActiveSync.OOFState.Disabled)
+            if (IsOOFEnabled(oof))
             {
                 if (MessageBox.Show(
                                 string.Format(Properties.Resources.OOFStartup_Message, account.Account.SmtpAddress),
