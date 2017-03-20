@@ -27,8 +27,14 @@ namespace Acacia.Stubs
     /// </summary>
     public interface IMailItem : IItem
     {
+        #region Reply verbs
+
         DateTime? AttrLastVerbExecutionTime { get; set; }
         int AttrLastVerbExecuted { get; set; }
+
+        #endregion
+
+        #region Sender
 
         string SenderEmailAddress { get; }
         string SenderName { get; }
@@ -38,5 +44,16 @@ namespace Acacia.Stubs
         /// </summary>
         /// <param name="addressEntry">The address. The caller is responsible for disposing.</param>
         void SetSender(IAddressEntry addressEntry);
+
+        #endregion
+
+        #region Recipients
+
+        string To { get; set; }
+        string CC { get; set; }
+        string BCC { get; set; }
+        IRecipients Recipients { get; }
+
+        #endregion
     }
 }

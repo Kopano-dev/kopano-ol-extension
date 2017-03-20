@@ -111,9 +111,9 @@ namespace Acacia.Features.FreeBusy
 
         private const string REG_KEY = @"Options\Calendar\Internet Free/Busy";
         private const string REG_VALUE = @"Read URL";
-        internal const string URL_IDENTIFIER = "/zpush/";
+        internal const string URL_IDENTIFIER = "zpush";
         private const int DEFAULT_PORT = 18632;
-        private const string URL_PREFIX = @"http://127.0.0.1:{0}" + URL_IDENTIFIER;
+        private const string URL_PREFIX = @"http://127.0.0.1:{0}/" + URL_IDENTIFIER + "/";
         private const string URL = URL_PREFIX + "%NAME%@%SERVER%";
 
         private void Worker()
@@ -125,8 +125,9 @@ namespace Acacia.Features.FreeBusy
             {
                 if (key != null)
                 {
+                    // Set only if empty or already our URL
                     string oldURL = key.GetValueString(REG_VALUE);
-                    if (string.IsNullOrWhiteSpace(oldURL) || oldURL.Contains(URL_IDENTIFIER))
+                    if (string.IsNullOrWhiteSpace(oldURL) || oldURL.Contains("/" + URL_IDENTIFIER + "/"))
                         key.SetValue(REG_VALUE, string.Format(URL, Port));
                 }
             }

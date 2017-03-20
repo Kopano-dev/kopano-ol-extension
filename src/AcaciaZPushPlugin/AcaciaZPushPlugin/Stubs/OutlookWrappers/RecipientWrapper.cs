@@ -32,6 +32,17 @@ namespace Acacia.Stubs.OutlookWrappers
 
         internal NSOutlook.Recipient RawItem { get { return _item; } }
 
+        public MailRecipientType Type
+        {
+            get { return (MailRecipientType)_item.Type; }
+            set { _item.Type = (int)value; }
+        }
+
+        public bool Resolve()
+        {
+            return _item.Resolve();
+        }
+
         public bool IsResolved
         {
             get

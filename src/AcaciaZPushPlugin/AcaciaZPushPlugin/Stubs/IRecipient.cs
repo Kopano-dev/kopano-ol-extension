@@ -24,10 +24,13 @@ namespace Acacia.Stubs
 {
     public interface IRecipient : IComWrapper
     {
+        bool Resolve();
         bool IsResolved { get; }
 
         string Name { get; }
         string Address { get; }
+
+        MailRecipientType Type { get; set; }
 
         /// <summary>
         /// Returns the address entry. The caller is responsible for disposing it.

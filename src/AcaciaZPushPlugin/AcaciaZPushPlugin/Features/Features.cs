@@ -27,6 +27,7 @@ namespace Acacia.Features
         public static readonly Type[] FEATURES =
         {
             typeof(ReplyFlags.FeatureReplyFlags),
+            typeof(BCC.FeatureBCC),
             typeof(OutOfOffice.FeatureOutOfOffice),
             typeof(SharedFolders.FeatureSharedFolders),
             typeof(WebApp.FeatureWebApp),

@@ -241,6 +241,9 @@
     <Compile Include="Controls\KUITask.cs" />
     <Compile Include="Controls\KUIUtil.cs" />
     <Compile Include="DebugOptions.cs" />
+    <Compile Include="Features\BCC\FeatureBCC.cs" />
+    <Compile Include="Features\FreeBusy\FreeBusyServlet.cs" />
+    <Compile Include="Features\FreeBusy\Servlet.cs" />
     <Compile Include="Features\SecondaryContacts\FeatureSecondaryContacts.cs" />
     <Compile Include="Features\DebugSupport\AboutDialog.cs">
       <SubType>Form</SubType>
@@ -309,6 +312,7 @@
     <Compile Include="Stubs\IOutlookWindow.cs" />
     <Compile Include="Stubs\IPicture.cs" />
     <Compile Include="Stubs\IRecipient.cs" />
+    <Compile Include="Stubs\IRecipients.cs" />
     <Compile Include="Stubs\ISignature.cs" />
     <Compile Include="Stubs\ISignatures.cs" />
     <Compile Include="Stubs\IStores.cs" />
@@ -323,6 +327,7 @@
     <Compile Include="Stubs\OutlookWrappers\ItemsWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\OutlookItemWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\PictureWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\RecipientsWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\RecipientWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\SignaturesWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\SignatureWrapper.cs" />
