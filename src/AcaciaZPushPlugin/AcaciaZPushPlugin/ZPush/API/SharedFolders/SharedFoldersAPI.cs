@@ -96,10 +96,13 @@ namespace Acacia.ZPush.API.SharedFolders
                         rootNodes.Add(folder);
                         parent = null;
                     }
+                    else if (!foldersByServerId.ContainsKey(folder.ParentId))
+                    {
+                        // Ignore the node if the parent is not available
+                        continue;
+                    }
                     else
                     {
-                        if (!foldersByServerId.ContainsKey(folder.ParentId))
-                            throw new Exception("Missing parent folder: " + folder.ParentId);
                         parent = foldersByServerId[folder.ParentId];
                         parent.Children.Add(folder);
                     }
