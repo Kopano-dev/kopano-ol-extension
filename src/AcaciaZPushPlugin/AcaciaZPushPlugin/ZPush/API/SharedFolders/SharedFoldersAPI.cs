@@ -99,6 +99,7 @@ namespace Acacia.ZPush.API.SharedFolders
                     else if (!foldersByServerId.ContainsKey(folder.ParentId))
                     {
                         // Ignore the node if the parent is not available
+                        Logger.Instance.Warning(this, "Missing parent node: {0}", folder.ParentId);
                         continue;
                     }
                     else
