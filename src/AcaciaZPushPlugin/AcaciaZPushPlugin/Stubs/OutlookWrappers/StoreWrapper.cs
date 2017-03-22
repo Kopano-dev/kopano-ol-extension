@@ -95,7 +95,15 @@ namespace Acacia.Stubs.OutlookWrappers
         public string StoreID { get { return _item.StoreID; } }
 
         public bool IsFileStore { get { return _item.IsDataFileStore; } }
-        public string FilePath { get { return _item.FilePath; } }
+        public string FilePath
+        {
+            get
+            {
+                // Sometimes local paths include a ? UNC prefix which complicates checking for local
+                // folders. Strip that.
+                return _item.FilePath?.StripPrefix(@"\\?\");
+            }
+        }
 
         public void EmptyDeletedItems()
         {
