@@ -107,6 +107,7 @@ namespace Acacia.Controls
                 }, true)
                 .OnError(error =>
                 {
+                    Logger.Instance.Error(this, "Exception while fetching child nodes: {0}", error);
                     // On error return an empty node list
                     State = LoadingState.Error;
                     return new KTreeNodes(node);
