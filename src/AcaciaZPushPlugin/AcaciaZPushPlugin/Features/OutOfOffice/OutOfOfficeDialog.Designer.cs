@@ -29,9 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OutOfOfficeDialog));
-            this.tableGlobal = new System.Windows.Forms.TableLayoutPanel();
+            this._layout = new System.Windows.Forms.TableLayoutPanel();
+            this._busyHider = new Acacia.Controls.KBusyHider();
+            this._layoutForm = new System.Windows.Forms.TableLayoutPanel();
             this.chkEnable = new System.Windows.Forms.CheckBox();
-            this.tableDates = new System.Windows.Forms.TableLayoutPanel();
+            this._layoutDates = new System.Windows.Forms.TableLayoutPanel();
             this.radioNoTime = new System.Windows.Forms.RadioButton();
             this.radioTime = new System.Windows.Forms.RadioButton();
             this.dateFrom = new System.Windows.Forms.DateTimePicker();
@@ -43,24 +45,38 @@
             this.tableTextEntry = new System.Windows.Forms.TableLayoutPanel();
             this.labelBody = new System.Windows.Forms.Label();
             this.textBody = new System.Windows.Forms.TextBox();
-            this.flowButtons = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.tableGlobal.SuspendLayout();
-            this.tableDates.SuspendLayout();
+            this._buttons = new Acacia.Controls.KDialogButtons();
+            this._layout.SuspendLayout();
+            this._busyHider.SuspendLayout();
+            this._layoutForm.SuspendLayout();
+            this._layoutDates.SuspendLayout();
             this.groupTextEntry.SuspendLayout();
             this.tableTextEntry.SuspendLayout();
-            this.flowButtons.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tableGlobal
+            // _layout
             // 
-            resources.ApplyResources(this.tableGlobal, "tableGlobal");
-            this.tableGlobal.Controls.Add(this.chkEnable, 0, 0);
-            this.tableGlobal.Controls.Add(this.tableDates, 0, 1);
-            this.tableGlobal.Controls.Add(this.groupTextEntry, 0, 2);
-            this.tableGlobal.Controls.Add(this.flowButtons, 0, 3);
-            this.tableGlobal.Name = "tableGlobal";
+            resources.ApplyResources(this._layout, "_layout");
+            this._layout.Controls.Add(this._busyHider, 0, 0);
+            this._layout.Controls.Add(this._buttons, 0, 1);
+            this._layout.Name = "_layout";
+            // 
+            // _busyHider
+            // 
+            this._busyHider.Busy = false;
+            this._busyHider.BusyText = null;
+            this._busyHider.Cancellation = null;
+            this._busyHider.Controls.Add(this._layoutForm);
+            resources.ApplyResources(this._busyHider, "_busyHider");
+            this._busyHider.Name = "_busyHider";
+            // 
+            // _layoutForm
+            // 
+            resources.ApplyResources(this._layoutForm, "_layoutForm");
+            this._layoutForm.Controls.Add(this.chkEnable, 0, 0);
+            this._layoutForm.Controls.Add(this._layoutDates, 0, 1);
+            this._layoutForm.Controls.Add(this.groupTextEntry, 0, 2);
+            this._layoutForm.Name = "_layoutForm";
             // 
             // chkEnable
             // 
@@ -69,23 +85,23 @@
             this.chkEnable.UseVisualStyleBackColor = true;
             this.chkEnable.CheckedChanged += new System.EventHandler(this.chkEnable_CheckedChanged);
             // 
-            // tableDates
+            // _layoutDates
             // 
-            resources.ApplyResources(this.tableDates, "tableDates");
-            this.tableDates.Controls.Add(this.radioNoTime, 0, 0);
-            this.tableDates.Controls.Add(this.radioTime, 0, 1);
-            this.tableDates.Controls.Add(this.dateFrom, 1, 1);
-            this.tableDates.Controls.Add(this.timeFrom, 2, 1);
-            this.tableDates.Controls.Add(this.labelTill, 0, 2);
-            this.tableDates.Controls.Add(this.dateTill, 1, 2);
-            this.tableDates.Controls.Add(this.timeTill, 2, 2);
-            this.tableDates.Name = "tableDates";
+            resources.ApplyResources(this._layoutDates, "_layoutDates");
+            this._layoutDates.Controls.Add(this.radioNoTime, 0, 0);
+            this._layoutDates.Controls.Add(this.radioTime, 0, 1);
+            this._layoutDates.Controls.Add(this.dateFrom, 1, 1);
+            this._layoutDates.Controls.Add(this.timeFrom, 2, 1);
+            this._layoutDates.Controls.Add(this.labelTill, 0, 2);
+            this._layoutDates.Controls.Add(this.dateTill, 1, 2);
+            this._layoutDates.Controls.Add(this.timeTill, 2, 2);
+            this._layoutDates.Name = "_layoutDates";
             // 
             // radioNoTime
             // 
             resources.ApplyResources(this.radioNoTime, "radioNoTime");
             this.radioNoTime.Checked = true;
-            this.tableDates.SetColumnSpan(this.radioNoTime, 3);
+            this._layoutDates.SetColumnSpan(this.radioNoTime, 3);
             this.radioNoTime.Name = "radioNoTime";
             this.radioNoTime.TabStop = true;
             this.radioNoTime.UseVisualStyleBackColor = true;
@@ -128,6 +144,7 @@
             this.timeTill.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.timeTill.Name = "timeTill";
             this.timeTill.ShowUpDown = true;
+            this.timeTill.ValueChanged += new System.EventHandler(this.timeTill_ValueChanged);
             // 
             // groupTextEntry
             // 
@@ -153,73 +170,60 @@
             this.textBody.AcceptsReturn = true;
             resources.ApplyResources(this.textBody, "textBody");
             this.textBody.Name = "textBody";
+            this.textBody.TextChanged += new System.EventHandler(this.textBody_TextChanged);
             // 
-            // flowButtons
+            // _buttons
             // 
-            resources.ApplyResources(this.flowButtons, "flowButtons");
-            this.flowButtons.Controls.Add(this.btnCancel);
-            this.flowButtons.Controls.Add(this.btnSave);
-            this.flowButtons.Name = "flowButtons";
-            // 
-            // btnCancel
-            // 
-            resources.ApplyResources(this.btnCancel, "btnCancel");
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            // 
-            // btnSave
-            // 
-            resources.ApplyResources(this.btnSave, "btnSave");
-            this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnSave.Name = "btnSave";
-            this.btnSave.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this._buttons, "_buttons");
+            this._buttons.ButtonSize = null;
+            this._buttons.Cancellation = null;
+            this._buttons.HasApply = true;
+            this._buttons.IsDirty = false;
+            this._buttons.Name = "_buttons";
+            this._buttons.Apply += new System.EventHandler(this._buttons_Apply);
             // 
             // OutOfOfficeDialog
             // 
-            this.AcceptButton = this.btnSave;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnCancel;
-            this.Controls.Add(this.tableGlobal);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            this.BusyHider = this._busyHider;
+            this.Controls.Add(this._layout);
+            this.DialogButtons = this._buttons;
             this.Name = "OutOfOfficeDialog";
-            this.ShowInTaskbar = false;
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OutOfOfficeDialog_FormClosed);
-            this.tableGlobal.ResumeLayout(false);
-            this.tableGlobal.PerformLayout();
-            this.tableDates.ResumeLayout(false);
-            this.tableDates.PerformLayout();
+            this.DirtyFormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OutOfOfficeDialog_DirtyFormClosing);
+            this.Shown += new System.EventHandler(this.OutOfOfficeDialog_Shown);
+            this._layout.ResumeLayout(false);
+            this._layout.PerformLayout();
+            this._busyHider.ResumeLayout(false);
+            this._layoutForm.ResumeLayout(false);
+            this._layoutForm.PerformLayout();
+            this._layoutDates.ResumeLayout(false);
+            this._layoutDates.PerformLayout();
             this.groupTextEntry.ResumeLayout(false);
             this.groupTextEntry.PerformLayout();
             this.tableTextEntry.ResumeLayout(false);
             this.tableTextEntry.PerformLayout();
-            this.flowButtons.ResumeLayout(false);
-            this.flowButtons.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TableLayoutPanel tableGlobal;
+        private System.Windows.Forms.TableLayoutPanel _layout;
+        private Controls.KDialogButtons _buttons;
+        private System.Windows.Forms.TableLayoutPanel _layoutForm;
         private System.Windows.Forms.CheckBox chkEnable;
+        private System.Windows.Forms.TableLayoutPanel _layoutDates;
         private System.Windows.Forms.RadioButton radioNoTime;
-        private System.Windows.Forms.GroupBox groupTextEntry;
-        private System.Windows.Forms.FlowLayoutPanel flowButtons;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.TableLayoutPanel tableDates;
         private System.Windows.Forms.RadioButton radioTime;
         private System.Windows.Forms.DateTimePicker dateFrom;
+        private System.Windows.Forms.DateTimePicker timeFrom;
+        private System.Windows.Forms.Label labelTill;
         private System.Windows.Forms.DateTimePicker dateTill;
+        private System.Windows.Forms.DateTimePicker timeTill;
+        private System.Windows.Forms.GroupBox groupTextEntry;
         private System.Windows.Forms.TableLayoutPanel tableTextEntry;
         private System.Windows.Forms.Label labelBody;
         private System.Windows.Forms.TextBox textBody;
-        private System.Windows.Forms.DateTimePicker timeFrom;
-        private System.Windows.Forms.DateTimePicker timeTill;
-        private System.Windows.Forms.Label labelTill;
+        private Controls.KBusyHider _busyHider;
     }
 }

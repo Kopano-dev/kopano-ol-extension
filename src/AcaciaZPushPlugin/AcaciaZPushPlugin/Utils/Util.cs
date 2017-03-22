@@ -29,7 +29,7 @@ namespace Acacia.Utils
 {
     public static class Util
     {
-        public static bool NullSafeEquals<ObjType>(ObjType a, ObjType b)
+        public static bool NullSafeEquals<ObjType>(this ObjType a, ObjType b)
         {
             if (System.Object.ReferenceEquals(a, b))
             {

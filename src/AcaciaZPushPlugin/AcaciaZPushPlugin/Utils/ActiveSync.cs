@@ -92,6 +92,21 @@ namespace Acacia.Utils
         public class OOFMessage
         {
             public string Message { get; set; }
+
+            public override bool Equals(object obj)
+            {
+                if (obj is string)
+                    return Message.Equals(obj);
+                else if (obj is OOFMessage)
+                    return Message.Equals(((OOFMessage)obj).Message);
+                else
+                    return false;
+            }
+
+            public override int GetHashCode()
+            {
+                return Message.GetHashCode();
+            }
         }
 
         public class SettingsOOF : Response
@@ -99,8 +114,53 @@ namespace Acacia.Utils
             public OOFState State { get; set; }
             public DateTime? From { get; set; }
             public DateTime? Till { get; set; }
-            public OOFMessage[] Message {get; set;}
+            public OOFMessage[] Message {get; private set;}
             public bool? SupportsTimes { get; set; }
+
+            public SettingsOOF()
+            {
+
+            }
+
+            public SettingsOOF(bool initMessage)
+            {
+                if (initMessage)
+                    Message = new OOFMessage[3];
+            }
+
+            public override bool Equals(object obj)
+            {
+                SettingsOOF rhs = obj as SettingsOOF;
+                if (rhs == null)
+                    return false;
+
+                if (State != rhs.State)
+                    return false;
+
+                // Check the times only if they are used
+                if (State == OOFState.EnabledTimeBased)
+                {
+                    if (!From.Equals(rhs.From))
+                        return false;
+                    if (!Till.Equals(rhs.Till))
+                        return false;
+                }
+
+                // Check the messages only if they are used
+                if (State != OOFState.Disabled)
+                {
+                    // Only one entry is effectively used
+                    if (!Message[0].NullSafeEquals(rhs.Message[0]))
+                        return false;
+                }
+
+                return true;
+            }
+
+            public override int GetHashCode()
+            {
+                return base.GetHashCode();
+            }
 
             protected override void ParseResponseBody(ActiveSync.RequestBase request, ZPushConnection.Response response)
             {

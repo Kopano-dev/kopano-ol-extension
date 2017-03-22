@@ -188,6 +188,15 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are unsaved changes. Do you really want to to discard these?.
+        /// </summary>
+        internal static string OOF_Unsaved_Changes {
+            get {
+                return ResourceManager.GetString("OOF_Unsaved_Changes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to retrieve Out of Office settings. You can still enable or disable Out of Office, but applying the settings might fail..
         /// </summary>
         internal static string OOFGet_Failed {

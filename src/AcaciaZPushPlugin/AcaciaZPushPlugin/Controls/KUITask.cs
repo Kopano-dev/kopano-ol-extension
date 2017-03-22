@@ -485,6 +485,11 @@ namespace Acacia.Controls
             return Chain(new KUITask(TaskExecutor.TaskContextParam(func, TaskExecutor.OptionHelper(false, true, inUI)), false));
         }
 
+        public KUITask OnSuccess(Action<ResultType> func, bool inUI = false)
+        {
+            return Chain(new KUITask(TaskExecutor.Param(func, TaskExecutor.OptionHelper(false, true, inUI)), false));
+        }
+
         public KUITask<NewResultType> OnSuccess<NewResultType>(Func<ResultType, NewResultType> func, bool inUI = false)
         {
             return Chain(new KUITask<NewResultType>(TaskExecutor.Param(func, TaskExecutor.OptionHelper(false, true, inUI)), false));

@@ -103,7 +103,7 @@ namespace Acacia.Features.OutOfOffice
             }
         }
 
-        private void StoreOOFSettings(ZPushAccount account, ActiveSync.SettingsOOF settings)
+        internal void StoreOOFSettings(ZPushAccount account, ActiveSync.SettingsOOF settings)
         {
             account.SetFeatureData(this, "OOF", settings);
             if (_button != null)
@@ -115,141 +115,21 @@ namespace Acacia.Features.OutOfOffice
             ZPushAccount account = Watcher.CurrentZPushAccount();
             if (account != null)
             {
-                try
-                {
-                    // Fetch the current status
-                    ActiveSync.SettingsOOF settings;
-
-                    try
-                    {
-                        settings = ProgressDialog.Execute("OOFGet",
-                            (ct) =>
-                            {
-                                using (ZPushConnection con = new ZPushConnection(account, ct))
-                                    return con.Execute(new ActiveSync.SettingsOOFGet());
-                            }
-                        );
-                    }
-                    catch (System.Exception e)
-                    {
-                        Logger.Instance.Warning(this, "Exception getting OOF state: {0}", e);
-                        if (MessageBox.Show(
-                                        Properties.Resources.OOFGet_Failed,
-                                        Properties.Resources.OOFGet_Title,
-                                        MessageBoxButtons.OKCancel,
-                                        MessageBoxIcon.Error
-                                        ) != DialogResult.OK)
-                        {
-                            return;
-                        }
-                        else
-                        {
-                            // Initialise default settings
-                            settings = new ActiveSync.SettingsOOF();
-                            settings.Message = new ActiveSync.OOFMessage[3];
-                        }
-                    }
-
-                    // Store them for later use
-                    StoreOOFSettings(account, settings);
-
-                    // Show the dialog
-                    ShowOOFDialog(account, settings);
-                }
-                catch(System.Exception e)
-                {
-                    Logger.Instance.Warning(this, "Exception: {0}", e);
-                }
+                // Show the dialog, let it fetch the settings
+                ShowOOFDialog(account, null);
             }
         }
 
+        /// <summary>
+        /// Shows the OOF dialog.
+        /// </summary>
+        /// <param name="account">The account.</param>
+        /// <param name="settings">The setttings, or null, in which case the settings will be retrieved</param>
         private void ShowOOFDialog(ZPushAccount account, ActiveSync.SettingsOOF settings)
         {
-
             // Show dialog
-            if (new OutOfOfficeDialog(this, account, settings).ShowDialog() != DialogResult.OK)
-                return;
-
-            try
-            {
-                // Store settings
-                ActiveSync.SettingsOOF actualSettings = ProgressDialog.Execute("OOFSet",
-                    (ct) =>
-                    {
-                        using (ZPushConnection connection = new ZPushConnection(account, ct))
-                        {
-                            // Set the OOF state. This always seems to return ok, so we fetch the settings
-                            // again, to see what happend
-                            connection.Execute(new ActiveSync.SettingsOOFSet(settings));
-
-                            // Fetch the OOF state 
-                            return connection.Execute(new ActiveSync.SettingsOOFGet());
-                        }
-                    }
-                );
-
-                // Store them for later use
-                StoreOOFSettings(account, actualSettings);
-
-                // Check what happened
-                string message;
-                MessageBoxIcon messageIcon;
-                if (settings.State == ActiveSync.OOFState.Disabled)
-                {
-                    // Tried to disable. 
-                    if (actualSettings.State != ActiveSync.OOFState.Disabled)
-                    {
-                        // It's an error if its not actually disabled
-                        message = Properties.Resources.OOFSet_DisableFailed;
-                        messageIcon = MessageBoxIcon.Error;
-                    }
-                    else
-                    {
-                        // All good
-                        message = Properties.Resources.OOFSet_Disabled;
-                        messageIcon = MessageBoxIcon.Information;
-                    }
-                }
-                else if (actualSettings.State == ActiveSync.OOFState.Disabled)
-                {
-                    // It's an error if the state is set to disabled when we tried to enable
-                    message = Properties.Resources.OOFSet_EnableFailed;
-                    messageIcon = MessageBoxIcon.Error;
-                }
-                else
-                {
-                    // All good
-                    if (actualSettings.State == ActiveSync.OOFState.EnabledTimeBased)
-                    {
-                        message = string.Format(Properties.Resources.OOFSet_EnabledTimeBased,
-                            actualSettings.From, actualSettings.Till);
-                    }
-                    else
-                    {
-                        message = Properties.Resources.OOFSet_Enabled;
-                    }
-                    messageIcon = MessageBoxIcon.Information;
-
-                    // It's okay if the state is not the same, but it deserves a message
-                    if (actualSettings.State != settings.State)
-                    {
-                        message = Properties.Resources.OOFSet_DifferentState + message;
-                        messageIcon = MessageBoxIcon.Warning;
-                    }
-                }
-
-                Logger.Instance.Debug(this, "OOF state updated: {0}, {1}", message, messageIcon);
-                MessageBox.Show(message,
-                                Properties.Resources.OOFSet_Title,
-                                MessageBoxButtons.OK,
-                                messageIcon
-                                );
-            }
-            catch (System.Exception e)
-            {
-                ErrorUtil.HandleErrorNew(this, "Exception in OOFSet", e, 
-                    Properties.Resources.OOFSet_Title, Properties.Resources.OOFSet_Failed);
-            }
+            OutOfOfficeDialog dialog = new OutOfOfficeDialog(this, account, settings);
+            dialog.ShowDialog();
         }
 
         /// <summary>

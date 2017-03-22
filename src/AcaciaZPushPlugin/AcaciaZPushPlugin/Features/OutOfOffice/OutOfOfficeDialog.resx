@@ -117,26 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="tableGlobal.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="tableGlobal.ColumnCount" type="System.Int32, mscorlib">
+  <data name="_layout.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="_layoutForm.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="chkEnable.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="chkEnable.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkEnable.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 2</value>
+    <value>6, 5</value>
   </data>
   <data name="chkEnable.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>6, 5, 6, 5</value>
   </data>
   <data name="chkEnable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>197, 17</value>
+    <value>515, 36</value>
   </data>
   <data name="chkEnable.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -151,21 +154,21 @@
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;chkEnable.Parent" xml:space="preserve">
-    <value>tableGlobal</value>
+    <value>_layoutForm</value>
   </data>
   <data name="&gt;&gt;chkEnable.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="tableDates.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="_layoutDates.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="tableDates.AutoSize" type="System.Boolean, mscorlib">
+  <data name="_layoutDates.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="tableDates.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+  <data name="_layoutDates.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
     <value>GrowAndShrink</value>
   </data>
-  <data name="tableDates.ColumnCount" type="System.Int32, mscorlib">
+  <data name="_layoutDates.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="radioNoTime.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -174,14 +177,17 @@
   <data name="radioNoTime.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="radioNoTime.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="radioNoTime.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 2</value>
+    <value>48, 5</value>
   </data>
   <data name="radioNoTime.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>18, 2, 2, 2</value>
+    <value>48, 5, 6, 5</value>
   </data>
   <data name="radioNoTime.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 17</value>
+    <value>279, 36</value>
   </data>
   <data name="radioNoTime.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -196,7 +202,7 @@
     <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;radioNoTime.Parent" xml:space="preserve">
-    <value>tableDates</value>
+    <value>_layoutDates</value>
   </data>
   <data name="&gt;&gt;radioNoTime.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -207,14 +213,17 @@
   <data name="radioTime.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="radioTime.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="radioTime.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 23</value>
+    <value>48, 51</value>
   </data>
   <data name="radioTime.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>18, 2, 2, 2</value>
+    <value>48, 5, 6, 5</value>
   </data>
   <data name="radioTime.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 20</value>
+    <value>108, 38</value>
   </data>
   <data name="radioTime.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -229,19 +238,19 @@
     <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;radioTime.Parent" xml:space="preserve">
-    <value>tableDates</value>
+    <value>_layoutDates</value>
   </data>
   <data name="&gt;&gt;radioTime.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="dateFrom.Location" type="System.Drawing.Point, System.Drawing">
-    <value>67, 23</value>
+    <value>170, 51</value>
   </data>
   <data name="dateFrom.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>6, 5, 6, 5</value>
   </data>
   <data name="dateFrom.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 20</value>
+    <value>334, 38</value>
   </data>
   <data name="dateFrom.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -253,7 +262,7 @@
     <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;dateFrom.Parent" xml:space="preserve">
-    <value>tableDates</value>
+    <value>_layoutDates</value>
   </data>
   <data name="&gt;&gt;dateFrom.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -262,13 +271,13 @@
     <value>HH:mm</value>
   </data>
   <data name="timeFrom.Location" type="System.Drawing.Point, System.Drawing">
-    <value>199, 23</value>
+    <value>516, 51</value>
   </data>
   <data name="timeFrom.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>6, 5, 6, 5</value>
   </data>
   <data name="timeFrom.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 20</value>
+    <value>170, 38</value>
   </data>
   <data name="timeFrom.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -280,7 +289,7 @@
     <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;timeFrom.Parent" xml:space="preserve">
-    <value>tableDates</value>
+    <value>_layoutDates</value>
   </data>
   <data name="&gt;&gt;timeFrom.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -291,14 +300,17 @@
   <data name="labelTill.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="labelTill.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="labelTill.Location" type="System.Drawing.Point, System.Drawing">
-    <value>33, 45</value>
+    <value>89, 94</value>
   </data>
   <data name="labelTill.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>33, 0, 2, 0</value>
+    <value>89, 0, 6, 0</value>
   </data>
   <data name="labelTill.Size" type="System.Drawing.Size, System.Drawing">
-    <value>30, 24</value>
+    <value>69, 48</value>
   </data>
   <data name="labelTill.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -316,19 +328,19 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;labelTill.Parent" xml:space="preserve">
-    <value>tableDates</value>
+    <value>_layoutDates</value>
   </data>
   <data name="&gt;&gt;labelTill.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="dateTill.Location" type="System.Drawing.Point, System.Drawing">
-    <value>67, 47</value>
+    <value>170, 99</value>
   </data>
   <data name="dateTill.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>6, 5, 6, 5</value>
   </data>
   <data name="dateTill.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 20</value>
+    <value>334, 38</value>
   </data>
   <data name="dateTill.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -340,7 +352,7 @@
     <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;dateTill.Parent" xml:space="preserve">
-    <value>tableDates</value>
+    <value>_layoutDates</value>
   </data>
   <data name="&gt;&gt;dateTill.ZOrder" xml:space="preserve">
     <value>5</value>
@@ -349,13 +361,13 @@
     <value>HH:mm</value>
   </data>
   <data name="timeTill.Location" type="System.Drawing.Point, System.Drawing">
-    <value>199, 47</value>
+    <value>516, 99</value>
   </data>
   <data name="timeTill.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>6, 5, 6, 5</value>
   </data>
   <data name="timeTill.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 20</value>
+    <value>170, 38</value>
   </data>
   <data name="timeTill.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -367,40 +379,40 @@
     <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;timeTill.Parent" xml:space="preserve">
-    <value>tableDates</value>
+    <value>_layoutDates</value>
   </data>
   <data name="&gt;&gt;timeTill.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="tableDates.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 21</value>
+  <data name="_layoutDates.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 46</value>
   </data>
-  <data name="tableDates.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="_layoutDates.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
-  <data name="tableDates.RowCount" type="System.Int32, mscorlib">
+  <data name="_layoutDates.RowCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="tableDates.Size" type="System.Drawing.Size, System.Drawing">
-    <value>323, 69</value>
+  <data name="_layoutDates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>863, 142</value>
   </data>
-  <data name="tableDates.TabIndex" type="System.Int32, mscorlib">
+  <data name="_layoutDates.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;tableDates.Name" xml:space="preserve">
-    <value>tableDates</value>
+  <data name="&gt;&gt;_layoutDates.Name" xml:space="preserve">
+    <value>_layoutDates</value>
   </data>
-  <data name="&gt;&gt;tableDates.Type" xml:space="preserve">
+  <data name="&gt;&gt;_layoutDates.Type" xml:space="preserve">
     <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tableDates.Parent" xml:space="preserve">
-    <value>tableGlobal</value>
+  <data name="&gt;&gt;_layoutDates.Parent" xml:space="preserve">
+    <value>_layoutForm</value>
   </data>
-  <data name="&gt;&gt;tableDates.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_layoutDates.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="tableDates.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="radioNoTime" Row="0" RowSpan="1" Column="0" ColumnSpan="3" /&gt;&lt;Control Name="radioTime" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="dateFrom" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="timeFrom" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="labelTill" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="dateTill" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="timeTill" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,AutoSize,0,AutoSize,0,Absolute,15" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  <data name="_layoutDates.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="radioNoTime" Row="0" RowSpan="1" Column="0" ColumnSpan="3" /&gt;&lt;Control Name="radioTime" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="dateFrom" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="timeFrom" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="labelTill" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="dateTill" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="timeTill" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,AutoSize,0,AutoSize,0,Absolute,41" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="groupTextEntry.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -423,14 +435,17 @@
   <data name="labelBody.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="labelBody.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="labelBody.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 5</value>
+    <value>6, 12</value>
   </data>
   <data name="labelBody.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 5, 2, 0</value>
+    <value>6, 12, 6, 0</value>
   </data>
   <data name="labelBody.Size" type="System.Drawing.Size, System.Drawing">
-    <value>286, 13</value>
+    <value>756, 32</value>
   </data>
   <data name="labelBody.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -454,10 +469,10 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="textBody.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 20</value>
+    <value>6, 49</value>
   </data>
   <data name="textBody.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>6, 5, 6, 5</value>
   </data>
   <data name="textBody.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -466,7 +481,7 @@
     <value>Vertical</value>
   </data>
   <data name="textBody.Size" type="System.Drawing.Size, System.Drawing">
-    <value>309, 128</value>
+    <value>823, 358</value>
   </data>
   <data name="textBody.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -484,16 +499,16 @@
     <value>1</value>
   </data>
   <data name="tableTextEntry.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 11</value>
+    <value>9, 26</value>
   </data>
   <data name="tableTextEntry.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>6, 5, 6, 5</value>
   </data>
   <data name="tableTextEntry.RowCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="tableTextEntry.Size" type="System.Drawing.Size, System.Drawing">
-    <value>313, 150</value>
+    <value>835, 412</value>
   </data>
   <data name="tableTextEntry.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -511,19 +526,19 @@
     <value>0</value>
   </data>
   <data name="tableTextEntry.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="labelBody" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBody" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,Percent,100,Absolute,20,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="labelBody" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textBody" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,Percent,100,Absolute,48,Absolute,48" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="groupTextEntry.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 92</value>
+    <value>6, 193</value>
   </data>
   <data name="groupTextEntry.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>6, 5, 6, 5</value>
   </data>
   <data name="groupTextEntry.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>6, 5, 6, 5</value>
   </data>
   <data name="groupTextEntry.Size" type="System.Drawing.Size, System.Drawing">
-    <value>319, 167</value>
+    <value>851, 453</value>
   </data>
   <data name="groupTextEntry.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -535,148 +550,151 @@
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;groupTextEntry.Parent" xml:space="preserve">
-    <value>tableGlobal</value>
+    <value>_layoutForm</value>
   </data>
   <data name="&gt;&gt;groupTextEntry.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="flowButtons.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
+  <data name="_layoutForm.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
-  <data name="btnCancel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="_layoutForm.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
-  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>256, 2</value>
+  <data name="_layoutForm.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 5, 6, 5</value>
   </data>
-  <data name="btnCancel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+  <data name="_layoutForm.RowCount" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
-  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>61, 27</value>
+  <data name="_layoutForm.Size" type="System.Drawing.Size, System.Drawing">
+    <value>863, 651</value>
   </data>
-  <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="btnCancel.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.Name" xml:space="preserve">
-    <value>btnCancel</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
-    <value>flowButtons</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="btnSave.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>191, 2</value>
-  </data>
-  <data name="btnSave.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="btnSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>61, 27</value>
-  </data>
-  <data name="btnSave.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="btnSave.Text" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="&gt;&gt;btnSave.Name" xml:space="preserve">
-    <value>btnSave</value>
-  </data>
-  <data name="&gt;&gt;btnSave.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnSave.Parent" xml:space="preserve">
-    <value>flowButtons</value>
-  </data>
-  <data name="&gt;&gt;btnSave.ZOrder" xml:space="preserve">
+  <data name="_layoutForm.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="flowButtons.FlowDirection" type="System.Windows.Forms.FlowDirection, System.Windows.Forms">
-    <value>RightToLeft</value>
+  <data name="&gt;&gt;_layoutForm.Name" xml:space="preserve">
+    <value>_layoutForm</value>
   </data>
-  <data name="flowButtons.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 263</value>
-  </data>
-  <data name="flowButtons.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="flowButtons.Size" type="System.Drawing.Size, System.Drawing">
-    <value>319, 31</value>
-  </data>
-  <data name="flowButtons.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;flowButtons.Name" xml:space="preserve">
-    <value>flowButtons</value>
-  </data>
-  <data name="&gt;&gt;flowButtons.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;flowButtons.Parent" xml:space="preserve">
-    <value>tableGlobal</value>
-  </data>
-  <data name="&gt;&gt;flowButtons.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="tableGlobal.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 4</value>
-  </data>
-  <data name="tableGlobal.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="tableGlobal.RowCount" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="tableGlobal.Size" type="System.Drawing.Size, System.Drawing">
-    <value>323, 296</value>
-  </data>
-  <data name="tableGlobal.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;tableGlobal.Name" xml:space="preserve">
-    <value>tableGlobal</value>
-  </data>
-  <data name="&gt;&gt;tableGlobal.Type" xml:space="preserve">
+  <data name="&gt;&gt;_layoutForm.Type" xml:space="preserve">
     <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tableGlobal.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;_layoutForm.Parent" xml:space="preserve">
+    <value>_busyHider</value>
   </data>
-  <data name="&gt;&gt;tableGlobal.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_layoutForm.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="tableGlobal.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="chkEnable" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="tableDates" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupTextEntry" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="flowButtons" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,Percent,100,AutoSize,0,Absolute,16" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  <data name="_layoutForm.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="chkEnable" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="_layoutDates" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="groupTextEntry" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,Percent,100,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="_busyHider.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="_busyHider.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="_busyHider.Size" type="System.Drawing.Size, System.Drawing">
+    <value>863, 651</value>
+  </data>
+  <data name="_busyHider.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="_busyHider.Text" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="&gt;&gt;_busyHider.Name" xml:space="preserve">
+    <value>_busyHider</value>
+  </data>
+  <data name="&gt;&gt;_busyHider.Type" xml:space="preserve">
+    <value>Acacia.Controls.KBusyHider, Kopano, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;_busyHider.Parent" xml:space="preserve">
+    <value>_layout</value>
+  </data>
+  <data name="&gt;&gt;_busyHider.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="_buttons.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="_buttons.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="_buttons.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="_buttons.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 662</value>
+  </data>
+  <data name="_buttons.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 5, 6, 5</value>
+  </data>
+  <data name="_buttons.Size" type="System.Drawing.Size, System.Drawing">
+    <value>857, 54</value>
+  </data>
+  <data name="_buttons.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;_buttons.Name" xml:space="preserve">
+    <value>_buttons</value>
+  </data>
+  <data name="&gt;&gt;_buttons.Type" xml:space="preserve">
+    <value>Acacia.Controls.KDialogButtons, Kopano, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;_buttons.Parent" xml:space="preserve">
+    <value>_layout</value>
+  </data>
+  <data name="&gt;&gt;_buttons.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="_layout.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="_layout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 9</value>
+  </data>
+  <data name="_layout.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="_layout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>869, 721</value>
+  </data>
+  <data name="_layout.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;_layout.Name" xml:space="preserve">
+    <value>_layout</value>
+  </data>
+  <data name="&gt;&gt;_layout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_layout.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;_layout.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="_layout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="_busyHider" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="_buttons" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,100,AutoSize,0,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+    <value>16, 31</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>333, 310</value>
+    <value>889, 739</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>6, 5, 6, 5</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>348, 345</value>
+    <value>884, 727</value>
   </data>
   <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
+    <value>10, 9, 10, 9</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
@@ -688,6 +706,6 @@
     <value>OutOfOfficeDialog</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Acacia.UI.KopanoDialog, Kopano, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Acacia.Controls.KDialogNew, Kopano, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

@@ -23,6 +23,7 @@ using System.Windows.Forms;
 
 namespace Acacia.UI
 {
+    // TODO: remove when Debug and SettingsDialog are rewritten.
     public class KopanoDialog : Form
     {
         public KopanoDialog()

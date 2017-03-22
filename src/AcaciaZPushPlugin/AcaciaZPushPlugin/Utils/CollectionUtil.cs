@@ -24,6 +24,28 @@ namespace Acacia.Utils
 {
     public static class CollectionUtil
     {
+        public static bool EnumEquals<TValue>(this IEnumerable<TValue> first, IEnumerable<TValue> second)
+        {
+            if (first == second) return true;
+            if ((first == null) || (second == null)) return false;
+
+            var i1 = first.GetEnumerator();
+            var i2 = second.GetEnumerator();
+
+            while (i1.MoveNext())
+            {
+                if (!i2.MoveNext())
+                    return false;
+
+                if (!i1.Current.NullSafeEquals(i2.Current))
+                    return false;
+            }
+
+            if (i2.MoveNext())
+                return false;
+            return true;
+        }
+
         /// <summary>
         /// Checks if both collections contain the same elements, not necessarily in the same order.
         /// </summary>

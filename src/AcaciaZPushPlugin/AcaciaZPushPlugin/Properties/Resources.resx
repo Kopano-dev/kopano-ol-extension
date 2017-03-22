@@ -454,4 +454,7 @@
   <data name="SignaturesSync_Title" xml:space="preserve">
     <value>Signatures</value>
   </data>
+  <data name="OOF_Unsaved_Changes" xml:space="preserve">
+    <value>There are unsaved changes. Do you really want to to discard these?</value>
+  </data>
 </root>
