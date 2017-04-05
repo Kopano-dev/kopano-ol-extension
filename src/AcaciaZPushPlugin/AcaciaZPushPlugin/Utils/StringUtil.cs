@@ -77,6 +77,8 @@ namespace Acacia.Utils
 
         #endregion
 
+        #region XML
+
         public static string ToXMLString(this XmlNode xml)
         {
             using (var stringWriter = new StringWriter())
@@ -87,6 +89,13 @@ namespace Acacia.Utils
                 return stringWriter.GetStringBuilder().ToString();
             }
         }
+
+        public static string EncodeXML(this string s)
+        {
+            return System.Security.SecurityElement.Escape(s);
+        }
+
+        #endregion
 
 
         #region Resources
