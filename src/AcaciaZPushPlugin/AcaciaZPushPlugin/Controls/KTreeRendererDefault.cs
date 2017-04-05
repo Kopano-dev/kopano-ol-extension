@@ -68,8 +68,7 @@ namespace Acacia.Controls
 
         protected override void RenderNodeText(Graphics graphics, KTreeNode node, Rectangle rect, KTreeNodeMeasurements.Part? highlight)
         {
-            TextRenderer.DrawText(graphics, node.Text, _tree.Font, rect, GetColor(node, highlight), 
-                Color.Transparent, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
+            TextRenderer.DrawText(graphics, node.Text, _tree.Font, rect, GetColor(node, highlight), Color.Transparent, TEXT_FLAGS);
         }
 
         private Color GetColor(KTreeNode node, KTreeNodeMeasurements.Part? highlight)

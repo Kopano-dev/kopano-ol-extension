@@ -29,6 +29,8 @@ namespace Acacia.Controls
 {
     internal abstract class KTreeRenderer
     {
+        protected const TextFormatFlags TEXT_FLAGS = TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.NoPrefix;
+
         private Rectangle _clientRect;
         private Rectangle _totalRect;
         protected KTree _tree;
@@ -79,7 +81,7 @@ namespace Acacia.Controls
             }
 
             // Text size
-            dimension[KTreeNodeMeasurements.Part.Text] = TextRenderer.MeasureText(graphics, node.Text, _tree.Font);
+            dimension[KTreeNodeMeasurements.Part.Text] = TextRenderer.MeasureText(graphics, node.Text, _tree.Font, Size.Empty, TEXT_FLAGS);
 
             // Control
             if (node.Control != null)
