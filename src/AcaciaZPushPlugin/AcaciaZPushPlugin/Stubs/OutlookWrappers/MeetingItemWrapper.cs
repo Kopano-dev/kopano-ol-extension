@@ -1,4 +1,4 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -24,40 +24,41 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    class AppointmentItemWrapper : OutlookItemWrapper<NSOutlook.AppointmentItem>, IAppointmentItem, IZPushItem
+    class MeetingItemWrapper : OutlookItemWrapper<NSOutlook.MeetingItem>, IMeetingItem
     {
 
-        internal AppointmentItemWrapper(NSOutlook.AppointmentItem item)
+        internal MeetingItemWrapper(NSOutlook.MeetingItem item)
         :
         base(item)
         {
         }
 
-        #region IAppointmentItem implementation
-
-        public DateTime Start
+        public IAppointmentItem GetAssociatedAppointment(bool addToCalendar)
         {
-            get { return _item.Start; }
-            set { _item.Start = value; }
-        }
-        public DateTime End
-        {
-            get { return _item.End; }
-            set { _item.End = value; }
+            return _item.GetAssociatedAppointment(addToCalendar).Wrap<IAppointmentItem>();
         }
 
-        public string Location
+        public byte[] GlobalObjectId
         {
-            get { return _item.Location; }
-            set { _item.Location = value; }
-        }
+            get
+            {
+                byte[] uid = (byte[])GetProperty(OutlookConstants.PR_MEETING_UID);
+                if (uid != null)
+                    return null;
 
-        public string GlobalAppointmentId
-        {
-            get { return _item.GlobalAppointmentID; }
-        }
+                using (IAppointmentItem appointment = GetAssociatedAppointment(false))
+                {
+                    if (appointment != null)
+                        return appointment.GlobalAppointmentId.HexToBytes();
+                }
+                return null;
+            }
 
-        #endregion
+            set
+            {
+                SetProperty(OutlookConstants.PR_MEETING_UID, value);
+            }
+        }
 
         #region Wrapper methods
 

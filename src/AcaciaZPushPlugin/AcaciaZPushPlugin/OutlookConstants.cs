@@ -114,6 +114,13 @@ namespace Acacia
 
         #endregion
 
+        #region Meeting requests
+
+        public const string PSETID_MEETING = GUID + "{6ED8DA90-450B-101B-98DA-00AA003F1305}/";
+        public const string PR_MEETING_UID = PSETID_MEETING + "0003" + PT_BINARY;
+
+        #endregion
+
         #region EAS / ZPush
 
         public const string PR_ZPUSH_MESSAGE_ID = PROP + "6B20" + PT_STRING8;
@@ -229,12 +236,12 @@ namespace Acacia
         #region Notes
 
 
-        public const string PREFIX_NOTES = GUID + "{0006200E-0000-0000-C000-000000000046}/";
-        public const string PR_NOTE_COLOR = PREFIX_NOTES + "8B00" + PT_LONG;
-        public const string PR_NOTE_WIDTH = PREFIX_NOTES + "8B02" + PT_LONG;
-        public const string PR_NOTE_HEIGHT = PREFIX_NOTES + "8B03" + PT_LONG;
-        public const string PR_NOTE_X = PREFIX_NOTES + "8B04" + PT_LONG;
-        public const string PR_NOTE_Y = PREFIX_NOTES + "8B05" + PT_LONG;
+        public const string PSETID_NOTE = GUID + "{0006200E-0000-0000-C000-000000000046}/";
+        public const string PR_NOTE_COLOR = PSETID_NOTE + "8B00" + PT_LONG;
+        public const string PR_NOTE_WIDTH = PSETID_NOTE + "8B02" + PT_LONG;
+        public const string PR_NOTE_HEIGHT = PSETID_NOTE + "8B03" + PT_LONG;
+        public const string PR_NOTE_X = PSETID_NOTE + "8B04" + PT_LONG;
+        public const string PR_NOTE_Y = PSETID_NOTE + "8B05" + PT_LONG;
 
         #endregion
 

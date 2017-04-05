@@ -1,4 +1,4 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -23,13 +23,16 @@ using System.Threading.Tasks;
 namespace Acacia.Stubs
 {
     /// <summary>
-    /// Specialisation for appointments
+    /// Specialisation for meeting requests
     /// </summary>
-    public interface IAppointmentItem : IItem
+    public interface IMeetingItem : IItem
     {
-        DateTime Start { get; set; }
-        DateTime End { get; set; }
-        string Location { get; set; }
-        string GlobalAppointmentId { get; }
+        IAppointmentItem GetAssociatedAppointment(bool addToCalendar);
+
+        byte[] GlobalObjectId
+        {
+            get;
+            set;
+        }
     }
 }

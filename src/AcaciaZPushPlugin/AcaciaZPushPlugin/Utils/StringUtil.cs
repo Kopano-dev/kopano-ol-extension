@@ -54,7 +54,7 @@ namespace Acacia.Utils
 
         #region Hex strings
 
-        public static byte[] HexToBytes(string hex)
+        public static byte[] HexToBytes(this string hex)
         {
             int NumberChars = hex.Length;
             byte[] bytes = new byte[NumberChars / 2];
@@ -63,14 +63,14 @@ namespace Acacia.Utils
             return bytes;
         }
 
-        public static string BytesToHex(byte[] bytes)
+        public static string BytesToHex(this byte[] bytes)
         {
             if (bytes == null)
                 return null;
             return BitConverter.ToString(bytes).Replace("-", "");
         }
 
-        public static string HexToUtf8(string s)
+        public static string HexToUtf8(this string s)
         {
             return Encoding.UTF8.GetString(HexToBytes(s));
         }

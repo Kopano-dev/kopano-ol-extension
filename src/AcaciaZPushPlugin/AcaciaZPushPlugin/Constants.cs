@@ -44,6 +44,12 @@ namespace Acacia
 
         #endregion
 
+        #region Meeting requests
+
+        public const string ZPUSH_MEETING_UID = OutlookConstants.NS_TRANSPORT_MESSAGE_HEADERS + "X-Push-Meeting-UID";
+
+        #endregion
+
         #region GAB
 
         public const string ZPUSH_GAB_INDEX = "$PushIndex";

@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Acacia.Stubs;
 using Acacia.Stubs.OutlookWrappers;
+using System.Reflection;
 
 namespace Acacia.Utils
 {
@@ -151,25 +152,176 @@ namespace Acacia.Utils
             }
         }
 
-        public event CancellableMailItemEventHandler ItemSend;
-        private void OnItemSend(object item, ref bool cancel)
+        #region Send
+
+        private class Dispatchers
         {
-            try
+            public class Dispatcher
             {
-                if (ItemSend != null && item != null)
+                private readonly Dispatchers _dispatchers;
+                private bool _failed;
+                private List<object> _params = new List<object>();
+
+                public Dispatcher(Dispatchers dispatchers)
                 {
-                    using (IMailItem wrapped = Mapping.WrapOrDefault<IMailItem>(item, false))
+                    this._dispatchers = dispatchers;
+                }
+
+                public Dispatcher Item(object item, bool mustRelease = false)
+                {
+                    if (_failed || !_dispatchers.IsRegistered)
+                        return this;
+
+                    try
                     {
-                        if (wrapped != null)
-                            ItemSend(wrapped, ref cancel);
+                        IItem wrapped = Mapping.WrapOrDefault<IItem>(item, mustRelease);
+                        if (wrapped == null)
+                            _failed = true;
+                        else
+                            _params.Add(wrapped);
+                    }
+                    catch (System.Exception e)
+                    {
+                        Logger.Instance.Error(this, "Dispatcher.Item: {0}: {1}", _dispatchers._name, e);
+                        _failed = true;
+                    }
+                    return this;
+                }
+
+                public void Exec()
+                {
+                    try
+                    {
+                        ExecInternal(0);
+                    }
+                    catch (System.Exception e)
+                    {
+                        Logger.Instance.Error(this, "Dispatcher.Exec: {0}: {1}", _dispatchers._name, e);
+                        _failed = true;
                     }
                 }
+
+                private object[] ExecInternal(int skipTypeCheck)
+                { 
+                    if (_failed || !_dispatchers.IsRegistered)
+                        return null;
+
+                    object[] paramsArray = this._params.ToArray();
+
+                    foreach (Delegate handler in _dispatchers._handlers)
+                    {
+                        // Check the signature
+                        ParameterInfo[] parameters = handler.Method.GetParameters();
+                        if (parameters.Length != paramsArray.Length)
+                            continue;
+
+                        bool invoke = true;
+                        for (int i = 0; i < paramsArray.Length - skipTypeCheck; ++i)
+                        {
+                            // TODO: this doesn't handle null correctly
+                            Type formal = parameters[i].ParameterType;
+                            Type actual = paramsArray[i].GetType();
+                            if (!formal.IsAssignableFrom(actual))
+                            {
+                                invoke = false;
+                                break;
+                            }
+                        }
+                        if (!invoke)
+                            continue;
+
+                        // Invoke
+                        handler.DynamicInvoke(paramsArray);
+                    }
+                    Cleanup();
+                    return paramsArray;
+                }
+
+                public void Exec(ref bool cancel)
+                {
+                    try
+                    {
+                        _params.Add(cancel);
+                        object[] paramsArray = ExecInternal(1);
+                        if (paramsArray == null)
+                            return;
+                        cancel = (bool)paramsArray.Last();
+                        _params.RemoveAt(_params.Count - 1);
+                    }
+                    catch (System.Exception e)
+                    {
+                        Logger.Instance.Error(this, "Dispatcher.Exec(cancel): {0}: {1}", _dispatchers._name, e);
+                        _failed = true;
+                    }
+                }
+
+                private void Cleanup()
+                {
+                    foreach (object param in _params)
+                        if (param is IDisposable)
+                            ((IDisposable)param).Dispose();
+                }
             }
-            catch (System.Exception e)
+
+            private List<Delegate> _handlers = new List<Delegate>();
+            private readonly string _name;
+
+            private bool IsRegistered { get { return _handlers.Count > 0; } }
+
+            public Dispatchers(string name)
             {
-                Logger.Instance.Error(this, "OnItemSend: {0}", e);
+                this._name = name;
+            }
+
+            public void Add(Delegate o)
+            {
+                _handlers.Add(o);
+            }
+
+            public void Remove(Delegate o)
+            {
+                _handlers.Remove(o);
+            }
+
+            public Dispatcher Dispatch()
+            {
+                return new Dispatcher(this);
             }
         }
+
+        public class CancellableItemEvent
+        {
+            public delegate void Handler<ItemType>(ItemType item, ref bool cancel)
+            where ItemType : IItem;
+
+            private readonly Dispatchers _handlers;
+
+            public CancellableItemEvent(string name)
+            {
+                _handlers = new Dispatchers(name);
+            }
+
+            public void Register<ItemType>(Handler<ItemType> handler)
+            where ItemType : IItem
+            {
+                _handlers.Add(handler);
+            }
+
+            public void Unregister<ItemType>(Handler<ItemType> handler)
+            where ItemType : IItem
+            {
+                _handlers.Remove(handler);
+            }
+
+            internal void Dispatch(object item, ref bool cancel)
+            {
+                _handlers.Dispatch().Item(item).Exec(ref cancel);
+            }
+        }
+
+        public readonly CancellableItemEvent ItemSend = new CancellableItemEvent("ItemSend");
+
+        #endregion
 
         #endregion
 
@@ -178,7 +330,7 @@ namespace Acacia.Utils
         public MailEvents(IAddIn app)
         {
             app.ItemLoad += OnItemLoad;
-            app.ItemSend += OnItemSend;
+            app.ItemSend += ItemSend.Dispatch;
         }
 
         private void OnItemLoad(object item)

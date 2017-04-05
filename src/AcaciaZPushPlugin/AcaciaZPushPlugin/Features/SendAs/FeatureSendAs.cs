@@ -51,7 +51,7 @@ namespace Acacia.Features.SendAs
         {
             if (MailEvents != null)
             {
-                MailEvents.ItemSend += MailEvents_ItemSend;
+                MailEvents.ItemSend.Register<IMailItem>(MailEvents_ItemSend);
             }
 
             if (SendAsOwner)

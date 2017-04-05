@@ -244,6 +244,7 @@
     <Compile Include="Features\BCC\FeatureBCC.cs" />
     <Compile Include="Features\FreeBusy\FreeBusyServlet.cs" />
     <Compile Include="Features\FreeBusy\Servlet.cs" />
+    <Compile Include="Features\MeetingRequest\FeatureMeetingRequest.cs" />
     <Compile Include="Features\SecondaryContacts\FeatureSecondaryContacts.cs" />
     <Compile Include="Features\DebugSupport\AboutDialog.cs">
       <SubType>Form</SubType>
@@ -303,6 +304,7 @@
     <Compile Include="Stubs\IAccount.cs" />
     <Compile Include="Stubs\IAddIn.cs" />
     <Compile Include="Stubs\IAddressEntry.cs" />
+    <Compile Include="Stubs\IMeetingItem.cs" />
     <Compile Include="Stubs\ICommandBars.cs" />
     <Compile Include="Stubs\IComWrapper.cs" />
     <Compile Include="Stubs\IExplorer.cs" />
@@ -320,6 +322,7 @@
     <Compile Include="Stubs\OutlookWrappers\AccountWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\AddInWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\AddressEntryWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\MeetingItemWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\CommandBarsWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\ExplorerWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\FoldersWrapper.cs" />

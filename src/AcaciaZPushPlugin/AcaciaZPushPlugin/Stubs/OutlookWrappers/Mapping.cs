@@ -62,6 +62,8 @@ namespace Acacia.Stubs.OutlookWrappers
                 return new NoteItemWrapper((NSOutlook.NoteItem)o);
             if (o is NSOutlook.TaskItem)
                 return new TaskItemWrapper((NSOutlook.TaskItem)o);
+            if (o is NSOutlook.MeetingItem)
+                return new MeetingItemWrapper((NSOutlook.MeetingItem)o);
 
             // TODO: support others?
             if (mustRelease)
