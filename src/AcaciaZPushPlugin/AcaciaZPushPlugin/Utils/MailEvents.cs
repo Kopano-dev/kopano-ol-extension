@@ -390,12 +390,14 @@ namespace Acacia.Utils
 
             private void HandleBeforeDelete(object item, ref bool cancel)
             {
-                _events.OnBeforeDelete(item.WrapOrDefault<IItem>(), ref cancel);
+                using (IItem wrapped = item.WrapOrDefault<IItem>(false))
+                    _events.OnBeforeDelete(wrapped, ref cancel);
             }
 
             private void HandleForward(object response, ref bool cancel)
             {
-                _events.OnForward(_item as IMailItem, response.WrapOrDefault<IMailItem>());
+                using (IItem wrapped = response.WrapOrDefault<IItem>(false))
+                    _events.OnForward(_item as IMailItem, wrapped as IMailItem);
             }
 
             private void HandleRead()
@@ -405,12 +407,14 @@ namespace Acacia.Utils
 
             private void HandleReply(object response, ref bool cancel)
             {
-                _events.OnReply(_item as IMailItem, response.WrapOrDefault<IMailItem>());
+                using (IItem wrapped = response.WrapOrDefault<IItem>(false))
+                    _events.OnReply(_item as IMailItem, wrapped as IMailItem);
             }
 
             private void HandleReplyAll(object response, ref bool cancel)
             {
-                _events.OnReplyAll(_item as IMailItem, response.WrapOrDefault<IMailItem>());
+                using (IItem wrapped = response.WrapOrDefault<IItem>(false))
+                    _events.OnReplyAll(_item as IMailItem, wrapped as IMailItem);
             }
 
             private void HandleUnload()
