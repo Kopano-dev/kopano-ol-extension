@@ -206,7 +206,7 @@ namespace Acacia.Utils
                                 s.Append("<Enabled>1</Enabled>");
                                 s.Append("<BodyType>Text</BodyType>");
                                 s.Append("<ReplyMessage>");
-                                s.Append(_value.Message[i].Message); // TODO: escaping
+                                s.Append(_value.Message[i].Message.EncodeXML());
                                 s.Append("</ReplyMessage>");
                             }
                         }
