@@ -202,8 +202,7 @@ namespace Acacia.ZPush.Connect.Soap
 
             public override void Serialize(string name, object value, StringBuilder s)
             {
-                // TODO: this needs escaping
-                s.Append(string.Format("<{0} xsi:type=\"xsd:string\">{1}</{0}>", name, value));
+                s.Append(string.Format("<{0} xsi:type=\"xsd:string\">{1}</{0}>", name, value.ToString().EncodeXML()));
             }
 
             protected override object DeserializeContents(XmlNode node, Type expectedType)

@@ -143,8 +143,7 @@ namespace Acacia.Controls
         {
             Color foreColor = GetStyle(node, highlight).GetColor(ColorProperty.TextColor);
 
-            TextRenderer.DrawText(graphics, node.Text, _tree.Font, rect, foreColor, Color.Transparent, 
-                TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
+            TextRenderer.DrawText(graphics, node.Text, _tree.Font, rect, foreColor, Color.Transparent, TEXT_FLAGS);
         }
 
         public override void RenderControlBorder(Graphics graphics, Rectangle rect)
