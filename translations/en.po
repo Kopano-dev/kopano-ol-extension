@@ -160,18 +160,6 @@ msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\labelBody.
 msgid "AutoReply only once to each sender with the following text:"
 msgstr "AutoReply only once to each sender with the following text:"
 
-#: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\btnCancel.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\btnCancel.Text"
-msgid "Cancel"
-msgstr "Cancel"
-
-#: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\btnSave.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\btnSave.Text"
-msgid "Save"
-msgstr "Save"
-
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\$this.Text"
@@ -719,6 +707,12 @@ msgstr "The signatures are being synchronised."
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SignaturesSync_Title"
 msgid "Signatures"
 msgstr "Signatures"
+
+#: AcaciaZPushPlugin\Properties\Resources\OOF_Unsaved_Changes
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOF_Unsaved_Changes"
+msgid "There are unsaved changes. Do you really want to to discard these?"
+msgstr "There are unsaved changes. Do you really want to to discard these?"
 
 #: AcaciaZPushPlugin\UI\ProgressDialog\labelMessage.Text
 #, csharp-format
