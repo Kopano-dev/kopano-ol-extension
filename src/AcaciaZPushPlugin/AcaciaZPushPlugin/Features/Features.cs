@@ -38,7 +38,8 @@ namespace Acacia.Features
             typeof(SendAs.FeatureSendAs),
             typeof(Signatures.FeatureSignatures),
             typeof(MeetingRequest.FeatureMeetingRequest),
-            typeof(DebugSupport.FeatureDebugSupport)
+            typeof(DebugSupport.FeatureDebugSupport),
+            typeof(SyncState.FeatureSyncState),
         };
     }
 }

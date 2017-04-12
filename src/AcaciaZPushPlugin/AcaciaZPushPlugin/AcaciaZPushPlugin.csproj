@@ -287,6 +287,7 @@
     <Compile Include="Features\Signatures\SignaturesSettings.Designer.cs">
       <DependentUpon>SignaturesSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Features\SyncState\FeatureSyncState.cs" />
     <Compile Include="GlobalOptions.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Native\IOleWindow.cs" />
@@ -337,6 +338,7 @@
     <Compile Include="Stubs\OutlookWrappers\StoresWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\SyncObjectWrapper.cs" />
     <Compile Include="Stubs\Wrappers.cs" />
+    <Compile Include="UI\Outlook\DataProvider.cs" />
     <Compile Include="UI\Outlook\OutlookImageList.cs" />
     <Compile Include="UI\Outlook\RibbonToggleButton.cs" />
     <Compile Include="UI\Outlook\RibbonButton.cs" />
@@ -618,6 +620,11 @@
     <None Include="Properties\TreeLoading.gif" />
     <None Include="Resources\Icons\Ribbon_About.png" />
     <None Include="Resources\Icons\Ribbon_About_Small.png" />
+    <None Include="Resources\Icons\Progress0.png" />
+    <None Include="Resources\Icons\Progress1.png" />
+    <None Include="Resources\Icons\Progress2.png" />
+    <None Include="Resources\Icons\Progress3.png" />
+    <None Include="Resources\Icons\Progress4.png" />
     <Content Include="Resources\Icons\Ribbon_AddSharedFolder.png" />
     <Content Include="Resources\Icons\Ribbon_AddSharedFolder_Small.png" />
     <Content Include="Resources\Icons\Ribbon_Debug.png" />

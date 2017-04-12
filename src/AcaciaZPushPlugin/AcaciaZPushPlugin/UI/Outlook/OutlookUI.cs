@@ -242,47 +242,84 @@ namespace Acacia.UI.Outlook
             this._officeUI = ribbonUI;
         }
 
+        private class ResourceDataProvider : DataProvider
+        {
+            public Bitmap GetImage(string elementId, bool large)
+            {
+                string id = "Ribbon_" + elementId + (large ? "" : "_Small");
+                object o = Properties.Resources.ResourceManager.GetObject(id);
+                if (o == null)
+                    throw new InvalidDataException("Missing image resource " + id);
+                return o as Bitmap;
+            }
+
+            public string GetLabel(string elementId)
+            {
+                return GetString(elementId, "Label");
+            }
+
+            public string GetScreenTip(string elementId)
+            {
+                return GetString(elementId, "Screentip");
+            }
+
+            public string GetSuperTip(string elementId)
+            {
+                return GetString(elementId, "Supertip");
+            }
+
+            private string GetString(string elementId, string suffix)
+            {
+                string id = "Ribbon_" + elementId + "_" + suffix;
+                string s = Properties.Resources.ResourceManager.GetString(id);
+                if (s == null)
+                    throw new InvalidDataException("Missing string resource " + id);
+                return s;
+            }
+        }
+
+        private static readonly DataProvider RESOURCE_DATA_PROVIDER = new ResourceDataProvider();
+
+        private CommandElement GetCommand(Office.IRibbonControl control)
+        {
+            CommandElement command = null;
+            _commandIds.TryGetValue(control.Id, out command);
+            return command;
+        }
+
+        private DataProvider GetDataProvider(CommandElement cmd)
+        {
+            return cmd?.DataProvider ?? RESOURCE_DATA_PROVIDER;
+        }
+
         public Bitmap getControlImage_large(Office.IRibbonControl control)
         {
-            return GetControlImage(control, "");
+            CommandElement cmd = GetCommand(control);
+            return GetDataProvider(cmd).GetImage(control.Id, true);
         }
 
         public Bitmap getControlImage_normal(Office.IRibbonControl control)
         {
-            return GetControlImage(control, "_Small");
-        }
-
-        private Bitmap GetControlImage(Office.IRibbonControl control, string suffix)
-        {
-            string id = "Ribbon_" + control.Id + suffix;
-            object o = Properties.Resources.ResourceManager.GetObject(id);
-            if (o == null)
-                throw new InvalidDataException("Missing image resource " + id);
-            return o as Bitmap;
+            CommandElement cmd = GetCommand(control);
+            return GetDataProvider(cmd).GetImage(control.Id, false);
         }
 
         public string getControlLabel(Office.IRibbonControl control)
         {
-            return GetString(control, "Label");
+            CommandElement cmd = GetCommand(control);
+            return GetDataProvider(cmd).GetLabel(control.Id);
         }
 
         public string getControlScreentip(Office.IRibbonControl control)
         {
-            return GetString(control, "Screentip");
+            CommandElement cmd = GetCommand(control);
+            return GetDataProvider(cmd).GetScreenTip(control.Id);
         }
 
         public string getControlSupertip(Office.IRibbonControl control)
         {
-            return GetString(control, "Supertip");
-        }
-
-        private string GetString(Office.IRibbonControl control, string suffix)
-        {
-            string id = "Ribbon_" + control.Id + "_" + suffix;
-            string s = Properties.Resources.ResourceManager.GetString(id);
-            if (s == null)
-                throw new InvalidDataException("Missing string resource " + id);
-            return s;
+            CommandElement cmd = GetCommand(control);
+            return GetDataProvider(cmd).GetSuperTip(control.Id);
         }
 
         #endregion

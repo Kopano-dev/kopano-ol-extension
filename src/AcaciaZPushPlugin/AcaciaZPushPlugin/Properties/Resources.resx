@@ -457,4 +457,23 @@
   <data name="OOF_Unsaved_Changes" xml:space="preserve">
     <value>There are unsaved changes. Do you really want to to discard these?</value>
   </data>
+  <data name="Progress0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Progress0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Progress1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\Progress1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ribbon_SyncState_Label" xml:space="preserve">
+    <value>Syncing: {0}%</value>
+    <comment>{0} will be replaced with progress in percent</comment>
+  </data>
+  <data name="Ribbon_SyncState_Label_Done" xml:space="preserve">
+    <value>Up-to-date</value>
+  </data>
+  <data name="Ribbon_SyncState_Screentip" xml:space="preserve">
+    <value>Synchronisation state</value>
+  </data>
+  <data name="Ribbon_SyncState_Supertip" xml:space="preserve">
+    <value>Open the "Synchronisation" dialog, in which the synchronisation state can be viewed and managed.</value>
+  </data>
 </root>

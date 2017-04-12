@@ -327,6 +327,26 @@ namespace Acacia.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Progress0 {
+            get {
+                object obj = ResourceManager.GetObject("Progress0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Progress1 {
+            get {
+                object obj = ResourceManager.GetObject("Progress1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Ribbon_About {
             get {
                 object obj = ResourceManager.GetObject("Ribbon_About", resourceCulture);
@@ -742,6 +762,42 @@ namespace Acacia.Properties {
             get {
                 object obj = ResourceManager.GetObject("Ribbon_SyncGAB_Small", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Syncing: {0}%.
+        /// </summary>
+        internal static string Ribbon_SyncState_Label {
+            get {
+                return ResourceManager.GetString("Ribbon_SyncState_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up-to-date.
+        /// </summary>
+        internal static string Ribbon_SyncState_Label_Done {
+            get {
+                return ResourceManager.GetString("Ribbon_SyncState_Label_Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Synchronisation state.
+        /// </summary>
+        internal static string Ribbon_SyncState_Screentip {
+            get {
+                return ResourceManager.GetString("Ribbon_SyncState_Screentip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open the &quot;Synchronisation&quot; dialog, in which the synchronisation state can be viewed and managed..
+        /// </summary>
+        internal static string Ribbon_SyncState_Supertip {
+            get {
+                return ResourceManager.GetString("Ribbon_SyncState_Supertip", resourceCulture);
             }
         }
         

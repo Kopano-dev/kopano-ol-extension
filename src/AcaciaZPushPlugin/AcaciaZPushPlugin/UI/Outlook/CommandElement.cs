@@ -35,6 +35,8 @@ namespace Acacia.UI.Outlook
         public CheckCommandHandler CheckEnabled;
         public CheckCommandHandler CheckVisible;
 
+        public DataProvider DataProvider { get; set; }
+
         public CommandElement(FeatureWithUI feature, string id, 
                               System.Action callback, ZPushBehaviour zpushBehaviour)
         {
@@ -65,6 +67,11 @@ namespace Acacia.UI.Outlook
             Logger.Instance.Trace(Owner, "Command {0}: Handled", Id);
         }
 
+        public void Invalidate()
+        {
+            UI?.InvalidateCommand(this);
+        }
+
         private bool _isEnabled = true;
         public bool IsEnabled
         {
@@ -78,7 +85,7 @@ namespace Acacia.UI.Outlook
                 if (_isEnabled != value)
                 {
                     _isEnabled = value;
-                    UI?.InvalidateCommand(this);
+                    Invalidate();
                 }
             }
         }
@@ -96,7 +103,7 @@ namespace Acacia.UI.Outlook
                 if (_isVisible != value)
                 {
                     _isVisible = value;
-                    UI?.InvalidateCommand(this);
+                    Invalidate();
                 }
             }
         }
