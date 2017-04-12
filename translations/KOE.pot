@@ -160,18 +160,6 @@ msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\labelBody.
 msgid "AutoReply only once to each sender with the following text:"
 msgstr ""
 
-#: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\btnCancel.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\btnCancel.Text"
-msgid "Cancel"
-msgstr ""
-
-#: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\btnSave.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\btnSave.Text"
-msgid "Save"
-msgstr ""
-
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\$this.Text"
@@ -716,6 +704,37 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SignaturesSync_Title"
 msgid "Signatures"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\OOF_Unsaved_Changes
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOF_Unsaved_Changes"
+msgid "There are unsaved changes. Do you really want to to discard these?"
+msgstr ""
+
+#. {0} will be replaced with progress in percent
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Label"
+msgid "Syncing: {0}%"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Label_Done
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Label_Done"
+msgid "Up-to-date"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Screentip
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Screentip"
+msgid "Synchronisation state"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Supertip
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Supertip"
+msgid "Open the \"Synchronisation\" dialog, in which the synchronisation state can be viewed and managed."
 msgstr ""
 
 #: AcaciaZPushPlugin\UI\ProgressDialog\labelMessage.Text
