@@ -127,6 +127,16 @@ namespace Acacia
         }
         private static readonly BoolOption HOOK_ITEM_EVENTS = new BoolOption("HookItemEvents", true);
 
+        [AcaciaOption("Enables or disables the release of wrappers for item events. " +
+                     "This should normally be enabled, but can be disabled to debug exceptions.")]
+        virtual public bool ReleaseItemEventWrappers
+        {
+            get { return GetOption(null, RELEASE_ITEM_EVENT_WRAPPERS); }
+            set { SetOption(null, RELEASE_ITEM_EVENT_WRAPPERS, value); }
+        }
+        private static readonly BoolOption RELEASE_ITEM_EVENT_WRAPPERS = new BoolOption("ReleaseItemEventWrappers", true);
+
+
         #region UI Options
 
         [AcaciaOption("Completely enables or disables modifications to the Outlook UI." +
