@@ -113,10 +113,9 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             get
             {
-                using (ComRelease com = new ComRelease())
+                using (IBase parent = Mapping.Wrap<IBase>(_item.Parent))
                 {
-                    NSOutlook.Folder parent = com.Add(_item.Parent);
-                    return parent?.EntryID;
+                    return parent.EntryID;
                 }
             }
         }

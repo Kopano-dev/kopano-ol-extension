@@ -189,14 +189,11 @@ namespace Acacia.Stubs.OutlookWrappers
             {
                 try
                 {
-                    if (_itemAdd != null)
+                    using (IItem item = Mapping.Wrap<IItem>(objItem, GlobalOptions.INSTANCE.ReleaseItemEventWrappers))
                     {
-                        using (IItem item = Mapping.Wrap<IItem>(objItem, false))
+                        if (item != null && _itemAdd != null)
                         {
-                            if (item != null)
-                            {
-                                _itemAdd(item);
-                            }
+                            _itemAdd(item);
                         }
                     }
                 }
@@ -239,14 +236,11 @@ namespace Acacia.Stubs.OutlookWrappers
             {
                 try
                 {
-                    if (_itemChange != null)
+                    using (IItem item = Mapping.Wrap<IItem>(objItem, GlobalOptions.INSTANCE.ReleaseItemEventWrappers))
                     {
-                        using (IItem item = Mapping.Wrap<IItem>(objItem, false))
+                        if (item != null && _itemChange != null)
                         {
-                            if (item != null)
-                            {
-                                _itemChange(item);
-                            }
+                            _itemChange(item);
                         }
                     }
                 }
