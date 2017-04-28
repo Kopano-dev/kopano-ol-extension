@@ -112,6 +112,10 @@ namespace Acacia
         public const string PR_IN_REPLY_TO_ID = PROP + "1042" + PT_UNICODE;
         public const string PR_INTERNET_MESSAGE_ID = PROP + "1035" + PT_UNICODE;
 
+        public const string PR_ORIGINATOR_DELIVERY_REPORT_REQUESTED = PROP + "0023" + PT_BOOLEAN;
+        public const string PR_ORIGINATOR_NON_DELIVERY_REPORT_REQUESTED = PROP + "0C08" + PT_BOOLEAN;
+        public const string PR_READ_RECEIPT_REQUESTED = PROP + "0029" + PT_BOOLEAN;
+
         #endregion
 
         #region Meeting requests
