@@ -38,6 +38,7 @@ namespace Acacia.Utils
         public delegate void MailEventHandler(IMailItem mail);
         public delegate void MailResponseEventHandler(IMailItem mail, IMailItem response);
         public delegate void ItemEventHandler(IItem item);
+        public delegate void PropertyChangeEventHandler(IItem item, string propertyName);
         public delegate void CancellableItemEventHandler(IItem item, ref bool cancel);
         public delegate void CancellableMailItemEventHandler(IMailItem item, ref bool cancel);
 
@@ -116,6 +117,22 @@ namespace Acacia.Utils
             catch (System.Exception e)
             {
                 Logger.Instance.Error(this, "OnRead: {0}", e);
+            }
+        }
+
+        public event PropertyChangeEventHandler PropertyChange;
+        private void OnPropertyChange(IItem item, string propertyName)
+        {
+            try
+            {
+                if (PropertyChange != null && item != null)
+                {
+                    PropertyChange(item, propertyName);
+                }
+            }
+            catch (System.Exception e)
+            {
+                Logger.Instance.Error(this, "OnPropertyChange: {0}", e);
             }
         }
 
@@ -369,6 +386,7 @@ namespace Acacia.Utils
 
                         events.BeforeDelete += HandleBeforeDelete;
                         events.Forward += HandleForward;
+                        events.PropertyChange += HandlePropertyChange;
                         events.Read += HandleRead;
                         events.Reply += HandleReply;
                         events.ReplyAll += HandleReplyAll;
@@ -379,6 +397,7 @@ namespace Acacia.Utils
                     {
                         events.BeforeDelete -= HandleBeforeDelete;
                         events.Forward -= HandleForward;
+                        events.PropertyChange -= HandlePropertyChange;
                         events.Read -= HandleRead;
                         events.Reply -= HandleReply;
                         events.ReplyAll -= HandleReplyAll;
@@ -400,8 +419,14 @@ namespace Acacia.Utils
                     _events.OnForward(_item as IMailItem, wrapped as IMailItem);
             }
 
+            private void HandlePropertyChange(string name)
+            {
+                _events.OnPropertyChange(_item, name);
+            }
+
             private void HandleRead()
             {
+                // TODO: should this not be simply an IItem?
                 _events.OnRead(_item as IMailItem);
             }
 

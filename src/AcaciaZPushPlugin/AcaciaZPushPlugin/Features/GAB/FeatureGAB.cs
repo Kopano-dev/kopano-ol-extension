@@ -74,7 +74,8 @@ namespace Acacia.Features.GAB
             if (SuppressModifications && MailEvents != null)
             {
                 MailEvents.BeforeDelete += SuppressEventHandler_Delete;
-                MailEvents.Write += SuppressEventHandler_Modify;
+                MailEvents.PropertyChange += SuppressEventHandler_PropertyChange;
+                MailEvents.Write += SuppressEventHandler_Write;
             }
             Watcher.AccountDiscovered += AccountDiscovered;
             Watcher.AccountRemoved += AccountRemoved;
@@ -247,9 +248,27 @@ namespace Acacia.Features.GAB
             SuppressEventHandler(item, false, ref cancel);
         }
 
-        private void SuppressEventHandler_Modify(IItem item, ref bool cancel)
+        /// <summary>
+        /// When copying a contact from the GAB to a local folder, Outlook raises the Write event on
+        /// the original. To detect this, we set this id on every property change (which is signalled before
+        /// write), and only suppress if anything has actually changed. If we suppress, the flag is cleared again.
+        /// </summary>
+        private string _propertyChangeId;
+
+        private void SuppressEventHandler_PropertyChange(IItem item, string propertyName)
         {
-            SuppressEventHandler(item, true, ref cancel);
+            if (_propertyChangeId == item.EntryID)
+                return;
+            _propertyChangeId = item.EntryID;
+        }
+
+        private void SuppressEventHandler_Write(IItem item, ref bool cancel)
+        {
+            if (_propertyChangeId == item.EntryID)
+            {
+                SuppressEventHandler(item, true, ref cancel);
+                _propertyChangeId = null;
+            }
         }
 
         private void SuppressEventHandler(IItem item, bool findInspector, ref bool cancel)
@@ -301,7 +320,10 @@ namespace Acacia.Features.GAB
             }*/
 
             // Show message and cancel event
-            MessageBox.Show(StringUtil.GetResourceString("GABEvent_Body"),
+            // TODO: show on active inspector if used
+            // [KOE-108] If the window is not specified as parent, it sometimes doesn't show
+            var res = MessageBox.Show(ThisAddIn.Instance.Window,
+                            StringUtil.GetResourceString("GABEvent_Body"),
                             StringUtil.GetResourceString("GABEvent_Title"),
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning

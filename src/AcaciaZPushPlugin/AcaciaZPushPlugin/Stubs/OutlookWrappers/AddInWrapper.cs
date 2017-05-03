@@ -231,6 +231,10 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #region Window handle
 
+        /// <summary>
+        /// Simple IWin32Window wrapper for a native handle. NativeWindow sometimes refuses to handle
+        /// these (FromHandle returns null), so use a simple wrapper.
+        /// </summary>
         private class WindowHandle : IWin32Window
         {
             private IntPtr hWnd;
