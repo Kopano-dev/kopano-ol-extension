@@ -61,7 +61,6 @@ namespace Acacia.Utils
                 else
                     ++typeCounts[GetType()];
 
-                Logger.Instance.TraceExtra(this, "Disposing wrapper: {0}", new System.Diagnostics.StackTrace());
                 _isDisposed = true;
                 Interlocked.Increment(ref Statistics.DisposedWrappers);
                 DoRelease();

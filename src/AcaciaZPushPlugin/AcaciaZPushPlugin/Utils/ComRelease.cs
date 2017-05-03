@@ -74,30 +74,7 @@ namespace Acacia.Utils
             if (o == null || !Marshal.IsComObject(o))
                 return;
 
-            if (Logger.Instance.IsLevelEnabled(LogLevel.TraceExtra))
-            {
-                Logger.Instance.TraceExtra(typeof(ComRelease), "Releasing object: {0:X} @ {1}", GetObjAddress(o),
-                                new System.Diagnostics.StackTrace());
-            }
             Marshal.ReleaseComObject(o);
-        }
-
-        private static long GetObjAddress(object o)
-        {
-            // It seems to be impossible to get an actual address, and the objects get moved around fairly frequently
-            return o.GetHashCode();
-        }
-
-        public static void LogWrapper(object o, IBase wrapper)
-        {
-            if (Logger.Instance.IsLevelEnabled(LogLevel.TraceExtra))
-            {
-                if (wrapper != null)
-                {
-                    Logger.Instance.TraceExtra(typeof(ComRelease), "Wrapping object: {0:X} @ {1}", GetObjAddress(o),
-                                        new System.Diagnostics.StackTrace());
-                }
-            }
         }
     }
 }

@@ -41,7 +41,6 @@ namespace Acacia.Stubs.OutlookWrappers
             IBase wrapper = CreateWrapper(o, mustRelease);
             if (wrapper != null)
                 wrapper.MustRelease = mustRelease;
-            ComRelease.LogWrapper(o, wrapper);
             return wrapper;
         }
 
