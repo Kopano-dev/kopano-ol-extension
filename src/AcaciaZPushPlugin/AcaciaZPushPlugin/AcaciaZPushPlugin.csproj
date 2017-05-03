@@ -242,6 +242,7 @@
     <Compile Include="Controls\KUIUtil.cs" />
     <Compile Include="DebugOptions.cs" />
     <Compile Include="Features\BCC\FeatureBCC.cs" />
+    <Compile Include="Features\DeliveryReceipts\FeatureDeliveryReceipts.cs" />
     <Compile Include="Features\FreeBusy\FreeBusyServlet.cs" />
     <Compile Include="Features\FreeBusy\Servlet.cs" />
     <Compile Include="Features\SecondaryContacts\FeatureSecondaryContacts.cs" />
@@ -352,6 +353,7 @@
     <Compile Include="ZPush\API\SharedFolders\SharedFolder.cs" />
     <Compile Include="ZPush\API\SharedFolders\Types.cs" />
     <Compile Include="ZPush\Connect\Soap\SoapException.cs" />
+    <Compile Include="ZPush\Connect\Soap\SoapFieldAttribute.cs" />
     <Compile Include="ZPush\Connect\Soap\SoapParameters.cs" />
     <Compile Include="ZPush\API\SharedFolders\SharedFoldersAPI.cs" />
     <Compile Include="Features\SharedFolders\SharedFoldersDialog.cs">
@@ -652,6 +654,7 @@
     <Content Include="Resources\Icons\Ribbon_WebMeetings.png" />
     <Content Include="Resources\Icons\Ribbon_WebMeetings_Small.png" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

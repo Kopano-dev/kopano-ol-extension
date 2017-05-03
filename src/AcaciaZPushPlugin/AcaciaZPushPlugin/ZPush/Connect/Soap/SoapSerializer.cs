@@ -167,9 +167,12 @@ namespace Acacia.ZPush.Connect.Soap
                 return node.InnerText.ToLower().Equals("true");
             }
         }
-        private class TypeHandlerInt : TypeHandler
+
+        abstract private class TypeHandlerIntegral : TypeHandler
         {
-            public TypeHandlerInt() : base(SoapConstants.XMLNS_XSD, null, typeof(int)) { }
+            public TypeHandlerIntegral(string xmlns, string name, Type baseType) : base(xmlns, name, baseType)
+            {
+            }
 
             public override void Serialize(string name, object value, StringBuilder s)
             {
@@ -178,22 +181,24 @@ namespace Acacia.ZPush.Connect.Soap
 
             protected override object DeserializeContents(XmlNode node, Type expectedType)
             {
-                return long.Parse(node.InnerText);
+                long value = long.Parse(node.InnerText);
+                if (expectedType == typeof(DateTime))
+                {
+                    // TODO: make a util function for this?
+                    DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+                    return origin.AddSeconds(value);
+                }
+                return value;
             }
         }
-        private class TypeHandlerLong : TypeHandler
+
+        private class TypeHandlerInt : TypeHandlerIntegral
+        {
+            public TypeHandlerInt() : base(SoapConstants.XMLNS_XSD, null, typeof(int)) { }
+        }
+        private class TypeHandlerLong : TypeHandlerIntegral
         {
             public TypeHandlerLong() : base(SoapConstants.XMLNS_XSD, "int", typeof(long)) { }
-
-            public override void Serialize(string name, object value, StringBuilder s)
-            {
-                s.Append(string.Format("<{0} xsi:type=\"xsd:int\">{1}</{0}>", name, value));
-            }
-
-            protected override object DeserializeContents(XmlNode node, Type expectedType)
-            {
-                return long.Parse(node.InnerText);
-            }
         }
 
         private class TypeHandlerString : TypeHandler
@@ -221,17 +226,36 @@ namespace Acacia.ZPush.Connect.Soap
 
             protected override object DeserializeContents(XmlNode node, Type expectedType)
             {
-                // Create a list instance
-                System.Collections.IList list = (System.Collections.IList)Activator.CreateInstance(expectedType);
-                Type entryType = expectedType.GetGenericArguments()[0];
+                if (expectedType == null)
+                    return null;
 
-                foreach (XmlNode child in node.ChildNodes)
+                if (expectedType.IsArray)
                 {
-                    object element = DeserializeNode(child, entryType);
-                    list.Add(element);
+                    // Decode into array
+                    Array array = Array.CreateInstance(expectedType.GetElementType(), node.ChildNodes.Count);
+                    int index = 0;
+                    foreach (XmlNode child in node.ChildNodes)
+                    {
+                        object element = DeserializeNode(child, expectedType.GetElementType());
+                        array.SetValue(element, index);
+                        ++index;
+                    }
+                    return array;
                 }
+                else
+                {
 
-                return list;
+                    // Decode into list
+                    System.Collections.IList list = (System.Collections.IList)Activator.CreateInstance(expectedType);
+                    Type elementType = expectedType.GetGenericArguments()[0];
+
+                    foreach (XmlNode child in node.ChildNodes)
+                    {
+                        object element = DeserializeNode(child, elementType);
+                        list.Add(element);
+                    }
+                    return list;
+                }
             }
 
             public override void Serialize(string name, object value, StringBuilder s)
@@ -260,6 +284,9 @@ namespace Acacia.ZPush.Connect.Soap
 
             protected override object DeserializeContents(XmlNode node, Type expectedType)
             {
+                if (expectedType == null)
+                    return null;
+
                 // Determine if the expected type is an ISoapSerializable
                 if (!typeof(ISoapSerializable<>).IsGenericAssignableFrom(expectedType))
                 {
@@ -294,8 +321,9 @@ namespace Acacia.ZPush.Connect.Soap
                 object instance = Activator.CreateInstance(serializationType);
                 foreach (FieldInfo field in serializationType.GetFields())
                 {
+                    string key = field.GetCustomAttribute<SoapFieldAttribute>()?.FieldId?.ToString() ?? field.Name;
                     object value = null;
-                    if (node.TryGetValue(field.Name.ToLower(), out value))
+                    if (node.TryGetValue(key, out value))
                     {
                         value = SoapConvert(field.FieldType, value);
                         field.SetValue(instance, value);
@@ -328,7 +356,7 @@ namespace Acacia.ZPush.Connect.Soap
                 Dictionary<string, object> dict;
                 if (typeof(Dictionary<string, object>).IsAssignableFrom(value.GetType()))
                 {
-                    dict = (Dictionary < string, object> )value;
+                    dict = (Dictionary<string, object>)value;
                 }
                 else
                 {
@@ -352,11 +380,13 @@ namespace Acacia.ZPush.Connect.Soap
                 if (type == null)
                     return null;
 
+                // Check if the field is a simple field name
                 FieldInfo prop = type.GetField(field);
-                if (prop == null)
-                    return null;
-                    
-                return prop.FieldType;
+                if (prop == null && type.GetCustomAttribute<SoapFieldAttribute>() != null)
+                    // Check for an attriubte
+                    prop = type.GetFields().FirstOrDefault(f => f.GetCustomAttribute<SoapFieldAttribute>()?.FieldId?.ToString() == field);
+
+                return prop?.FieldType;
             }
         }
 
@@ -371,7 +401,7 @@ namespace Acacia.ZPush.Connect.Soap
             {
                 foreach (XmlNode child in node.ChildNodes)
                 {
-                    string key = child.Name.ToLower();
+                    string key = child.Name;
                     object value = DeserializeNode(child, DetermineChildType(expectedType, key));
                     dict.Add(key, value);
                 }
@@ -396,7 +426,8 @@ namespace Acacia.ZPush.Connect.Soap
                 foreach (XmlNode child in node.ChildNodes)
                 {
                     string key = (string)DeserializeNode(child.SelectSingleNode("key"), typeof(string));
-                    object value = DeserializeNode(child.SelectSingleNode("value"), DetermineChildType(expectedType, key));
+                    Type childType = DetermineChildType(expectedType, key);
+                    object value = DeserializeNode(child.SelectSingleNode("value"), childType);
                     dict.Add(key, value);
                 }
             }
@@ -494,7 +525,7 @@ namespace Acacia.ZPush.Connect.Soap
 
             XmlAttribute typeAttr = part.Attributes["type", SoapConstants.XMLNS_XSI];
             if (typeAttr == null)
-                throw new Exception("Missing type");
+                throw new Exception("Missing type: " + part.OuterXml);
             string value = typeAttr.Value;
             string[] parts = value.Split(new char[] { ':' }, 2);
             string fullName;

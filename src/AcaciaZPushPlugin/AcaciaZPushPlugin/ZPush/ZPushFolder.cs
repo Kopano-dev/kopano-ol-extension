@@ -245,7 +245,7 @@ namespace Acacia.ZPush
 
         private void Cleanup()
         {
-            Logger.Instance.Trace(this, "Unwatching folder: {0}", _folder.Name);
+            Logger.Instance.Trace(this, "Unwatching folder"); // Cannot log name, as folder is now invalid
             // The events need to be unhooked explicitly, otherwise we get double notifications if a folder is moved
             HookEvents(false);
             foreach (ZPushFolder child in _children.Values)

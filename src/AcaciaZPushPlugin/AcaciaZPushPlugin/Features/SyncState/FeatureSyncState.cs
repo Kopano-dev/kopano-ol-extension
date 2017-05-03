@@ -27,11 +27,18 @@ using Acacia.ZPush.API.SharedFolders;
 using static Acacia.DebugOptions;
 using Acacia.UI.Outlook;
 using System.Drawing;
+using Acacia.ZPush.Connect;
+using Acacia.ZPush.Connect.Soap;
+
+// Prevent field assignment warnings
+#pragma warning disable 0649
 
 namespace Acacia.Features.SyncState
-{
+{   
+
     public class FeatureSyncState : FeatureDisabled, FeatureWithRibbon
     {
+        // TODO: this is largely about progress bars, separate that?
         private class SyncStateData : DataProvider
         {
             private FeatureSyncState _feature;
@@ -39,7 +46,7 @@ namespace Acacia.Features.SyncState
             /// <summary>
             /// Number in range [0,1]
             /// </summary>
-            private double _syncProgress;
+            private double _syncProgress = 1;
             public double SyncProgress
             {
                 get { return _syncProgress; }
@@ -142,10 +149,12 @@ namespace Acacia.Features.SyncState
         {
             _button = RegisterButton(this, "Progress", true, ShowSyncState, ZPushBehaviour.None);
             _button.DataProvider = new SyncStateData(this);
+            Watcher.Sync.AddTask(this, Name, CheckSyncState);
+
 
             // Debug timer to increase progress
             var timer = new System.Windows.Forms.Timer();
-            timer.Interval = 1000; 
+            timer.Interval = 15000; 
             timer.Tick += (o, args) =>
             {
                 SyncStateData data = (SyncStateData)_button.DataProvider;
@@ -153,9 +162,121 @@ namespace Acacia.Features.SyncState
                 if (val > 1.01)
                     val = 0;
                 data.SyncProgress = val;
-            };
-            timer.Start();
 
+                foreach(ZPushAccount account in Watcher.Accounts.GetAccounts())
+                {
+                    CheckSyncState(account);
+                }
+            };
+            //timer.Start();
+        }
+
+        private class DeviceDetails : ISoapSerializable<DeviceDetails.Data>
+        {
+            public class SyncData
+            {
+                public string status;
+                public long total;
+                public long done;
+                public long todo;
+
+                override public string ToString()
+                {
+                    return string.Format("{0}: {1}/{2}={3}", status, total, done, todo);
+                }
+            }
+
+            [SoapField]
+            public struct ContentData
+            {
+                [SoapField(1)]
+                public string synckey;
+
+                [SoapField(2)]
+                public int type; // TODO: SyncType
+
+                [SoapField(3)]
+                public string[] flags;
+
+                [SoapField(4)]
+                public SyncData Sync;
+
+                public bool IsSyncing { get { return Sync != null; } }
+
+                [SoapField(5)]
+                public string id; // TODO: backend folder id
+            }
+
+            public struct Data2
+            {
+                public string deviceid;
+                public string devicetype;
+                public string domain;
+                public string deviceuser;
+                public string useragent;
+                public DateTime firstsynctime;
+                public string announcedasversion;
+                public string hierarchyuuid;
+
+                public string asversion;
+                public DateTime lastupdatetime;
+                public string koeversion;
+                public string koebuild;
+                public DateTime koebuilddate;
+                public string[] koecapabilities;
+                public string koegabbackendfolderid;
+
+                public bool changed;
+                public DateTime lastsynctime;
+                public bool hasfolderidmapping;
+
+                public Dictionary<string, ContentData> contentdata;
+
+                // TODO: additionalfolders
+                // TODO: hierarchycache
+                // TODO: useragenthistory
+            }
+
+            public struct Data
+            {
+                public Data2 data;
+                public bool changed;
+            }
+
+            private readonly Data _data;
+
+            public DeviceDetails(Data data)
+            {
+                this._data = data;
+            }
+
+            public Data SoapSerialize()
+            {
+                return _data;
+            }
+
+            public Dictionary<string, ContentData> Content
+            {
+                get { return _data.data.contentdata; } 
+            }
+        }
+
+        private class GetDeviceDetailsRequest : SoapRequest<DeviceDetails>
+        {
+        }
+
+        private void CheckSyncState(ZPushAccount account)
+        {
+            // TODO: we probably want one invocation for all accounts
+            using (ZPushConnection connection = account.Connect())
+            using (ZPushWebServiceDevice deviceService = connection.DeviceService)
+            {
+                // Fetch
+                DeviceDetails details = deviceService.Execute(new GetDeviceDetailsRequest());
+
+                foreach(KeyValuePair<string, DeviceDetails.ContentData> cd in details.Content)
+                   Logger.Instance.Trace(this, "SYNC: {0}: {1}: {2} -- {3}", cd.Key, cd.Value.IsSyncing, cd.Value.Sync, cd.Value.synckey);
+            }
         }
 
         private void ShowSyncState()

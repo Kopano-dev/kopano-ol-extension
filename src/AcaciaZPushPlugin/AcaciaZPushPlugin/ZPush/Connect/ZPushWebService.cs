@@ -86,6 +86,7 @@ namespace Acacia.ZPush.Connect
             {
                 SoapParameters parameters = new SoapParameters();
                 parameters.Add("devid", _connection.Account.Account.DeviceId.ToLower());
+                //parameters.Add("deviceId", _connection.Account.Account.DeviceId.ToLower());
                 return parameters;
             }
         }

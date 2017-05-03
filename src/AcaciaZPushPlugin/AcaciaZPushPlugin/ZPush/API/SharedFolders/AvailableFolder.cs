@@ -35,10 +35,10 @@ namespace Acacia.ZPush.API.SharedFolders
         /// </summary>
         public struct SoapData
         {
-            public SyncId ServerId;
-            public SyncId ParentId;
-            public string DisplayName;
-            public OutlookConstants.SyncType Type;
+            public SyncId serverid;
+            public SyncId parentid;
+            public string displayname;
+            public OutlookConstants.SyncType type;
             public BackendId BackendId;
 
             // TODO: are there ever flags on available folders? They are sent by the server
@@ -71,12 +71,12 @@ namespace Acacia.ZPush.API.SharedFolders
 
         #region Ids and properties
 
-        public SyncId ServerId { get { return _data.ServerId; } }
-        public SyncId ParentId { get { return _data.ParentId; } }
+        public SyncId ServerId { get { return _data.serverid; } }
+        public SyncId ParentId { get { return _data.parentid; } }
         public BackendId ParentIdAsBackend { get { return Parent?.BackendId ?? BackendId.NONE; } }
         public BackendId BackendId { get { return _data.BackendId; } }
 
-        public string Name { get { return _data.DisplayName; } }
+        public string Name { get { return _data.displayname; } }
 
         public string DefaultName
         {
@@ -90,7 +90,7 @@ namespace Acacia.ZPush.API.SharedFolders
             }
         }
 
-        public OutlookConstants.SyncType Type { get { return _data.Type; } }
+        public OutlookConstants.SyncType Type { get { return _data.type; } }
 
         public GABUser Store { get; private set; }
 
