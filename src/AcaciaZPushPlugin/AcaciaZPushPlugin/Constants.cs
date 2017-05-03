@@ -85,6 +85,13 @@ namespace Acacia
 
         #endregion
 
+        #region Delivery receipt requests
+
+        public const string ZPUSH_RECEIPT_REQUESTS = OutlookConstants.NS_TRANSPORT_MESSAGE_HEADERS + "X-Push-Receipts";
+        public const string ZPUSH_RECEIPT_REQUEST_DELIVERY = "delivery";
+
+        #endregion
+
         #region Capabilities
 
         public const string ZPUSH_CAPABILITY_NOTES = "notes";
