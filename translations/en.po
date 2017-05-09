@@ -160,6 +160,18 @@ msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\labelBody.
 msgid "AutoReply only once to each sender with the following text:"
 msgstr "AutoReply only once to each sender with the following text:"
 
+#: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\btnCancel.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\btnCancel.Text"
+msgid "Cancel"
+msgstr "Cancel"
+
+#: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\btnSave.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\btnSave.Text"
+msgid "Save"
+msgstr "Save"
+
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\$this.Text"
@@ -707,37 +719,6 @@ msgstr "The signatures are being synchronised."
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SignaturesSync_Title"
 msgid "Signatures"
 msgstr "Signatures"
-
-#: AcaciaZPushPlugin\Properties\Resources\OOF_Unsaved_Changes
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOF_Unsaved_Changes"
-msgid "There are unsaved changes. Do you really want to to discard these?"
-msgstr "There are unsaved changes. Do you really want to to discard these?"
-
-#. {0} will be replaced with progress in percent
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Label
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Label"
-msgid "Syncing: {0}%"
-msgstr "Syncing: {0}%"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Label_Done
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Label_Done"
-msgid "Up-to-date"
-msgstr "Up-to-date"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Screentip
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Screentip"
-msgid "Synchronisation state"
-msgstr "Synchronisation state"
-
-#: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Supertip
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Supertip"
-msgid "Open the \"Synchronisation\" dialog, in which the synchronisation state can be viewed and managed."
-msgstr "Open the \"Synchronisation\" dialog, in which the synchronisation state can be viewed and managed."
 
 #: AcaciaZPushPlugin\UI\ProgressDialog\labelMessage.Text
 #, csharp-format
