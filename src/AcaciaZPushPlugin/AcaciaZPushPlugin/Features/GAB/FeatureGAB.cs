@@ -361,7 +361,7 @@ namespace Acacia.Features.GAB
                                 {
                                     try
                                     {
-                                        if (IsGABContactsFolder(folder))
+                                        if (IsGABContactsFolder(folder, accounts))
                                         {
                                             Logger.Instance.Debug(this, "FullResync: Deleting contacts folder: {0}", folder.Name);
                                             folder.Delete();
@@ -378,16 +378,27 @@ namespace Acacia.Features.GAB
                 }
 
                 // Do the resync
-                int remaining = _gabsByDomainName.Count;
-                foreach (GABHandler gab in _gabsByDomainName.Values)
+                using (completion.Begin())
                 {
-                    CompletionTracker partCompletion = new CompletionTracker(() => OnGabSyncFinished(gab));
-                    // TODO: merge partCompletion into total completion
-                    Logger.Instance.Debug(this, "FullResync: Starting resync: {0}", gab.DisplayName);
-                    Tasks.Task(partCompletion, this, "FullResync", () =>
+                    foreach (GABHandler gab in _gabsByDomainName.Values)
                     {
-                        gab.FullResync(partCompletion);
-                    });
+                        // Check if the gab is appropriate for the accounts
+                        if (accounts == null || accounts.Contains(gab.ActiveAccount))
+                        {
+                            completion.Begin();
+                            CompletionTracker partCompletion = new CompletionTracker(() =>
+                            {
+                                OnGabSyncFinished(gab);
+                                completion.End();
+                            });
+
+                            Logger.Instance.Debug(this, "FullResync: Starting resync: {0}", gab.DisplayName);
+                            Tasks.Task(partCompletion, this, "FullResync", () =>
+                            {
+                                gab.FullResync(partCompletion);
+                            });
+                        }
+                    }
                 }
             }
             finally
@@ -499,9 +510,30 @@ namespace Acacia.Features.GAB
             return GABInfo.Get(folder);
         }
 
-        public static bool IsGABContactsFolder(IFolder folder)
+        /// <summary>
+        /// Checks if the folder is a relevant GAB contacts folder.
+        /// </summary>
+        /// <param name="folder">The folder.</param>
+        /// <param name="accounts">If specified, the folder is considered relevant only if it is the GAB for one of the specified
+        /// accounts. Otherwise, any GAB folder is considered relevant.</param>
+        public static bool IsGABContactsFolder(IFolder folder, ZPushAccount[] accounts)
         {
-            return GetGABContactsFolderInfo(folder) != null;
+            // Check if this is a GAB folder at all
+            GABInfo gab = GetGABContactsFolderInfo(folder);
+            if (gab == null)
+                return false;
+
+            // If we don't have a list of accounts, it is what we're looking for
+            if (accounts == null)
+                return true;
+
+            // Check if the domain is specified
+            foreach(ZPushAccount account in accounts)
+            {
+                if (account.Account.DomainName == gab.Domain)
+                    return true;
+            }
+            return false;
         }
 
         private void AccountDiscovered(ZPushAccount zpush)

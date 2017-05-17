@@ -50,6 +50,15 @@ namespace Acacia.Features.SyncState
             // Add the accounts
             foreach (ZPushAccount account in ThisAddIn.Instance.Watcher.Accounts.GetAccounts())
                 comboAccounts.Items.Add(account);
+
+            // Add a timer to update the UI
+            Timer timer = new Timer();
+            timer.Interval = 2500;
+            timer.Tick += (o, args) =>
+            {
+                UpdateUI();
+            };
+            timer.Start();
         }
 
         private void ShowHint(object sender, KHintButton.HintEventArgs e)
@@ -119,6 +128,8 @@ namespace Acacia.Features.SyncState
 
         private void UpdateUI()
         {
+            _syncState.Update();
+
             // Set up the UI
             foreach (ResyncOption option in Enum.GetValues(typeof(ResyncOption)))
             {
@@ -127,7 +138,7 @@ namespace Acacia.Features.SyncState
 
             if (_syncState.IsSyncing)
             {
-                textRemaining.Text = _syncState.Remaining.ToString();
+                textRemaining.Text = _syncState.Remaining.ToString() + " / " + _syncState.Total.ToString();
                 progress.Value = (int)(_syncState.Done * 100.0 / _syncState.Total);
             }
             else

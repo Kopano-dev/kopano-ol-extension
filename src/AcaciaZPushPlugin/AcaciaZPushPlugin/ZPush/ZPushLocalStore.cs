@@ -125,7 +125,7 @@ namespace Acacia.ZPush
 
         private static bool IsCustomFolder(IFolder folder)
         {
-            return Features.GAB.FeatureGAB.IsGABContactsFolder(folder);
+            return Features.GAB.FeatureGAB.IsGABContactsFolder(folder, null);
         }
 
         private static void HideAllFolders(IStore store)

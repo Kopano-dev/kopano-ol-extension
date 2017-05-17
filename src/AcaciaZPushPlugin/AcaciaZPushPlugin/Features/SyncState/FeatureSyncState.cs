@@ -41,6 +41,39 @@ namespace Acacia.Features.SyncState
 
     public class FeatureSyncState : FeatureDisabled, FeatureWithRibbon
     {
+
+        #region Sync configuration
+
+        [AcaciaOption("Sets the period to check synchronisation state if a sync is in progress.")]
+        public TimeSpan CheckPeriod
+        {
+            get { return GetOption(OPTION_CHECK_PERIOD); }
+            set { SetOption(OPTION_CHECK_PERIOD, value); }
+        }
+        private static readonly TimeSpanOption OPTION_CHECK_PERIOD = new TimeSpanOption("CheckPeriod", new TimeSpan(0, 5, 0));
+
+        [AcaciaOption("Sets the period to check synchronisation state if a sync is in progress and the dialog is open.")]
+        public TimeSpan CheckPeriodDialog
+        {
+            get { return GetOption(OPTION_CHECK_PERIOD_DIALOG); }
+            set { SetOption(OPTION_CHECK_PERIOD_DIALOG, value); }
+        }
+        private static readonly TimeSpanOption OPTION_CHECK_PERIOD_DIALOG = new TimeSpanOption("CheckPeriodDialog", new TimeSpan(0, 1, 0));
+
+        private TimeSpan DelayTime
+        {
+            get
+            {
+                if (_dialogOpen)
+                    return CheckPeriodDialog;
+                else
+                    return CheckPeriod;
+            }
+        }
+        private bool _dialogOpen;
+
+        #endregion
+
         // TODO: this is largely about progress bars, separate that?
         private class SyncStateData : DataProvider
         {
@@ -152,7 +185,7 @@ namespace Acacia.Features.SyncState
         public override void Startup()
         {
             _state = new SyncStateData(this);
-            _button = RegisterButton(this, "Progress", true, ShowSyncState, ZPushBehaviour.Disable);
+            _button = RegisterButton(this, "Progress", true, ShowSyncState, ZPushBehaviour.None);
             _button.DataProvider = _state;
             // Add a sync task to start checking. If this finds it's not fully synchronised, it will check more often
             Watcher.Sync.AddTask(this, Name, CheckSyncState);
@@ -306,10 +339,14 @@ namespace Acacia.Features.SyncState
                 DeviceDetails details = deviceService.Execute(new GetDeviceDetailsRequest());
 
                 // Determine the totals
-                details.Calculate();
+                details?.Calculate();
 
                 // And store with the account
                 account.SetFeatureData(this, null, details);
+
+                // If syncing, check again soon.
+                if (details?.IsSyncing == true)
+                    Util.Delayed(this, (int)DelayTime.TotalMilliseconds, () => CheckSyncState(account));
             }
 
             // Update the total for all accounts
@@ -340,7 +377,15 @@ namespace Acacia.Features.SyncState
 
         private void ShowSyncState()
         {
-            new SyncStateDialog(this).ShowDialog();
+            _dialogOpen = true;
+            try
+            {
+                new SyncStateDialog(this).ShowDialog();
+            }
+            finally
+            {
+                _dialogOpen = false;
+            }
         }
 
         private class SyncStateImpl : SyncState
@@ -362,7 +407,6 @@ namespace Acacia.Features.SyncState
                 _canResync[(int)ResyncOption.Signatures] = _featureSignatures != null;
                 _canResync[(int)ResyncOption.ServerData] = ThisAddIn.Instance.Watcher.Sync.Enabled;
                 _canResync[(int)ResyncOption.Full] = true;
-                Update();
             }
 
             public long Done
@@ -399,14 +443,29 @@ namespace Acacia.Features.SyncState
             {
                 if (!CanResync(option))
                     return true;
-                _canResync [(int)option] = false;
 
                 switch(option)
                 {
                     case ResyncOption.GAB:
-                        // TODO: use completion tracker if not synching
-                        _featureGAB.FullResync(null, _accounts);
-                        return false;
+                        if (IsSyncing)
+                        {
+                            // Already syncing, resync GAB asynchronously
+                            _featureGAB.FullResync(null, _accounts);
+                            // Cannot resync again until the dialog is reopened
+                            _canResync[(int)ResyncOption.GAB] = false;
+                            return false;
+                        }
+                        else
+                        {
+                            ProgressDialog.Execute("GABSync",
+                                (ct, tracker) =>
+                                {
+                                    _featureGAB.FullResync(tracker, _accounts);
+                                    return 0;
+                                }
+                            );
+                            return true;
+                        }
                     case ResyncOption.Signatures:
                         ProgressDialog.Execute("SignaturesSync",
                             (ct) =>

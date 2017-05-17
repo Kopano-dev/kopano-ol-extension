@@ -169,6 +169,24 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The global address book is being synchronised..
+        /// </summary>
+        internal static string GABSync_Label {
+            get {
+                return ResourceManager.GetString("GABSync_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global Address Book.
+        /// </summary>
+        internal static string GABSync_Title {
+            get {
+                return ResourceManager.GetString("GABSync_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon Kopano {

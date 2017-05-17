@@ -494,4 +494,10 @@
   <data name="ServerSync_Title" xml:space="preserve">
     <value>Server data</value>
   </data>
+  <data name="GABSync_Label" xml:space="preserve">
+    <value>The global address book is being synchronised.</value>
+  </data>
+  <data name="GABSync_Title" xml:space="preserve">
+    <value>Global Address Book</value>
+  </data>
 </root>

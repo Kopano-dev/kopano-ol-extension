@@ -89,6 +89,61 @@ namespace Acacia.UI
             return task.Result;
         }
 
+        public static ResultType Execute<ResultType>(string resourcePrefix, Func<CancellationToken, CompletionTracker, ResultType> action)
+        {
+            // TODO: merge with above
+
+            Logger.Instance.Info(typeof(ProgressDialog), "Opening");
+            // Determine the UI context, creating a new one if required
+            if (SynchronizationContext.Current == null)
+                SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
+            var context = TaskScheduler.FromCurrentSynchronizationContext();
+
+            // Create the dialog, so it is available for the task
+            ProgressDialog dlg = new ProgressDialog();
+            // Set the strings
+            dlg.Text = StringUtil.GetResourceString(resourcePrefix + "_Title");
+            dlg.labelMessage.Text = StringUtil.GetResourceString(resourcePrefix + "_Label");
+
+            // Start the task
+            Exception caught = null;
+            Task<ResultType> task = null;
+            // And close the dialog when done
+            CompletionTracker tracker = new CompletionTracker(() => 
+            {
+                // This extra step is needed to go back into the thread context
+                task.ContinueWith(_ => { dlg._isComplete = true; dlg.DialogResult = DialogResult.OK; }, context);
+            });
+
+            task = Task.Factory.StartNew(
+                () =>
+                {
+                    try
+                    {
+                        return action(dlg.cancel.Token, tracker);
+                    }
+                    catch (Exception e)
+                    {
+                        caught = e;
+                        return default(ResultType);
+                    }
+                },
+                dlg.cancel.Token);
+            dlg.task = task;
+
+            // Show the dialog
+            if (dlg.ShowDialog() != DialogResult.OK)
+                return default(ResultType);
+
+            // Rethrow any exception.
+            // The framework already handles this, but that causes breaks into the debugger
+            if (caught != null)
+                throw caught;
+
+            // Result the result
+            return task.Result;
+        }
+
         private void ProgressDialog_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!_isComplete)
