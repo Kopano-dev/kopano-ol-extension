@@ -149,7 +149,7 @@ namespace Acacia.Features.SyncState
         public override void Startup()
         {
             _state = new SyncStateData(this);
-            _button = RegisterButton(this, "Progress", true, ShowSyncState, ZPushBehaviour.None);
+            _button = RegisterButton(this, "Progress", true, ShowSyncState, ZPushBehaviour.Disable);
             _button.DataProvider = _state;
             // Add a sync task to start checking. If this finds it's not fully synchronised, it will check more often
             Watcher.Sync.AddTask(this, Name, CheckSyncState);
@@ -330,6 +330,7 @@ namespace Acacia.Features.SyncState
 
         private void ShowSyncState()
         {
+            new SyncStateDialog(this).ShowDialog();
         }
     }
 }

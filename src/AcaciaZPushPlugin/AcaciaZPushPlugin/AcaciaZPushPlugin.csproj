@@ -227,6 +227,12 @@
     <Compile Include="Controls\KDialogNew.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Controls\KHintButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\KProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\KSelectionManager.cs" />
     <Compile Include="Controls\KTreeNode.cs" />
     <Compile Include="Controls\KTreeNodeLoader.cs" />
@@ -288,6 +294,12 @@
       <DependentUpon>SignaturesSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Features\SyncState\FeatureSyncState.cs" />
+    <Compile Include="Features\SyncState\SyncStateDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\SyncState\SyncStateDialog.Designer.cs">
+      <DependentUpon>SyncStateDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalOptions.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Native\IOleWindow.cs" />
@@ -571,6 +583,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Features\Signatures\SignaturesSettings.resx">
       <DependentUpon>SignaturesSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\SyncState\SyncStateDialog.resx">
+      <DependentUpon>SyncStateDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
