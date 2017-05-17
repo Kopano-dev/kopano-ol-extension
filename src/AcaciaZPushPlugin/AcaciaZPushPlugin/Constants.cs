@@ -102,7 +102,15 @@ namespace Acacia
 
         public const string DATE_ISO_8601 = "yyyyMMddTHHmmssZ";
 
+        /// <summary>
+        /// Default period for synchronisation tasks
+        /// </summary>
         public static readonly TimeSpan ZPUSH_SYNC_DEFAULT_PERIOD = new TimeSpan(1, 0, 0);
+
+        /// <summary>
+        /// Default period during which synchronisation tasks will not be executed again.
+        /// </summary>
+        public static readonly TimeSpan ZPUSH_SYNC_DEFAULT_PERIOD_THROTTLE = new TimeSpan(0, 15, 0);
 
         #region Registry
 

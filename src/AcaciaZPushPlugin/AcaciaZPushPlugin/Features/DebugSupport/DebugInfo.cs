@@ -194,6 +194,16 @@ namespace Acacia.Features.DebugSupport
         {
             get { return ThisAddIn.Instance.Watcher.Sync.Period; }
         }
+        [DebugCategory(DebugCategory.Misc)]
+        public TimeSpan ZPushSyncPeriodThrottle
+        {
+            get { return ThisAddIn.Instance.Watcher.Sync.PeriodThrottle; }
+        }
+        [DebugCategory(DebugCategory.Misc)]
+        public DateTime ZPushSyncLast
+        {
+            get { return ThisAddIn.Instance.Watcher.Sync.LastSyncTime; }
+        }
 
         [DebugCategory(DebugCategory.Misc)]
         public string Build

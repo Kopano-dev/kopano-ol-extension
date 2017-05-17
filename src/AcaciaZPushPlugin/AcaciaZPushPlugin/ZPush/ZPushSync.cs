@@ -1,4 +1,4 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -28,7 +28,7 @@ using System.Windows.Forms;
 namespace Acacia.ZPush
 {
     /// <summary>
-    /// Helper for synchronising state with ZPush servers
+    /// Helper for periodically synchronising state with ZPush servers
     /// </summary>
     public class ZPushSync : DisposableWrapper
     {
@@ -85,6 +85,8 @@ namespace Acacia.ZPush
 
         public readonly bool Enabled;
         public readonly TimeSpan Period;
+        public readonly TimeSpan PeriodThrottle;
+        public DateTime LastSyncTime;
 
         public ZPushSync(ZPushWatcher watcher, IAddIn addIn)
         {
@@ -93,6 +95,9 @@ namespace Acacia.ZPush
             Period = GlobalOptions.INSTANCE.ZPushSync_Period;
             if (Period.Ticks == 0)
                 Period = Constants.ZPUSH_SYNC_DEFAULT_PERIOD;
+            PeriodThrottle = GlobalOptions.INSTANCE.ZPushSync_PeriodThrottle;
+            if (PeriodThrottle.Ticks == 0)
+                PeriodThrottle = Constants.ZPUSH_SYNC_DEFAULT_PERIOD_THROTTLE;
 
             // Set up a timer and events if enabled
             if (Enabled)
@@ -174,13 +179,24 @@ namespace Acacia.ZPush
         #region Task execution
 
         /// <summary>
-        /// Executes the tasks for all known ZPush accounts
+        /// Executes the tasks for all known ZPush accounts. Only executed if enough time has passed since the last check.
         /// </summary>
-        private void ExecuteTasks()
+        private void PossiblyExecuteTasks()
         {
+            // Don't contact the network if Outlook is offline
             if (ThisAddIn.Instance.IsOffline)
                 return;
 
+            // Check for time
+            DateTime now = DateTime.Now;
+            if (LastSyncTime != null && now.Subtract(LastSyncTime) < PeriodThrottle)
+            {
+                // Back off
+                return;
+            }
+            LastSyncTime = now;
+
+            // Execute tasks for all accounts
             foreach (ZPushAccount account in _watcher.Accounts.GetAccounts())
                 ExecuteTasks(account);
         }
@@ -191,6 +207,11 @@ namespace Acacia.ZPush
         /// </summary>
         private void ExecuteTasks(ZPushAccount account)
         {
+            // Don't contact the network if Outlook is offline
+            if (ThisAddIn.Instance.IsOffline)
+                return;
+
+            // Execute the tasks for the account
             foreach (SyncTask task in _tasks)
             {
                 Tasks.Task(task.GetInstance(account));
@@ -202,7 +223,7 @@ namespace Acacia.ZPush
         /// </summary>
         private void _timer_Tick(object sender, EventArgs e)
         {
-            ExecuteTasks();
+            PossiblyExecuteTasks();
         }
 
         /// <summary>
@@ -225,7 +246,7 @@ namespace Acacia.ZPush
             if (_started)
             {
                 // Explicit sync, run tasks
-                ExecuteTasks();
+                PossiblyExecuteTasks();
             }
         }
 

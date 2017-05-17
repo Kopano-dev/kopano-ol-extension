@@ -90,6 +90,14 @@ namespace Acacia
         }
         private static readonly TimeSpanOption ZPUSH_SYNC_PERIOD = new TimeSpanOption("ZPushSyncPeriod", Constants.ZPUSH_SYNC_DEFAULT_PERIOD);
 
+        [AcaciaOption("Sets the interval during which ZPush synchronization tasks will be not executed to prevent overloading the server.")]
+        public TimeSpan ZPushSync_PeriodThrottle
+        {
+            get { return GetOption(null, ZPUSH_SYNC_PERIOD_THROTTLE); }
+            set { SetOption(null, ZPUSH_SYNC_PERIOD_THROTTLE, value); }
+        }
+        private static readonly TimeSpanOption ZPUSH_SYNC_PERIOD_THROTTLE = new TimeSpanOption("ZPushSyncPeriodThrottle", Constants.ZPUSH_SYNC_DEFAULT_PERIOD_THROTTLE);
+
         [AcaciaOption("Disables the release of COM objects. This generally leads to resource leaks and should " +
                       "only be disabled for debug purposes.")]
         public bool COMRelease
