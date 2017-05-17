@@ -89,6 +89,14 @@ namespace Acacia.Features.GAB
             return new GABSettings(this);
         }
 
+        [AcaciaOption("If set, fax numbers are synchronised. This is normally disabled as Outlook interprets them as email addresses. ")]
+        public bool SyncFaxNumbers
+        {
+            get { return GetOption(OPTION_SYNC_FAX_NUMBERS); }
+            set { SetOption(OPTION_SYNC_FAX_NUMBERS, value); }
+        }
+        private static readonly BoolOption OPTION_SYNC_FAX_NUMBERS = new BoolOption("SyncFaxNumbers", false);
+
         #endregion
 
         #region Debug options

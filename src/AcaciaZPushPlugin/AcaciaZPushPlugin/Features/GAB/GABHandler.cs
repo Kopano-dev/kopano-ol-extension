@@ -532,7 +532,10 @@ namespace Acacia.Features.GAB
                 if (Get<string>(value, "mobileTelephoneNumber") != null) contact.MobileTelephoneNumber = Get<string>(value, "mobileTelephoneNumber");
                 if (Get<string>(value, "homeTelephoneNumber") != null) contact.HomeTelephoneNumber = Get<string>(value, "homeTelephoneNumber");
                 if (Get<string>(value, "beeperTelephoneNumber") != null) contact.PagerNumber = Get<string>(value, "beeperTelephoneNumber");
-                if (Get<string>(value, "primaryFaxNumber") != null) contact.BusinessFaxNumber = Get<string>(value, "primaryFaxNumber");
+
+                if (_feature.SyncFaxNumbers)
+                    if (Get<string>(value, "primaryFaxNumber") != null) contact.BusinessFaxNumber = Get<string>(value, "primaryFaxNumber");
+
                 if (Get<string>(value, "organizationalIdNumber") != null) contact.OrganizationalIDNumber = Get<string>(value, "organizationalIdNumber");
                 if (Get<string>(value, "postalAddress") != null) contact.BusinessAddress = Get<string>(value, "postalAddress");
                 if (Get<string>(value, "businessAddressCity") != null) contact.BusinessAddressCity = Get<string>(value, "businessAddressCity");

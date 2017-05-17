@@ -29,22 +29,22 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GABSettings));
-            this.buttonGABResync = new System.Windows.Forms.Button();
+            this.checkFaxNumbers = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // buttonGABResync
+            // checkFaxNumbers
             // 
-            resources.ApplyResources(this.buttonGABResync, "buttonGABResync");
-            this.buttonGABResync.Name = "buttonGABResync";
-            this.buttonGABResync.UseVisualStyleBackColor = true;
-            this.buttonGABResync.Click += new System.EventHandler(this.buttonGABResync_Click);
+            resources.ApplyResources(this.checkFaxNumbers, "checkFaxNumbers");
+            this.checkFaxNumbers.Name = "checkFaxNumbers";
+            this.checkFaxNumbers.UseVisualStyleBackColor = true;
+            this.checkFaxNumbers.CheckedChanged += new System.EventHandler(this.checkFaxNumbers_CheckedChanged);
             // 
             // GABSettings
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.Controls.Add(this.buttonGABResync);
+            this.Controls.Add(this.checkFaxNumbers);
             this.Name = "GABSettings";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -53,6 +53,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button buttonGABResync;
+        private System.Windows.Forms.CheckBox checkFaxNumbers;
     }
 }

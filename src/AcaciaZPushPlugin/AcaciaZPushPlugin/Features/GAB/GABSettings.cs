@@ -43,15 +43,19 @@ namespace Acacia.Features.GAB
             this._feature = feature;
 
             InitializeComponent();
+
+            // Allow null feature for designer
+            if (feature != null)
+            {
+                checkFaxNumbers.Checked = feature.SyncFaxNumbers;
+            }
         }
 
-        private void buttonGABResync_Click(object sender, EventArgs e)
+        private void checkFaxNumbers_CheckedChanged(object sender, EventArgs e)
         {
-            // Allow null feature for designer
             if (_feature != null)
-            {
-                _feature.FullResync(null, null);
-            }
+                _feature.SyncFaxNumbers = checkFaxNumbers.Checked;
+
         }
     }
 }

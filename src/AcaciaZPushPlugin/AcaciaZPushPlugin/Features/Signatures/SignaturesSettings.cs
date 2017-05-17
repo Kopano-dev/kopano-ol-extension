@@ -61,20 +61,6 @@ namespace Acacia.Features.Signatures
             Dirty = false;
         }
 
-        private void buttonResync_Click(object sender, EventArgs e)
-        {
-            if (_feature != null)
-            {
-                ProgressDialog.Execute("SignaturesSync",
-                    (ct) =>
-                    {
-                        _feature.ResyncAll();
-                        return 0;
-                    }
-                );
-            }
-        }
-
         private void checkForceSet_CheckedChanged(object sender, EventArgs e)
         {
             if (_feature != null)

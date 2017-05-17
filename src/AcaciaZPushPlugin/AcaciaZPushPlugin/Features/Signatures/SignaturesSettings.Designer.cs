@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SignaturesSettings));
             this._layout = new System.Windows.Forms.TableLayoutPanel();
             this.checkForceSet = new System.Windows.Forms.CheckBox();
-            this.buttonResync = new System.Windows.Forms.Button();
             this._layout.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -39,7 +38,6 @@
             // 
             resources.ApplyResources(this._layout, "_layout");
             this._layout.Controls.Add(this.checkForceSet, 0, 0);
-            this._layout.Controls.Add(this.buttonResync, 0, 1);
             this._layout.Name = "_layout";
             // 
             // checkForceSet
@@ -48,13 +46,6 @@
             this.checkForceSet.Name = "checkForceSet";
             this.checkForceSet.UseVisualStyleBackColor = true;
             this.checkForceSet.CheckedChanged += new System.EventHandler(this.checkForceSet_CheckedChanged);
-            // 
-            // buttonResync
-            // 
-            resources.ApplyResources(this.buttonResync, "buttonResync");
-            this.buttonResync.Name = "buttonResync";
-            this.buttonResync.UseVisualStyleBackColor = true;
-            this.buttonResync.Click += new System.EventHandler(this.buttonResync_Click);
             // 
             // SignaturesSettings
             // 
@@ -74,6 +65,5 @@
 
         private System.Windows.Forms.TableLayoutPanel _layout;
         private System.Windows.Forms.CheckBox checkForceSet;
-        private System.Windows.Forms.Button buttonResync;
     }
 }
