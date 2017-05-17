@@ -140,6 +140,7 @@ namespace Acacia.Features.SyncState
         }
 
         private RibbonButton _button;
+        private SyncStateData _state;
 
         public FeatureSyncState()
         {
@@ -147,28 +148,11 @@ namespace Acacia.Features.SyncState
 
         public override void Startup()
         {
+            _state = new SyncStateData(this);
             _button = RegisterButton(this, "Progress", true, ShowSyncState, ZPushBehaviour.None);
-            _button.DataProvider = new SyncStateData(this);
+            _button.DataProvider = _state;
+            // Add a sync task to start checking. If this finds it's not fully synchronised, it will check more often
             Watcher.Sync.AddTask(this, Name, CheckSyncState);
-
-
-            // Debug timer to increase progress
-            var timer = new System.Windows.Forms.Timer();
-            timer.Interval = 15000; 
-            timer.Tick += (o, args) =>
-            {
-                SyncStateData data = (SyncStateData)_button.DataProvider;
-                double val = (data.SyncProgress + 0.05);
-                if (val > 1.01)
-                    val = 0;
-                data.SyncProgress = val;
-
-                foreach(ZPushAccount account in Watcher.Accounts.GetAccounts())
-                {
-                    CheckSyncState(account);
-                }
-            };
-            //timer.Start();
         }
 
         private class DeviceDetails : ISoapSerializable<DeviceDetails.Data>
@@ -193,7 +177,7 @@ namespace Acacia.Features.SyncState
                 public string synckey;
 
                 [SoapField(2)]
-                public int type; // TODO: SyncType
+                public OutlookConstants.SyncType type;
 
                 [SoapField(3)]
                 public string[] flags;
@@ -259,6 +243,42 @@ namespace Acacia.Features.SyncState
             {
                 get { return _data.data.contentdata; } 
             }
+
+            #region Totals
+
+            /// <summary>
+            /// Calculates the totals for the data
+            /// </summary>
+            internal void Calculate()
+            {
+                long total = 0;
+                long done = 0;
+                foreach(ContentData content in Content.Values)
+                {
+                    if (content.IsSyncing)
+                    {
+                        total += content.Sync.total;
+                        done += content.Sync.done;
+                    }
+                }
+
+                this.Total = total;
+                this.Done = done;
+            }
+
+            public long Total
+            {
+                get;
+                private set;
+            }
+
+            public long Done
+            {
+                get;
+                private set;
+            }
+
+            #endregion
         }
 
         private class GetDeviceDetailsRequest : SoapRequest<DeviceDetails>
@@ -274,9 +294,38 @@ namespace Acacia.Features.SyncState
                 // Fetch
                 DeviceDetails details = deviceService.Execute(new GetDeviceDetailsRequest());
 
-                foreach(KeyValuePair<string, DeviceDetails.ContentData> cd in details.Content)
-                   Logger.Instance.Trace(this, "SYNC: {0}: {1}: {2} -- {3}", cd.Key, cd.Value.IsSyncing, cd.Value.Sync, cd.Value.synckey);
+                // Determine the totals
+                details.Calculate();
+
+                // And store with the account
+                account.SetFeatureData(this, null, details);
             }
+
+            // Update the total for all accounts
+            UpdateTotalSyncState();
+        }
+
+        private void UpdateTotalSyncState()
+        {
+            long total = 0;
+            long done = 0;
+
+            foreach(ZPushAccount account in Watcher.Accounts.GetAccounts())
+            {
+                DeviceDetails details = account.GetFeatureData<DeviceDetails>(this, null);
+                if (details != null)
+                {
+                    total += details.Total;
+                    done += details.Done;
+                }
+            }
+
+
+            // Calculate progress and update
+            if (done == 0)
+                _state.SyncProgress = total == 0 ? 1 : 0;
+            else
+                _state.SyncProgress = (double)done / total;
         }
 
         private void ShowSyncState()
