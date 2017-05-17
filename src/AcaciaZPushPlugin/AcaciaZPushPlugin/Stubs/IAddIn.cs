@@ -66,6 +66,13 @@ namespace Acacia.Stubs
         /// Restarts the application
         /// </summary>
         void Restart(bool closeWindows);
+
+        /// <summary>
+        /// Restarts the application and removes the specified account files.
+        /// </summary>
+        /// <param name="accounts"></param>
+        void RestartResync(ZPushAccount[] accounts);
+
         void Quit(bool closeWindows);
 
         void InvokeUI(Action action);

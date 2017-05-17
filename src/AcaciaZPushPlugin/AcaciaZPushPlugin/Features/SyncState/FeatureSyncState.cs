@@ -29,6 +29,9 @@ using Acacia.UI.Outlook;
 using System.Drawing;
 using Acacia.ZPush.Connect;
 using Acacia.ZPush.Connect.Soap;
+using Acacia.Features.GAB;
+using Acacia.Features.Signatures;
+using Acacia.UI;
 
 // Prevent field assignment warnings
 #pragma warning disable 0649
@@ -253,12 +256,14 @@ namespace Acacia.Features.SyncState
             {
                 long total = 0;
                 long done = 0;
-                foreach(ContentData content in Content.Values)
+                IsSyncing = false;
+                foreach (ContentData content in Content.Values)
                 {
                     if (content.IsSyncing)
                     {
                         total += content.Sync.total;
                         done += content.Sync.done;
+                        IsSyncing = true;
                     }
                 }
 
@@ -273,6 +278,12 @@ namespace Acacia.Features.SyncState
             }
 
             public long Done
+            {
+                get;
+                private set;
+            }
+
+            public bool IsSyncing
             {
                 get;
                 private set;
@@ -320,7 +331,6 @@ namespace Acacia.Features.SyncState
                 }
             }
 
-
             // Calculate progress and update
             if (done == 0)
                 _state.SyncProgress = total == 0 ? 1 : 0;
@@ -331,6 +341,127 @@ namespace Acacia.Features.SyncState
         private void ShowSyncState()
         {
             new SyncStateDialog(this).ShowDialog();
+        }
+
+        private class SyncStateImpl : SyncState
+        {
+            private readonly FeatureSyncState _feature;
+            private readonly ZPushAccount[] _accounts;
+            private readonly bool[] _canResync;
+
+            // Additional features for syncing
+            private readonly FeatureGAB _featureGAB = ThisAddIn.Instance.GetFeature<FeatureGAB>();
+            private readonly FeatureSignatures _featureSignatures = ThisAddIn.Instance.GetFeature<FeatureSignatures>();
+
+            public SyncStateImpl(FeatureSyncState feature, ZPushAccount[] accounts)
+            {
+                this._feature = feature;
+                this._accounts = accounts;
+                _canResync = new bool[Enum.GetNames(typeof(ResyncOption)).Length];
+                _canResync[(int)ResyncOption.GAB] = _featureGAB != null;
+                _canResync[(int)ResyncOption.Signatures] = _featureSignatures != null;
+                _canResync[(int)ResyncOption.ServerData] = ThisAddIn.Instance.Watcher.Sync.Enabled;
+                _canResync[(int)ResyncOption.Full] = true;
+                Update();
+            }
+
+            public long Done
+            {
+                get;
+                private set;
+            }
+
+            public bool IsSyncing
+            {
+                get;
+                private set;
+            }
+
+            public long Remaining
+            {
+                get;
+                private set;
+            }
+
+            public long Total
+            {
+                get;
+                private set;
+            }
+
+            public bool CanResync(ResyncOption option)
+            {
+                // TODO: check if outlook is not offline?
+                return _canResync[(int)option];
+            }
+
+            public bool Resync(ResyncOption option)
+            {
+                if (!CanResync(option))
+                    return true;
+                _canResync [(int)option] = false;
+
+                switch(option)
+                {
+                    case ResyncOption.GAB:
+                        // TODO: use completion tracker if not synching
+                        _featureGAB.FullResync(null, _accounts);
+                        return false;
+                    case ResyncOption.Signatures:
+                        ProgressDialog.Execute("SignaturesSync",
+                            (ct) =>
+                            {
+                                _featureSignatures.Resync(_accounts);
+                                return 0;
+                            }
+                        );
+                        return true;
+                    case ResyncOption.ServerData:
+                        ProgressDialog.Execute("ServerSync",
+                            (ct) =>
+                            {
+                                ThisAddIn.Instance.Watcher.Sync.ExecuteTasks(_accounts);
+                                return 0;
+                            }
+                        );
+                        
+                        return true; 
+                    case ResyncOption.Full:
+                        ThisAddIn.Instance.RestartResync(_accounts);
+                        return true;
+                }
+                return true;
+            }
+
+            public void Update()
+            {
+                Total = 0;
+                Done = 0;
+                IsSyncing = false;
+
+                foreach (ZPushAccount account in _accounts)
+                {
+                    DeviceDetails details = account.GetFeatureData<DeviceDetails>(_feature, null);
+                    if (details != null)
+                    {
+                        Total += details.Total;
+                        Done += details.Done;
+                        if (details.IsSyncing)
+                            IsSyncing = true;
+                    }
+                }
+
+                Remaining = Total - Done;
+            }
+        }
+
+        /// <summary>
+        /// Returns a SyncState for the specified account, or all accounts.
+        /// </summary>
+        /// <param name="account">The account, or null to fetch a SyncState for all accounts</param>
+        public SyncState GetSyncState(ZPushAccount account)
+        {
+            return new SyncStateImpl(this, account == null ? Watcher.Accounts.GetAccounts().ToArray() : new ZPushAccount[] { account });
         }
     }
 }

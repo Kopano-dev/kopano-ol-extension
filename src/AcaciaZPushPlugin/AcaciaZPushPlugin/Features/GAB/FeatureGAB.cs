@@ -335,10 +335,16 @@ namespace Acacia.Features.GAB
 
         #region Resync
 
-        internal void FullResync(CompletionTracker completion)
+        /// <summary>
+        /// Performs a full resync.
+        /// </summary>
+        /// <param name="completion">The completion tracker, or null.</param>
+        /// <param name="accounts">The accounts to resync, or null to resync all</param>
+        internal void FullResync(CompletionTracker completion, ZPushAccount[] accounts)
         {
             try
             {
+                // TODO: implement per-account resyncing
                 Logger.Instance.Trace(this, "FullResync begin: {0}", _processing);
                 BeginProcessing();
 

@@ -41,7 +41,7 @@ namespace OutlookRestarter
         static void Main(string[] args)
         {
             string procPath = args[1];
-            var procArgs = args.Skip(2);
+            List<string> procArgs = args.Skip(2).ToList();
             try
             {
                 // Attempt waiting for the process to finish
@@ -51,9 +51,33 @@ namespace OutlookRestarter
             }
             finally
             {
+                List<string> useArgs = new List<string>();
+                for (int i = 0; i < procArgs.Count; ++i)
+                {
+                    if (procArgs[i] == "/cleankoe")
+                    {
+                        ++i;
+                        string path = procArgs[i];
+                        if (System.IO.Path.GetExtension(path) == ".ost")
+                        {
+                            // Delete it
+                            try
+                            {
+                                System.IO.File.Delete(path);
+                            }
+                            catch (Exception) { }
+                        }
+                    }
+                    else
+                    {
+                        useArgs.Add(procArgs[i]);
+                    }
+                }
+                File.WriteAllLines("c:\\temp\\ol.txt", useArgs);
+                string argsString = string.Join(" ", useArgs);
                 // Start the process
                 Process process = new Process();
-                process.StartInfo = new ProcessStartInfo(procPath, string.Join(" ", procArgs));
+                process.StartInfo = new ProcessStartInfo(procPath, argsString);
                 process.Start();
             }
         }

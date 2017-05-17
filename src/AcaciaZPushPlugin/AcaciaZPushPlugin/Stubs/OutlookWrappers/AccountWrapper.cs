@@ -94,6 +94,29 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
+
+        public string BackingFilePath
+        {
+            get
+            {
+                byte[] bytes = (byte[])Registry.GetValue(_regPath, OutlookConstants.REG_VAL_EAS_STOREID, null);
+                // Find the last index of 00
+                int start = bytes.Length - 2;
+                while (start > 2)
+                {
+                    if (bytes[start - 1] == 0 && bytes[start - 2] == 0)
+                        break;
+                    --start;
+                }
+
+                if (start <= 2)
+                    return null;
+
+                return System.Text.Encoding.Unicode.GetString(bytes, start, bytes.Length - start - 2);
+            }
+        }
+
+
         public string DisplayName
         {
             get

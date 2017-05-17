@@ -476,4 +476,22 @@
   <data name="Ribbon_SyncState_Supertip" xml:space="preserve">
     <value>Open the "Synchronisation" dialog, in which the synchronisation state can be viewed and managed.</value>
   </data>
+  <data name="SyncState_FullResync_Body" xml:space="preserve">
+    <value>To fully resynchronise, Outlook must be restarted and all local data will be removed. Fetching all the data from the server again may take some time. Are you sure you want to resynchronise all data?</value>
+  </data>
+  <data name="SyncState_FullResync_Caption" xml:space="preserve">
+    <value>Full Resynchronisation</value>
+  </data>
+  <data name="SyncState_Resync_Body_GAB" xml:space="preserve">
+    <value>The Global Address Book has been scheduled for resynchronisation.</value>
+  </data>
+  <data name="SyncState_Resync_Caption" xml:space="preserve">
+    <value>Resynchronisation</value>
+  </data>
+  <data name="ServerSync_Label" xml:space="preserve">
+    <value>The server data is being synchronised.</value>
+  </data>
+  <data name="ServerSync_Title" xml:space="preserve">
+    <value>Server data</value>
+  </data>
 </root>

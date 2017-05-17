@@ -99,6 +99,7 @@
             this.comboAccounts.Items.AddRange(new object[] {
             resources.GetString("comboAccounts.Items")});
             this.comboAccounts.Name = "comboAccounts";
+            this.comboAccounts.SelectedIndexChanged += new System.EventHandler(this.comboAccounts_SelectedIndexChanged);
             // 
             // _labelProgress
             // 
@@ -132,7 +133,7 @@
             this.buttonGAB.Tag = "";
             this.buttonGAB.UseVisualStyleBackColor = true;
             this.buttonGAB.ShowHint += new Acacia.Controls.KHintButton.HintEventHandler(this.ShowHint);
-            this.buttonGAB.Click += new System.EventHandler(this.button1_Click);
+            this.buttonGAB.Click += new System.EventHandler(this.SyncButton_Click);
             // 
             // buttonSignatures
             // 
@@ -140,6 +141,7 @@
             this.buttonSignatures.Name = "buttonSignatures";
             this.buttonSignatures.UseVisualStyleBackColor = true;
             this.buttonSignatures.ShowHint += new Acacia.Controls.KHintButton.HintEventHandler(this.ShowHint);
+            this.buttonSignatures.Click += new System.EventHandler(this.SyncButton_Click);
             // 
             // buttonServerData
             // 
@@ -147,6 +149,7 @@
             this.buttonServerData.Name = "buttonServerData";
             this.buttonServerData.UseVisualStyleBackColor = true;
             this.buttonServerData.ShowHint += new Acacia.Controls.KHintButton.HintEventHandler(this.ShowHint);
+            this.buttonServerData.Click += new System.EventHandler(this.SyncButton_Click);
             // 
             // buttonFullResync
             // 
@@ -154,6 +157,7 @@
             this.buttonFullResync.Name = "buttonFullResync";
             this.buttonFullResync.UseVisualStyleBackColor = true;
             this.buttonFullResync.ShowHint += new Acacia.Controls.KHintButton.HintEventHandler(this.ShowHint);
+            this.buttonFullResync.Click += new System.EventHandler(this.buttonFullResync_Click);
             // 
             // _labelResyncOption
             // 
@@ -171,7 +175,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SyncStateDialog";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsDialog_FormClosing);
             this._layout.ResumeLayout(false);
             this._layout.PerformLayout();
             this._layoutMain.ResumeLayout(false);

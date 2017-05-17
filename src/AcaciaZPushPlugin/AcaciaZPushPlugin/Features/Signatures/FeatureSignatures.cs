@@ -106,7 +106,12 @@ namespace Acacia.Features.Signatures
 
         internal void ResyncAll()
         {
-            foreach(ZPushAccount account in Watcher.Accounts.GetAccounts())
+            Resync(Watcher.Accounts.GetAccounts().ToArray());
+        }
+
+        internal void Resync(ZPushAccount[] accounts)
+        {
+            foreach (ZPushAccount account in accounts)
             {
                 if (account.Confirmed == ZPushAccount.ConfirmationType.IsZPush)
                 {

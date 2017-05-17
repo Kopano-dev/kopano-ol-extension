@@ -370,7 +370,7 @@
     <value>3, 79</value>
   </data>
   <data name="_labelResync.Size" type="System.Drawing.Size, System.Drawing">
-    <value>77, 29</value>
+    <value>77, 35</value>
   </data>
   <data name="_labelResync.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -411,8 +411,11 @@
   <data name="buttonGAB.Location" type="System.Drawing.Point, System.Drawing">
     <value>86, 82</value>
   </data>
+  <data name="buttonGAB.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
   <data name="buttonGAB.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 23</value>
+    <value>242, 29</value>
   </data>
   <data name="buttonGAB.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -448,10 +451,13 @@
     <value>NoControl</value>
   </data>
   <data name="buttonSignatures.Location" type="System.Drawing.Point, System.Drawing">
-    <value>86, 111</value>
+    <value>86, 117</value>
+  </data>
+  <data name="buttonSignatures.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
   </data>
   <data name="buttonSignatures.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 23</value>
+    <value>242, 29</value>
   </data>
   <data name="buttonSignatures.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -487,10 +493,13 @@
     <value>NoControl</value>
   </data>
   <data name="buttonServerData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>86, 140</value>
+    <value>86, 152</value>
+  </data>
+  <data name="buttonServerData.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
   </data>
   <data name="buttonServerData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 23</value>
+    <value>242, 29</value>
   </data>
   <data name="buttonServerData.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -526,10 +535,13 @@
     <value>NoControl</value>
   </data>
   <data name="buttonFullResync.Location" type="System.Drawing.Point, System.Drawing">
-    <value>86, 169</value>
+    <value>86, 187</value>
+  </data>
+  <data name="buttonFullResync.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
   </data>
   <data name="buttonFullResync.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 23</value>
+    <value>242, 29</value>
   </data>
   <data name="buttonFullResync.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -553,13 +565,13 @@
     <value>Fill</value>
   </data>
   <data name="_labelResyncOption.Location" type="System.Drawing.Point, System.Drawing">
-    <value>86, 195</value>
+    <value>86, 219</value>
   </data>
   <data name="_labelResyncOption.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 6, 0, 0</value>
   </data>
   <data name="_labelResyncOption.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 83</value>
+    <value>242, 59</value>
   </data>
   <data name="_labelResyncOption.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>

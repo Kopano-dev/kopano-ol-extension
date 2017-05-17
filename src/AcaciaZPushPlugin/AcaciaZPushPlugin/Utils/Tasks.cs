@@ -134,9 +134,12 @@ namespace Acacia.Utils
             Task(new AcaciaTask(completion, owner, name, action));
         }
 
-        public static void Task(AcaciaTask task)
+        public static void Task(AcaciaTask task, bool synchronous = false)
         {
-            Executor.AddTask(task);
+            if (synchronous)
+                task.Execute();
+            else
+                Executor.AddTask(task);
         }
     }
 }

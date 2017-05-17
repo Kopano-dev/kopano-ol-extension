@@ -294,6 +294,7 @@
       <DependentUpon>SignaturesSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Features\SyncState\FeatureSyncState.cs" />
+    <Compile Include="Features\SyncState\SyncState.cs" />
     <Compile Include="Features\SyncState\SyncStateDialog.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -198,14 +198,20 @@ namespace Acacia.ZPush
 
             // Execute tasks for all accounts
             foreach (ZPushAccount account in _watcher.Accounts.GetAccounts())
-                ExecuteTasks(account);
+                ExecuteTasks(account, false);
+        }
+
+        public void ExecuteTasks(ZPushAccount[] accounts, bool synchronous = false)
+        {
+            foreach (ZPushAccount account in accounts)
+                ExecuteTasks(account, synchronous);
         }
 
         /// <summary>
         /// Executes the tasks for the specified ZPush account. The tasks are pushed into the system
         /// task queue.
         /// </summary>
-        private void ExecuteTasks(ZPushAccount account)
+        private void ExecuteTasks(ZPushAccount account, bool synchronous = false)
         {
             // Don't contact the network if Outlook is offline
             if (ThisAddIn.Instance.IsOffline)
@@ -214,7 +220,7 @@ namespace Acacia.ZPush
             // Execute the tasks for the account
             foreach (SyncTask task in _tasks)
             {
-                Tasks.Task(task.GetInstance(account));
+                Tasks.Task(task.GetInstance(account), synchronous);
             }
         }
 

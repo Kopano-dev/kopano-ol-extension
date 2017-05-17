@@ -49,6 +49,8 @@ namespace Acacia.Stubs
 
         string DomainName { get; }
 
+        string BackingFilePath { get; }
+
         // TODO: this is really a Z-Push thing, but it's here to store it in the registry
         string LocalSignaturesHash
         {

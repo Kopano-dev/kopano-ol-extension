@@ -896,6 +896,24 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The server data is being synchronised..
+        /// </summary>
+        internal static string ServerSync_Label {
+            get {
+                return ResourceManager.GetString("ServerSync_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server data.
+        /// </summary>
+        internal static string ServerSync_Title {
+            get {
+                return ResourceManager.GetString("ServerSync_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to open the shared folder. Please ensure you have permission to open the shared folder..
         /// </summary>
         internal static string SharedFolders_Adding_Failure {
@@ -1126,6 +1144,42 @@ namespace Acacia.Properties {
         internal static string SSLFailed_Title {
             get {
                 return ResourceManager.GetString("SSLFailed_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To fully resynchronise, Outlook must be restarted and all local data will be removed. Fetching all the data from the server again may take some time. Are you sure you want to resynchronise all data?.
+        /// </summary>
+        internal static string SyncState_FullResync_Body {
+            get {
+                return ResourceManager.GetString("SyncState_FullResync_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full Resynchronisation.
+        /// </summary>
+        internal static string SyncState_FullResync_Caption {
+            get {
+                return ResourceManager.GetString("SyncState_FullResync_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Global Address Book has been scheduled for resynchronisation..
+        /// </summary>
+        internal static string SyncState_Resync_Body_GAB {
+            get {
+                return ResourceManager.GetString("SyncState_Resync_Body_GAB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resynchronisation.
+        /// </summary>
+        internal static string SyncState_Resync_Caption {
+            get {
+                return ResourceManager.GetString("SyncState_Resync_Caption", resourceCulture);
             }
         }
         

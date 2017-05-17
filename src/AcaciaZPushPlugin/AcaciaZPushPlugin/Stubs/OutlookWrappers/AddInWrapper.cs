@@ -157,6 +157,11 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public void Restart(bool closeWindows)
         {
+            DoRestart(closeWindows, null);
+        }
+
+        private void DoRestart(bool closeWindows, string additionalCommandLine)
+        {
             // Can not use the assembly location, as that is in the GAC
             string codeBase = Assembly.GetExecutingAssembly().CodeBase;
             UriBuilder uri = new UriBuilder(codeBase);
@@ -174,6 +179,11 @@ namespace Acacia.Stubs.OutlookWrappers
                 commandLine += " /profile " + Util.QuoteCommandLine(ProfileName);
             }
 
+            if (!string.IsNullOrEmpty(additionalCommandLine))
+            {
+                commandLine = commandLine + " " + additionalCommandLine;
+            }
+
             // Run that
             Process process = new Process();
             process.StartInfo = new ProcessStartInfo(path, Process.GetCurrentProcess().Id + " " + commandLine);
@@ -181,6 +191,20 @@ namespace Acacia.Stubs.OutlookWrappers
 
             // And close us and any other windows
             Quit(closeWindows);
+        }
+
+        public void RestartResync(ZPushAccount[] accounts)
+        {
+            string commandLine = "";
+            foreach(ZPushAccount account in accounts)
+            {
+                string path = account.Account.BackingFilePath;
+                if (!string.IsNullOrEmpty(path) && System.IO.Path.GetExtension(path) == ".ost")
+                {
+                    commandLine += "/cleankoe " + Util.QuoteCommandLine(path);
+                }
+            }
+            DoRestart(true, commandLine);
         }
 
         public void Quit(bool closeWindows)
