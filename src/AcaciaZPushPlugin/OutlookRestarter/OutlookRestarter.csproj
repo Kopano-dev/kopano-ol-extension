@@ -49,14 +49,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="OutlookRestarter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Version.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Kopano.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AcaciaZPushPlugin\AcaciaZPushPlugin.csproj">
+      <Project>{1a7427a5-f814-4b07-98b2-c67d758b65d6}</Project>
+      <Name>AcaciaZPushPlugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

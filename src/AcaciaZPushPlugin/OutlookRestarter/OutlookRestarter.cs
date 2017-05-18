@@ -1,4 +1,6 @@
-﻿/// Copyright 2017 Kopano b.v.
+﻿
+using Acacia;
+/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -13,7 +15,6 @@
 /// along with this program.If not, see<http://www.gnu.org/licenses/>.
 /// 
 /// Consult LICENSE file for details
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,7 +26,7 @@ using System.Threading.Tasks;
 
 namespace OutlookRestarter
 {
-    class Program
+    class OutlookRestarter
     {
 
         /// <summary>
@@ -40,6 +41,8 @@ namespace OutlookRestarter
         [STAThread]
         static void Main(string[] args)
         {
+            Logger.Instance.Debug(typeof(OutlookRestarter), "Restarting: {0}", string.Join(", ", args));
+
             string procPath = args[1];
             List<string> procArgs = args.Skip(2).ToList();
             try
@@ -47,10 +50,13 @@ namespace OutlookRestarter
                 // Attempt waiting for the process to finish
                 int procId = int.Parse(args[0]);
                 Process proc = Process.GetProcessById(procId);
-                proc.WaitForExit(15000);
+                Logger.Instance.Debug(typeof(OutlookRestarter), "Waiting for process to exit: {0}: {1}", procId, proc);
+                bool finished = proc.WaitForExit(15000);
+                Logger.Instance.Debug(typeof(OutlookRestarter), "Waited for process to exit: {0}: {1}", procId, finished);
             }
             finally
             {
+                Logger.Instance.Debug(typeof(OutlookRestarter), "Parsing arguments");
                 List<string> useArgs = new List<string>();
                 for (int i = 0; i < procArgs.Count; ++i)
                 {
@@ -58,14 +64,19 @@ namespace OutlookRestarter
                     {
                         ++i;
                         string path = procArgs[i];
+                        Logger.Instance.Debug(typeof(OutlookRestarter), "Request to remove store: {0}", path);
                         if (System.IO.Path.GetExtension(path) == ".ost")
                         {
+                            Logger.Instance.Info(typeof(OutlookRestarter), "Removing store: {0}", path);
                             // Delete it
                             try
                             {
                                 System.IO.File.Delete(path);
                             }
-                            catch (Exception) { }
+                            catch (Exception e)
+                            {
+                                Logger.Instance.Error(typeof(OutlookRestarter), "Exception removing store: {0}: {1}", path, e);
+                            }
                         }
                     }
                     else
@@ -73,12 +84,14 @@ namespace OutlookRestarter
                         useArgs.Add(procArgs[i]);
                     }
                 }
-                File.WriteAllLines("c:\\temp\\ol.txt", useArgs);
                 string argsString = string.Join(" ", useArgs);
+                Logger.Instance.Debug(typeof(OutlookRestarter), "Parsed arguments: {0}", argsString);
                 // Start the process
                 Process process = new Process();
                 process.StartInfo = new ProcessStartInfo(procPath, argsString);
+                Logger.Instance.Debug(typeof(OutlookRestarter), "Starting process: {0}", process);
                 process.Start();
+                Logger.Instance.Debug(typeof(OutlookRestarter), "Started process: {0}", process);
             }
         }
     }
