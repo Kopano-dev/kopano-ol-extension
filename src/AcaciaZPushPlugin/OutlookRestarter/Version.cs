@@ -17,7 +17,7 @@
 using System.Reflection; 
 [assembly: AssemblyVersion("0.1")] 
 [assembly: AssemblyFileVersion("0.1")] 
-public static class BuildVersions 
+internal static class BuildVersions 
 { 
     public const string VERSION = "0.1"; 
     public const string REVISION = "abcdef0123456789abcdef0123456789abcdef01"; 
