@@ -28,6 +28,9 @@ namespace OutlookRestarter
 {
     class OutlookRestarter
     {
+        private const int FINISH_WAIT_TIME = 15000;
+        private const int DELETE_RETRIES = 30;
+        private const int DELETE_WAIT_TIME = 500;
 
         /// <summary>
         /// Entry point.
@@ -41,7 +44,7 @@ namespace OutlookRestarter
         [STAThread]
         static void Main(string[] args)
         {
-            Logger.Instance.Debug(typeof(OutlookRestarter), "Restarting: {0}", string.Join(", ", args));
+            Logger.Instance.Debug(typeof(OutlookRestarter), "Restarting: {0}: {1}", BuildVersions.VERSION, string.Join(", ", args));
 
             string procPath = args[1];
             List<string> procArgs = args.Skip(2).ToList();
@@ -51,7 +54,7 @@ namespace OutlookRestarter
                 int procId = int.Parse(args[0]);
                 Process proc = Process.GetProcessById(procId);
                 Logger.Instance.Debug(typeof(OutlookRestarter), "Waiting for process to exit: {0}: {1}", procId, proc);
-                bool finished = proc.WaitForExit(15000);
+                bool finished = proc.WaitForExit(FINISH_WAIT_TIME);
                 Logger.Instance.Debug(typeof(OutlookRestarter), "Waited for process to exit: {0}: {1}", procId, finished);
             }
             finally
@@ -68,14 +71,29 @@ namespace OutlookRestarter
                         if (System.IO.Path.GetExtension(path) == ".ost")
                         {
                             Logger.Instance.Info(typeof(OutlookRestarter), "Removing store: {0}", path);
-                            // Delete it
-                            try
+
+                            for (int attempt = 0; attempt < DELETE_RETRIES; ++attempt)
                             {
-                                System.IO.File.Delete(path);
-                            }
-                            catch (Exception e)
-                            {
-                                Logger.Instance.Error(typeof(OutlookRestarter), "Exception removing store: {0}: {1}", path, e);
+                                // Delete it
+                                try
+                                {
+                                    System.IO.File.Delete(path);
+
+                                    // Success, done
+                                    break;
+                                }
+                                catch (IOException e)
+                                {
+                                    Logger.Instance.Error(typeof(OutlookRestarter), "IOException removing store: {0}: on attempt {1}: {2}", path, attempt, e);
+                                    // IO Exception. Wait a while and retry
+                                    Thread.Sleep(DELETE_WAIT_TIME);
+                                }
+                                catch (Exception e)
+                                {
+                                    Logger.Instance.Error(typeof(OutlookRestarter), "Exception removing store: {0}: {1}", path, e);
+                                    // This kind of exception will not be resolved by retrying
+                                    break;
+                                }
                             }
                         }
                     }
