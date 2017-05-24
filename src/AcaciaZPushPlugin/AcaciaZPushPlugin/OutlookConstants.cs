@@ -116,6 +116,11 @@ namespace Acacia
         public const string PR_ORIGINATOR_NON_DELIVERY_REPORT_REQUESTED = PROP + "0C08" + PT_BOOLEAN;
         public const string PR_READ_RECEIPT_REQUESTED = PROP + "0029" + PT_BOOLEAN;
 
+        public const string PR_READ_RECEIPT_ADDR_TYPE = PROP + "4029" + PT_UNICODE;
+        public const string PR_READ_RECEIPT_DISPLAY_NAME = PROP + "402B" + PT_UNICODE;
+        public const string PR_READ_RECEIPT_EMAIL_ADDR = PROP + "402A" + PT_UNICODE;
+        public const string PR_READ_RECEIPT_SIMPLE_DISP_NAME = PROP + "4036" + PT_UNICODE;
+
         #endregion
 
         #region Meeting requests

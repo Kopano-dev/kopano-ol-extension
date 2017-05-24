@@ -40,7 +40,7 @@ namespace Acacia.Stubs
         #region UI
 
         OutlookUI OutlookUI { get; }
-        IWin32Window Window { get; }
+        ISystemWindow Window { get; }
         IExplorer GetActiveExplorer();
 
         #endregion

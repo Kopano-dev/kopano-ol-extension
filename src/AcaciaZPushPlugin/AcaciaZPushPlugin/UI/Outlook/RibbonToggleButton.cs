@@ -46,7 +46,7 @@ namespace Acacia.UI.Outlook
                 if (_isPressed != value)
                 {
                     _isPressed = value;
-                    UI?.InvalidateCommand(this);
+                    UI?.InvalidateCommand(this, false);
                 }
             }
         }

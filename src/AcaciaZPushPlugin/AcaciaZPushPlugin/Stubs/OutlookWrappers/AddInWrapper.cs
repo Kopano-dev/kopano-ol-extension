@@ -29,6 +29,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NSOutlook = Microsoft.Office.Interop.Outlook;
+using System.Drawing;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
@@ -259,13 +260,21 @@ namespace Acacia.Stubs.OutlookWrappers
         /// Simple IWin32Window wrapper for a native handle. NativeWindow sometimes refuses to handle
         /// these (FromHandle returns null), so use a simple wrapper.
         /// </summary>
-        private class WindowHandle : IWin32Window
+        private class WindowHandle : ISystemWindow
         {
             private IntPtr hWnd;
 
             public WindowHandle(IntPtr hWnd)
             {
                 this.hWnd = hWnd;
+            }
+
+            public Rectangle Bounds
+            {
+                get
+                {
+                    return User32.GetWindowRect(hWnd);
+                }
             }
 
             public IntPtr Handle
@@ -277,7 +286,7 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public IWin32Window Window
+        public ISystemWindow Window
         {
             get
             {

@@ -206,15 +206,23 @@ namespace Acacia.Controls
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            if (Cancellation != null)
-                Cancellation.Cancel();
+            DoClose();
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
+            DoClose();
+        }
+
+        private void DoClose()
+        {
             if (Cancellation != null)
                 Cancellation.Cancel();
 
+            // If we're not on a modal form, close the form manually
+            Form form = FindForm();
+            if (form?.Modal == false)
+                form.Close();
         }
     }
 }

@@ -67,9 +67,13 @@ namespace Acacia.UI.Outlook
             Logger.Instance.Trace(Owner, "Command {0}: Handled", Id);
         }
 
-        public void Invalidate()
+        /// <summary>
+        /// Invalidates the command, triggering a reload of labels and images.
+        /// </summary>
+        /// <param name="forceUpdate">If true, the Outlook UI will be updated straight away.</param>
+        public void Invalidate(bool forceUpdate = false)
         {
-            UI?.InvalidateCommand(this);
+            UI?.InvalidateCommand(this, forceUpdate);
         }
 
         private bool _isEnabled = true;

@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -30,6 +31,24 @@ namespace Acacia.Controls
         public KDialogNew()
         {
             Icon = Properties.Resources.Kopano;
+        }
+
+        /// <summary>
+        /// Show(IWin32Window) doesn't properly center on the parent, this fixes that
+        /// </summary>
+        /// <param name="owner">The owner, used for the bounds</param>
+        public void ShowCentered(Stubs.ISystemWindow owner)
+        {
+            if (owner == null)
+            {
+                Show();
+                return;
+            }
+            Rectangle parent = owner.Bounds;
+            Rectangle centered = KUIUtil.Center(parent, Size);
+            StartPosition = FormStartPosition.Manual;
+            Location = new Point(centered.X - parent.X, centered.Y - parent.Y);
+            Show(owner);
         }
 
         #region Control links

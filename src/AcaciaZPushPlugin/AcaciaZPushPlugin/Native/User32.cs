@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -46,6 +47,31 @@ namespace Acacia.Native
 
         [DllImport("user32.dll")]
         public static extern int GetWindowLong(IntPtr hWnd, GWL gwl);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RECT
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+
+            public Rectangle ToRectangle()
+            {
+                return new Rectangle(Left, Top, Right - Left, Bottom - Top);
+            }
+        }
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+        public static Rectangle GetWindowRect(IntPtr hWnd)
+        {
+            RECT rect;
+            GetWindowRect(hWnd, out rect);
+            return rect.ToRectangle();
+        }
 
         #region Messages
 

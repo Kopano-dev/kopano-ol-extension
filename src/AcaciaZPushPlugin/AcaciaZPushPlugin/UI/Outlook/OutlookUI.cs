@@ -327,9 +327,14 @@ namespace Acacia.UI.Outlook
 
         #region Command state
 
-        internal void InvalidateCommand(CommandElement command)
+        internal void InvalidateCommand(CommandElement command, bool forceUpdate)
         {
             _officeUI?.InvalidateControl(command.Id);
+            if (forceUpdate)
+            {
+                _officeUI?.Invalidate();
+                // TODO: sometimes if the focus is on another window, it is not updated.
+            }
         }
 
         public bool getControlEnabled(Office.IRibbonControl control)

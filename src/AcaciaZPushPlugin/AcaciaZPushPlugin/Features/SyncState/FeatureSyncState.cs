@@ -32,6 +32,8 @@ using Acacia.ZPush.Connect.Soap;
 using Acacia.Features.GAB;
 using Acacia.Features.Signatures;
 using Acacia.UI;
+using System.Windows.Forms;
+using System.Collections.Concurrent;
 
 // Prevent field assignment warnings
 #pragma warning disable 0649
@@ -45,32 +47,35 @@ namespace Acacia.Features.SyncState
         #region Sync configuration
 
         [AcaciaOption("Sets the period to check synchronisation state if a sync is in progress.")]
-        public TimeSpan CheckPeriod
+        public TimeSpan CheckPeriodSync
         {
-            get { return GetOption(OPTION_CHECK_PERIOD); }
-            set { SetOption(OPTION_CHECK_PERIOD, value); }
+            get { return GetOption(OPTION_CHECK_PERIOD_SYNC); }
+            set { SetOption(OPTION_CHECK_PERIOD_SYNC, value); }
         }
-        private static readonly TimeSpanOption OPTION_CHECK_PERIOD = new TimeSpanOption("CheckPeriod", new TimeSpan(0, 5, 0));
+        private static readonly TimeSpanOption OPTION_CHECK_PERIOD_SYNC = new TimeSpanOption("CheckPeriodSync", new TimeSpan(0, 1, 0));
 
         [AcaciaOption("Sets the period to check synchronisation state if a sync is in progress and the dialog is open.")]
-        public TimeSpan CheckPeriodDialog
+        public TimeSpan CheckPeriodDialogSync
         {
-            get { return GetOption(OPTION_CHECK_PERIOD_DIALOG); }
-            set { SetOption(OPTION_CHECK_PERIOD_DIALOG, value); }
+            get { return GetOption(OPTION_CHECK_PERIOD_DIALOG_SYNC); }
+            set { SetOption(OPTION_CHECK_PERIOD_DIALOG_SYNC, value); }
         }
-        private static readonly TimeSpanOption OPTION_CHECK_PERIOD_DIALOG = new TimeSpanOption("CheckPeriodDialog", new TimeSpan(0, 1, 0));
+        private static readonly TimeSpanOption OPTION_CHECK_PERIOD_DIALOG_SYNC = new TimeSpanOption("CheckPeriodDialogSync", new TimeSpan(0, 0, 30));
 
-        private TimeSpan DelayTime
+        [AcaciaOption("Sets the period to check synchronisation state if a sync is NOT in progress and the dialog is open.")]
+        public TimeSpan CheckPeriodDialogNoSync
         {
-            get
-            {
-                if (_dialogOpen)
-                    return CheckPeriodDialog;
-                else
-                    return CheckPeriod;
-            }
+            get { return GetOption(OPTION_CHECK_PERIOD_DIALOG_NO_SYNC); }
+            set { SetOption(OPTION_CHECK_PERIOD_DIALOG_NO_SYNC, value); }
         }
-        private bool _dialogOpen;
+        private static readonly TimeSpanOption OPTION_CHECK_PERIOD_DIALOG_NO_SYNC = new TimeSpanOption("CheckPeriodDialogNoSync", new TimeSpan(0, 5, 0));
+
+        private bool _isSyncing;
+        public TimeSpan CheckPeriodDialogEffective
+        {
+            get { return _isSyncing ? CheckPeriodDialogSync : CheckPeriodDialogNoSync; }
+        }
+
 
         #endregion
 
@@ -79,39 +84,21 @@ namespace Acacia.Features.SyncState
         {
             private FeatureSyncState _feature;
 
-            /// <summary>
-            /// Number in range [0,1]
-            /// </summary>
-            private double _syncProgress = 1;
-            public double SyncProgress
-            {
-                get { return _syncProgress; }
-                set
-                {
-                    int old = SyncProgressPercent;
-
-                    _syncProgress = value;
-
-                    if (SyncProgressPercent != old)
-                    {
-                        // Percentage has changed, update required
-                        _feature._button.Invalidate();
-                    }
-                }
-            }
-
+            private int _syncProgressPercent = 100;
             public int SyncProgressPercent
             {
-                get
+                get { return _syncProgressPercent; }
+                set
                 {
-                    return AlignProgress(100);
-                }
-            }
+                    if (value != _syncProgressPercent)
+                    {
+                        _syncProgressPercent = Math.Max(0, Math.Min(100, value));
 
-            private int AlignProgress(int steps, double round = 0.5)
-            {
-                int val = (int)Math.Floor(_syncProgress * steps + round);
-                return Math.Min(steps, val);
+                        // Percentage has changed, update required
+                        // If the dialog is open, force the update, otherwise it'll trigger only when the main window is active
+                        _feature._button.Invalidate(_feature._dialog != null);
+                    }
+                }
             }
 
             public SyncStateData(FeatureSyncState feature)
@@ -122,6 +109,7 @@ namespace Acacia.Features.SyncState
             private static readonly Bitmap[] PROGRESS = CreateProgressImages();
 
             private const int PROGRESS_STEPS = 20;
+
             private static Bitmap[] CreateProgressImages()
             {
                 Bitmap[] images = new Bitmap[PROGRESS_STEPS + 1];
@@ -151,7 +139,9 @@ namespace Acacia.Features.SyncState
 
             public Bitmap GetImage(string elementId, bool large)
             {
-                int index = AlignProgress(PROGRESS_STEPS, 0.05);
+                double round = (double)PROGRESS_STEPS / 100;
+                int val = (int)Math.Floor((_syncProgressPercent / (double)100) * PROGRESS_STEPS + round);
+                int index = Math.Max(0, Math.Min(PROGRESS_STEPS, val));
 
                 // extra safety check, just in case
                 return (index >= 0 && index <= PROGRESS_STEPS) ? PROGRESS[index] : PROGRESS[0];
@@ -177,6 +167,7 @@ namespace Acacia.Features.SyncState
 
         private RibbonButton _button;
         private SyncStateData _state;
+        private ZPushSync.SyncTask _task;
 
         public FeatureSyncState()
         {
@@ -188,7 +179,7 @@ namespace Acacia.Features.SyncState
             _button = RegisterButton(this, "Progress", true, ShowSyncState, ZPushBehaviour.None);
             _button.DataProvider = _state;
             // Add a sync task to start checking. If this finds it's not fully synchronised, it will check more often
-            Watcher.Sync.AddTask(this, Name, CheckSyncState);
+            _task = Watcher.Sync.AddTask(this, Name, CheckSyncState);
         }
 
         private class DeviceDetails : ISoapSerializable<DeviceDetails.Data>
@@ -203,6 +194,12 @@ namespace Acacia.Features.SyncState
                 override public string ToString()
                 {
                     return string.Format("{0}: {1}/{2}={3}", status, total, done, todo);
+                }
+
+                internal void MakeDone()
+                {
+                    done = total;
+                    todo = 0;
                 }
             }
 
@@ -221,7 +218,7 @@ namespace Acacia.Features.SyncState
                 [SoapField(4)]
                 public SyncData Sync;
 
-                public bool IsSyncing { get { return Sync != null; } }
+                public bool IsSyncing { get { return Sync != null && Sync.todo > 0; } }
 
                 [SoapField(5)]
                 public string id; // TODO: backend folder id
@@ -279,54 +276,95 @@ namespace Acacia.Features.SyncState
             {
                 get { return _data.data.contentdata; } 
             }
-
-            #region Totals
-
-            /// <summary>
-            /// Calculates the totals for the data
-            /// </summary>
-            internal void Calculate()
-            {
-                long total = 0;
-                long done = 0;
-                IsSyncing = false;
-                foreach (ContentData content in Content.Values)
-                {
-                    if (content.IsSyncing)
-                    {
-                        total += content.Sync.total;
-                        done += content.Sync.done;
-                        IsSyncing = true;
-                    }
-                }
-
-                this.Total = total;
-                this.Done = done;
-            }
-
-            public long Total
-            {
-                get;
-                private set;
-            }
-
-            public long Done
-            {
-                get;
-                private set;
-            }
-
-            public bool IsSyncing
-            {
-                get;
-                private set;
-            }
-
-            #endregion
         }
 
         private class GetDeviceDetailsRequest : SoapRequest<DeviceDetails>
         {
+        }
+
+        /// <summary>
+        /// Information stored per account on a synchronisation session.
+        /// </summary>
+        private class SyncSession
+        {
+            public long Total { get; private set; }
+            public long Done { get; private set; }
+            public bool IsSyncing { get; private set; }
+
+            private readonly FeatureSyncState _feature;
+            private readonly ZPushAccount _account;
+            private readonly Dictionary<string, DeviceDetails.ContentData> _syncContent = new Dictionary<string, DeviceDetails.ContentData>();
+
+            public SyncSession(FeatureSyncState feature, ZPushAccount account)
+            {
+                this._feature = feature;
+                this._account = account;
+            }
+
+            /// <summary>
+            /// Adds the details to the current session
+            /// </summary>
+            public void Add(DeviceDetails details)
+            {
+                StringBuilder debug = new StringBuilder();
+
+                // If a folder is no longer reported as it's already synced, we don't necessarily get the
+                // last step where (done == total). This causes some folders to keep lingering. To clean these
+                // up, keep a list of folders syncing in this iteration.
+                // Any folders in the session but not this list are done
+                HashSet<string> syncingNow = new HashSet<string>();
+
+                // Check all syncing data
+                foreach (DeviceDetails.ContentData content in details.Content.Values)
+                {
+                    if (content.IsSyncing)
+                    {
+                        // If the current session is not syncing, this is a restart. Clear stat
+                        if (!IsSyncing)
+                        {
+                            _syncContent.Clear();
+                            debug.AppendLine("Starting new SyncSession");
+                        }
+
+                        // Add to the syncing content
+                        IsSyncing = true;
+                        _syncContent[content.synckey] = content;
+                        syncingNow.Add(content.synckey);
+
+                        debug.AppendLine(string.Format("\tFolder: {0} \tSync: {1} \tStatus: {2} / {3}",
+                                    content.synckey, content.IsSyncing, content.Sync.done, content.Sync.total));
+                    }
+                }
+                debug.AppendLine(string.Format("Calculating totals: ({0})", IsSyncing));
+
+                // Clean up any done items
+                bool _syncingNow = false;
+                foreach (DeviceDetails.ContentData content in _syncContent.Values)
+                {
+                    if (!syncingNow.Contains(content.synckey))
+                    {
+                        content.Sync.MakeDone();
+                    }
+                    else
+                    {
+                        _syncingNow = true;
+                    }
+                }
+                IsSyncing = _syncingNow;
+
+                // Update totals
+                Total = 0;
+                Done = 0;
+                foreach(DeviceDetails.ContentData content in _syncContent.Values)
+                {
+                    Total += content.Sync.total;
+                    Done += content.Sync.done;
+                    debug.AppendLine(string.Format("\tFolder: {0} \tSync: {1} \tStatus: {2} / {3}",
+                                content.synckey, content.IsSyncing, content.Sync.done, content.Sync.total));
+                }
+                debug.AppendLine(string.Format("Total: {0} / {1} ({2}%)", Done, Total, CalculatePercentage(Done, Total)));
+                Logger.Instance.Trace(_feature, "Syncing account {0}:\n{1}", _account, debug);
+            }
         }
 
         private void CheckSyncState(ZPushAccount account)
@@ -337,16 +375,28 @@ namespace Acacia.Features.SyncState
             {
                 // Fetch
                 DeviceDetails details = deviceService.Execute(new GetDeviceDetailsRequest());
+                if (details != null)
+                {
+                    bool wasSyncing = false;
 
-                // Determine the totals
-                details?.Calculate();
+                    // Create or update session
+                    SyncSession session = account.GetFeatureData<SyncSession>(this, null);
+                    if (session == null)
+                        session = new SyncSession(this, account);
+                    else
+                        wasSyncing = session.IsSyncing;
 
-                // And store with the account
-                account.SetFeatureData(this, null, details);
+                    session.Add(details);
 
-                // If syncing, check again soon.
-                if (details?.IsSyncing == true)
-                    Util.Delayed(this, (int)DelayTime.TotalMilliseconds, () => CheckSyncState(account));
+                    // Store with the account
+                    account.SetFeatureData(this, null, session);
+
+                    if (wasSyncing != session.IsSyncing)
+                    {
+                        // Sync state has changed, update the schedule
+                        Watcher.Sync.SetTaskSchedule(_task, account, session.IsSyncing ? CheckPeriodSync : (TimeSpan?)null);
+                    }
+                }
             }
 
             // Update the total for all accounts
@@ -357,35 +407,66 @@ namespace Acacia.Features.SyncState
         {
             long total = 0;
             long done = 0;
+            bool isSyncing = false;
 
             foreach(ZPushAccount account in Watcher.Accounts.GetAccounts())
             {
-                DeviceDetails details = account.GetFeatureData<DeviceDetails>(this, null);
-                if (details != null)
+                SyncSession sync = account.GetFeatureData<SyncSession>(this, null);
+                if (sync != null)
                 {
-                    total += details.Total;
-                    done += details.Done;
+                    total += sync.Total;
+                    done += sync.Done;
+                    if (sync.IsSyncing)
+                        isSyncing = true;
                 }
             }
 
-            // Calculate progress and update
-            if (done == 0)
-                _state.SyncProgress = total == 0 ? 1 : 0;
-            else
-                _state.SyncProgress = (double)done / total;
+            // Update UI
+            _state.SyncProgressPercent = CalculatePercentage(done, total);
+            if (_dialog != null)
+                _dialog.RefreshData();
+
+            if (_isSyncing != isSyncing)
+            {
+                _isSyncing = isSyncing;
+                if(_dialog != null)
+                {
+                    // Update the task schedule
+                    Watcher.Sync.SetTaskSchedule(_task, null, CheckPeriodDialogEffective, false);
+                }
+            }
         }
+
+        private static int CalculatePercentage(long done, long total)
+        {
+            if (total == 0 || done == total)
+                return 100;
+
+            return Math.Max(0, Math.Min(100, (int)(done * 100 / total)));
+        }
+
+        private SyncStateDialog _dialog;
 
         private void ShowSyncState()
         {
-            _dialogOpen = true;
-            try
+            // Only show the dialog once
+            if (_dialog != null)
+                return;
+
+            // Ramp up the checking schedule while the dialog is open
+            // The other check sets per-account schedules, we use the global one, so they should't interfere.
+            TimeSpan? old = Watcher.Sync.SetTaskSchedule(_task, null, CheckPeriodDialogEffective, true);
+            SyncStateDialog dlg = new SyncStateDialog(this);
+            dlg.FormClosed += (s, e) =>
             {
-                new SyncStateDialog(this).ShowDialog();
-            }
-            finally
-            {
-                _dialogOpen = false;
-            }
+                // Restore the schedule
+                Watcher.Sync.SetTaskSchedule(_task, null, old);
+                _dialog = null;
+            };
+
+            // Show the dialog as a non-modal, otherwise the ribbon doesn't get updated
+            _dialog = dlg;
+            dlg.ShowCentered(ThisAddIn.Instance.Window);
         }
 
         private class SyncStateImpl : SyncState
@@ -431,6 +512,11 @@ namespace Acacia.Features.SyncState
             {
                 get;
                 private set;
+            }
+
+            public int Percentage
+            {
+                get { return CalculatePercentage(Done, Total); }
             }
 
             public bool CanResync(ResyncOption option)
@@ -500,12 +586,12 @@ namespace Acacia.Features.SyncState
 
                 foreach (ZPushAccount account in _accounts)
                 {
-                    DeviceDetails details = account.GetFeatureData<DeviceDetails>(_feature, null);
-                    if (details != null)
+                    SyncSession sync = account.GetFeatureData<SyncSession>(_feature, null);
+                    if (sync != null)
                     {
-                        Total += details.Total;
-                        Done += details.Done;
-                        if (details.IsSyncing)
+                        Total += sync.Total;
+                        Done += sync.Done;
+                        if (sync.IsSyncing)
                             IsSyncing = true;
                     }
                 }

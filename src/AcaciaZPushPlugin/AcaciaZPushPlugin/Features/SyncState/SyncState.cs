@@ -24,9 +24,14 @@ namespace Acacia.Features.SyncState
         long Remaining { get; }
 
         /// <summary>
-        /// Returns the number of items already synced;
+        /// Returns the number of items already synced.
         /// </summary>
         long Done { get; }
+
+        /// <summary>
+        /// Returns the percentage of syncing that is done.
+        /// </summary>
+        int Percentage { get; }
 
         bool IsSyncing { get; }
 

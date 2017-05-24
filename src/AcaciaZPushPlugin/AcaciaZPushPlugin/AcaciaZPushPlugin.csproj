@@ -333,6 +333,7 @@
     <Compile Include="Stubs\ISignatures.cs" />
     <Compile Include="Stubs\IStores.cs" />
     <Compile Include="Stubs\ISyncObject.cs" />
+    <Compile Include="Stubs\ISystemWindow.cs" />
     <Compile Include="Stubs\OutlookWrappers\AccountWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\AddInWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\AddressEntryWrapper.cs" />
