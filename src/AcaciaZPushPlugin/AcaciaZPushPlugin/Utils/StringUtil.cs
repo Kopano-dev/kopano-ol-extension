@@ -176,9 +176,7 @@ namespace Acacia.Utils
 
         public static string DecodeQuotedPrintable(this string _this)
         {
-            return ReplaceStringTokens(_this, "=?", "?=", (token) =>
-                System.Net.Mail.Attachment.CreateAttachmentFromString("", "=?" + token + "?=").Name
-            );
+            return MimeKit.Utils.Rfc2047.DecodeText(Encoding.UTF8.GetBytes(_this));
         }
 
     }
