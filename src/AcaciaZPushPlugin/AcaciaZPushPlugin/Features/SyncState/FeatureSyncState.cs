@@ -41,7 +41,7 @@ using System.Collections.Concurrent;
 namespace Acacia.Features.SyncState
 {   
 
-    public class FeatureSyncState : FeatureDisabled, FeatureWithRibbon
+    public class FeatureSyncState : Feature, FeatureWithRibbon
     {
 
         #region Sync configuration
