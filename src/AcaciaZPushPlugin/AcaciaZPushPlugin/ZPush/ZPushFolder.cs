@@ -61,9 +61,9 @@ namespace Acacia.ZPush
         protected override void DoRelease()
         {
             Cleanup();
-            _folder.Dispose();
-            _items.Dispose();
-            _subFolders.Dispose();
+            _folder?.Dispose();
+            _items?.Dispose();
+            _subFolders?.Dispose();
         }
 
         public override string ToString()
@@ -113,24 +113,36 @@ namespace Acacia.ZPush
             if (register)
             {
                 // Item events
-                _items.ItemAdd += Items_ItemAdd;
-                _items.ItemChange += Items_ItemChange;
+                if (_items != null)
+                {
+                    _items.ItemAdd += Items_ItemAdd;
+                    _items.ItemChange += Items_ItemChange;
+                }
 
                 // Folder events
-                _subFolders.FolderAdd += SubFolders_FolderAdd;
-                _subFolders.FolderRemove += SubFolders_FolderRemove;
-                _subFolders.FolderChange += SubFolders_FolderChange;
+                if (_subFolders != null)
+                {
+                    _subFolders.FolderAdd += SubFolders_FolderAdd;
+                    _subFolders.FolderRemove += SubFolders_FolderRemove;
+                    _subFolders.FolderChange += SubFolders_FolderChange;
+                }
             }
             else
             {
                 // Item events
-                _items.ItemAdd -= Items_ItemAdd;
-                _items.ItemChange -= Items_ItemChange;
+                if (_items != null)
+                {
+                    _items.ItemAdd -= Items_ItemAdd;
+                    _items.ItemChange -= Items_ItemChange;
+                }
 
                 // Folder events
-                _subFolders.FolderAdd -= SubFolders_FolderAdd;
-                _subFolders.FolderRemove -= SubFolders_FolderRemove;
-                _subFolders.FolderChange -= SubFolders_FolderChange;
+                if (_subFolders != null)
+                {
+                    _subFolders.FolderAdd -= SubFolders_FolderAdd;
+                    _subFolders.FolderRemove -= SubFolders_FolderRemove;
+                    _subFolders.FolderChange -= SubFolders_FolderChange;
+                }
             }
         }
 
