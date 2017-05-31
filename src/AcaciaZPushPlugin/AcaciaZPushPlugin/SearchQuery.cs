@@ -42,40 +42,50 @@ namespace Acacia
 
         private void Indent()
         {
-            _builder.Append(new String(' ', _indent));
+            _builder.Append(new String(' ', _indent * 4));
         }
 
         public void Encode(SearchQuery.And part)
         {
-            EncodeMulti("AND", part.Operands);
+            EncodeMulti("AND", false, part.Operands);
         }
 
         public void Encode(SearchQuery.Or part)
         {
-            EncodeMulti("OR", part.Operands);
+            EncodeMulti("OR", false, part.Operands);
         }
 
         public void Encode(SearchQuery.Not part)
         {
-            EncodeMulti("NOT", new[] { part.Operand });
+            EncodeMulti("NOT", true, new[] { part.Operand });
         }
 
-        private void EncodeMulti(string oper, IEnumerable<SearchQuery> parts)
+        private void EncodeMulti(string oper, bool prefix, IEnumerable<SearchQuery> parts)
         {
             Indent();
-            _builder.Append(oper).Append("\n");
-            Indent();
-            _builder.Append("{\n");
+            _builder.Append("(\n");
 
             ++_indent;
 
+            bool first = !prefix;
             foreach (SearchQuery operand in parts)
+            {
+                if (first)
+                    first = false;
+                else
+                {
+                    --_indent;
+                    Indent();
+                    _builder.Append(oper).Append("\n");
+                    ++_indent;
+                }
                 operand.Encode(this);
+            }
 
             --_indent;
 
             Indent();
-            _builder.Append("}\n");
+            _builder.Append(")\n");
         }
 
         public void Encode(SearchQuery.PropertyBitMask part)
