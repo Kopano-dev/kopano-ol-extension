@@ -121,6 +121,12 @@ namespace Acacia.Stubs
             set;
         }
 
+        bool SearchRunning
+        {
+            get;
+            set;
+        }
+
         void Save();
 
         void SetCustomIcon(IPicture icon);

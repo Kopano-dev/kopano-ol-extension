@@ -20,7 +20,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using static Acacia.Native.NativeEncoder;
 
 namespace Acacia.Native.MAPI
 {
@@ -48,7 +47,7 @@ namespace Acacia.Native.MAPI
 
         public override string ToString()
         {
-            return "<" + prop.ToString("X4") + ":" + type + ">";
+            return string.Format("0x{0:X4}{1:X4} (PT_{2})", prop, (int)type, type);
         }
 
         public SearchQuery.PropertyIdentifier ToPropertyIdentifier()
@@ -144,33 +143,42 @@ namespace Acacia.Native.MAPI
                 case PropType.UNICODE:
                     return new string(data.lpszW);
                 case PropType.BINARY:
-                    return data.bin;
+                    return data.bin.Unmarshal();
             }
             throw new NotImplementedException();
         }
 
-        unsafe public static IntPtr MarshalFromObject(NativeEncoder encoder, PropTag prop, object value)
+        unsafe public static IntPtr MarshalFromObject(RestrictionEncoder encoder, PropTag prop, object value)
         {
-            PropValue obj = new PropValue();
-            obj.header.ulPropTag = prop;
-
+            IntPtr ptr;
+            Data data = new Data();
             switch (prop.type)
             {
                 case PropType.BOOLEAN:
-                    obj.data.b = (bool)value;
-                    return encoder.Allocate(obj.header, obj.data.b);
+                    data.b = (bool)value;
+                    ptr = encoder.AllocateWithExtra<Header>(8, data.b);
+                    break;
                 case PropType.STRING8:
-                    IntPtr ptrA = encoder.Allocate(Encoding.ASCII.GetBytes((string)value), new byte[] { 0 });
-                    return encoder.Allocate(obj.header, 8, ptrA);
+                    IntPtr lpszA = encoder.Allocate(Encoding.ASCII.GetBytes((string)value), 1);
+                    ptr = encoder.AllocateWithExtra<Header>(8, lpszA);
+                    break;
                 case PropType.UNICODE:
-                    IntPtr ptrW = encoder.Allocate(Encoding.Unicode.GetBytes((string)value), new byte[] { 0, 0 });
-                    return encoder.Allocate(obj.header, 8, ptrW);
+                    IntPtr lpszW = encoder.Allocate(Encoding.Unicode.GetBytes((string)value), 2);
+                    ptr = encoder.AllocateWithExtra<Header>(8, lpszW);
+                    break;
                 case PropType.BINARY:
-                    obj.data.bin = ((SBinary)value).Marshal(encoder);
-                    return encoder.Allocate(obj.header, 8, obj.data.bin);
+                    data.bin.cb = (uint)((SBinaryWrapper)value).Data.Length;
+                    data.bin.ptr = (byte*)encoder.Allocate(((SBinaryWrapper)value).Data);
+                    ptr = encoder.AllocateWithExtra<Header>(8, data.bin);
+                    break;
                 default:
                     throw new NotImplementedException();
             }
+
+            // Initialise the header
+            PropValue* obj = (PropValue*)ptr;
+            obj->header.ulPropTag = prop;
+            return ptr;
         }
     }
 }

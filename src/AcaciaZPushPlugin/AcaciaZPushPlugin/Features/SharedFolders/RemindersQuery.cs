@@ -14,15 +14,16 @@ namespace Acacia.Features.SharedFolders
     {
         private static readonly SearchQuery.PropertyIdentifier PROP_FOLDER = new SearchQuery.PropertyIdentifier(PropTag.FromInt(0x6B20001F));
 
-        private readonly LogContext _context;
+        private readonly FeatureSharedFolders _feature;
         private readonly IFolder _folder;
         private SearchQuery _queryRoot;
         private SearchQuery.Or _queryCustom;
+        private bool _queryCustomModified;
 
-        public RemindersQuery(LogContext context, IStore store)
+        public RemindersQuery(FeatureSharedFolders feature, IStore store)
         {
-            this._context = context;
-            _folder = store.GetSpecialFolder(SpecialFolder.Reminders);
+            this._feature = feature;
+            this._folder = store.GetSpecialFolder(SpecialFolder.Reminders);
         }
 
         public bool Open()
@@ -31,10 +32,10 @@ namespace Acacia.Features.SharedFolders
                 return true;
             try
             {
-                _queryRoot = _folder.SearchCriteria;
+                _queryRoot = FolderQuery;
                 if (!(_queryRoot is SearchQuery.And))
                     return false;
-                Logger.Instance.Trace(this, "Current query1: {0}", _queryRoot.ToString());
+                Logger.Instance.Debug(this, "Current query:\n{0}", _queryRoot.ToString());
 
                 SearchQuery.And root = (SearchQuery.And)_queryRoot;
                 // TODO: more strict checking of query
@@ -50,7 +51,6 @@ namespace Acacia.Features.SharedFolders
 
                 // We have the root, but not the custom query. Create it.
                 Logger.Instance.Debug(this, "Creating custom query");
-                Logger.Instance.Trace(this, "Current query: {0}", root.ToString());
                 _queryCustom = new SearchQuery.Or();
 
                 // Add the prefix exclusion for shared folders
@@ -63,11 +63,10 @@ namespace Acacia.Features.SharedFolders
                 );
 
                 root.Operands.Add(_queryCustom);
-                Logger.Instance.Trace(this, "Modified query: {0}", root.ToString());
+                Logger.Instance.Debug(this, "Modified query:\n{0}", root.ToString());
                 // Store it
-                // TODO: could store it on change only
-                _folder.SearchCriteria = root;
-                Logger.Instance.Trace(this, "Modified query2: {0}", _folder.SearchCriteria.ToString());
+                FolderQuery = root;
+                Logger.Instance.Debug(this, "Modified query readback:\n{0}", FolderQuery);
             }
             catch (Exception e)
             {
@@ -80,7 +79,7 @@ namespace Acacia.Features.SharedFolders
         {
             get
             {
-                return _context.LogContextId;
+                return _feature.LogContextId;
             }
         }
 
@@ -91,7 +90,29 @@ namespace Acacia.Features.SharedFolders
 
         public void Commit()
         {
-            _folder.SearchCriteria = _queryRoot;
+            if (_queryCustomModified)
+            {
+                FolderQuery = _queryRoot;
+                _queryCustomModified = false;
+            }
+        }
+
+        private SearchQuery FolderQuery
+        {
+            get
+            {
+                return _folder.SearchCriteria;
+            }
+            set
+            {
+                if (!_feature.RemindersKeepRunning)
+                    _folder.SearchRunning = false;
+
+                _folder.SearchCriteria = value;
+
+                if (!_feature.RemindersKeepRunning)
+                    _folder.SearchRunning = true;
+            }
         }
 
         public void UpdateReminders(SyncId folderId, bool wantReminders)
@@ -125,6 +146,7 @@ namespace Acacia.Features.SharedFolders
                 _queryCustom.Operands.Add(new SearchQuery.PropertyContent(
                     PROP_FOLDER, SearchQuery.ContentMatchOperation.Prefix, SearchQuery.ContentMatchModifiers.None, prefix
                 ));
+                _queryCustomModified = true;
             }
         }
 
@@ -154,6 +176,7 @@ namespace Acacia.Features.SharedFolders
 
                     Logger.Instance.Trace(this, "Unwanted prefix at {0}: {1}", i, prefix);
                     _queryCustom.Operands.RemoveAt(i);
+                    _queryCustomModified = true;
                 }
                 else ++i;
             }

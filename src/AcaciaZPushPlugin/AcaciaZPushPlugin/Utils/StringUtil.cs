@@ -49,6 +49,13 @@ namespace Acacia.Utils
             return _this;
         }
 
+        public static string ToTitle(this string _this)
+        {
+            if (string.IsNullOrWhiteSpace(_this))
+                return _this;
+            return _this.Substring(0, 1).ToUpper() + _this.Substring(1).ToLower();
+        }
+
 
         #endregion
 
