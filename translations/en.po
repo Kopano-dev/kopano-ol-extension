@@ -865,6 +865,20 @@ msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABSync_Title"
 msgid "Global Address Book"
 msgstr "Global Address Book"
 
+#. {0} will be replaced with the account name
+#: AcaciaZPushPlugin\Properties\Resources\SyncState_Stalled_Body
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Stalled_Body"
+msgid "It appears synchronisation has stalled for account {0}. This can be fixed by performing a full resynchronisation. Would you like to perform this resynchronisation now?"
+msgstr "It appears synchronisation has stalled for account {0}. This can be fixed by performing a full resynchronisation. Would you like to perform this resynchronisation now?"
+
+#. {0} will be replaced with the account name
+#: AcaciaZPushPlugin\Properties\Resources\SyncState_Stalled_Caption
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Stalled_Caption"
+msgid "Synchronisation stalled - {0}"
+msgstr "Synchronisation stalled - {0}"
+
 #: AcaciaZPushPlugin\UI\ProgressDialog\labelMessage.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\ProgressDialog\\labelMessage.Text"
