@@ -1,4 +1,6 @@
-﻿/// Copyright 2017 Kopano b.v.
+﻿
+using Acacia.Native;
+/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -13,7 +15,6 @@
 /// along with this program.If not, see<http://www.gnu.org/licenses/>.
 /// 
 /// Consult LICENSE file for details
-
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -27,9 +28,6 @@ namespace Acacia.Utils
 {
     public static class ImageUtils
     {
-        [DllImport("kernel32.dll", EntryPoint = "CopyMemory", SetLastError = false)]
-        private static extern void CopyMemory(IntPtr dest, IntPtr src, uint count);
-
         public static Bitmap GetBitmapFromHBitmap(IntPtr nativeHBitmap)
         {
 
@@ -49,7 +47,7 @@ namespace Acacia.Utils
                 {
                     IntPtr target = bmpData2.Scan0 + bmpData2.Stride * y;
                     IntPtr source = bmpData.Scan0 + bmpData.Stride * y;
-                    CopyMemory(target, source, (uint)Math.Abs(bmpData2.Stride));
+                    Kernel32.CopyMemory(target, source, (uint)Math.Abs(bmpData2.Stride));
                 }
             }
             finally

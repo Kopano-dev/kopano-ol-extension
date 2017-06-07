@@ -39,20 +39,42 @@ namespace Acacia.Native.MAPI
         public PropTag ulPropTag;
         public PropValue* prop;
 
+        private static readonly string[] RELOP_NAMES =
+        {
+            "RELOP_LT", "RELOP_LE", "RELOP_GT", "RELOP_GE", "RELOP_EQ", "RELOP_NE", "RELOP_RE"
+        };
+
         public string ToString(int depth)
         {
-            string indent = new string(' ', depth);
-            string s = indent + relop + ":" + ulPropTag.ToString();
-            s += ":" + prop->ToString();
-            s += "\n";
+            string s = string.Format(
+                "{0}lpRes->res.resProperty.relop = {2} = 0x{1:X8}\n" +
+                "{0}lpRes->res.resProperty.ulPropTag = {3}\n",
+                SRestriction.Indent(depth),
+                (int)relop,
+                RELOP_NAMES[(int)relop],
+                ulPropTag
+            );
+
+            s += string.Format("{0}lpRes->res.resProperty.lpProp->ulPropTag = {1}\n",
+                SRestriction.Indent(depth),
+                ulPropTag
+            );
+
+            s += string.Format("{0}lpRes->res.resProperty.lpProp->Value = {1}\n",
+                SRestriction.Indent(depth),
+                *prop
+            );
+
             return s;
         }
 
         public SearchQuery ToSearchQuery()
         {
+            object value = prop->ToObject();
             return new SearchQuery.PropertyCompare(ulPropTag.ToPropertyIdentifier(),
                 (SearchQuery.ComparisonOperation)(int)relop,
-                prop->ToObject());
+                value
+            );
         }
     }
 
@@ -76,10 +98,24 @@ namespace Acacia.Native.MAPI
 
         public string ToString(int depth)
         {
-            string indent = new string(' ', depth);
-            string s = indent + ulFuzzyLevel + ":" + ulPropTag.ToString();
-            s += ":" + prop->ToString();
-            s += "\n";
+            string s = string.Format(
+                "{0}lpRes->res.resContent.ulFuzzyLevel = FL_{2} = 0x{1:X8}\n" +
+                "{0}lpRes->res.resContent.ulPropTag = {3}\n",
+                SRestriction.Indent(depth),
+                (int)ulFuzzyLevel,
+                ulFuzzyLevel,
+                ulPropTag
+            );
+
+            s += string.Format("{0}lpRes->res.resContent.lpProp->ulPropTag = {1}\n",
+                SRestriction.Indent(depth),
+                ulPropTag
+            );
+
+            s += string.Format("{0}lpRes->res.resContent.lpProp->Value = {1}\n",
+                SRestriction.Indent(depth),
+                *prop
+            );
             return s;
         }
 
@@ -120,19 +156,20 @@ namespace Acacia.Native.MAPI
         public uint cb;
         public SRestriction* ptr;
 
-        public string ToString(int depth)
+        public string ToString(string name, int depth)
         {
-            string s = "";
+            string s = string.Format("{0}lpRes->res.res{1}.cRes = 0x{2:X8}\n", SRestriction.Indent(depth), name, cb);
             for (uint i = 0; i < cb; ++i)
             {
-                s += ptr[i].ToString(depth);
+                s += string.Format("{0}lpRes->res.res{1}.lpRes[0x{2:X8}]\n", SRestriction.Indent(depth), name, i);
+                s += ptr[i].ToString(depth + 1);
             }
             return s;
         }
 
         public SearchQuery ToSearchQuery(bool and)
         {
-            SearchQuery.MultiOperator oper = and ? (SearchQuery.MultiOperator)new SearchQuery.And() : new SearchQuery.Or(); ;
+            SearchQuery.MultiOperator oper = and ? (SearchQuery.MultiOperator)new SearchQuery.And() : new SearchQuery.Or();
             for (uint i = 0; i < cb; ++i)
             {
                 oper.Add(ptr[i].ToSearchQuery());
@@ -148,7 +185,10 @@ namespace Acacia.Native.MAPI
 
         public string ToString(int depth)
         {
-            return ptr->ToString(depth);
+            string s = string.Format("{0}lpRes->res.resNot.ulReserved = 0x{1:X8}\n", SRestriction.Indent(depth), dwReserved);
+            s += string.Format("{0}lpRes->res.resNot.lpRes\n", SRestriction.Indent(depth));
+            s += ptr->ToString(depth + 1);
+            return s;
         }
 
         public SearchQuery ToSearchQuery()
@@ -175,8 +215,10 @@ namespace Acacia.Native.MAPI
         }
         public string ToString(int depth)
         {
-            string indent = new string(' ', depth);
-            return indent + ToString() + "\n";
+            string s = string.Format("{0}lpRes->res.resBitMask.relBMR = BMR_{1} = 0x{2:X8}\n", SRestriction.Indent(depth), bmr, (int)bmr);
+            s += string.Format("{0}lpRes->res.resBitMask.ulMask = 0x{1:X8}\n", SRestriction.Indent(depth), mask);
+            s += string.Format("{0}lpRes->res.resBitMask.ulPropTag = 0x{1:X8}\n", SRestriction.Indent(depth), prop);
+            return s;
         }
 
         public SearchQuery ToSearchQuery()
@@ -197,8 +239,10 @@ namespace Acacia.Native.MAPI
         }
         public string ToString(int depth)
         {
-            string indent = new string(' ', depth);
-            return indent + prop.ToString() + "\n";
+            string s = string.Format("{0}lpRes->res.resExist.ulPropTag = 0x{1:X8}\n", SRestriction.Indent(depth), prop);
+            s += string.Format("{0}lpRes->res.resExist.ulReserved1 = 0x{1:X8}\n", SRestriction.Indent(depth), dwReserved1);
+            s += string.Format("{0}lpRes->res.resExist.ulReserved2 = 0x{1:X8}\n", SRestriction.Indent(depth), dwReserved2);
+            return s;
         }
 
         public SearchQuery ToSearchQuery()
@@ -281,30 +325,34 @@ namespace Acacia.Native.MAPI
             return ToString(0);
         }
 
+        internal static string Indent(int depth)
+        {
+            return new string('\t', depth);
+        }
+
         public string ToString(int depth)
         {
-            string indent = new string(' ', depth);
-            string s = indent + header.rt.ToString() + "\n" + indent + "{\n";
+            string s = Indent(depth) + string.Format("lpRes->rt = 0x{0:X} = RES_{1}\n", (int)header.rt, header.rt);
             switch (header.rt)
             {
                 case RestrictionType.AND:
                 case RestrictionType.OR:
-                    s += data.sub.ToString(depth + 1);
+                    s += data.sub.ToString(header.rt.ToString().ToTitle(), depth);
                     break;
                 case RestrictionType.NOT:
-                    s += data.not.ToString(depth + 1);
+                    s += data.not.ToString(depth);
                     break;
                 case RestrictionType.CONTENT:
-                    s += data.content.ToString(depth + 1);
+                    s += data.content.ToString(depth);
                     break;
                 case RestrictionType.PROPERTY:
-                    s += data.prop.ToString(depth + 1);
+                    s += data.prop.ToString(depth);
                     break;
                 case RestrictionType.BITMASK:
-                    s += data.bitMask.ToString(depth + 1);
+                    s += data.bitMask.ToString(depth);
                     break;
                 case RestrictionType.EXIST:
-                    s += data.exist.ToString(depth + 1);
+                    s += data.exist.ToString(depth);
                     break;
 
                     /* TODO        COMPAREPROPS,
@@ -316,158 +364,7 @@ namespace Acacia.Native.MAPI
                             ANNOTATION*/
 
             }
-            s += indent + "}\n";
             return s;
-        }
-    }
-
-    /// <summary>
-    /// Encodes a search as an SRestriction. Note that as memory needs to be managed for the miscellaneous structures,
-    /// the SRestriction is only valid until RestrictionEncoder is disposed.
-    /// </summary>
-    unsafe public class RestrictionEncoder : NativeEncoder, ISearchEncoder
-    {
-        private class EncodingStack
-        {
-            public SRestriction[] array;
-            public int index;
-            public SRestriction* ptr;
-
-            public EncodingStack(int count, Allocation<SRestriction[]> alloc)
-            {
-                array = alloc.Object;
-                index = 0;
-                ptr = (SRestriction*)alloc.Pointer;
-            }
-        }
-        private readonly Stack<EncodingStack> _current = new Stack<EncodingStack>();
-        private readonly EncodingStack _root;
-
-        public RestrictionEncoder()
-        {
-            // Create an object for the root element
-            _root = Begin(1);
-        }
-
-        protected override void DoRelease()
-        {
-            base.DoRelease();
-        }
-
-        public SRestriction Restriction
-        {
-            get { return _root.array[0]; }
-        }
-
-        private SRestriction* Current
-        {
-            get
-            {
-                EncodingStack top = _current.Peek();
-                return top.ptr + top.index;
-            }
-        }
-
-        public void Encode(SearchQuery.PropertyExists part)
-        {
-            Current->header.rt = RestrictionType.EXIST;
-            Current->data.exist.prop = part.Property.Tag;
-        }
-
-        public void Encode(SearchQuery.Or part)
-        {
-            Current->header.rt = RestrictionType.OR;
-            Current->data.sub.cb = (uint)part.Operands.Count;
-            Current->data.sub.ptr = EncodePointer(part.Operands);
-        }
-
-        public void Encode(SearchQuery.PropertyIdentifier part)
-        {
-            // This should be unreachable
-            throw new InvalidProgramException();
-        }
-
-        public void Encode(SearchQuery.Not part)
-        {
-            Current->header.rt = RestrictionType.NOT;
-            Current->data.not.ptr = EncodePointer(new[] { part.Operand });
-        }
-
-        public void Encode(SearchQuery.And part)
-        {
-            Current->header.rt = RestrictionType.AND;
-            Current->data.sub.cb = (uint)part.Operands.Count;
-            Current->data.sub.ptr = EncodePointer(part.Operands);
-        }
-
-        private SRestriction* EncodePointer(IEnumerable<SearchQuery> operands)
-        {
-            EncodingStack alloc = Begin(operands.Count());
-            try
-            {
-                foreach (SearchQuery operand in operands)
-                {
-                    operand.Encode(this);
-                    ++alloc.index;
-                }
-            }
-            finally
-            {
-                End();
-            }
-            return alloc.ptr;
-        }
-
-        private EncodingStack Begin(int count)
-        {
-            // Allocate and push the array
-            EncodingStack alloc = new EncodingStack(count, Allocate(new SRestriction[count]));
-            _current.Push(alloc);
-
-            return alloc;
-        }
-
-        private void End()
-        {
-            _current.Pop();
-        }
-
-        public void Encode(SearchQuery.PropertyContent part)
-        {
-            Current->header.rt = RestrictionType.CONTENT;
-            Current->data.content.ulFuzzyLevel = ContentRestriction.FuzzyLevelFromSearchQuery(part);
-            Current->data.content.ulPropTag = part.Property.Tag;
-            Current->data.content.prop = (PropValue*)PropValue.MarshalFromObject(this, part.Property.Tag, part.Content);
-        }
-
-        public void Encode(SearchQuery.PropertyCompare part)
-        {
-            Current->header.rt = RestrictionType.PROPERTY;
-            Current->data.prop.relop = (SearchOperation)part.Operation;
-            Current->data.prop.ulPropTag = part.Property.Tag;
-            Current->data.prop.prop = (PropValue*)PropValue.MarshalFromObject(this, part.Property.Tag, part.Value);
-        }
-
-        public void Encode(SearchQuery.PropertyBitMask part)
-        {
-            Current->header.rt = RestrictionType.BITMASK;
-            Current->data.bitMask.bmr = (BMR)(int)part.Operation;
-            Current->data.bitMask.prop = part.Property.Tag;
-            Current->data.bitMask.mask = part.Mask;
-        }
-    }
-
-    public static class RestrictionExensions
-    {
-        /// <summary>
-        /// Encodes the search as an SRestriction.
-        /// </summary>
-        /// <returns>The encoder containing the restriction. The caller is responsible for disposing.</returns>
-        public static RestrictionEncoder ToRestriction(this SearchQuery search)
-        {
-            RestrictionEncoder encoder = new RestrictionEncoder();
-            search.Encode(encoder);
-            return encoder;
         }
     }
 }

@@ -24,35 +24,40 @@ using System.Threading.Tasks;
 
 namespace Acacia.Native.MAPI
 {
+    /// <summary>
+    /// Simple wrapper type to allow string encoding to work. Returned from SBinary.Unmarshall; this is needed
+    /// as a copy of the data ptr there must be managed.
+    /// </summary>
+    public struct SBinaryWrapper
+    {
+        public readonly byte[] Data;
+
+        public SBinaryWrapper(byte[] bytes)
+        {
+            this.Data = bytes;
+        }
+
+        public override string ToString()
+        {
+            return "cb: " + Data.Length.ToString() + " lpb: " + StringUtil.BytesToHex(Data);
+        }
+    }
 
     unsafe public struct SBinary
     {
         public uint cb;
         public byte* ptr;
 
-        public byte[] Unmarshal()
+        public SBinaryWrapper Unmarshal()
         {
             byte[] result = new byte[cb];
-            System.Runtime.InteropServices.Marshal.Copy((IntPtr)ptr, result, 0, result.Length);
-            return result;
-        }
-
-        /// <summary>
-        /// Returns an instance with the data allocated in the enocder.
-        /// </summary>
-        public SBinary Marshal(NativeEncoder encoder)
-        {
-            return new SBinary()
-            {
-                cb = cb,
-                ptr = (byte*)encoder.Allocate(Unmarshal())
-            };
+            Marshal.Copy((IntPtr)ptr, result, 0, result.Length);
+            return new SBinaryWrapper(result);
         }
 
         public override string ToString()
         {
-            byte[] b = Unmarshal();
-            return b.Length.ToString() + ":" + StringUtil.BytesToHex(b);
+            return Unmarshal().ToString();
         }
     }
 
@@ -60,15 +65,5 @@ namespace Acacia.Native.MAPI
     {
         public uint count;
         public SBinary* ptr;
-
-        public byte[][] Unmarshal()
-        {
-            byte[][] result = new byte[count][];
-            for (uint i = 0; i < count; ++i)
-            {
-                result[i] = ptr[i].Unmarshal();
-            }
-            return result;
-        }
     }
 }

@@ -46,6 +46,15 @@ namespace Acacia.Features.SharedFolders
         }
         private static readonly BoolOption OPTION_REMINDERS = new BoolOption("Reminders", true);
 
+        [AcaciaOption("If disabled, the reminders queyr will be explicitly stopped and started when update the query. " +
+                      "This causes more effort to search again, but might prevent issues.")]
+        public bool RemindersKeepRunning
+        {
+            get { return GetOption(OPTION_REMINDERS_KEEP_RUNNING); }
+            set { SetOption(OPTION_REMINDERS_KEEP_RUNNING, value); }
+        }
+        private static readonly BoolOption OPTION_REMINDERS_KEEP_RUNNING = new BoolOption("RemindersKeepRunning", true);
+
         #endregion
 
         public override void Startup()

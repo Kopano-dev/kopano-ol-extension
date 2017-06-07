@@ -310,13 +310,15 @@
     <Compile Include="Logging.cs" />
     <Compile Include="Native\IOleWindow.cs" />
     <Compile Include="Native\IOlkAccount.cs" />
+    <Compile Include="Native\Kernel32.cs" />
     <Compile Include="Native\MAPI\Binary.cs" />
     <Compile Include="Native\MAPI\IMAPIContainer.cs" />
     <Compile Include="Native\MAPI\IMAPIFolder.cs" />
     <Compile Include="Native\MAPI\IMAPIProp.cs" />
+    <Compile Include="Native\MAPI\MAPI.cs" />
     <Compile Include="Native\MAPI\Property.cs" />
     <Compile Include="Native\MAPI\Restriction.cs" />
-    <Compile Include="Native\NativeEncoder.cs" />
+    <Compile Include="Native\MAPI\RestrictionEncoder.cs" />
     <Compile Include="OutlookConstants.cs" />
     <Compile Include="SearchQuery.cs" />
     <Compile Include="Stubs\Enums.cs" />

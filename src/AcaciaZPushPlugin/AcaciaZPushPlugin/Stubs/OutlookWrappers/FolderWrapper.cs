@@ -392,7 +392,56 @@ namespace Acacia.Stubs.OutlookWrappers
             set;
         }
 
+        #region Search criteria
+
         unsafe public SearchQuery SearchCriteria
+        {
+            get
+            {
+                IMAPIFolder imapi = _item.MAPIOBJECT as IMAPIFolder;
+                SBinaryArray* sb1 = null;
+                SRestriction* restrict = null;
+                try
+                {
+                    SearchCriteriaState state;
+                    imapi.GetSearchCriteria(0, &restrict, &sb1, out state);
+                    Logger.Instance.Debug(this, "GetSearchCriteria: {0}: {1}\n{2}", Name, state, 
+                                            restrict == null ? "<NODE>" : restrict->ToString());
+                    return restrict->ToSearchQuery();
+                }
+                finally
+                {
+                    MAPI.MAPIFreeBuffer((IntPtr)restrict);
+                    MAPI.MAPIFreeBuffer((IntPtr)sb1);
+                    ComRelease.Release(imapi);
+                }
+            }
+
+            set
+            {
+                IMAPIFolder imapi = _item.MAPIOBJECT as IMAPIFolder;
+                try
+                {
+                    using (RestrictionEncoder res = value.ToRestriction())
+                    {
+                        SRestriction* resEncoded = res.Encoded;
+                        Logger.Instance.Debug(this, "SetSearchCriteria: {0}\n{1}", Name, resEncoded == null ? "<NODE>" : resEncoded->ToString());
+                        imapi.SetSearchCriteria(resEncoded, null, SearchCriteriaFlags.NONE);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.Instance.Error(this, "Exception in SetSearchCriteria: {0}: {1}", Name, e);
+                }
+                finally
+                {
+                    ComRelease.Release(imapi);
+                }
+            }
+
+        }
+
+        unsafe public bool SearchRunning
         {
             get
             {
@@ -400,10 +449,13 @@ namespace Acacia.Stubs.OutlookWrappers
                 try
                 {
                     SearchCriteriaState state;
-                    SBinaryArray* sb1;
-                    SRestriction* restrict;
-                    imapi.GetSearchCriteria(0, &restrict, &sb1, out state);
-                    return restrict->ToSearchQuery();
+                    imapi.GetSearchCriteria(0, null, null, out state);
+                    return (state & SearchCriteriaState.SEARCH_RUNNING) != 0;
+                }
+                catch (Exception e)
+                {
+                    Logger.Instance.Error(this, "Exception in GetSearchRunning: {0}: {1}", Name, e);
+                    return true;
                 }
                 finally
                 {
@@ -416,11 +468,11 @@ namespace Acacia.Stubs.OutlookWrappers
                 IMAPIFolder imapi = _item.MAPIOBJECT as IMAPIFolder;
                 try
                 {
-                    using (RestrictionEncoder res = value.ToRestriction())
-                    {
-                        SRestriction restrict = res.Restriction;
-                        imapi.SetSearchCriteria(&restrict, null, SearchCriteriaFlags.NONE);
-                    }
+                    imapi.SetSearchCriteria(null, null, value ? SearchCriteriaFlags.RESTART_SEARCH : SearchCriteriaFlags.STOP_SEARCH);
+                }
+                catch (Exception e)
+                {
+                    Logger.Instance.Error(this, "Exception in SetSearchRunning: {0}: {1}", Name, e);
                 }
                 finally
                 {
@@ -428,5 +480,7 @@ namespace Acacia.Stubs.OutlookWrappers
                 }
             }
         }
+
+        #endregion
     }
 }

@@ -173,5 +173,11 @@ namespace Acacia.Utils
         }
 
         #endregion
+
+        public static int Align(int size, int align)
+        {
+            int additional = (align - (size % align)) % align;
+            return size + additional;
+        }
     }
 }
