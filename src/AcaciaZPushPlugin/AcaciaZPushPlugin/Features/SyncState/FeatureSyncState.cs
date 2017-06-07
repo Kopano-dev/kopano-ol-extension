@@ -77,6 +77,29 @@ namespace Acacia.Features.SyncState
         }
 
 
+        [AcaciaOption("Enables or disables checking for stalled synchronsation. If this is detected, a full resynchronisation " +
+                      "is suggested automatically")]
+        public bool CheckSyncStall
+        {
+            get { return GetOption(OPTION_CHECK_SYNC_STALL); }
+            set { SetOption(OPTION_CHECK_SYNC_STALL, value); }
+        }
+        private static readonly BoolOption OPTION_CHECK_SYNC_STALL = new BoolOption("CheckSyncStall", false);
+
+        [AcaciaOption("Sets the period that triggers a full resynchronisation suggestion. Note that the check is only performed " +
+                      "when the synchronisation state is being updated, so the effective period may be longer than this.")]
+        public TimeSpan CheckSyncStallPeriod
+        {
+            get { return GetOption(OPTION_CHECK_SYNC_STALL_PERIOD); }
+            set { SetOption(OPTION_CHECK_SYNC_STALL_PERIOD, value); }
+        }
+        private static readonly TimeSpanOption OPTION_CHECK_SYNC_STALL_PERIOD = new TimeSpanOption("CheckSyncStallPeriod", new TimeSpan(0, 10, 0));
+        /// <summary>
+        /// The time at which a sync stall was first suspected, or null if this is not the case.
+        /// </summary>
+        private DateTime? _syncStallStarted;
+        private bool _syncStallAsked;
+
         #endregion
 
         // TODO: this is largely about progress bars, separate that?
@@ -223,9 +246,13 @@ namespace Acacia.Features.SyncState
                 [SoapField(5)]
                 public string id; 
 
+                /// <summary>
+                /// The key, which is a short folder id. Set when checking the values.
+                /// </summary>
                 public string Key
                 {
-                    get { return id; }
+                    get;
+                    set;
                 }
             }
 
@@ -320,8 +347,11 @@ namespace Acacia.Features.SyncState
                 HashSet<string> syncingNow = new HashSet<string>();
 
                 // Check all syncing data
-                foreach (DeviceDetails.ContentData content in details.Content.Values)
+                foreach (KeyValuePair<string, DeviceDetails.ContentData> contentEntry in details.Content)
                 {
+                    DeviceDetails.ContentData content = contentEntry.Value;
+                    content.Key = contentEntry.Key;
+
                     if (content.IsSyncing)
                     {
                         // If the current session is not syncing, this is a restart. Clear stat
@@ -370,6 +400,15 @@ namespace Acacia.Features.SyncState
                 debug.AppendLine(string.Format("Total: {0} / {1} ({2}%)", Done, Total, CalculatePercentage(Done, Total)));
                 Logger.Instance.Trace(_feature, "Syncing account {0}:\n{1}", _account, debug);
             }
+
+            public bool HasFolderSynced(string folderId)
+            {
+                DeviceDetails.ContentData content;
+                if (!_syncContent.TryGetValue(folderId, out content))
+                    return false;
+
+                return !string.IsNullOrWhiteSpace(content.synckey);
+            }
         }
 
         private void CheckSyncState(ZPushAccount account)
@@ -406,6 +445,9 @@ namespace Acacia.Features.SyncState
 
             // Update the total for all accounts
             UpdateTotalSyncState();
+
+            // Check for stalls
+            CheckSyncStalled(account);
         }
 
         private void UpdateTotalSyncState()
@@ -440,6 +482,60 @@ namespace Acacia.Features.SyncState
                     Watcher.Sync.SetTaskSchedule(_task, null, CheckPeriodDialogEffective, false);
                 }
             }
+        }
+
+        private void CheckSyncStalled(ZPushAccount account)
+        {
+            if (!CheckSyncStall)
+                return;
+
+            // Check the inbox folder
+            using (IFolder inbox = account.Account.Store.GetDefaultFolder(DefaultFolder.Inbox))
+            {
+                string syncId = (string)inbox.GetProperty(OutlookConstants.PR_ZPUSH_SYNC_ID);
+
+                // If it's syncing, it's not stalled
+                if (syncId != null && syncId != "0")
+                    return;
+
+                // Check if the folder has synced. In that case, it's not stalled.
+                string folderId = (string)inbox.GetProperty(OutlookConstants.PR_ZPUSH_FOLDER_ID);
+                SyncSession sync = account.GetFeatureData<SyncSession>(this, null);
+                if (sync.HasFolderSynced(folderId))
+                    return;
+            }
+
+            // It is not syncing, check for a stall
+            if (_syncStallStarted == null)
+                _syncStallStarted = DateTime.Now;
+            else if (_syncStallStarted.Value.Add(CheckSyncStallPeriod) <= DateTime.Now)
+            {
+                // We have a stall
+                if (!_syncStallAsked)
+                {
+                    // Set the flag to prevent asking again
+                    _syncStallAsked = true;
+
+                    // And alert the user
+                    SyncStalled(account);
+                }
+            }
+        }
+
+        private void SyncStalled(ZPushAccount account)
+        {
+            ThisAddIn.Instance.InUI(() =>
+            {
+                if (MessageBox.Show(ThisAddIn.Instance.Window,
+                    string.Format(Properties.Resources.SyncState_Stalled_Body, account.DisplayName),
+                    string.Format(Properties.Resources.SyncState_Stalled_Caption, account.DisplayName),
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Error
+                    ) == DialogResult.Yes)
+                {
+                    ThisAddIn.Instance.RestartResync(account);
+                }
+            });
         }
 
         private static int CalculatePercentage(long done, long total)

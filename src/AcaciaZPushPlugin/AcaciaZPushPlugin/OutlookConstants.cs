@@ -132,8 +132,9 @@ namespace Acacia
 
         #region EAS / ZPush
 
-        public const string PR_ZPUSH_MESSAGE_ID = PROP + "6B20" + PT_STRING8;
+        public const string PR_ZPUSH_SYNC_ID = PROP + "6A18" + PT_STRING8;
         public const string PR_ZPUSH_FOLDER_ID = PROP + "6A19" + PT_STRING8;
+        public const string PR_ZPUSH_MESSAGE_ID = PROP + "6B20" + PT_STRING8;
 
         // TODO: names for these, use MFCMAPI
         public const string PR_EAS_SYNC1 = PROP + "6A17" + PT_BOOLEAN;

@@ -1202,6 +1202,24 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to It appears synchronisation has stalled for account {0}. This can be fixed by performing a full resynchronisation. Would you like to perform this resynchronisation now?.
+        /// </summary>
+        internal static string SyncState_Stalled_Body {
+            get {
+                return ResourceManager.GetString("SyncState_Stalled_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Synchronisation stalled - {0}.
+        /// </summary>
+        internal static string SyncState_Stalled_Caption {
+            get {
+                return ResourceManager.GetString("SyncState_Stalled_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kopano.
         /// </summary>
         internal static string ThisAddIn_Title {
