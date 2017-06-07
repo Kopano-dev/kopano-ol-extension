@@ -221,7 +221,12 @@ namespace Acacia.Features.SyncState
                 public bool IsSyncing { get { return Sync != null && Sync.todo > 0; } }
 
                 [SoapField(5)]
-                public string id; // TODO: backend folder id
+                public string id; 
+
+                public string Key
+                {
+                    get { return id; }
+                }
             }
 
             public struct Data2
@@ -328,20 +333,19 @@ namespace Acacia.Features.SyncState
 
                         // Add to the syncing content
                         IsSyncing = true;
-                        _syncContent[content.synckey] = content;
-                        syncingNow.Add(content.synckey);
+                        _syncContent[content.Key] = content;
+                        syncingNow.Add(content.Key);
 
                         debug.AppendLine(string.Format("\tFolder: {0} \tSync: {1} \tStatus: {2} / {3}",
-                                    content.synckey, content.IsSyncing, content.Sync.done, content.Sync.total));
+                                    content.Key, content.IsSyncing, content.Sync.done, content.Sync.total));
                     }
                 }
-                debug.AppendLine(string.Format("Calculating totals: ({0})", IsSyncing));
 
                 // Clean up any done items
                 bool _syncingNow = false;
                 foreach (DeviceDetails.ContentData content in _syncContent.Values)
                 {
-                    if (!syncingNow.Contains(content.synckey))
+                    if (!syncingNow.Contains(content.Key))
                     {
                         content.Sync.MakeDone();
                     }
@@ -351,6 +355,7 @@ namespace Acacia.Features.SyncState
                     }
                 }
                 IsSyncing = _syncingNow;
+                debug.AppendLine(string.Format("Calculating totals: ({0})", IsSyncing));
 
                 // Update totals
                 Total = 0;
@@ -360,7 +365,7 @@ namespace Acacia.Features.SyncState
                     Total += content.Sync.total;
                     Done += content.Sync.done;
                     debug.AppendLine(string.Format("\tFolder: {0} \tSync: {1} \tStatus: {2} / {3}",
-                                content.synckey, content.IsSyncing, content.Sync.done, content.Sync.total));
+                                content.Key, content.IsSyncing, content.Sync.done, content.Sync.total));
                 }
                 debug.AppendLine(string.Format("Total: {0} / {1} ({2}%)", Done, Total, CalculatePercentage(Done, Total)));
                 Logger.Instance.Trace(_feature, "Syncing account {0}:\n{1}", _account, debug);
