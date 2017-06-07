@@ -23,23 +23,25 @@ using NSOutlookDelegates = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs
 {
-    public interface IExplorer : IOutlookWindow
+    public enum InspectorClose
     {
-        /// <summary>
-        /// Returns the currently selected folder, or null if no folder is selected.
-        /// </summary>
-        /// <returns>The folder. The caller is responsible for disposing.</returns>
-        IFolder GetCurrentFolder();
+        Save,
+        Discard,
+        PromptForSave
+    }
+
+    public interface IInspector : IOutlookWindow
+    {
 
         /// <summary>
-        /// Closes the explorer window.
+        /// Closes the inspector window.
         /// </summary>
-        void Close();
+        void Close(InspectorClose mode);
 
-        #region Events
-        // TODO: custom delegates
-        event NSOutlookDelegates.ExplorerEvents_10_SelectionChangeEventHandler SelectionChange;
-
-        #endregion
+        /// <summary>
+        /// Returns the currently selected item, or null if no item is selected.
+        /// </summary>
+        /// <returns>The item. The caller is responsible for disposing.</returns>
+        IItem GetCurrentItem();
     }
 }

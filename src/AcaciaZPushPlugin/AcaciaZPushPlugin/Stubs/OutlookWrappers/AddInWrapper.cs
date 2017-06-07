@@ -254,6 +254,11 @@ namespace Acacia.Stubs.OutlookWrappers
             return new ExplorerWrapper(_app.ActiveExplorer());
         }
 
+        public IInspectors GetInspectors()
+        {
+            return new InspectorsWrapper(_app.Inspectors);
+        }
+
         #region Window handle
 
         /// <summary>

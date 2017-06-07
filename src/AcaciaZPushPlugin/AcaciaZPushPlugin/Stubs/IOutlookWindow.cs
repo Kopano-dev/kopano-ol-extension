@@ -24,5 +24,11 @@ namespace Acacia.Stubs
 {
     public interface IOutlookWindow : IComWrapper
     {
+        /// <summary>
+        /// Returns the command bars.
+        /// </summary>
+        /// <returns>The command bars. The caller is responsible for disposing.</returns>
+        ICommandBars GetCommandBars();
+
     }
 }

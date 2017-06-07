@@ -330,9 +330,9 @@ namespace Acacia.Features.GAB
             // Show message and cancel event
             // TODO: show on active inspector if used
             // [KOE-108] If the window is not specified as parent, it sometimes doesn't show
-            var res = MessageBox.Show(ThisAddIn.Instance.Window,
-                            StringUtil.GetResourceString("GABEvent_Body"),
-                            StringUtil.GetResourceString("GABEvent_Title"),
+            MessageBox.Show(ThisAddIn.Instance.Window,
+                            Properties.Resources.GABEvent_Body,
+                            Properties.Resources.GABEvent_Title,
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning
                         );

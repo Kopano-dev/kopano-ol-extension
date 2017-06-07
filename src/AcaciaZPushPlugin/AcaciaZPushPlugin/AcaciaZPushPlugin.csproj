@@ -325,6 +325,8 @@
     <Compile Include="Stubs\IAccount.cs" />
     <Compile Include="Stubs\IAddIn.cs" />
     <Compile Include="Stubs\IAddressEntry.cs" />
+    <Compile Include="Stubs\IInspector.cs" />
+    <Compile Include="Stubs\IInspectors.cs" />
     <Compile Include="Stubs\IMeetingItem.cs" />
     <Compile Include="Stubs\ICommandBars.cs" />
     <Compile Include="Stubs\IComWrapper.cs" />
@@ -344,6 +346,7 @@
     <Compile Include="Stubs\OutlookWrappers\AccountWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\AddInWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\AddressEntryWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\InspectorWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\MeetingItemWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\CommandBarsWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\ExplorerWrapper.cs" />
@@ -354,6 +357,7 @@
     <Compile Include="Stubs\OutlookWrappers\PictureWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\RecipientsWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\RecipientWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\InspectorsWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\SignaturesWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\SignatureWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\StoresWrapper.cs" />

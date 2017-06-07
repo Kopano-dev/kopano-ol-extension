@@ -42,6 +42,7 @@ namespace Acacia.Stubs
         OutlookUI OutlookUI { get; }
         ISystemWindow Window { get; }
         IExplorer GetActiveExplorer();
+        IInspectors GetInspectors();
 
         #endregion
 

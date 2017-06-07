@@ -1112,6 +1112,24 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changing other people&apos;s private events is not allowed..
+        /// </summary>
+        internal static string SharedFolders_PrivateEvent_Body {
+            get {
+                return ResourceManager.GetString("SharedFolders_PrivateEvent_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Private event.
+        /// </summary>
+        internal static string SharedFolders_PrivateEvent_Title {
+            get {
+                return ResourceManager.GetString("SharedFolders_PrivateEvent_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Public folders.
         /// </summary>
         internal static string SharedFolders_PublicFolders {

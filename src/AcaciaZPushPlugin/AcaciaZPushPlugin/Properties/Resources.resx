@@ -508,4 +508,10 @@
     <value>Synchronisation stalled - {0}</value>
     <comment>{0} will be replaced with the account name</comment>
   </data>
+  <data name="SharedFolders_PrivateEvent_Body" xml:space="preserve">
+    <value>Changing other people's private events is not allowed.</value>
+  </data>
+  <data name="SharedFolders_PrivateEvent_Title" xml:space="preserve">
+    <value>Private event</value>
+  </data>
 </root>

@@ -31,5 +31,7 @@ namespace Acacia.Stubs
         DateTime End { get; set; }
         string Location { get; set; }
         string GlobalAppointmentId { get; }
+
+        Sensitivity Sensitivity { get; }
     }
 }

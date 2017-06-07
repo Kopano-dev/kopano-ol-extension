@@ -24,26 +24,15 @@ using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    class ExplorerWrapper : ComWrapper<NSOutlook.Explorer>, IExplorer
+    class InspectorWrapper : ComWrapper<NSOutlook.Inspector>, IInspector
     {
-        public ExplorerWrapper(NSOutlook.Explorer item) : base(item)
+        public InspectorWrapper(NSOutlook.Inspector item) : base(item)
         {
         }
 
-        public void Close()
+        public void Close(InspectorClose mode)
         {
-            _item.Close();
-        }
-
-        public event NSOutlook.ExplorerEvents_10_SelectionChangeEventHandler SelectionChange
-        {
-            add { _item.SelectionChange += value; }
-            remove { _item.SelectionChange -= value; }
-        }
-
-        protected override void DoRelease()
-        {
-            base.DoRelease();
+            _item.Close((NSOutlook.OlInspectorClose)mode);
         }
 
         public ICommandBars GetCommandBars()
@@ -51,11 +40,9 @@ namespace Acacia.Stubs.OutlookWrappers
             return new CommandBarsWrapper(_item.CommandBars);
         }
 
-        public IFolder GetCurrentFolder()
+        public IItem GetCurrentItem()
         {
-            return _item.CurrentFolder.Wrap();
+            return Mapping.Wrap<IItem>(_item.CurrentItem);
         }
-
-
     }
 }

@@ -84,4 +84,13 @@ namespace Acacia.Stubs
         CC = 2,
         BCC = 3
     }
+
+    // Replacement for OlSensitivity
+    public enum Sensitivity
+    {
+        Normal,
+        Personal,
+        Private,
+        Confidential
+    }
 }

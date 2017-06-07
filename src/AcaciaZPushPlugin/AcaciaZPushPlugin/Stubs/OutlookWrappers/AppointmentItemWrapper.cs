@@ -57,6 +57,11 @@ namespace Acacia.Stubs.OutlookWrappers
             get { return _item.GlobalAppointmentID; }
         }
 
+        public Sensitivity Sensitivity
+        {
+            get { return (Sensitivity)_item.Sensitivity; }
+        }
+
         #endregion
 
         #region Wrapper methods
