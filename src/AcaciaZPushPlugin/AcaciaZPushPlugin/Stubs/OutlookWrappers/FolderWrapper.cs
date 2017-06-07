@@ -79,7 +79,7 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public string FullFolderPath { get { return _item.FullFolderPath; } }
 
-        public IFolder Parent
+        override public IFolder Parent
         {
             get
             {
@@ -88,7 +88,7 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public string ParentEntryID
+        override public string ParentEntryID
         {
             get
             {
@@ -136,30 +136,9 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public string EntryID { get { return _item.EntryID; } }
+        override public string EntryID { get { return _item.EntryID; } }
 
-        public IStore GetStore() { return Mapping.Wrap(_item.Store); }
-
-        public string StoreID
-        {
-            get
-            {
-                using (IStore store = GetStore())
-                {
-                    return store.StoreID;
-                }
-            }
-        }
-        public string StoreDisplayName
-        {
-            get
-            {
-                using (IStore store = GetStore())
-                {
-                    return store.DisplayName;
-                }
-            }
-        }
+        override public IStore GetStore() { return Mapping.Wrap(_item.Store); }
 
         public ItemType ItemType { get { return (ItemType)(int)_item.DefaultItemType; } }
 
@@ -310,7 +289,7 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #endregion
 
-        public void Delete()
+        override public void Delete()
         {
             _item.Delete();
         }

@@ -162,9 +162,9 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #region IBase implementation
 
-        public string EntryID { get { return _item.EntryID; } }
+        override public string EntryID { get { return _item.EntryID; } }
 
-        public IFolder Parent
+        override public IFolder Parent
         {
             get
             {
@@ -173,7 +173,7 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public string ParentEntryID
+        override public string ParentEntryID
         {
             get
             {
@@ -185,7 +185,7 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public IStore GetStore()
+        override public IStore GetStore()
         {
             using (ComRelease com = new ComRelease())
             {
@@ -194,33 +194,7 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public string StoreID
-        {
-            get
-            {
-                using (ComRelease com = new ComRelease())
-                {
-                    NSOutlook.Folder parent = com.Add(_item.Parent);
-                    NSOutlook.Store store = com.Add(parent?.Store);
-                    return store.StoreID;
-                }
-            }
-        }
-
-        public string StoreDisplayName
-        {
-            get
-            {
-                using (ComRelease com = new ComRelease())
-                {
-                    NSOutlook.Folder parent = com.Add(_item.Parent);
-                    NSOutlook.Store store = com.Add(parent?.Store);
-                    return store.StoreID;
-                }
-            }
-        }
-
-        public void Delete() { _item.Delete(); }
+        override public void Delete() { _item.Delete(); }
 
         #endregion
     }

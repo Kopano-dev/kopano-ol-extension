@@ -66,7 +66,11 @@ namespace Acacia.Features.SecondaryContacts
                 // Check the hidden suffix
                 if (!folder.Name.EndsWith(SUFFIX_CONTACTS))
                     return false;
- 
+
+                // Deleted contacts folders won't sync anyway
+                if (folder.IsDeleted)
+                    return false;
+
                 return true;
             }
         }
@@ -104,7 +108,7 @@ namespace Acacia.Features.SecondaryContacts
                 // Stage 1
 
                 // Sync type
-                Logger.Instance.Trace(this, "Settin7g sync type");
+                Logger.Instance.Trace(this, "Setting sync type");
                 folder.SetProperty(OutlookConstants.PR_EAS_SYNCTYPE, (int)OutlookConstants.SyncType.UserContact);
 
                 // Container type

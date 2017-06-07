@@ -29,7 +29,7 @@ namespace Acacia.Stubs.OutlookWrappers
     /// <summary>
     /// Helper for Outlook wrapper implementations
     /// </summary>
-    abstract class OutlookWrapper<ItemType> : ComWrapper<ItemType>
+    abstract class OutlookWrapper<ItemType> : ComWrapper<ItemType>, IBase
     {
 
         #region Construction / Destruction
@@ -77,6 +77,63 @@ namespace Acacia.Stubs.OutlookWrappers
         /// </summary>
         /// <returns>The property accessor. The caller is responsible for disposing this.</returns>
         abstract protected NSOutlook.PropertyAccessor GetPropertyAccessor();
+
+        #endregion
+
+        #region IBase implementation
+
+        public bool IsDeleted
+        {
+            get
+            {
+                string deletedEntryId;
+                using (IStore store = GetStore())
+                {
+                    using (IFolder deleted = store.GetDefaultFolder(DefaultFolder.DeletedItems))
+                        deletedEntryId = deleted.EntryID;
+                }
+
+                IFolder current = Parent;
+                while (current != null)
+                {
+                    if (current.EntryID == deletedEntryId)
+                    {
+                        current.Dispose();
+                        return true;
+                    }
+                    IFolder parent = current.Parent;
+                    current.Dispose();
+                    current = parent;
+                }
+                return false;
+            }
+        }
+
+        public abstract string EntryID { get; }
+        public abstract IFolder Parent { get; }
+        public abstract string ParentEntryID { get; }
+
+        virtual public string StoreID
+        {
+            get
+            {
+                using (IStore store = GetStore())
+                {
+                    return store.StoreID;
+                }
+            }
+        }
+
+        virtual public string StoreDisplayName
+        {
+            get
+            {
+                using (IStore store = GetStore())
+                {
+                    return store.DisplayName;
+                }
+            }
+        }
 
         #endregion
 
@@ -140,5 +197,7 @@ namespace Acacia.Stubs.OutlookWrappers
         #endregion
 
         public override abstract string ToString();
+        public abstract IStore GetStore();
+        public abstract void Delete();
     }
 }

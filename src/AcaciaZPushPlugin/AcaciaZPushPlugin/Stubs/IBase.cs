@@ -41,6 +41,11 @@ namespace Acacia.Stubs
         string ParentEntryID { get; }
 
         /// <summary>
+        /// Checks if the object is in the deleted items folder.
+        /// </summary>
+        bool IsDeleted { get; }
+
+        /// <summary>
         /// Returns the store. The owner is responsible for disposing. 
         /// </summary>
         IStore GetStore();
