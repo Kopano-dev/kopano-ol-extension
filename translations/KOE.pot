@@ -877,6 +877,18 @@ msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Stalled_Caption"
 msgid "Synchronisation stalled - {0}"
 msgstr ""
 
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Body
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Body"
+msgid "Changing other people\'s private events is not allowed."
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Title"
+msgid "Private event"
+msgstr ""
+
 #: AcaciaZPushPlugin\UI\ProgressDialog\labelMessage.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\ProgressDialog\\labelMessage.Text"
