@@ -500,9 +500,12 @@ namespace Acacia.Features.SyncState
 
                 // Check if the folder has synced. In that case, it's not stalled.
                 string folderId = (string)inbox.GetProperty(OutlookConstants.PR_ZPUSH_FOLDER_ID);
-                SyncSession sync = account.GetFeatureData<SyncSession>(this, null);
-                if (sync.HasFolderSynced(folderId))
-                    return;
+                if (folderId != null)
+                {
+                    SyncSession sync = account.GetFeatureData<SyncSession>(this, null);
+                    if (sync.HasFolderSynced(folderId))
+                        return;
+                }
             }
 
             // It is not syncing, check for a stall
