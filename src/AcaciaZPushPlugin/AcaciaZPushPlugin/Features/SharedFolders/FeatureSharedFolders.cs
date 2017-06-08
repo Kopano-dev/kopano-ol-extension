@@ -187,15 +187,21 @@ namespace Acacia.Features.SharedFolders
         {
             if (SuppressModificationsPrivateAppointments && MailEvents != null)
             {
+                Logger.Instance.Trace(this, "Setting up private appointment modification suppression");
                 MailEvents.BeforeDelete += SuppressEventHandler_Delete;
                 MailEvents.PropertyChange += SuppressEventHandler_PropertyChange;
                 MailEvents.Write += SuppressEventHandler_Write;
+            }
+            else
+            {
+                Logger.Instance.Trace(this, "Not setting up private appointment modification suppression");
             }
         }
 
 
         private void SuppressEventHandler_Delete(IItem item, ref bool cancel)
         {
+            Logger.Instance.Trace(this, "Private appointment: delete");
             SuppressEventHandler(item, false, ref cancel);
         }
 
@@ -210,6 +216,7 @@ namespace Acacia.Features.SharedFolders
         {
             if (_propertyChangeId == item.EntryID)
                 return;
+            Logger.Instance.Trace(this, "Private appointment: property change");
             _propertyChangeId = item.EntryID;
         }
 
@@ -217,6 +224,7 @@ namespace Acacia.Features.SharedFolders
         {
             if (_propertyChangeId == item.EntryID)
             {
+                Logger.Instance.Trace(this, "Private appointment: write");
                 SuppressEventHandler(item, true, ref cancel);
                 _propertyChangeId = null;
             }
@@ -224,20 +232,31 @@ namespace Acacia.Features.SharedFolders
 
         private void SuppressEventHandler(IItem item, bool findInspector, ref bool cancel)
         {
+            Logger.Instance.Trace(this, "Private appointment: suppress");
+
             // Check if it's an appointment
             IAppointmentItem appointment = item as IAppointmentItem;
             if (appointment == null)
+            {
+                Logger.Instance.TraceExtra(this, "Private appointment: suppress: not an appointment");
                 return;
+            }
 
             // Check if it's private. Confidential is also considered private
             if (appointment.Sensitivity < Sensitivity.Private)
+            {
+                Logger.Instance.TraceExtra(this, "Private appointment: suppress: not private");
                 return;
+            }
 
             // Check if in a shared folder
             using (IFolder parent = item.Parent)
             {
                 if (parent == null || !IsSharedFolder(parent))
+                {
+                    Logger.Instance.TraceExtra(this, "Private appointment: suppress: not in a shared folder");
                     return;
+                }
             }
 
             if (findInspector)
@@ -256,6 +275,7 @@ namespace Acacia.Features.SharedFolders
             }
 
             // Private appointment in a shared folder, suppress
+            Logger.Instance.TraceExtra(this, "Private appointment: suppressing");
             cancel = true;
             MessageBox.Show(ThisAddIn.Instance.Window,
                             Properties.Resources.SharedFolders_PrivateEvent_Body,
