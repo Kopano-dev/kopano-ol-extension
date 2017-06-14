@@ -262,8 +262,10 @@ namespace Acacia.Features.SharedFolders
             if (findInspector)
             {
                 // Find and close any inspector
-                foreach (IInspector inspector in ThisAddIn.Instance.GetInspectors())
+                using (IInspectors inspectors = ThisAddIn.Instance.GetInspectors())
+                foreach (IInspector inspector in inspectors)
                 {
+                    using (inspector)
                     using (IItem inspectItem = inspector.GetCurrentItem())
                     {
                         if (appointment.EntryID == inspectItem.EntryID)
