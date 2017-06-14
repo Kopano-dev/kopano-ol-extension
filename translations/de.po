@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-06-14 12:48+0000\n"
+"PO-Revision-Date: 2017-06-14 12:54+0000\n"
 "Last-Translator: Felix <f.bartels@kopano.com>\n"
 "Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-"
 "extension/de/>\n"
@@ -719,7 +719,9 @@ msgstr "Es trat ein Fehler während des Abrufs der geteilten Ordner auf"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_None"
 msgid "No shared folders are available or you do not have permissions to view the root of the inbox."
-msgstr "Keine geteilten Ordner verfügbar"
+msgstr ""
+"Keine geteilten Ordner verfügbar oder Sie haben keine Berechtigungen die "
+"Wurzel des Posteingangs anzuzeigen."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Failure
 #, csharp-format
@@ -1007,13 +1009,13 @@ msgstr "Fortschritt"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelResync.Text"
 msgid "Resynchronise"
-msgstr "Resynchronisieren"
+msgstr "Neu synchronisieren"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonGAB.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonGAB.Hint"
 msgid "Resynchronise the global address book"
-msgstr "Globales Adressbuch resynchronisieren"
+msgstr "Globales Adressbuch neu synchronisieren"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonGAB.Text
 #, csharp-format
@@ -1025,7 +1027,7 @@ msgstr "Globales Adressbuch"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonSignatures.Hint"
 msgid "Resynchronise all signatures from the server"
-msgstr "Alle Signaturen vom Server resynchronisieren"
+msgstr "Alle Signaturen vom Server neu synchronisieren"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonSignatures.Text
 #, csharp-format
@@ -1059,7 +1061,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonFullResync.Text"
 msgid "Full Resynchronisation"
-msgstr ""
+msgstr "Komplett neu Synchronisieren"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\$this.Text
 #, csharp-format
