@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Acacia.Stubs
 {
-    public interface IInspectors : IEnumerable<IInspector>
+    public interface IInspectors : IEnumerable<IInspector>, IComWrapper
     {
     }
 }
