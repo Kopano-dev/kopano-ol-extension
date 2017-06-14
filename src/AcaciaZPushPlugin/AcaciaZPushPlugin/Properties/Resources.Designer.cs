@@ -1076,7 +1076,7 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No shared folders are available.
+        ///   Looks up a localized string similar to No shared folders are available or you do not have permissions to view the root of the inbox..
         /// </summary>
         internal static string SharedFolders_None {
             get {
