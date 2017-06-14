@@ -2,9 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-22 09:29+0000\n"
-"Last-Translator: Felix <f.bartels@kopano.com>\n"
-"Language-Team: Dutch <http://translate.kopano.io/projects/kopano/kopano-ol-extension/nl/>\n"
+"PO-Revision-Date: 2017-06-14 10:09+0000\n"
+"Last-Translator: Patrick Simpson <p.simpson@etosis.com>\n"
+"Language-Team: Dutch <http://translate.kopano.io/projects/kopano/kopano-ol-"
+"extension/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -958,109 +959,113 @@ msgstr "Toont het over dialoog, waarin de licentie en versie informatie worden g
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\textLicense.Text"
 msgid "!!! This string is not used"
-msgstr ""
+msgstr "!!! This string is not used"
 
 #: AcaciaZPushPlugin\Features\GAB\GABSettings\checkFaxNumbers.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\GAB\\GABSettings\\checkFaxNumbers.Text"
 msgid "Synchronise fax numbers"
-msgstr ""
+msgstr "Synchroniseer faxnummers"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelReminders.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelReminders.Text"
 msgid "Show reminders"
-msgstr ""
+msgstr "Toon herinneringen"
 
 #: AcaciaZPushPlugin\Features\Signatures\SignaturesSettings\checkForceSet.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\Signatures\\SignaturesSettings\\checkForceSet.Text"
 msgid "Override local signatures"
-msgstr ""
+msgstr "Overschrijf lokale handtekeningen"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelRemaining.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelRemaining.Text"
 msgid "Remaining"
-msgstr ""
+msgstr "Resterend"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelAccount.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelAccount.Text"
 msgid "Account"
-msgstr ""
+msgstr "Account"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboAccounts.Items
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboAccounts.Items"
 msgid "All Z-Push accounts"
-msgstr ""
+msgstr "Alle Z-Push accounts"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelProgress.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelProgress.Text"
 msgid "Progress"
-msgstr ""
+msgstr "Voortgang"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelResync.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelResync.Text"
 msgid "Resynchronise"
-msgstr ""
+msgstr "Hersynchroniseren"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonGAB.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonGAB.Hint"
 msgid "Resynchronise the global address book"
-msgstr ""
+msgstr "Synchroniseer het adresboek opnieuw"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonGAB.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonGAB.Text"
 msgid "Global Address Book"
-msgstr ""
+msgstr "Adresboek"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonSignatures.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonSignatures.Hint"
 msgid "Resynchronise all signatures from the server"
-msgstr ""
+msgstr "Synchroniseer alle handtekeningen opnieuw"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonSignatures.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonSignatures.Text"
 msgid "Signatures"
-msgstr ""
+msgstr "Handtekeningen"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonServerData.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonServerData.Hint"
 msgid "Resynchronise all server data on shared folders and out-of-office"
 msgstr ""
+"Synchroniseer alle data van de server over gedeelde mappen en automatische "
+"antwoorden opnieuw"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonServerData.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonServerData.Text"
 msgid "Server Data"
-msgstr ""
+msgstr "Server Data"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonFullResync.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonFullResync.Hint"
 msgid "Fully resynchronise the Z-Push store. This requires a restart and may take some time."
 msgstr ""
+"Synchroniseer alle data uit de Z-Push account opnieuw. Dit vereist een "
+"herstart en kan enige tijd duren."
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonFullResync.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonFullResync.Text"
 msgid "Full Resynchronisation"
-msgstr ""
+msgstr "Complete hersynchronisatie"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\$this.Text"
 msgid "Synchronisation State"
-msgstr ""
+msgstr "Synchronisatievoortgang"
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Body
@@ -1068,122 +1073,134 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Body"
 msgid "The contacts folder \'{0}\' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click \'Yes\' to restart Outlook now, or \'No\' if you plan to restart Outlook later."
 msgstr ""
+"De map met contactpersonen \\'{0}\\ is toegevoegd. Deze wordt "
+"gesynchroniseerd, maar verschijnt pas in de lijst met contactpersonen als "
+"Outlook opnieuw is opgestart. Klik \\'Ja\\' om Outlook nu opnieuw op te "
+"starten, of \\'Nee\\' om Outlook later opnieuw op te starten."
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Title"
 msgid "Contacts folder"
-msgstr ""
+msgstr "Map met contactpersonen"
 
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Body"
 msgid "The password for account \'{0}\' is not available. Advanced Z-Push features will not work."
 msgstr ""
+"Het wachtwoord voor account \\'{0}\\' is niet beschikbaar. Geavanceerde Z-"
+"Push functies zijn daardoor niet beschikbaar."
 
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Title"
 msgid "Password unavailable"
-msgstr ""
+msgstr "Wachtwoord niet beschikbaar"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_Signatures
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_Signatures"
 msgid "Signatures"
-msgstr ""
+msgstr "Handtekeningen"
 
 #: AcaciaZPushPlugin\Properties\Resources\SignaturesSync_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SignaturesSync_Label"
 msgid "The signatures are being synchronised."
-msgstr ""
+msgstr "De handtekeningen worden gesynchroniseerd."
 
 #: AcaciaZPushPlugin\Properties\Resources\SignaturesSync_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SignaturesSync_Title"
 msgid "Signatures"
-msgstr ""
+msgstr "Handtekeningen"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOF_Unsaved_Changes
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOF_Unsaved_Changes"
 msgid "There are unsaved changes. Do you really want to to discard these?"
-msgstr ""
+msgstr "De wijzigingen zijn niet opgeslagen. Wilt U deze weggooien?"
 
 #. {0} will be replaced with progress in percent
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Label"
 msgid "Syncing: {0}%"
-msgstr ""
+msgstr "Synchronisatie: {0}%"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Label_Done
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Label_Done"
 msgid "Up-to-date"
-msgstr ""
+msgstr "Up-to-date"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Screentip"
 msgid "Synchronisation state"
-msgstr ""
+msgstr "Synchronisatievoortgang"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Supertip"
 msgid "Open the \"Synchronisation\" dialog, in which the synchronisation state can be viewed and managed."
 msgstr ""
+"Open het dialoog \"Synchronisatievoortgang\", waarin de synchronisatie met "
+"de server kan worden bekeken en bijgewerkt."
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_FullResync_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_FullResync_Body"
 msgid "To fully resynchronise, Outlook must be restarted and all local data will be removed. Fetching all the data from the server again may take some time. Are you sure you want to resynchronise all data?"
 msgstr ""
+"Om volledige te hersynchroniseren moet Outlook opnieuw worden opgestart en "
+"de lokale data worden verwijderd. Het opnieuw ophalen van alle data van de "
+"server kan enige tijd in beslag nemen. Weet U zeker dat U alle data wilt "
+"hersynchroniseren?"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_FullResync_Caption
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_FullResync_Caption"
 msgid "Full Resynchronisation"
-msgstr ""
+msgstr "Volledige Hersynchronisatie"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Resync_Body_GAB
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Resync_Body_GAB"
 msgid "The Global Address Book has been scheduled for resynchronisation."
-msgstr ""
+msgstr "Het Adresboek wordt opnieuw gesynchroniseerd."
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Resync_Caption
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Resync_Caption"
 msgid "Resynchronisation"
-msgstr ""
+msgstr "Hersynchronisatie"
 
 #: AcaciaZPushPlugin\Properties\Resources\ServerSync_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\ServerSync_Label"
 msgid "The server data is being synchronised."
-msgstr ""
+msgstr "De server data wordt gesynchoniseerd."
 
 #: AcaciaZPushPlugin\Properties\Resources\ServerSync_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\ServerSync_Title"
 msgid "Server data"
-msgstr ""
+msgstr "Server data"
 
 #: AcaciaZPushPlugin\Properties\Resources\GABSync_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABSync_Label"
 msgid "The global address book is being synchronised."
-msgstr ""
+msgstr "Het adresboek wordt gesynchroniseerd."
 
 #: AcaciaZPushPlugin\Properties\Resources\GABSync_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABSync_Title"
 msgid "Global Address Book"
-msgstr ""
+msgstr "Adresboek"
 
 #. {0} will be replaced with the account name
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Stalled_Body
@@ -1191,23 +1208,26 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Stalled_Body"
 msgid "It appears synchronisation has stalled for account {0}. This can be fixed by performing a full resynchronisation. Would you like to perform this resynchronisation now?"
 msgstr ""
+"Het lijkt er op dat de synchronisatie van account {0} is vastgelopen. Dit "
+"kan worden opgelost door een volledige hersynchronisatie uit te voeren. Wilt "
+"U dit nu doen?"
 
 #. {0} will be replaced with the account name
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Stalled_Caption
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Stalled_Caption"
 msgid "Synchronisation stalled - {0}"
-msgstr ""
+msgstr "Synchronisatie vastgelopen - {0}"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Body"
 msgid "Changing other people\'s private events is not allowed."
 msgstr ""
+"Het is niet toegestaan om privé afspraken van andere gebruikers te wijzigen."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Title"
 msgid "Private event"
-msgstr ""
-
+msgstr "Privé afspraak"
