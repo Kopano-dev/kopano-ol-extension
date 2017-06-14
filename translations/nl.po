@@ -4,8 +4,7 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2017-06-14 10:09+0000\n"
 "Last-Translator: Patrick Simpson <p.simpson@etosis.com>\n"
-"Language-Team: Dutch <http://translate.kopano.io/projects/kopano/kopano-ol-"
-"extension/nl/>\n"
+"Language-Team: Dutch <http://translate.kopano.io/projects/kopano/kopano-ol-extension/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -1037,9 +1036,7 @@ msgstr "Handtekeningen"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonServerData.Hint"
 msgid "Resynchronise all server data on shared folders and out-of-office"
-msgstr ""
-"Synchroniseer alle data van de server over gedeelde mappen en automatische "
-"antwoorden opnieuw"
+msgstr "Synchroniseer alle data van de server over gedeelde mappen en automatische antwoorden opnieuw"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonServerData.Text
 #, csharp-format
@@ -1051,9 +1048,7 @@ msgstr "Server Data"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonFullResync.Hint"
 msgid "Fully resynchronise the Z-Push store. This requires a restart and may take some time."
-msgstr ""
-"Synchroniseer alle data uit de Z-Push account opnieuw. Dit vereist een "
-"herstart en kan enige tijd duren."
+msgstr "Synchroniseer alle data uit de Z-Push account opnieuw. Dit vereist een herstart en kan enige tijd duren."
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonFullResync.Text
 #, csharp-format
@@ -1072,11 +1067,7 @@ msgstr "Synchronisatievoortgang"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Body"
 msgid "The contacts folder \'{0}\' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click \'Yes\' to restart Outlook now, or \'No\' if you plan to restart Outlook later."
-msgstr ""
-"De map met contactpersonen \\'{0}\\ is toegevoegd. Deze wordt "
-"gesynchroniseerd, maar verschijnt pas in de lijst met contactpersonen als "
-"Outlook opnieuw is opgestart. Klik \\'Ja\\' om Outlook nu opnieuw op te "
-"starten, of \\'Nee\\' om Outlook later opnieuw op te starten."
+msgstr "De map met contactpersonen \\\'{0}\\ is toegevoegd. Deze wordt gesynchroniseerd, maar verschijnt pas in de lijst met contactpersonen als Outlook opnieuw is opgestart. Klik \\\'Ja\\\' om Outlook nu opnieuw op te starten, of \\\'Nee\\\' om Outlook later opnieuw op te starten."
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Title
@@ -1089,9 +1080,7 @@ msgstr "Map met contactpersonen"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Body"
 msgid "The password for account \'{0}\' is not available. Advanced Z-Push features will not work."
-msgstr ""
-"Het wachtwoord voor account \\'{0}\\' is niet beschikbaar. Geavanceerde Z-"
-"Push functies zijn daardoor niet beschikbaar."
+msgstr "Het wachtwoord voor account \\\'{0}\\\' is niet beschikbaar. Geavanceerde Z-Push functies zijn daardoor niet beschikbaar."
 
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Title
 #, csharp-format
@@ -1146,19 +1135,13 @@ msgstr "Synchronisatievoortgang"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Supertip"
 msgid "Open the \"Synchronisation\" dialog, in which the synchronisation state can be viewed and managed."
-msgstr ""
-"Open het dialoog \"Synchronisatievoortgang\", waarin de synchronisatie met "
-"de server kan worden bekeken en bijgewerkt."
+msgstr "Open het dialoog \"Synchronisatievoortgang\", waarin de synchronisatie met de server kan worden bekeken en bijgewerkt."
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_FullResync_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_FullResync_Body"
 msgid "To fully resynchronise, Outlook must be restarted and all local data will be removed. Fetching all the data from the server again may take some time. Are you sure you want to resynchronise all data?"
-msgstr ""
-"Om volledige te hersynchroniseren moet Outlook opnieuw worden opgestart en "
-"de lokale data worden verwijderd. Het opnieuw ophalen van alle data van de "
-"server kan enige tijd in beslag nemen. Weet U zeker dat U alle data wilt "
-"hersynchroniseren?"
+msgstr "Om volledige te hersynchroniseren moet Outlook opnieuw worden opgestart en de lokale data worden verwijderd. Het opnieuw ophalen van alle data van de server kan enige tijd in beslag nemen. Weet U zeker dat U alle data wilt hersynchroniseren?"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_FullResync_Caption
 #, csharp-format
@@ -1207,10 +1190,7 @@ msgstr "Adresboek"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Stalled_Body"
 msgid "It appears synchronisation has stalled for account {0}. This can be fixed by performing a full resynchronisation. Would you like to perform this resynchronisation now?"
-msgstr ""
-"Het lijkt er op dat de synchronisatie van account {0} is vastgelopen. Dit "
-"kan worden opgelost door een volledige hersynchronisatie uit te voeren. Wilt "
-"U dit nu doen?"
+msgstr "Het lijkt er op dat de synchronisatie van account {0} is vastgelopen. Dit kan worden opgelost door een volledige hersynchronisatie uit te voeren. Wilt U dit nu doen?"
 
 #. {0} will be replaced with the account name
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Stalled_Caption
@@ -1223,11 +1203,11 @@ msgstr "Synchronisatie vastgelopen - {0}"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Body"
 msgid "Changing other people\'s private events is not allowed."
-msgstr ""
-"Het is niet toegestaan om privé afspraken van andere gebruikers te wijzigen."
+msgstr "Het is niet toegestaan om privï¿½ afspraken van andere gebruikers te wijzigen."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Title"
 msgid "Private event"
-msgstr "Privé afspraak"
+msgstr "Privï¿½ afspraak"
+
