@@ -637,8 +637,8 @@ msgstr "There was an error retrieving shared folders"
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_None
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_None"
-msgid "No shared folders are available"
-msgstr "No shared folders are available"
+msgid "No shared folders are available or you do not have permissions to view the root of the inbox."
+msgstr "No shared folders are available or you do not have permissions to view the root of the inbox."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Failure
 #, csharp-format
