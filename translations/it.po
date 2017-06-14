@@ -682,7 +682,7 @@ msgstr "Si è verificato un errore recuperando le cartelle condivise"
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_None
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_None"
-msgid "No shared folders are available"
+msgid "No shared folders are available or you do not have permissions to view the root of the inbox."
 msgstr "Nessuna cartella condivisa disponibile"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Failure
