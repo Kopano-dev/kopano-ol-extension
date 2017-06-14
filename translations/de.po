@@ -2,9 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-22 07:41+0000\n"
+"PO-Revision-Date: 2017-06-14 12:48+0000\n"
 "Last-Translator: Felix <f.bartels@kopano.com>\n"
-"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-extension/de/>\n"
+"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-"
+"extension/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -958,97 +959,101 @@ msgstr "Zeigt den über Dialog, welcher Informationen zur Lizenz und Version ent
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\textLicense.Text"
 msgid "!!! This string is not used"
-msgstr ""
+msgstr "!!! This string is not used"
 
 #: AcaciaZPushPlugin\Features\GAB\GABSettings\checkFaxNumbers.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\GAB\\GABSettings\\checkFaxNumbers.Text"
 msgid "Synchronise fax numbers"
-msgstr ""
+msgstr "Faxnummern synchronisieren"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelReminders.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelReminders.Text"
 msgid "Show reminders"
-msgstr ""
+msgstr "Erinnerungen anzeigen"
 
 #: AcaciaZPushPlugin\Features\Signatures\SignaturesSettings\checkForceSet.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\Signatures\\SignaturesSettings\\checkForceSet.Text"
 msgid "Override local signatures"
-msgstr ""
+msgstr "Lokale Signaturen überschreiben"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelRemaining.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelRemaining.Text"
 msgid "Remaining"
-msgstr ""
+msgstr "Verbleibend"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelAccount.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelAccount.Text"
 msgid "Account"
-msgstr ""
+msgstr "Konto"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboAccounts.Items
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboAccounts.Items"
 msgid "All Z-Push accounts"
-msgstr ""
+msgstr "Alle Z-Push Konten"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelProgress.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelProgress.Text"
 msgid "Progress"
-msgstr ""
+msgstr "Fortschritt"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelResync.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelResync.Text"
 msgid "Resynchronise"
-msgstr ""
+msgstr "Resynchronisieren"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonGAB.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonGAB.Hint"
 msgid "Resynchronise the global address book"
-msgstr ""
+msgstr "Globales Adressbuch resynchronisieren"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonGAB.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonGAB.Text"
 msgid "Global Address Book"
-msgstr ""
+msgstr "Globales Adressbuch"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonSignatures.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonSignatures.Hint"
 msgid "Resynchronise all signatures from the server"
-msgstr ""
+msgstr "Alle Signaturen vom Server resynchronisieren"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonSignatures.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonSignatures.Text"
 msgid "Signatures"
-msgstr ""
+msgstr "Signaturen"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonServerData.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonServerData.Hint"
 msgid "Resynchronise all server data on shared folders and out-of-office"
 msgstr ""
+"Sämtliche Serverdaten über geteilte Ordner und "
+"Abwensenheitsbenachrichtigungen neu synchronisieren"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonServerData.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonServerData.Text"
 msgid "Server Data"
-msgstr ""
+msgstr "Serverdaten"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonFullResync.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonFullResync.Hint"
 msgid "Fully resynchronise the Z-Push store. This requires a restart and may take some time."
 msgstr ""
+"Z-Push Store neu synchronisieren. Dies erfordert einen Neustart, die "
+"anschließende Synchronisation kann eine Weile dauern."
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonFullResync.Text
 #, csharp-format
@@ -1210,4 +1215,3 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Title"
 msgid "Private event"
 msgstr ""
-
