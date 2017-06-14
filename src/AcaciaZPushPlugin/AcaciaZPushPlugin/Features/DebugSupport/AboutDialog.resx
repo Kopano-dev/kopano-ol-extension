@@ -133,13 +133,13 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="labelDateValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 117</value>
+    <value>96, 181</value>
   </data>
   <data name="labelDateValue.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="labelDateValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 13</value>
+    <value>493, 22</value>
   </data>
   <data name="labelDateValue.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -148,7 +148,7 @@
     <value>labelDateValue</value>
   </data>
   <data name="&gt;&gt;labelDateValue.Type" xml:space="preserve">
-    <value>Acacia.Controls.KCopyLabel, Kopano, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Acacia.Controls.KCopyLabel, Kopano, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;labelDateValue.Parent" xml:space="preserve">
     <value>_layoutForm</value>
@@ -163,13 +163,13 @@
     <value>NoControl</value>
   </data>
   <data name="labelRevisionValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 100</value>
+    <value>96, 151</value>
   </data>
   <data name="labelRevisionValue.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="labelRevisionValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 13</value>
+    <value>493, 22</value>
   </data>
   <data name="labelRevisionValue.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -178,7 +178,7 @@
     <value>labelRevisionValue</value>
   </data>
   <data name="&gt;&gt;labelRevisionValue.Type" xml:space="preserve">
-    <value>Acacia.Controls.KCopyLabel, Kopano, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Acacia.Controls.KCopyLabel, Kopano, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;labelRevisionValue.Parent" xml:space="preserve">
     <value>_layoutForm</value>
@@ -190,13 +190,13 @@
     <value>Fill</value>
   </data>
   <data name="icon.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 2</value>
+    <value>4, 4</value>
   </data>
   <data name="icon.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="icon.Size" type="System.Drawing.Size, System.Drawing">
-    <value>64, 64</value>
+    <value>84, 84</value>
   </data>
   <data name="icon.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>AutoSize</value>
@@ -226,13 +226,13 @@
     <value>Microsoft Sans Serif, 16.2pt</value>
   </data>
   <data name="labelTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 0</value>
+    <value>96, 0</value>
   </data>
   <data name="labelTitle.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="labelTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 68</value>
+    <value>493, 92</value>
   </data>
   <data name="labelTitle.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -256,13 +256,13 @@
     <value>3</value>
   </data>
   <data name="labelVersionCaption.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 83</value>
+    <value>4, 121</value>
   </data>
   <data name="labelVersionCaption.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="labelVersionCaption.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 13</value>
+    <value>77, 22</value>
   </data>
   <data name="labelVersionCaption.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -274,7 +274,7 @@
     <value>labelVersionCaption</value>
   </data>
   <data name="&gt;&gt;labelVersionCaption.Type" xml:space="preserve">
-    <value>Acacia.Controls.KCopyLabel, Kopano, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Acacia.Controls.KCopyLabel, Kopano, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;labelVersionCaption.Parent" xml:space="preserve">
     <value>_layoutForm</value>
@@ -286,13 +286,13 @@
     <value>NoControl</value>
   </data>
   <data name="labelRevisionCaption.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 100</value>
+    <value>4, 151</value>
   </data>
   <data name="labelRevisionCaption.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="labelRevisionCaption.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 13</value>
+    <value>84, 22</value>
   </data>
   <data name="labelRevisionCaption.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -304,7 +304,7 @@
     <value>labelRevisionCaption</value>
   </data>
   <data name="&gt;&gt;labelRevisionCaption.Type" xml:space="preserve">
-    <value>Acacia.Controls.KCopyLabel, Kopano, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Acacia.Controls.KCopyLabel, Kopano, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;labelRevisionCaption.Parent" xml:space="preserve">
     <value>_layoutForm</value>
@@ -316,19 +316,19 @@
     <value>Fill</value>
   </data>
   <data name="textLicense.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 150</value>
+    <value>4, 241</value>
   </data>
   <data name="textLicense.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="textLicense.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 208</value>
+    <value>585, 436</value>
   </data>
   <data name="textLicense.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
   <data name="textLicense.Text" xml:space="preserve">
-    <value />
+    <value>!!! This string is not used</value>
   </data>
   <data name="&gt;&gt;textLicense.Name" xml:space="preserve">
     <value>textLicense</value>
@@ -343,13 +343,13 @@
     <value>6</value>
   </data>
   <data name="labelDateCaption.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 117</value>
+    <value>4, 181</value>
   </data>
   <data name="labelDateCaption.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="labelDateCaption.Size" type="System.Drawing.Size, System.Drawing">
-    <value>28, 13</value>
+    <value>51, 22</value>
   </data>
   <data name="labelDateCaption.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -361,7 +361,7 @@
     <value>labelDateCaption</value>
   </data>
   <data name="&gt;&gt;labelDateCaption.Type" xml:space="preserve">
-    <value>Acacia.Controls.KCopyLabel, Kopano, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Acacia.Controls.KCopyLabel, Kopano, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;labelDateCaption.Parent" xml:space="preserve">
     <value>_layoutForm</value>
@@ -373,13 +373,13 @@
     <value>True</value>
   </data>
   <data name="linkKopano.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 68</value>
+    <value>96, 92</value>
   </data>
   <data name="linkKopano.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="linkKopano.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 13</value>
+    <value>185, 25</value>
   </data>
   <data name="linkKopano.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -403,13 +403,13 @@
     <value>Fill</value>
   </data>
   <data name="labelVersionValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 83</value>
+    <value>96, 121</value>
   </data>
   <data name="labelVersionValue.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="labelVersionValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 13</value>
+    <value>493, 22</value>
   </data>
   <data name="labelVersionValue.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -418,7 +418,7 @@
     <value>labelVersionValue</value>
   </data>
   <data name="&gt;&gt;labelVersionValue.Type" xml:space="preserve">
-    <value>Acacia.Controls.KCopyLabel, Kopano, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Acacia.Controls.KCopyLabel, Kopano, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;labelVersionValue.Parent" xml:space="preserve">
     <value>_layoutForm</value>
@@ -430,16 +430,16 @@
     <value>Fill</value>
   </data>
   <data name="_layoutForm.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 2</value>
+    <value>4, 4</value>
   </data>
   <data name="_layoutForm.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="_layoutForm.RowCount" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
   <data name="_layoutForm.Size" type="System.Drawing.Size, System.Drawing">
-    <value>324, 360</value>
+    <value>593, 681</value>
   </data>
   <data name="_layoutForm.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -457,7 +457,7 @@
     <value>0</value>
   </data>
   <data name="_layoutForm.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="labelDateValue" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelRevisionValue" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="icon" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="labelTitle" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelVersionCaption" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="labelRevisionCaption" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textLicense" Row="6" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="labelDateCaption" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="linkKopano" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelVersionValue" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Absolute,16,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="labelDateValue" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelRevisionValue" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="icon" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="labelTitle" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelVersionCaption" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="labelRevisionCaption" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textLicense" Row="6" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="labelDateCaption" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="linkKopano" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelVersionValue" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Absolute,30,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="_buttons.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -469,13 +469,13 @@
     <value>Fill</value>
   </data>
   <data name="_buttons.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 366</value>
+    <value>4, 693</value>
   </data>
   <data name="_buttons.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="_buttons.Size" type="System.Drawing.Size, System.Drawing">
-    <value>324, 35</value>
+    <value>593, 47</value>
   </data>
   <data name="_buttons.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -484,7 +484,7 @@
     <value>_buttons</value>
   </data>
   <data name="&gt;&gt;_buttons.Type" xml:space="preserve">
-    <value>Acacia.Controls.KDialogButtons, Kopano, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Acacia.Controls.KDialogButtons, Kopano, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;_buttons.Parent" xml:space="preserve">
     <value>_layout</value>
@@ -496,16 +496,16 @@
     <value>Fill</value>
   </data>
   <data name="_layout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 6</value>
+    <value>11, 11</value>
   </data>
   <data name="_layout.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="_layout.RowCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="_layout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>328, 403</value>
+    <value>601, 744</value>
   </data>
   <data name="_layout.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -529,19 +529,19 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+    <value>11, 24</value>
   </data>
   <data name="$this.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>340, 415</value>
+    <value>623, 766</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
+    <value>11, 11, 11, 11</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
@@ -553,6 +553,6 @@
     <value>AboutDialog</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Acacia.Controls.KDialogNew, Kopano, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Acacia.Controls.KDialogNew, Kopano, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>
