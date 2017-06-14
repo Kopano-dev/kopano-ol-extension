@@ -717,7 +717,7 @@ msgstr "Es trat ein Fehler während des Abrufs der geteilten Ordner auf"
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_None
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_None"
-msgid "No shared folders are available"
+msgid "No shared folders are available or you do not have permissions to view the root of the inbox."
 msgstr "Keine geteilten Ordner verfügbar"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Failure
