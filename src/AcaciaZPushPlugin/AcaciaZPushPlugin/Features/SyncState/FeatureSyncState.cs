@@ -409,11 +409,6 @@ namespace Acacia.Features.SyncState
 
                 return !string.IsNullOrWhiteSpace(content.synckey);
             }
-
-            public bool HasAnythingSynced
-            {
-                get { return Done > 0; }
-            }
         }
 
         private void CheckSyncState(ZPushAccount account)
@@ -508,8 +503,7 @@ namespace Acacia.Features.SyncState
                 if (folderId != null)
                 {
                     SyncSession sync = account.GetFeatureData<SyncSession>(this, null);
-                    // If nothing has synced yet, it's probably just a delay
-                    if (!sync.HasAnythingSynced || sync.HasFolderSynced(folderId))
+                    if (sync.HasFolderSynced(folderId))
                         return;
                 }
             }
