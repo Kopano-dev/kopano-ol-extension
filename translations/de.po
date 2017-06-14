@@ -4,8 +4,7 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2017-06-14 12:54+0000\n"
 "Last-Translator: Felix <f.bartels@kopano.com>\n"
-"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-"
-"extension/de/>\n"
+"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-extension/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -719,9 +718,7 @@ msgstr "Es trat ein Fehler während des Abrufs der geteilten Ordner auf"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_None"
 msgid "No shared folders are available or you do not have permissions to view the root of the inbox."
-msgstr ""
-"Keine geteilten Ordner verfügbar oder Sie haben keine Berechtigungen die "
-"Wurzel des Posteingangs anzuzeigen."
+msgstr "Keine geteilten Ordner verfügbar oder Sie haben keine Berechtigungen die Wurzel des Posteingangs anzuzeigen."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Failure
 #, csharp-format
@@ -1039,9 +1036,7 @@ msgstr "Signaturen"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonServerData.Hint"
 msgid "Resynchronise all server data on shared folders and out-of-office"
-msgstr ""
-"Sämtliche Serverdaten über geteilte Ordner und "
-"Abwensenheitsbenachrichtigungen neu synchronisieren"
+msgstr "Sämtliche Serverdaten über geteilte Ordner und Abwensenheitsbenachrichtigungen neu synchronisieren"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonServerData.Text
 #, csharp-format
@@ -1053,9 +1048,7 @@ msgstr "Serverdaten"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonFullResync.Hint"
 msgid "Fully resynchronise the Z-Push store. This requires a restart and may take some time."
-msgstr ""
-"Z-Push Store neu synchronisieren. Dies erfordert einen Neustart, die "
-"anschließende Synchronisation kann eine Weile dauern."
+msgstr "Z-Push Store neu synchronisieren. Dies erfordert einen Neustart, die anschließende Synchronisation kann eine Weile dauern."
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonFullResync.Text
 #, csharp-format
@@ -1217,3 +1210,4 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Title"
 msgid "Private event"
 msgstr ""
+
