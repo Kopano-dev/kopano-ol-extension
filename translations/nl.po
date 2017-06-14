@@ -2,9 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-06-14 12:51+0000\n"
+"PO-Revision-Date: 2017-06-14 14:17+0000\n"
 "Last-Translator: Patrick Simpson <p.simpson@etosis.com>\n"
-"Language-Team: Dutch <http://translate.kopano.io/projects/kopano/kopano-ol-extension/nl/>\n"
+"Language-Team: Dutch <http://translate.kopano.io/projects/kopano/kopano-ol-"
+"extension/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -1060,7 +1061,7 @@ msgstr "Complete hersynchronisatie"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\$this.Text"
 msgid "Synchronisation State"
-msgstr "Synchronisatievoortgang"
+msgstr "Synchronisatie"
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Body
@@ -1129,13 +1130,15 @@ msgstr "Up-to-date"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Screentip"
 msgid "Synchronisation state"
-msgstr "Synchronisatievoortgang"
+msgstr "Synchronisatie"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Supertip"
 msgid "Open the \"Synchronisation\" dialog, in which the synchronisation state can be viewed and managed."
-msgstr "Open het dialoog \"Synchronisatievoortgang\", waarin de synchronisatie met de server kan worden bekeken en bijgewerkt."
+msgstr ""
+"Open het dialoog \"Synchronisatie\", waarin de synchronisatie met de server "
+"kan worden bekeken en bijgewerkt."
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_FullResync_Body
 #, csharp-format
@@ -1210,4 +1213,3 @@ msgstr "Het is niet toegestaan om privé afspraken van andere gebruikers te wijz
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Title"
 msgid "Private event"
 msgstr "Privé afspraak"
-
