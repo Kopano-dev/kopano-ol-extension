@@ -2,9 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-06-14 10:09+0000\n"
+"PO-Revision-Date: 2017-06-14 12:51+0000\n"
 "Last-Translator: Patrick Simpson <p.simpson@etosis.com>\n"
-"Language-Team: Dutch <http://translate.kopano.io/projects/kopano/kopano-ol-extension/nl/>\n"
+"Language-Team: Dutch <http://translate.kopano.io/projects/kopano/kopano-ol-"
+"extension/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -718,7 +719,9 @@ msgstr "Het is niet gelukt om de gedeelde mappen op te halen"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_None"
 msgid "No shared folders are available or you do not have permissions to view the root of the inbox."
-msgstr "Er zijn geen gedeelde mappen beschikbaar"
+msgstr ""
+"Er zijn geen gedeelde mappen beschikbaar of U heeft geen rechten om de inbox "
+"te bekijken."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Failure
 #, csharp-format
@@ -1210,4 +1213,3 @@ msgstr "Het is niet toegestaan om privé afspraken van andere gebruikers te wijz
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Title"
 msgid "Private event"
 msgstr "Privé afspraak"
-
