@@ -99,6 +99,7 @@ namespace Acacia.Features.SyncState
         /// </summary>
         private DateTime? _syncStallStarted;
         private bool _syncStallAsked;
+        private DateTime? _syncStallLastSyncTime;
 
         #endregion
 
@@ -308,6 +309,11 @@ namespace Acacia.Features.SyncState
             {
                 get { return _data.data.contentdata; } 
             }
+
+            public DateTime LastSyncTime
+            {
+                get { return _data.data.lastsynctime; }
+            }
         }
 
         private class GetDeviceDetailsRequest : SoapRequest<DeviceDetails>
@@ -322,6 +328,7 @@ namespace Acacia.Features.SyncState
             public long Total { get; private set; }
             public long Done { get; private set; }
             public bool IsSyncing { get; private set; }
+            public DateTime? LastSyncTime { get; private set; }
 
             private readonly FeatureSyncState _feature;
             private readonly ZPushAccount _account;
@@ -339,6 +346,8 @@ namespace Acacia.Features.SyncState
             public void Add(DeviceDetails details)
             {
                 StringBuilder debug = new StringBuilder();
+
+                LastSyncTime = details.LastSyncTime;
 
                 // If a folder is no longer reported as it's already synced, we don't necessarily get the
                 // last step where (done == total). This causes some folders to keep lingering. To clean these
@@ -495,16 +504,24 @@ namespace Acacia.Features.SyncState
                 string syncId = (string)inbox.GetProperty(OutlookConstants.PR_ZPUSH_SYNC_ID);
 
                 // If it's syncing, it's not stalled
-                if (syncId != null && syncId != "0")
-                    return;
+                //if (syncId != null && syncId != "0")
+                // return;
 
-                // Check if the folder has synced. In that case, it's not stalled.
+                SyncSession sync = account.GetFeatureData<SyncSession>(this, null);
+
+                // If the last sync time hasn't changed, it hasn't actually synced yet
+                if (sync.LastSyncTime != null && _syncStallLastSyncTime == sync.LastSyncTime)
+                    return;
+                _syncStallLastSyncTime = sync.LastSyncTime;
+
+                // Get the sync state
                 string folderId = (string)inbox.GetProperty(OutlookConstants.PR_ZPUSH_FOLDER_ID);
                 if (folderId != null)
                 {
-                    SyncSession sync = account.GetFeatureData<SyncSession>(this, null);
+
+                    // Check if the folder has synced. In that case, it's not stalled.
                     if (sync.HasFolderSynced(folderId))
-                        return;
+                      return;
                 }
             }
 
