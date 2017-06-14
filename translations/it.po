@@ -922,7 +922,7 @@ msgstr "Mostra la finestra di info, che contiene informazioni su licenza e versi
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\textLicense.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\textLicense.Text"
-msgid ""
+msgid "!!! This string is not used"
 msgstr ""
 
 #: AcaciaZPushPlugin\Features\GAB\GABSettings\checkFaxNumbers.Text

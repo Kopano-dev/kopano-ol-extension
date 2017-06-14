@@ -52,7 +52,7 @@ msgstr "Revisjon"
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\textLicense.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\textLicense.Text"
-msgid ""
+msgid "!!! This string is not used"
 msgstr ""
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelDateCaption.Text

@@ -957,7 +957,7 @@ msgstr "Toont het over dialoog, waarin de licentie en versie informatie worden g
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\textLicense.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\textLicense.Text"
-msgid ""
+msgid "!!! This string is not used"
 msgstr ""
 
 #: AcaciaZPushPlugin\Features\GAB\GABSettings\checkFaxNumbers.Text

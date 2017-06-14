@@ -958,7 +958,7 @@ msgstr "A névjegy ablak megnyitása, amelyben a license és verzió informáci�
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\textLicense.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\textLicense.Text"
-msgid ""
+msgid "!!! This string is not used"
 msgstr ""
 
 #: AcaciaZPushPlugin\Features\GAB\GABSettings\checkFaxNumbers.Text
