@@ -46,7 +46,7 @@ namespace Acacia.ZPush
         [Browsable(false)]
         public IAccount Account { get { return _account; } }
 
-        public string DisplayName { get { return _account.DisplayName; } }
+        public string DisplayName { get { return _account.SmtpAddress; } }
         public string DeviceId { get { return _account.DeviceId; } }
 
         [Browsable(false)]
