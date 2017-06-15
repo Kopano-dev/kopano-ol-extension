@@ -90,7 +90,7 @@ namespace Acacia.Features.DebugSupport
                 // Add accounts
                 foreach (ZPushAccount account in ThisAddIn.Instance.Watcher.Accounts.GetAccounts())
                 {
-                    PropertyDescriptor p = new CustomPropertyDescriptor<ZPushAccount, DebugInfo>(account.DisplayName, DebugCategory.Accounts, account);
+                    PropertyDescriptor p = new CustomPropertyDescriptor<ZPushAccount, DebugInfo>(account.Account.DisplayName, DebugCategory.Accounts, account);
                     properties.Add(p);
                 }
 
