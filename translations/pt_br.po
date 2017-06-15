@@ -5,8 +5,7 @@ msgstr ""
 "POT-Creation-Date: 2016-12-12 14:56+0000\n"
 "PO-Revision-Date: 2017-06-14 21:44+0000\n"
 "Last-Translator: Sebastian <s.kummer@kopano.com>\n"
-"Language-Team: Portuguese (Brazil) "
-"<http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt_BR/>\n"
 "Language: pt_br\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -528,9 +527,7 @@ msgstr "Ocorreu um error ao carregar pastas compartilhadas"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_None"
 msgid "No shared folders are available or you do not have permissions to view the root of the inbox."
-msgstr ""
-"Nenhuma pasta compartilhada disponível ou sem permissões para visualizar a "
-"pasta raiz."
+msgstr "Nenhuma pasta compartilhada disponível ou sem permissões para visualizar a pasta raiz."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Failure
 #, csharp-format
@@ -704,7 +701,7 @@ msgstr "Sobre"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Screentip"
 msgid "About dialog"
-msgstr "Diálogo 'Sobre'"
+msgstr "Diálogo \'Sobre\'"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Supertip
 #, csharp-format
@@ -794,8 +791,7 @@ msgstr "Assinaturas"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonServerData.Hint"
 msgid "Resynchronise all server data on shared folders and out-of-office"
-msgstr ""
-"Resincronizar dados do servidor de compartilhamentos e fora do escritório"
+msgstr "Resincronizar dados do servidor de compartilhamentos e fora do escritório"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonServerData.Text
 #, csharp-format
@@ -807,9 +803,7 @@ msgstr "Dados to Servidor"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonFullResync.Hint"
 msgid "Fully resynchronise the Z-Push store. This requires a restart and may take some time."
-msgstr ""
-"Resincronizar completamente a conta Z-Push. Isso requer um restart e pode "
-"demorar um pouco."
+msgstr "Resincronizar completamente a conta Z-Push. Isso requer um restart e pode demorar um pouco."
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonFullResync.Text
 #, csharp-format
@@ -828,11 +822,7 @@ msgstr "Estado de Ressincronização"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Body"
 msgid "The contacts folder \'{0}\' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click \'Yes\' to restart Outlook now, or \'No\' if you plan to restart Outlook later."
-msgstr ""
-"A pasta de contatos \\'{0}\\' foi descoberta. Está sendo sincronizado, mas "
-"não aparecerá na lista de pastas de contatos até o Outlook ser reiniciado. "
-"Clique em \\'Sim\\' para reiniciar o Outlook agora ou \\'Não\\' se você "
-"planeja reiniciar o Outlook mais tarde."
+msgstr "A pasta de contatos \\\'{0}\\\' foi descoberta. Está sendo sincronizado, mas não aparecerá na lista de pastas de contatos até o Outlook ser reiniciado. Clique em \\\'Sim\\\' para reiniciar o Outlook agora ou \\\'Não\\\' se você planeja reiniciar o Outlook mais tarde."
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Title
@@ -845,9 +835,7 @@ msgstr "Pasta de contatos"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Body"
 msgid "The password for account \'{0}\' is not available. Advanced Z-Push features will not work."
-msgstr ""
-"A senha da conta \\'{0}\\' não está disponível. Recursos avançados do Z-Push "
-"não funcionarão."
+msgstr "A senha da conta \\\'{0}\\\' não está disponível. Recursos avançados do Z-Push não funcionarão."
 
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Title
 #, csharp-format
@@ -902,19 +890,13 @@ msgstr "Estado de sincronização"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Supertip"
 msgid "Open the \"Synchronisation\" dialog, in which the synchronisation state can be viewed and managed."
-msgstr ""
-"Abra o diálogo \"Sincronização\", no qual o estado de sincronização pode ser "
-"visualizado e gerenciado."
+msgstr "Abra o diálogo \"Sincronização\", no qual o estado de sincronização pode ser visualizado e gerenciado."
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_FullResync_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_FullResync_Body"
 msgid "To fully resynchronise, Outlook must be restarted and all local data will be removed. Fetching all the data from the server again may take some time. Are you sure you want to resynchronise all data?"
-msgstr ""
-"Para ressincronizar completamente, Outlook deve ser reiniciado e todos os "
-"dados locais serão removidos. Baixar todos os dados do servidor novamente "
-"pode levar algum tempo. Tem certeza de que deseja ressincronizar todos os "
-"dados?"
+msgstr "Para ressincronizar completamente, Outlook deve ser reiniciado e todos os dados locais serão removidos. Baixar todos os dados do servidor novamente pode levar algum tempo. Tem certeza de que deseja ressincronizar todos os dados?"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_FullResync_Caption
 #, csharp-format
@@ -963,10 +945,7 @@ msgstr "Lista Global de Endereços"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Stalled_Body"
 msgid "It appears synchronisation has stalled for account {0}. This can be fixed by performing a full resynchronisation. Would you like to perform this resynchronisation now?"
-msgstr ""
-"Parece que a sincronização da conta {0} está parada. Isso pode ser corrigido "
-"realizando uma ressincronização completa. Gostaria de realizar esta "
-"ressincronização agora?"
+msgstr "Parece que a sincronização da conta {0} está parada. Isso pode ser corrigido realizando uma ressincronização completa. Gostaria de realizar esta ressincronização agora?"
 
 #. {0} will be replaced with the account name
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Stalled_Caption
@@ -986,3 +965,4 @@ msgstr "Alterar eventos particulares de outras pessoas não é permitido."
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Title"
 msgid "Private event"
 msgstr "Evento particular"
+
