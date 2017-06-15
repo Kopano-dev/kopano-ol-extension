@@ -4,8 +4,7 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2017-06-14 15:43+0000\n"
 "Last-Translator: Felix <f.bartels@kopano.com>\n"
-"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-"
-"extension/de/>\n"
+"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-extension/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1068,12 +1067,7 @@ msgstr "Status der Synchronisation"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Body"
 msgid "The contacts folder \'{0}\' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click \'Yes\' to restart Outlook now, or \'No\' if you plan to restart Outlook later."
-msgstr ""
-"Der Kontaktordner \\'{0}\\' wurde entdeckt. Er wird bereits synchronisiert, "
-"aber wird von Outlook bis zu einem Neustart nicht in der Liste der "
-"Kontaktordner angezeigt. Mit Klick auf \\'Ja'\\ wird Outlook sofort "
-"neugestartet, falls Sie planen Outlook später neuzustarten drücken Sie bitte "
-"\\'Nein'\\."
+msgstr "Der Kontaktordner \\\'{0}\\\' wurde entdeckt. Er wird bereits synchronisiert, aber wird von Outlook bis zu einem Neustart nicht in der Liste der Kontaktordner angezeigt. Mit Klick auf \\\'Ja\'\\ wird Outlook sofort neugestartet, falls Sie planen Outlook später neuzustarten drücken Sie bitte \\\'Nein\'\\."
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Title
@@ -1086,9 +1080,7 @@ msgstr "Kontaktordner"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Body"
 msgid "The password for account \'{0}\' is not available. Advanced Z-Push features will not work."
-msgstr ""
-"Das Passwort für den Account \\'{0}\\' ist nicht verfügbar. Weiterführende "
-"Funktionen von Z-Push werden nicht funktionieren."
+msgstr "Das Passwort für den Account \\\'{0}\\\' ist nicht verfügbar. Weiterführende Funktionen von Z-Push werden nicht funktionieren."
 
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Title
 #, csharp-format
@@ -1118,8 +1110,7 @@ msgstr "Signaturen"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOF_Unsaved_Changes"
 msgid "There are unsaved changes. Do you really want to to discard these?"
-msgstr ""
-"Es gibt ungespeicherte Änderungen. Möchten Sie diese wirklich verwerfen?"
+msgstr "Es gibt ungespeicherte Änderungen. Möchten Sie diese wirklich verwerfen?"
 
 #. {0} will be replaced with progress in percent
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Label
@@ -1144,19 +1135,13 @@ msgstr "Synchronisierungsstand"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Supertip"
 msgid "Open the \"Synchronisation\" dialog, in which the synchronisation state can be viewed and managed."
-msgstr ""
-"Öffnet den \"Synchronisation\" Dialog, dieser erlaubt einen Überblick über "
-"den Stand der Synchronisation."
+msgstr "Öffnet den \"Synchronisation\" Dialog, dieser erlaubt einen Überblick über den Stand der Synchronisation."
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_FullResync_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_FullResync_Body"
 msgid "To fully resynchronise, Outlook must be restarted and all local data will be removed. Fetching all the data from the server again may take some time. Are you sure you want to resynchronise all data?"
-msgstr ""
-"Für die neue Synchronisation muss Outlook neugestartet und alle mit dem "
-"Account verknüpften Daten lokal gelöscht werden. Die synchronisierten Daten "
-"neu herunterzuladen kann einige Zeit beanspruchen. Wollen Sie wirklich "
-"sämtliche neu synchronisieren?"
+msgstr "Für die neue Synchronisation muss Outlook neugestartet und alle mit dem Account verknüpften Daten lokal gelöscht werden. Die synchronisierten Daten neu herunterzuladen kann einige Zeit beanspruchen. Wollen Sie wirklich sämtliche neu synchronisieren?"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_FullResync_Caption
 #, csharp-format
@@ -1205,10 +1190,7 @@ msgstr "Globales Adressbuch"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Stalled_Body"
 msgid "It appears synchronisation has stalled for account {0}. This can be fixed by performing a full resynchronisation. Would you like to perform this resynchronisation now?"
-msgstr ""
-"Es scheint als wäre die Synchronisation für den Account {0} zum Stillstand "
-"gekommen. Dies kann durch eine vollständige Neusynchronisation behoben "
-"werden. Möchten Sie nun neu synchronisieren?"
+msgstr "Es scheint als wäre die Synchronisation für den Account {0} zum Stillstand gekommen. Dies kann durch eine vollständige Neusynchronisation behoben werden. Möchten Sie nun neu synchronisieren?"
 
 #. {0} will be replaced with the account name
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Stalled_Caption
@@ -1221,11 +1203,11 @@ msgstr "Synchronisationsprobleme - {0}"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Body"
 msgid "Changing other people\'s private events is not allowed."
-msgstr ""
-"Das verändern von privaten Terminen in geteilten Ordnern ist nicht erlaubt."
+msgstr "Das verändern von privaten Terminen in geteilten Ordnern ist nicht erlaubt."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Title"
 msgid "Private event"
 msgstr "Privater Termin"
+
