@@ -35,6 +35,12 @@ namespace Acacia.Controls
             return new Rectangle(x, y, size.Width, size.Height);
         }
 
+        public static Rectangle CenterVertically(this Rectangle _this, Size size)
+        {
+            int y = _this.Y + (_this.Height - size.Height) / 2;
+            return new Rectangle(_this.X, y, size.Width, size.Height);
+        }
+
         public static Rectangle Expand(this Rectangle _this, Padding padding)
         {
             Rectangle r = _this;
@@ -73,6 +79,51 @@ namespace Acacia.Controls
         public static Size ScaleDpi(this Size _this, Graphics graphics)
         {
             return new Size((int)(_this.Width * graphics.DpiX / 96), (int)(_this.Height * graphics.DpiY / 96));
+        }
+
+        /// <summary>
+        /// Adds the sizes horizontally. The height is the maximum of any of the elements' height.
+        /// Any of the heights may be null.
+        /// </summary>
+        /// <returns>
+        /// The added sizes. Null is returned only if all sizes are null.
+        /// </returns>
+        public static Size? AddHorizontally(this Size? _this, params Size?[] add)
+        {
+            Size? s = _this;
+
+            foreach(Size? s2 in add)
+            {
+                if (s2.HasValue)
+                {
+                    if (!s.HasValue)
+                        s = s2;
+                    else
+                        s = new Size(s.Value.Width + s2.Value.Width, Math.Max(s.Value.Height, s2.Value.Height));
+                }
+            }
+
+            return s;
+        }
+        public static Size? AddHorizontally(this Size _this, params Size?[] add)
+        {
+            return AddHorizontally((Size?)_this, add);
+        }
+
+        public static Size Expand(this Size _this, Padding padding)
+        {
+            Size r = _this;
+            r.Width += padding.Horizontal;
+            r.Height += padding.Vertical;
+            return r;
+        }
+
+        public static Size Shrink(this Size _this, Padding padding)
+        {
+            Size r = _this;
+            r.Width -= padding.Horizontal;
+            r.Height -= padding.Vertical;
+            return r;
         }
 
         #endregion

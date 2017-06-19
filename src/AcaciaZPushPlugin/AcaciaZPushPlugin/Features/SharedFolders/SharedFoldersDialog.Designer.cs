@@ -111,7 +111,6 @@
             // 
             this.gabLookup.DisplayMember = "DisplayName";
             resources.ApplyResources(this.gabLookup, "gabLookup");
-            this.gabLookup.FormattingEnabled = true;
             this.gabLookup.GAB = null;
             this.gabLookup.Name = "gabLookup";
             this.gabLookup.SelectedUserChanged += new Acacia.UI.GABLookupControl.SelectedUserEventHandler(this.gabLookup_SelectedUserChanged);

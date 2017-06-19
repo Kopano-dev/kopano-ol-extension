@@ -220,6 +220,9 @@
       <DependentUpon>KBusyIndicator.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\KCheckManager.cs" />
+    <Compile Include="Controls\KComboBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\KCopyLabel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -251,6 +254,8 @@
     <Compile Include="Controls\KTreeRendererVisualStyles.cs" />
     <Compile Include="Controls\KUITask.cs" />
     <Compile Include="Controls\KUIUtil.cs" />
+    <Compile Include="Controls\KVisualStateTracker.cs" />
+    <Compile Include="Controls\KVisualStyle.cs" />
     <Compile Include="DebugOptions.cs" />
     <Compile Include="Features\BCC\FeatureBCC.cs" />
     <Compile Include="Features\DeliveryReceipts\FeatureDeliveryReceipts.cs" />
@@ -319,6 +324,7 @@
     <Compile Include="Native\MAPI\Property.cs" />
     <Compile Include="Native\MAPI\Restriction.cs" />
     <Compile Include="Native\MAPI\RestrictionEncoder.cs" />
+    <Compile Include="Native\UXTheme.cs" />
     <Compile Include="OutlookConstants.cs" />
     <Compile Include="SearchQuery.cs" />
     <Compile Include="Stubs\Enums.cs" />
@@ -403,7 +409,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\GABLookupControl.cs">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\GABLookupControl.Designer.cs">
       <DependentUpon>GABLookupControl.cs</DependentUpon>
