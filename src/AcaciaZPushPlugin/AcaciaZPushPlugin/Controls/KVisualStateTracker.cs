@@ -139,6 +139,10 @@ namespace Acacia.Controls
                     }
                 }
             }
+            public bool IsMouseOver
+            {
+                get { return _mouseOver; }
+            }
 
             private bool MousePressed
             {

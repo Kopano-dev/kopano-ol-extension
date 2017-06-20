@@ -207,6 +207,9 @@
     <Compile Include="AcaciaOptionAttribute.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Controls\KAbstractComboBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\KAnimator.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -242,6 +245,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\KSelectionManager.cs" />
+    <Compile Include="Controls\KTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\KTreeNode.cs" />
     <Compile Include="Controls\KTreeNodeLoader.cs" />
     <Compile Include="Controls\KTreeNodes.cs" />
@@ -325,6 +331,7 @@
     <Compile Include="Native\MAPI\Restriction.cs" />
     <Compile Include="Native\MAPI\RestrictionEncoder.cs" />
     <Compile Include="Native\UXTheme.cs" />
+    <Compile Include="Native\VirtualKeys.cs" />
     <Compile Include="OutlookConstants.cs" />
     <Compile Include="SearchQuery.cs" />
     <Compile Include="Stubs\Enums.cs" />

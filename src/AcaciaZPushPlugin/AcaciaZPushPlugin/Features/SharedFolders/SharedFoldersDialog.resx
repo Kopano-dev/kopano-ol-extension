@@ -222,9 +222,6 @@
   <data name="gabLookup.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="gabLookup.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Popup</value>
-  </data>
   <data name="gabLookup.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
   </data>
@@ -235,7 +232,7 @@
     <value>256, 21</value>
   </data>
   <data name="gabLookup.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;gabLookup.Name" xml:space="preserve">
     <value>gabLookup</value>
@@ -310,7 +307,7 @@
     <value>0</value>
   </data>
   <data name="_layoutSelectUser.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="labelSelectUser" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonOpenUser" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="_layoutCenterGABLookup" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,Percent,100,AutoSize,0" /&gt;&lt;Rows Styles="Percent,100,Absolute,27" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="labelSelectUser" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonOpenUser" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="_layoutCenterGABLookup" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,Percent,100,AutoSize,0" /&gt;&lt;Rows Styles="Percent,100,Absolute,31" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="kTreeFolders.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -322,7 +319,7 @@
     <value>442, 275</value>
   </data>
   <data name="kTreeFolders.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;kTreeFolders.Name" xml:space="preserve">
     <value>kTreeFolders</value>
@@ -391,7 +388,7 @@
     <value>351, 20</value>
   </data>
   <data name="textName.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;textName.Name" xml:space="preserve">
     <value>textName</value>
@@ -721,7 +718,7 @@
     <value>450, 35</value>
   </data>
   <data name="dialogButtons.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;dialogButtons.Name" xml:space="preserve">
     <value>dialogButtons</value>

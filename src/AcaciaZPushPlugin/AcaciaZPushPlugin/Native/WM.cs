@@ -25,6 +25,20 @@ namespace Acacia.Native
 {
     public enum WM : int
     {
+        NCHITTEST = 0x0084,
         NCPAINT = 0x0085,
+
+        NCLBUTTONDOWN = 0x00A1,
+        NCRBUTTONDOWN = 0x00A4,
+        NCMBUTTONDOWN = 0x00A7,
+
+        KEYDOWN = 0x0100,
+        KEYUP = 0x0101,
+        CHAR = 0x0102,
+
+        LBUTTONDOWN = 0x0201,
+        RBUTTONDOWN = 0x0204,
+        MBUTTONDOWN = 0x0207
+
     }
 }

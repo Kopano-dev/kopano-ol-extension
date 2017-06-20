@@ -27,10 +27,11 @@ using Acacia.ZPush;
 using Acacia.Features.GAB;
 using Acacia.Stubs;
 using System.Collections;
+using Acacia.Controls;
 
 namespace Acacia.UI
 {
-    public partial class GABLookupControl : ComboBox
+    public partial class GABLookupControl : KComboBox
     {
         public GABLookupControl() : this(null)
         {
@@ -39,14 +40,12 @@ namespace Acacia.UI
         public GABLookupControl(GABHandler gab)
         {
             InitializeComponent();
-            DropDownStyle = ComboBoxStyle.DropDown;
-            DisplayMember = "DisplayName";
             this.GAB = gab;
         }
 
         #region Properties and events
 
-            #region SelectedUser
+        #region SelectedUser
 
         public class SelectedUserEventArgs : EventArgs
         {
@@ -69,14 +68,15 @@ namespace Acacia.UI
         {
             get
             {
-                if (SelectedValue == null)
+                /*if (SelectedValue == null)
                     return new GABUser(Text, Text);
                 else
-                    return (GABUser)SelectedValue;
+                    return (GABUser)SelectedValue;*/
+                return null;
             }
             set
             {
-                if (value == null)
+                /*if (value == null)
                 {
                     SelectedIndex = -1;
                     Text = "";
@@ -84,7 +84,7 @@ namespace Acacia.UI
                 else
                 {
 
-                }
+                }*/
             }
         }
 
@@ -112,7 +112,14 @@ namespace Acacia.UI
         public GABHandler GAB
         {
             get { return _gab; }
-            set { _gab = value; }
+            set
+            {
+                if (_gab != value)
+                {
+                    _gab = value;
+                    LookupUsers(false);
+                }
+            }
         }
 
         #endregion
@@ -121,13 +128,13 @@ namespace Acacia.UI
 
         protected override void OnTextChanged(EventArgs e)
         {
-            LookupUsers();
+            LookupUsers(true);
             SelectCurrentUser(false);
         }
 
         private void SelectCurrentUser(bool isChosen)
         {
-            GABUser user = null;
+            /*GABUser user = null;
             // Select whatever is currently in the text box as a user
             if (DataSource != null)
             {
@@ -139,10 +146,10 @@ namespace Acacia.UI
                 // Make a new one
                 user = new GABUser(Text, Text);
             }
-            SetSelectedUser(user, isChosen);
+            SetSelectedUser(user, isChosen);*/
         }
 
-        private bool _needUpdate;
+        /*private bool _needUpdate;
 
         protected override void OnTextUpdate(EventArgs e)
         {
@@ -171,34 +178,36 @@ namespace Acacia.UI
         protected override void OnDataSourceChanged(EventArgs e)
         {
             // Suppress to prevent automatic selection
-        }
+        }*/
 
         private string _lastText;
+        private List<GABUser> _allUsers;
 
-        private void LookupUsers()
+        private void LookupUsers(bool dropDown)
         {
             // Cannot lookup if there is no GAB
             if (_gab == null)
                 return;
 
-            if (!_needUpdate)
-                return;
-            _needUpdate = false;
-
             string text = this.Text;
-            // Only search if there is text 
-            if (text.Length == 0)
-            {
-                DataSource = null;
-                DroppedDown = false;
-                _lastText = "";
-                return;
-            }
-
             // Only search if the text actually changed
             if (_lastText != text)
             {
-                List<GABUser> users = Lookup(text, 5);
+                // Limit search results if there is a filter, otherwise show everything
+                List<GABUser> users;
+                if (text.Length == 0)
+                {
+                    // Cache the list of all users
+                    if (_allUsers == null)
+                    {
+                        _allUsers = Lookup("", int.MaxValue);
+                    }
+                    users = _allUsers;
+                }
+                else
+                {
+                    users = Lookup(text, 8);
+                }
 
                 // Sort the users if we have them
                 users.Sort();
@@ -208,12 +217,13 @@ namespace Acacia.UI
                 // Setting the datasource will trigger a select if there is a match
                 BeginUpdate();
                     DataSource = users;
-                    SetItemsCore(users);
-                    DroppedDown = true;
-                    Cursor.Current = Cursors.Default;
-                    Text = _lastText;
-                    SelectionLength = 0;
-                    SelectionStart = _lastText.Length;
+                    //SetItemsCore(users);
+                    if (dropDown)
+                        DroppedDown = true;
+                    //Cursor.Current = Cursors.Default;
+                    //Text = _lastText;
+                    //SelectionLength = 0;
+                    //SelectionStart = _lastText.Length;
                 EndUpdate();
             }
         }

@@ -48,6 +48,8 @@ namespace Acacia.Native
         [DllImport("user32.dll")]
         public static extern int GetWindowLong(IntPtr hWnd, GWL gwl);
 
+        #region Geometry
+
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
         {
@@ -72,6 +74,11 @@ namespace Acacia.Native
             GetWindowRect(hWnd, out rect);
             return rect.ToRectangle();
         }
+
+        [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
+        public static extern int MapWindowPoints(IntPtr hWndFrom, IntPtr hWndTo, [In, Out] ref Point pt, int cPoints);
+
+        #endregion
 
         #region Messages
 

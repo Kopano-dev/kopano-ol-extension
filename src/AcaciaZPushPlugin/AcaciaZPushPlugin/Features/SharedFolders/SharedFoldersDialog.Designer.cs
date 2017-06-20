@@ -46,9 +46,9 @@
             this.checkSendAs = new System.Windows.Forms.CheckBox();
             this._labelPermissions = new System.Windows.Forms.Label();
             this.labelPermissionsValue = new System.Windows.Forms.Label();
-            this.dialogButtons = new Acacia.Controls.KDialogButtons();
             this._labelReminders = new System.Windows.Forms.Label();
             this.checkReminders = new System.Windows.Forms.CheckBox();
+            this.dialogButtons = new Acacia.Controls.KDialogButtons();
             this._layout.SuspendLayout();
             this._mainBusyHider.SuspendLayout();
             this._layoutMain.SuspendLayout();
@@ -109,10 +109,12 @@
             // 
             // gabLookup
             // 
-            this.gabLookup.DisplayMember = "DisplayName";
+            this.gabLookup.DataSource = null;
             resources.ApplyResources(this.gabLookup, "gabLookup");
+            this.gabLookup.DroppedDown = false;
             this.gabLookup.GAB = null;
             this.gabLookup.Name = "gabLookup";
+            this.gabLookup.SelectedUser = null;
             this.gabLookup.SelectedUserChanged += new Acacia.UI.GABLookupControl.SelectedUserEventHandler(this.gabLookup_SelectedUserChanged);
             // 
             // kTreeFolders
@@ -178,16 +180,6 @@
             resources.ApplyResources(this.labelPermissionsValue, "labelPermissionsValue");
             this.labelPermissionsValue.Name = "labelPermissionsValue";
             // 
-            // dialogButtons
-            // 
-            resources.ApplyResources(this.dialogButtons, "dialogButtons");
-            this.dialogButtons.ButtonSize = null;
-            this.dialogButtons.Cancellation = null;
-            this.dialogButtons.HasApply = true;
-            this.dialogButtons.IsDirty = false;
-            this.dialogButtons.Name = "dialogButtons";
-            this.dialogButtons.Apply += new System.EventHandler(this.dialogButtons_Apply);
-            // 
             // _labelReminders
             // 
             resources.ApplyResources(this._labelReminders, "_labelReminders");
@@ -199,6 +191,16 @@
             this.checkReminders.Name = "checkReminders";
             this.checkReminders.UseVisualStyleBackColor = true;
             this.checkReminders.CheckedChanged += new System.EventHandler(this.checkReminders_CheckedChanged);
+            // 
+            // dialogButtons
+            // 
+            resources.ApplyResources(this.dialogButtons, "dialogButtons");
+            this.dialogButtons.ButtonSize = null;
+            this.dialogButtons.Cancellation = null;
+            this.dialogButtons.HasApply = true;
+            this.dialogButtons.IsDirty = false;
+            this.dialogButtons.Name = "dialogButtons";
+            this.dialogButtons.Apply += new System.EventHandler(this.dialogButtons_Apply);
             // 
             // SharedFoldersDialog
             // 
