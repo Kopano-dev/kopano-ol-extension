@@ -18,6 +18,29 @@ namespace Acacia.Controls
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         override public bool AutoSize { get { return base.AutoSize; } set { base.AutoSize = value; } }
 
+        [Category("Appearance")]
+        [Localizable(true)]
+        public string Placeholder
+        {
+            get { return _edit.Placeholder; }
+            set { _edit.Placeholder = value; }
+        }
+
+        [Category("Appearance")]
+        public Color PlaceholderColor
+        {
+            get { return _edit.PlaceholderColor; }
+            set { _edit.PlaceholderColor = value; }
+        }
+
+        [Category("Appearance")]
+        public Font PlaceholderFont
+        {
+            get { return _edit.PlaceholderFont; }
+            set { _edit.PlaceholderFont = value; }
+        }
+
+
         #endregion
 
         #region Components
@@ -35,7 +58,6 @@ namespace Acacia.Controls
 
             _edit = new KTextBox();
             _edit.BorderStyle = BorderStyle.None;
-            _edit.Placeholder = "Test";
             Controls.Add(_edit);
             _state.AddControl(_edit);
             _edit.TextChanged += _edit_TextChanged;
@@ -198,6 +220,7 @@ namespace Acacia.Controls
             this._edit.Focus();
         }
 
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public bool DroppedDown
         {
             get
