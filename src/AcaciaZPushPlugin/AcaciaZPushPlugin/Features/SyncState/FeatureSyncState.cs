@@ -504,8 +504,8 @@ namespace Acacia.Features.SyncState
                 string syncId = (string)inbox.GetProperty(OutlookConstants.PR_ZPUSH_SYNC_ID);
 
                 // If it's syncing, it's not stalled
-                //if (syncId != null && syncId != "0")
-                // return;
+                if (syncId != null && syncId != "0")
+                    return;
 
                 SyncSession sync = account.GetFeatureData<SyncSession>(this, null);
 
