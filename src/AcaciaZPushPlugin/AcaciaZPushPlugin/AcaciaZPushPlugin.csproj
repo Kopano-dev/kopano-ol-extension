@@ -208,7 +208,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controls\KAbstractComboBox.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\KAnimator.cs">
       <SubType>Component</SubType>
@@ -224,7 +224,7 @@
     </Compile>
     <Compile Include="Controls\KCheckManager.cs" />
     <Compile Include="Controls\KComboBox.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\KCopyLabel.cs">
       <SubType>Component</SubType>
@@ -416,7 +416,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\GABLookupControl.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\GABLookupControl.Designer.cs">
       <DependentUpon>GABLookupControl.cs</DependentUpon>

@@ -41,28 +41,61 @@ namespace Acacia.Controls
                 this._parent = parent;
             }
 
-            public StateTypeId State
+            protected enum RawStateId
+            {
+                Disabled,
+                Normal,
+                Pressed,
+                Hot,
+                Focused
+            }
+
+            protected RawStateId RawState
             {
                 get
                 {
                     if (_parent != null && !_mouseOver)
-                    {
-                        return _parent.State;
-                    }
+                        return _parent.RawState;
 
                     if (!_tracker._control.Enabled)
-                    {
-                        return DisabledState;
-                    }
+                        return RawStateId.Disabled;
 
-                    if (_focused && FocusedState.HasValue)
-                        return FocusedState.Value;
+                    if (_focused)
+                        return RawStateId.Focused;
 
                     if (_mouseOver && _mousePressed)
-                        return _pressedState.Value;
+                        return RawStateId.Pressed;
 
-                    if (_mouseOver && HotState.HasValue)
-                        return HotState.Value;
+                    if (_mouseOver)
+                        return RawStateId.Hot;
+
+                    return RawStateId.Normal;
+                }
+            }
+
+            public StateTypeId State
+            {
+                get
+                {
+                    switch(RawState)
+                    {
+                        case RawStateId.Disabled:
+                            return DisabledState;
+                        case RawStateId.Focused:
+                            if (FocusedState.HasValue)
+                                return FocusedState.Value;
+                            if (HotState.HasValue)
+                                return HotState.Value;
+                            break;
+                        case RawStateId.Hot:
+                            if (HotState.HasValue)
+                                return HotState.Value;
+                            break;
+                        case RawStateId.Pressed:
+                            if (_pressedState.HasValue)
+                                return _pressedState.Value;
+                            break;
+                    }
 
                     return NormalState;
                 }
@@ -157,32 +190,10 @@ namespace Acacia.Controls
                 }
             }
 
-            private bool Focused
-            {
-                get { return _focused; }
-                set
-                {
-                    if (_focused != value)
-                    {
-                        _focused = value;
-                        Invalidate();
-                    }
-                }
-            }
 
             private void Invalidate()
             {
                 _tracker.Invalidate();
-            }
-
-            internal void GotFocus(object sender, EventArgs e)
-            {
-                Focused = true;
-            }
-
-            internal void LostFocus(object sender, EventArgs e)
-            {
-                Focused = false;
             }
 
             internal void MouseDown(object sender, MouseEventArgs e)
@@ -257,11 +268,38 @@ namespace Acacia.Controls
                 return this;
             }
 
+            #region Focused
+
+            private bool Focused
+            {
+                get { return _focused; }
+                set
+                {
+                    if (_focused != value)
+                    {
+                        _focused = value;
+                        Invalidate();
+                    }
+                }
+            }
+
+            internal void GotFocus(object sender, EventArgs e)
+            {
+                Focused = true;
+            }
+
+            internal void LostFocus(object sender, EventArgs e)
+            {
+                Focused = false;
+            }
+
             public Part WithFocus(StateTypeId? focusState)
             {
                 this._focusState = focusState;
                 return this;
             }
+
+            #endregion
         }
 
         private readonly Control _control;

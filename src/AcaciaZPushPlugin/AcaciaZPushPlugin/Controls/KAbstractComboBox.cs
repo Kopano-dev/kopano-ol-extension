@@ -1,6 +1,7 @@
 ﻿using Acacia.Native;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -10,8 +11,15 @@ using System.Windows.Forms;
 
 namespace Acacia.Controls
 {
-    public abstract class KAbstractComboBox : UserControl, IMessageFilter
+    public abstract class KAbstractComboBox : ContainerControl, IMessageFilter
     {
+        #region Properties
+
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        override public bool AutoSize { get { return base.AutoSize; } set { base.AutoSize = value; } }
+
+        #endregion
+
         #region Components
 
         private KTextBox _edit;
@@ -22,6 +30,7 @@ namespace Acacia.Controls
 
         public KAbstractComboBox()
         {
+            AutoSize = true;
             SetupRenderer();
 
             _edit = new KTextBox();
@@ -262,10 +271,11 @@ namespace Acacia.Controls
 
             _state = new KVisualStateTracker<State>(this, State.Normal, State.Disabled);
             _state.Root.WithHot(State.Hot);
-            _state.Root.WithFocus(State.Hot);
+            _state.Root.WithFocus(State.Pressed);
 
             _stateButton = _state.Root.AddPart().WithPressed(State.Pressed);
             _stateButton.Clicked += Button_Clicked;
+            _stateButton.WithFocus(State.Hot);
 
             // TODO if (enableVisualStyles && Application.RenderWithVisualStyles)
         }
@@ -273,6 +283,7 @@ namespace Acacia.Controls
         protected override void OnPaint(PaintEventArgs e)
         {
             _style[COMBOBOXPARTS.CP_BORDER]?.DrawBackground(e.Graphics, _state.Root.State, ClientRectangle);
+            System.Diagnostics.Trace.WriteLine(string.Format("BUTTON: {0}", _stateButton.State));
             _style[COMBOBOXPARTS.CP_DROPDOWNBUTTON]?.DrawBackground(e.Graphics, _stateButton.State, _stateButton.Rectangle);
         }
 
