@@ -16,18 +16,20 @@ namespace Acacia.Controls
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             DrawMode = DrawMode.OwnerDrawFixed;
+            SetStyle(ControlStyles.Selectable, true);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            Point point = PointToClient(Cursor.Position);
-            int newIndex = IndexFromPoint(point);
+            int newIndex = IndexFromPoint(PointToClient(Cursor.Position));
             if (newIndex != _hoverIndex)
             {
                 int oldIndex = _hoverIndex;
                 _hoverIndex = newIndex;
                 InvalidateItem(oldIndex);
                 InvalidateItem(_hoverIndex);
+                if (SelectedIndex != oldIndex && SelectedIndex != _hoverIndex)
+                    InvalidateItem(SelectedIndex);
             }
         }
 
@@ -35,6 +37,14 @@ namespace Acacia.Controls
         {
             base.OnMouseLeave(e);
             _hoverIndex = -1;
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            // Perform the select here. 
+            // TODO: this really is for ComboBox, where the list hides before the event is handled
+            SelectedIndex = IndexFromPoint(PointToClient(Cursor.Position));
         }
 
         protected override void OnVisibleChanged(EventArgs e)

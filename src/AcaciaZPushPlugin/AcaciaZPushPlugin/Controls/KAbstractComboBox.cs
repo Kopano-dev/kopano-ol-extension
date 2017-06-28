@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Acacia.Controls
 {
-    public abstract class KAbstractComboBox : ContainerControl, IMessageFilter
+    public abstract class KAbstractComboBox : ContainerControl
     {
         #region Properties
 
@@ -63,11 +63,7 @@ namespace Acacia.Controls
             _state.AddControl(_edit);
             _edit.TextChanged += _edit_TextChanged;
             _edit.LostFocus += _edit_LostFocus;
-        }
-
-        private void _edit_LostFocus(object sender, EventArgs e)
-        {
-            DroppedDown = false;
+            _edit.PreviewKeyDown += _edit_PreviewKeyDown;
         }
 
 
@@ -75,20 +71,77 @@ namespace Acacia.Controls
 
         #region Text edit
 
-        private void _edit_TextChanged(object sender, EventArgs e)
-        {
-            OnTextChanged(new EventArgs());
-        }
-
         override public string Text
         {
             get { return _edit.Text; }
-            set { _edit.Text = value; }
+            set
+            {
+                _edit.Text = value;
+                // Set the cursor after the text
+                _edit.Select(_edit.Text.Length, 0);
+            }
         }
 
         public void FocusEdit()
         {
             _edit.Select();
+        }
+
+        private void _edit_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Escape:
+                    // Escape closes the dropdown
+                    if (DroppedDown)
+                    {
+                        DroppedDown = false;
+                        e.IsInputKey = false;
+                        return;
+                    }
+                    break;
+                case Keys.Down:
+                    // Down opens the drop down
+                    if (!DroppedDown)
+                    {
+                        DroppedDown = true;
+                        e.IsInputKey = false;
+                        return;
+                    }
+                    break;
+            }
+            OnPreviewKeyDown(e);
+        }
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Winapi)]
+        internal static extern IntPtr GetFocus();
+
+        private Control GetFocusedControl()
+        {
+            Control focusedControl = null;
+            // To get hold of the focused control:
+            IntPtr focusedHandle = GetFocus();
+            if (focusedHandle != IntPtr.Zero)
+                // Note that if the focused Control is not a .Net control, then this will return null.
+                focusedControl = Control.FromHandle(focusedHandle);
+            return focusedControl;
+        }
+
+        private void _edit_LostFocus(object sender, EventArgs e)
+        {
+            System.Diagnostics.Trace.WriteLine("_edit_LostFocus: " + GetFocusedControl()?.Name);
+            DroppedDown = false;
+        }
+
+        protected override void OnGotFocus(EventArgs e)
+        {
+            base.OnGotFocus(e);
+            System.Diagnostics.Trace.WriteLine("OnGotFocus");
+        }
+
+        private void _edit_TextChanged(object sender, EventArgs e)
+        {
+            OnTextChanged(new EventArgs());
         }
 
         #endregion
@@ -118,6 +171,7 @@ namespace Acacia.Controls
             _dropListHost.Padding = new Padding(0);
             _dropListHost.Margin = new Padding(0);
             _dropListHost.AutoSize = false;
+            _dropListHost.GotFocus += (s, e) => System.Diagnostics.Trace.WriteLine("_dropListHost.GotFocus");
 
             _dropDown = new ToolStripDropDown();
             _dropDown.Padding = new Padding(0);
@@ -127,89 +181,7 @@ namespace Acacia.Controls
             _dropDown.Items.Add(_dropListHost);
             _dropDown.Closed += _dropDown_Closed;
             _dropDown.AutoClose = false;
-
-            Application.AddMessageFilter(this);
-        }
-        
-        protected override void OnHandleDestroyed(EventArgs e)
-        {
-            Application.RemoveMessageFilter(this);
-            base.OnHandleDestroyed(e);
-        }
-
-        public bool PreFilterMessage(ref Message m)
-        {
-            switch ((WM)m.Msg)
-            {
-                case WM.KEYDOWN:
-                    switch((VirtualKeys)m.WParam.ToInt32())
-                    {
-                        case VirtualKeys.Escape:
-                            // Escape closes the popup
-                            if (DroppedDown)
-                            {
-                                DroppedDown = false;
-                                return true;
-                            }
-                            break;
-                        case VirtualKeys.Down:
-                            // Down opens the drop down
-                            if (!DroppedDown)
-                            {
-                                DroppedDown = true;
-                                return true;
-                            }
-                            break;
-                    }
-                    ForwardKeyMessage(m);
-                    break;
-                case WM.CHAR:
-                case WM.KEYUP:
-                    ForwardKeyMessage(m);
-                    break;
-                case WM.LBUTTONDOWN:
-                case WM.RBUTTONDOWN:
-                case WM.MBUTTONDOWN:
-                case WM.NCLBUTTONDOWN:
-                case WM.NCRBUTTONDOWN:
-                case WM.NCMBUTTONDOWN:
-                    if (_dropDown.Visible)
-                    {
-                        //
-                        // When a mouse button is pressed, we should determine if it is within the client coordinates
-                        // of the active dropdown.  If not, we should dismiss it.
-                        //
-                        int i = unchecked((int)(long)m.LParam);
-                        short x = (short)(i & 0xFFFF);
-                        short y = (short)((i >> 16) & 0xffff);
-                        Point pt = new Point(x, y);
-
-                        // Map to global coordinates
-                        User32.MapWindowPoints(m.HWnd, IntPtr.Zero, ref pt, 1);
-                        System.Diagnostics.Trace.WriteLine(string.Format("MOUSE: {0} - {1}", pt, _dropDown.Bounds));
-                        if (!_dropDown.Bounds.Contains(pt))
-                        {
-                            // the user has clicked outside the dropdown
-                            User32.MapWindowPoints(m.HWnd, Handle, ref pt, 1);
-                            if (!ClientRectangle.Contains(pt))
-                            {
-                                // the user has clicked outside the combo
-                                DroppedDown = false;
-                            }
-                        }
-                    }
-                    break;
-            }
-            return false;
-        }
-
-        private void ForwardKeyMessage(Message m)
-        {
-            System.Diagnostics.Trace.WriteLine("KEY: " + m);
-            if ((WM)m.Msg == WM.KEYDOWN)
-            {
-                OnPreviewKeyDown(new PreviewKeyDownEventArgs((Keys)m.WParam.ToInt32()));
-            }
+            _dropDown.GotFocus += (s, e) => System.Diagnostics.Trace.WriteLine("_dropDown.GotFocus");
         }
 
         // Cannot use visibility of _dropDown to keep the open state, as clicking on the button already
@@ -249,10 +221,12 @@ namespace Acacia.Controls
                         _dropControl.Height = Util.Bound(prefSize.Height, minHeight, maxHeight);
                         // Show the drop down below the current control
                         _dropDown.Show(this.PointToScreen(new Point(0, Height)));
+                        _dropControl.Capture = true;
                     }
                     else
                     {
                         _dropDown.Close();
+                        _dropControl.Capture = false;
                     }
                     _isDroppedDown = value;
                 }

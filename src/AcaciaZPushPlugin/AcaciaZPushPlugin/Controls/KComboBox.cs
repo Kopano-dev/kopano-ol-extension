@@ -47,14 +47,25 @@ namespace Acacia.Controls
             MaxDropDownItems = 8;
             _list = new KListBox();
             _list.IntegralHeight = true;
+            _list.TabStop = false;
             DropControl = _list;
             _list.DisplayMember = "DisplayName"; // TODO: remove from here
             _list.SelectedIndexChanged += _list_SelectedIndexChanged;
+            _list.GotFocus += _list_GotFocus;
+        }
+
+        private void _list_GotFocus(object sender, EventArgs e)
+        {
+            System.Diagnostics.Trace.WriteLine("_list_GotFocus");
+
         }
 
         private void _list_SelectedIndexChanged(object sender, EventArgs e)
         {
-            System.Diagnostics.Trace.WriteLine("SELECTED: " + _list.SelectedIndex);
+            if (_list.SelectedIndex >= 0)
+            {
+                Text = _list.SelectedItem.ToString();
+            }
         }
 
         public void BeginUpdate()
@@ -95,9 +106,11 @@ namespace Acacia.Controls
         {
             switch(e.KeyCode)
             {
+                // Forward cursor keys to the list
                 case Keys.Down:
                 case Keys.Up:
                     User32.SendMessage(_list.Handle, (int)WM.KEYDOWN, new IntPtr((int)e.KeyCode), IntPtr.Zero);
+                    e.IsInputKey = false;
                     break;
                 default:
                     base.OnPreviewKeyDown(e);
