@@ -1,4 +1,5 @@
 ﻿using Acacia.Native;
+using Acacia.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -61,6 +62,12 @@ namespace Acacia.Controls
             Controls.Add(_edit);
             _state.AddControl(_edit);
             _edit.TextChanged += _edit_TextChanged;
+            _edit.LostFocus += _edit_LostFocus;
+        }
+
+        private void _edit_LostFocus(object sender, EventArgs e)
+        {
+            DroppedDown = false;
         }
 
 
@@ -135,7 +142,6 @@ namespace Acacia.Controls
             switch ((WM)m.Msg)
             {
                 case WM.KEYDOWN:
-                    System.Diagnostics.Trace.WriteLine("KEYMESSAGE: " + m);
                     switch((VirtualKeys)m.WParam.ToInt32())
                     {
                         case VirtualKeys.Escape:
@@ -155,10 +161,11 @@ namespace Acacia.Controls
                             }
                             break;
                     }
+                    ForwardKeyMessage(m);
                     break;
                 case WM.CHAR:
                 case WM.KEYUP:
-                    System.Diagnostics.Trace.WriteLine("KEYMESSAGE: " + m);
+                    ForwardKeyMessage(m);
                     break;
                 case WM.LBUTTONDOWN:
                 case WM.RBUTTONDOWN:
@@ -194,6 +201,15 @@ namespace Acacia.Controls
                     break;
             }
             return false;
+        }
+
+        private void ForwardKeyMessage(Message m)
+        {
+            System.Diagnostics.Trace.WriteLine("KEY: " + m);
+            if ((WM)m.Msg == WM.KEYDOWN)
+            {
+                OnPreviewKeyDown(new PreviewKeyDownEventArgs((Keys)m.WParam.ToInt32()));
+            }
         }
 
         // Cannot use visibility of _dropDown to keep the open state, as clicking on the button already
@@ -234,9 +250,13 @@ namespace Acacia.Controls
                 {
                     if (value)
                     {
-                        _dropListHost.Control.Width = this.Width;
-                        _dropListHost.Control.Height = 200;
-                        _dropListHost.Control.Refresh();
+                        // Calculate the height of the control
+                        int maxHeight = GetDropDownHeightMax();
+                        int minHeight = GetDropDownHeightMin();
+                        Size prefSize = _dropControl.GetPreferredSize(new Size(Width, maxHeight));
+                        _dropControl.Width = Util.Bound(prefSize.Width, Width, Width * 2);
+                        _dropControl.Height = Util.Bound(prefSize.Height, minHeight, maxHeight);
+                        // Show the drop down below the current control
                         _dropDown.Show(this.PointToScreen(new Point(0, Height)));
                         _dropDown.Capture = true;
                     }
@@ -248,6 +268,9 @@ namespace Acacia.Controls
                 }
             }
         }
+
+        protected abstract int GetDropDownHeightMax();
+        protected abstract int GetDropDownHeightMin();
 
         #endregion
 
@@ -306,7 +329,6 @@ namespace Acacia.Controls
         protected override void OnPaint(PaintEventArgs e)
         {
             _style[COMBOBOXPARTS.CP_BORDER]?.DrawBackground(e.Graphics, _state.Root.State, ClientRectangle);
-            System.Diagnostics.Trace.WriteLine(string.Format("BUTTON: {0}", _stateButton.State));
             _style[COMBOBOXPARTS.CP_DROPDOWNBUTTON]?.DrawBackground(e.Graphics, _stateButton.State, _stateButton.Rectangle);
         }
 

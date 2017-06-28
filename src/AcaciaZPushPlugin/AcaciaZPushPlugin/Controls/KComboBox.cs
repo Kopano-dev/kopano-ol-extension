@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Acacia.Native;
+using Acacia.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -70,6 +72,30 @@ namespace Acacia.Controls
             {
                 _list.BindingContext = new BindingContext();
                 _list.DataSource = value;
+            }
+        }
+
+        protected override int GetDropDownHeightMax()
+        {
+            return Util.Bound(Items.Count, 1, MaxDropDownItems) * ItemHeight + _list.Margin.Vertical;
+        }
+
+        protected override int GetDropDownHeightMin()
+        {
+            return ItemHeight;
+        }
+
+        protected override void OnPreviewKeyDown(PreviewKeyDownEventArgs e)
+        {
+            switch(e.KeyCode)
+            {
+                case Keys.Down:
+                case Keys.Up:
+                    User32.SendMessage(_list.Handle, (int)WM.KEYDOWN, new IntPtr((int)e.KeyCode), IntPtr.Zero);
+                    break;
+                default:
+                    base.OnPreviewKeyDown(e);
+                    break;
             }
         }
     }

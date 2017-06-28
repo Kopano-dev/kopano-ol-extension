@@ -179,5 +179,15 @@ namespace Acacia.Utils
             int additional = (align - (size % align)) % align;
             return size + additional;
         }
+
+        public static NumType Bound<NumType>(NumType value, NumType min, NumType max)
+            where NumType : IComparable
+        {
+            if (value.CompareTo(min) < 0)
+                return min;
+            if (value.CompareTo(max) > 0)
+                return max;
+            return value;
+        }
     }
 }
