@@ -218,7 +218,7 @@ namespace Acacia.UI
                 BeginUpdate();
                     DataSource = users;
                     //SetItemsCore(users);
-                    if (dropDown)
+                    if (dropDown && text.Length != 0)
                         DroppedDown = true;
                     //Cursor.Current = Cursors.Default;
                     //Text = _lastText;

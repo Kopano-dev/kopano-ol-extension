@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Acacia.Controls
 {
-    public abstract class KAbstractComboBox : ContainerControl
+    public abstract class KAbstractComboBox : ContainerControl, IMessageFilter
     {
         #region Properties
 
@@ -41,6 +41,19 @@ namespace Acacia.Controls
             set { _edit.PlaceholderFont = value; }
         }
 
+        protected Control DropControl
+        {
+            get
+            {
+                return _dropControl;
+            }
+            set
+            {
+                _dropControl = value;
+                SetupDropDown();
+            }
+        }
+
 
         #endregion
 
@@ -64,8 +77,28 @@ namespace Acacia.Controls
             _edit.TextChanged += _edit_TextChanged;
             _edit.LostFocus += _edit_LostFocus;
             _edit.PreviewKeyDown += _edit_PreviewKeyDown;
+            _edit.Leave += _edit_Leave;
+            _edit.Enter += _edit_Enter;
+
+            Application.AddMessageFilter(this);
         }
 
+        private void _edit_Enter(object sender, EventArgs e)
+        {
+            System.Diagnostics.Trace.WriteLine(string.Format("_edit_Enter"));
+        }
+
+        private void _edit_Leave(object sender, EventArgs e)
+        {
+            System.Diagnostics.Trace.WriteLine(string.Format("_edit_Leave"));
+            DroppedDown = false;
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            Application.RemoveMessageFilter(this);
+            base.OnHandleDestroyed(e);
+        }
 
         #endregion
 
@@ -96,7 +129,7 @@ namespace Acacia.Controls
                     if (DroppedDown)
                     {
                         DroppedDown = false;
-                        e.IsInputKey = false;
+                        e.IsInputKey = true;
                         return;
                     }
                     break;
@@ -113,24 +146,10 @@ namespace Acacia.Controls
             OnPreviewKeyDown(e);
         }
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Winapi)]
-        internal static extern IntPtr GetFocus();
-
-        private Control GetFocusedControl()
-        {
-            Control focusedControl = null;
-            // To get hold of the focused control:
-            IntPtr focusedHandle = GetFocus();
-            if (focusedHandle != IntPtr.Zero)
-                // Note that if the focused Control is not a .Net control, then this will return null.
-                focusedControl = Control.FromHandle(focusedHandle);
-            return focusedControl;
-        }
-
         private void _edit_LostFocus(object sender, EventArgs e)
         {
-            System.Diagnostics.Trace.WriteLine("_edit_LostFocus: " + GetFocusedControl()?.Name);
             DroppedDown = false;
+            System.Diagnostics.Trace.WriteLine(string.Format("_edit_LostFocus"));
         }
 
         protected override void OnGotFocus(EventArgs e)
@@ -148,33 +167,49 @@ namespace Acacia.Controls
 
         #region Drop down
 
-        public Control DropControl
+        private class DropDownRenderer : ToolStripRenderer
         {
-            get
+            private readonly KVisualStyle<COMBOBOXPARTS, State>.Part _style;
+
+            public DropDownRenderer(KVisualStyle<COMBOBOXPARTS, State>.Part style)
             {
-                return _dropControl;
+                this._style = style;
             }
-            set
+
+            protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
             {
-                _dropControl = value;
-                SetupDropDown();
+                _style.DrawBackground(e.Graphics, State.Pressed, e.AffectedBounds);
             }
         }
 
-        private ToolStripDropDown _dropDown;
+        private class DropDown : ToolStripDropDown
+        {
+            public DropDown(DropDownRenderer renderer)
+            {
+                Renderer = renderer;
+            }
+        }
+
+        private DropDown _dropDown;
         private Control _dropControl;
         private ToolStripControlHost _dropListHost;
 
         private void SetupDropDown()
         {
             _dropListHost = new ToolStripControlHost(_dropControl);
+
             _dropListHost.Padding = new Padding(0);
             _dropListHost.Margin = new Padding(0);
-            _dropListHost.AutoSize = false;
+            _dropListHost.AutoSize = true;
             _dropListHost.GotFocus += (s, e) => System.Diagnostics.Trace.WriteLine("_dropListHost.GotFocus");
 
-            _dropDown = new ToolStripDropDown();
+            _dropDown = new DropDown(new DropDownRenderer(_style[COMBOBOXPARTS.CP_BORDER]));
             _dropDown.Padding = new Padding(0);
+            using (Graphics graphics = CreateGraphics())
+            {
+                Padding insets = _style[COMBOBOXPARTS.CP_BORDER]?.GetMargins(graphics, State.Hot) ?? new Padding();
+                _dropDown.Padding = insets;
+            }
             _dropDown.Margin = new Padding(0);
             _dropDown.AutoSize = true;
             _dropDown.DropShadowEnabled = false;
@@ -213,20 +248,27 @@ namespace Acacia.Controls
                 {
                     if (value)
                     {
-                        // Calculate the height of the control
+                        // Calculate the dimensions of the dropdown
                         int maxHeight = GetDropDownHeightMax();
                         int minHeight = GetDropDownHeightMin();
-                        Size prefSize = _dropControl.GetPreferredSize(new Size(Width, maxHeight));
-                        _dropControl.Width = Util.Bound(prefSize.Width, Width, Width * 2);
-                        _dropControl.Height = Util.Bound(prefSize.Height, minHeight, maxHeight);
+                        //Size prefSize = new Size(minHeight, maxHeight);
+                        Size prefSize = _dropControl.GetPreferredSize(new Size(Width - _dropDown.Padding.Horizontal, maxHeight - _dropDown.Padding.Vertical));
+                        int width = Util.Bound(prefSize.Width, Width - _dropDown.Padding.Horizontal, Width * 2);
+                        int height = Util.Bound(prefSize.Height, minHeight, maxHeight);
+
+                        System.Diagnostics.Trace.WriteLine(string.Format("DROPDOWN1: {0} - {1} - {2}", prefSize, width,
+                            ((ListBox)_dropControl).ItemHeight));
+                        _dropControl.MaximumSize = _dropControl.MinimumSize = new Size(width, height);
+
                         // Show the drop down below the current control
-                        _dropDown.Show(this.PointToScreen(new Point(0, Height)));
-                        _dropControl.Capture = true;
+                        _dropDown.Show(this.PointToScreen(new Point(0, Height - 1)));
+                        //_dropListHost.Height = _dropDown.Height - _dropDown.Padding.Vertical;
+                        System.Diagnostics.Trace.WriteLine(string.Format("DROPDOWN2: {0} - {1} - {2} - {3}: {4}",
+                            _dropDown.Width, _dropListHost.Width, _dropControl.Width, width, this.Width));
                     }
                     else
                     {
                         _dropDown.Close();
-                        _dropControl.Capture = false;
                     }
                     _isDroppedDown = value;
                 }
@@ -348,5 +390,60 @@ namespace Acacia.Controls
         }
 
         #endregion
+
+        #region Message filtering
+
+        public bool PreFilterMessage(ref Message m)
+        {
+            switch ((WM)m.Msg)
+            {
+                case WM.LBUTTONDOWN:
+                case WM.RBUTTONDOWN:
+                case WM.MBUTTONDOWN:
+                    return CheckMouseDown(m, false);
+                case WM.NCLBUTTONDOWN:
+                case WM.NCRBUTTONDOWN:
+                case WM.NCMBUTTONDOWN:
+                    return CheckMouseDown(m, true);
+
+            }
+            return false;
+        }
+
+        private bool CheckMouseDown(Message m, bool nonClient)
+        {
+            if (_dropDown.Visible)
+            {
+                //
+                // When a mouse button is pressed, we should determine if it is within the client coordinates
+                // of the active dropdown.  If not, we should dismiss it.
+                //
+                int i = unchecked((int)(long)m.LParam);
+                short x = (short)(i & 0xFFFF);
+                short y = (short)((i >> 16) & 0xffff);
+                Point pt = new Point(x, y);
+                Point ptOrig = pt;
+                if (!nonClient)
+                {
+                    // Map to global coordinates
+                    User32.MapWindowPoints(m.HWnd, IntPtr.Zero, ref pt, 1);
+                }
+                System.Diagnostics.Trace.WriteLine(string.Format("MOUSE: {0} - {1} - {2}", pt, _dropDown.Bounds, ptOrig));
+                if (!_dropDown.Bounds.Contains(pt))
+                {
+                    System.Diagnostics.Trace.WriteLine(string.Format("CONTAINS1"));
+                    User32.MapWindowPoints(m.HWnd, Handle, ref pt, 1);
+                    if (!ClientRectangle.Contains(pt))
+                    {
+                        DroppedDown = false;
+                        return false;
+                    }
+                }
+            }
+            return false;
+        }
+
+        #endregion
+
     }
 }
