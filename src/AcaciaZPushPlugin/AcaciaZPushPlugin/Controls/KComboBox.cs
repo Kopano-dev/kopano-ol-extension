@@ -14,7 +14,7 @@ namespace Acacia.Controls
 {
     public class KComboBox : KAbstractComboBox
     {
-        private readonly ListBox _list;
+        protected readonly KListBox _list;
 
         #region Items properties
 
@@ -45,10 +45,16 @@ namespace Acacia.Controls
         public KComboBox()
         {
             MaxDropDownItems = 8;
-            _list = new ListBox();
+            _list = new KListBox();
             _list.IntegralHeight = true;
             DropControl = _list;
             _list.DisplayMember = "DisplayName"; // TODO: remove from here
+            _list.SelectedIndexChanged += _list_SelectedIndexChanged;
+        }
+
+        private void _list_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            System.Diagnostics.Trace.WriteLine("SELECTED: " + _list.SelectedIndex);
         }
 
         public void BeginUpdate()

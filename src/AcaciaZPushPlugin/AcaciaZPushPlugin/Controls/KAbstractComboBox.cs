@@ -215,23 +215,14 @@ namespace Acacia.Controls
         // Cannot use visibility of _dropDown to keep the open state, as clicking on the button already
         // hides the popup before the event handler is shown.
         private bool _isDroppedDown;
-        private bool _clickedButton;
 
         private void _dropDown_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
-            /*if (_stateButton.IsMouseOver)
-            {
-                _clickedButton = true;
-            }*/
             _isDroppedDown = false;
         }
 
         private void Button_Clicked()
         {
-            /*if (_clickedButton)
-                _clickedButton = false;
-            else
-                DroppedDown = true;*/
             DroppedDown = !DroppedDown;
             this._edit.Focus();
         }
@@ -258,7 +249,6 @@ namespace Acacia.Controls
                         _dropControl.Height = Util.Bound(prefSize.Height, minHeight, maxHeight);
                         // Show the drop down below the current control
                         _dropDown.Show(this.PointToScreen(new Point(0, Height)));
-                        _dropDown.Capture = true;
                     }
                     else
                     {

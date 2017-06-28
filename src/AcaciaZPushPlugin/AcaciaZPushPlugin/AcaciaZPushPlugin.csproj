@@ -241,6 +241,9 @@
     <Compile Include="Controls\KHintButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\KListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\KProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
