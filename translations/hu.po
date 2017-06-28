@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-06 11:27+0000\n"
-"PO-Revision-Date: 2016-12-28 11:55+0000\n"
-"Last-Translator: Zoltan <zoltan.kiss@serverside.hu>\n"
-"Language-Team: Hungarian <http://translate.kopano.io/projects/kopano/kopano-ol-extension/hu/>\n"
+"PO-Revision-Date: 2017-06-28 16:11+0000\n"
+"Last-Translator: Zoltan Kiss <zoltan.kiss@serverside.hu>\n"
+"Language-Team: Hungarian <http://translate.kopano.io/projects/kopano/kopano-"
+"ol-extension/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -977,91 +978,95 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\Signatures\\SignaturesSettings\\checkForceSet.Text"
 msgid "Override local signatures"
-msgstr ""
+msgstr "Helyi aláírások felülírása"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelRemaining.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelRemaining.Text"
 msgid "Remaining"
-msgstr ""
+msgstr "Hátralévő"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelAccount.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelAccount.Text"
 msgid "Account"
-msgstr ""
+msgstr "Fiók"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboAccounts.Items
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboAccounts.Items"
 msgid "All Z-Push accounts"
-msgstr ""
+msgstr "Minden Z-Push fiók"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelProgress.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelProgress.Text"
 msgid "Progress"
-msgstr ""
+msgstr "Folyamat"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelResync.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelResync.Text"
 msgid "Resynchronise"
-msgstr ""
+msgstr "Újraszinkronizálás"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonGAB.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonGAB.Hint"
 msgid "Resynchronise the global address book"
-msgstr ""
+msgstr "Globális címlista újraszinkronizálása"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonGAB.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonGAB.Text"
 msgid "Global Address Book"
-msgstr ""
+msgstr "Globális címlista"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonSignatures.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonSignatures.Hint"
 msgid "Resynchronise all signatures from the server"
-msgstr ""
+msgstr "Minden aláírás szinkronizálása a szerverről"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonSignatures.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonSignatures.Text"
 msgid "Signatures"
-msgstr ""
+msgstr "Aláírások"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonServerData.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonServerData.Hint"
 msgid "Resynchronise all server data on shared folders and out-of-office"
 msgstr ""
+"A szerver minden megosztott mappa és házon kívül adatnának "
+"újraszinkronizálása"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonServerData.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonServerData.Text"
 msgid "Server Data"
-msgstr ""
+msgstr "Szerver adatok"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonFullResync.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonFullResync.Hint"
 msgid "Fully resynchronise the Z-Push store. This requires a restart and may take some time."
 msgstr ""
+"Z-Push tároló teljes újraszinkronizálása. Újraindítás szükséges hozzá és sok "
+"időbe telhet."
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonFullResync.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonFullResync.Text"
 msgid "Full Resynchronisation"
-msgstr ""
+msgstr "Teljes újraszinkronizálás"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\$this.Text"
 msgid "Synchronisation State"
-msgstr ""
+msgstr "Szinkronizálás állapota"
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Body
@@ -1069,68 +1074,76 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Body"
 msgid "The contacts folder \'{0}\' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click \'Yes\' to restart Outlook now, or \'No\' if you plan to restart Outlook later."
 msgstr ""
+"Új névjegyalbum a szerveren: \\'{0}\\'. A mappa szinkronizálásra kerül, de "
+"amíg nem indítja újra az Outlookot nem fogja látni a Névjegyalbum mappák "
+"között. Kattintson a \\'Yes\\'-re ha újra kívánja indítani az Outlookot "
+"most, vagy a \\'No\\'-ra, amennyiben később kívánja újraindítani."
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Title"
 msgid "Contacts folder"
-msgstr ""
+msgstr "Névjegy mappa"
 
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Body"
 msgid "The password for account \'{0}\' is not available. Advanced Z-Push features will not work."
 msgstr ""
+"A fiók ({0}) jelszava nem elérhető. A kibővített Z-Push szolgáltatások nem "
+"működnek."
 
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Title"
 msgid "Password unavailable"
-msgstr ""
+msgstr "Jelszó nem elérhető"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_Signatures
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_Signatures"
 msgid "Signatures"
-msgstr ""
+msgstr "Aláírások"
 
 #: AcaciaZPushPlugin\Properties\Resources\SignaturesSync_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SignaturesSync_Label"
 msgid "The signatures are being synchronised."
-msgstr ""
+msgstr "Az aláírások szinkronizálása folyamatban."
 
 #: AcaciaZPushPlugin\Properties\Resources\SignaturesSync_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SignaturesSync_Title"
 msgid "Signatures"
-msgstr ""
+msgstr "Aláírások"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOF_Unsaved_Changes
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOF_Unsaved_Changes"
 msgid "There are unsaved changes. Do you really want to to discard these?"
 msgstr ""
+"Nem mentett változások vannak az űrlapon. Biztosan szeretné a változásokat "
+"eldobni?"
 
 #. {0} will be replaced with progress in percent
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Label"
 msgid "Syncing: {0}%"
-msgstr ""
+msgstr "Szinkronizálás: {0}%"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Label_Done
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Label_Done"
 msgid "Up-to-date"
-msgstr ""
+msgstr "Naprakész"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Screentip"
 msgid "Synchronisation state"
-msgstr ""
+msgstr "A szinkronizálás állapota"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Supertip
 #, csharp-format
@@ -1211,4 +1224,3 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Title"
 msgid "Private event"
 msgstr ""
-
