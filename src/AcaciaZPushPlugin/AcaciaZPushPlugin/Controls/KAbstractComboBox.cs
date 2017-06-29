@@ -16,6 +16,9 @@ namespace Acacia.Controls
     {
         #region Properties
 
+        /// <summary>
+        /// Hide the AutoSize property, it is always enabled
+        /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         override public bool AutoSize { get { return base.AutoSize; } set { base.AutoSize = value; } }
 
@@ -41,60 +44,21 @@ namespace Acacia.Controls
             set { _edit.PlaceholderFont = value; }
         }
 
+        /// <summary>
+        /// The control to set in the drop-down
+        /// </summary>
         protected Control DropControl
         {
             get
             {
-                return _dropControl;
+                return _dropDown?.Control;
             }
             set
             {
-                _dropControl = value;
-                SetupDropDown();
+                _dropDown = new DropDown(this, value);
             }
         }
 
-
-        #endregion
-
-        #region Components
-
-        private KTextBox _edit;
-
-        #endregion
-
-        #region Init
-
-        public KAbstractComboBox()
-        {
-            AutoSize = true;
-            SetupRenderer();
-
-            _edit = new KTextBox();
-            _edit.BorderStyle = BorderStyle.None;
-            Controls.Add(_edit);
-            _state.AddControl(_edit);
-            _edit.TextChanged += _edit_TextChanged;
-            _edit.LostFocus += _edit_LostFocus;
-            _edit.PreviewKeyDown += _edit_PreviewKeyDown;
-            _edit.Leave += _edit_Leave;
-            _edit.Enter += _edit_Enter;
-        }
-
-        private void _edit_Enter(object sender, EventArgs e)
-        {
-            System.Diagnostics.Trace.WriteLine(string.Format("_edit_Enter"));
-        }
-
-        private void _edit_Leave(object sender, EventArgs e)
-        {
-            System.Diagnostics.Trace.WriteLine(string.Format("_edit_Leave"));
-            DroppedDown = false;
-        }
-
-        #endregion
-
-        #region Text edit
 
         override public string Text
         {
@@ -107,6 +71,34 @@ namespace Acacia.Controls
             }
         }
 
+        #endregion
+
+        #region Init
+
+        public KAbstractComboBox()
+        {
+            AutoSize = true;
+            SetupRenderer();
+            SetupEdit();
+        }
+
+        #endregion
+
+        #region Text edit
+
+        private KTextBox _edit;
+
+        private void SetupEdit()
+        {
+            _edit = new KTextBox();
+            _edit.BorderStyle = BorderStyle.None;
+            Controls.Add(_edit);
+            _state.AddControl(_edit);
+            _edit.TextChanged += _edit_TextChanged;
+            _edit.LostFocus += _edit_LostFocus;
+            _edit.PreviewKeyDown += _edit_PreviewKeyDown;
+        }
+
         public void FocusEdit()
         {
             _edit.Select();
@@ -117,10 +109,11 @@ namespace Acacia.Controls
             switch (e.KeyCode)
             {
                 case Keys.Escape:
-                    // Escape closes the dropdown
+                    // Escape closes the drop-down
                     if (DroppedDown)
                     {
                         DroppedDown = false;
+                        // Grab the keypress to prevent closing a dialog
                         e.IsInputKey = true;
                         return;
                     }
@@ -130,7 +123,7 @@ namespace Acacia.Controls
                     if (!DroppedDown)
                     {
                         DroppedDown = true;
-                        e.IsInputKey = false;
+                        e.IsInputKey = true;
                         return;
                     }
                     break;
@@ -140,14 +133,9 @@ namespace Acacia.Controls
 
         private void _edit_LostFocus(object sender, EventArgs e)
         {
+            // Close the drop down when losing focus. This also handles the case when another window is selected,
+            // as that causes the focus to be taken away
             DroppedDown = false;
-            System.Diagnostics.Trace.WriteLine(string.Format("_edit_LostFocus"));
-        }
-
-        protected override void OnGotFocus(EventArgs e)
-        {
-            base.OnGotFocus(e);
-            System.Diagnostics.Trace.WriteLine("OnGotFocus");
         }
 
         private void _edit_TextChanged(object sender, EventArgs e)
@@ -160,7 +148,7 @@ namespace Acacia.Controls
         #region Drop down
 
         /// <summary>
-        /// Custom drop down. Registers a message filter when shown to close on clicks outside the dropdown.
+        /// Custom drop down. Registers a message filter when shown to close on clicks outside the drop-down.
         /// This is required as the default AutoClose behaviour consumes all keyboard events.
         /// </summary>
         private class DropDown : ToolStripDropDown, IMessageFilter
@@ -185,7 +173,15 @@ namespace Acacia.Controls
 
             private readonly KAbstractComboBox _owner;
 
-            public DropDown(KAbstractComboBox owner)
+            public Control Control
+            {
+                get
+                {
+                    return ((ToolStripControlHost)Items[0]).Control;
+                }
+            }
+
+            public DropDown(KAbstractComboBox owner, Control control)
             {
                 this._owner = owner;
 
@@ -202,7 +198,7 @@ namespace Acacia.Controls
                 AutoClose = false;
 
                 // Add a host for the control
-                ToolStripControlHost host = new ToolStripControlHost(owner._dropControl);
+                ToolStripControlHost host = new ToolStripControlHost(control);
                 host.Padding = new Padding(0);
                 host.Margin = new Padding(0);
                 host.AutoSize = true;
@@ -213,6 +209,7 @@ namespace Acacia.Controls
             {
                 base.OnVisibleChanged(e);
 
+                // Only register the message filter when it can do something useful
                 if (Visible)
                     Application.AddMessageFilter(this);
                 else
@@ -221,6 +218,7 @@ namespace Acacia.Controls
 
             public bool PreFilterMessage(ref Message m)
             {
+                // Handle mouse clicks to close the popup
                 switch ((WM)m.Msg)
                 {
                     case WM.LBUTTONDOWN:
@@ -245,10 +243,10 @@ namespace Acacia.Controls
                     User32.MapWindowPoints(m.HWnd, IntPtr.Zero, ref pt, 1);
                 }
 
-                // Check if the click was inside the dropdown
+                // Check if the click was inside the drop-down
                 if (!Bounds.Contains(pt))
                 {
-                    // Outside the dropdown, check if it was inside the combo box
+                    // Outside the drop-down, check if it was inside the combo box
 
                     // Map to the combo box coordinates
                     User32.MapWindowPoints(IntPtr.Zero, _owner.Handle, ref pt, 1);
@@ -263,7 +261,7 @@ namespace Acacia.Controls
                     }
                     else
                     {
-                        // Outside the dropdown, close it
+                        // Outside the drop-down, close it
                         Close();
                     }
                 }
@@ -272,26 +270,9 @@ namespace Acacia.Controls
         }
 
         private DropDown _dropDown;
-        private Control _dropControl;
-
-        private void SetupDropDown()
-        {
-            _dropDown = new DropDown(this);
-            _dropDown.Closed += _dropDown_Closed;
-        }
-
-        // Cannot use visibility of _dropDown to keep the open state, as clicking on the button already
-        // hides the popup before the event handler is shown.
-        private bool _isDroppedDown;
-
-        private void _dropDown_Closed(object sender, ToolStripDropDownClosedEventArgs e)
-        {
-            _isDroppedDown = false;
-        }
 
         private void Button_Clicked()
         {
-            System.Diagnostics.Trace.WriteLine("Button_Clicked");
             DroppedDown = !DroppedDown;
             this._edit.Focus();
         }
@@ -301,12 +282,12 @@ namespace Acacia.Controls
         {
             get
             {
-                return _isDroppedDown;
+                return _dropDown?.Visible == true;
             }
 
             set
             {
-                if (value != _isDroppedDown)
+                if (value != DroppedDown)
                 {
                     if (value)
                     {
@@ -316,30 +297,24 @@ namespace Acacia.Controls
                     {
                         _dropDown.Close();
                     }
-                    _isDroppedDown = value;
                 }
             }
         }
 
         private void ShowDropDown()
         {
-            // Calculate the dimensions of the dropdown
+            // Calculate the dimensions of the drop-down
             int maxHeight = GetDropDownHeightMax();
             int minHeight = GetDropDownHeightMin();
-            //Size prefSize = new Size(minHeight, maxHeight);
-            Size prefSize = _dropControl.GetPreferredSize(new Size(Width - _dropDown.Padding.Horizontal, maxHeight - _dropDown.Padding.Vertical));
+
+            Size prefSize = DropControl.GetPreferredSize(new Size(Width - _dropDown.Padding.Horizontal, maxHeight - _dropDown.Padding.Vertical));
             int width = Util.Bound(prefSize.Width, Width - _dropDown.Padding.Horizontal, Width * 2);
             int height = Util.Bound(prefSize.Height, minHeight, maxHeight);
 
-            System.Diagnostics.Trace.WriteLine(string.Format("DROPDOWN1: {0} - {1} - {2}", prefSize, width,
-                ((ListBox)_dropControl).ItemHeight));
-            _dropControl.MaximumSize = _dropControl.MinimumSize = new Size(width, height);
+            DropControl.MaximumSize = DropControl.MinimumSize = new Size(width, height);
 
             // Show the drop down below the current control
             _dropDown.Show(this.PointToScreen(new Point(0, Height - 1)));
-            //_dropListHost.Height = _dropDown.Height - _dropDown.Padding.Vertical;
-            System.Diagnostics.Trace.WriteLine(string.Format("DROPDOWN2: {0} - {1} - {2} - {3}: {4}",
-                _dropDown.Width, 0, _dropControl.Width, width, this.Width));
         }
 
         protected abstract int GetDropDownHeightMax();
