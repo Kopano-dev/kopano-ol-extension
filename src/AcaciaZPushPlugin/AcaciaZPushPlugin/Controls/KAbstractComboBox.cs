@@ -59,15 +59,24 @@ namespace Acacia.Controls
             }
         }
 
+        protected int _settingText = 0;
 
         override public string Text
         {
             get { return _edit.Text; }
             set
             {
-                _edit.Text = value;
-                // Set the cursor after the text
-                _edit.Select(_edit.Text.Length, 0);
+                ++_settingText;
+                try
+                {
+                    _edit.Text = value;
+                    // Set the cursor after the text
+                    _edit.Select(_edit.Text.Length, 0);
+                }
+                finally
+                {
+                    --_settingText;
+                }
             }
         }
 
@@ -327,12 +336,6 @@ namespace Acacia.Controls
             DropControl.MaximumSize = DropControl.MinimumSize = new Size(width, height);
 
             _dropDown.Control.Bounds = _dropDown.ControlHost.Bounds;
-            System.Diagnostics.Trace.WriteLine(string.Format(
-                "Layout: {0}, host: {1}, control: {2}",
-                height,
-                _dropDown.ControlHost.Bounds,
-                _dropDown.Control.Bounds
-                ));
         }
 
         protected abstract int GetDropDownHeightMax();

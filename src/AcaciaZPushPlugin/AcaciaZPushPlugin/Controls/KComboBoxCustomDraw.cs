@@ -49,7 +49,7 @@ namespace Acacia.Controls
             OnDrawItem(new DrawItemEventArgs(e, GetDisplayItem(e.Index)));
         }
 
-        abstract protected void OnDrawItem(DrawItemEventArgs e);
+        protected abstract void OnDrawItem(DrawItemEventArgs e);
 
         protected abstract void OnMeasureItem(MeasureItemEventArgs e);
 

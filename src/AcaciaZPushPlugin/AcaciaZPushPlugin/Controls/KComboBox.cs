@@ -27,6 +27,7 @@ namespace Acacia.Controls
         {
             private readonly KComboBox _owner;
             private int _committedIndex = -1;
+            public int ItemWidth { get; set; }
 
             public DropList(KComboBox owner, bool ownerDraw)
             {
@@ -91,7 +92,8 @@ namespace Acacia.Controls
             {
                 // Preferred size is simply the size of the (maximum) number of items
                 Size prefSize = base.GetPreferredSize(proposedSize);
-                return new Size(prefSize.Width, ItemHeight * Math.Min(Items.Count, _owner.MaxDropDownItems));
+                int w = Math.Max(prefSize.Width, ItemWidth);
+                return new Size(w, ItemHeight * Math.Min(Items.Count, _owner.MaxDropDownItems));
             }
 
             public void CommitSelection()
@@ -162,17 +164,40 @@ namespace Acacia.Controls
                 Text = "";
                 _selectedItem = null;
             }
+            OnSelectedItemChanged();
         }
 
-        public void BeginUpdate()
+        public DisplayItem SelectedItem
         {
-            _list.BeginUpdate();
+            get { return _selectedItem; }
         }
 
-        public void EndUpdate()
+        public void Select(object data)
         {
-            _list.EndUpdate();
+            _list.SelectedIndex = -1;
+            Text = null;
+            _selectedItem = null;
+            if (data != null)
+            {
+                foreach (DisplayItem item in DisplayItems)
+                {
+                    if (item.Item.Equals(data))
+                    {
+                        _list.SelectedItem = item;
+                        _selectedItem = item;
+                        break;
+                    }
+                }
+            }
         }
+
+        public event EventHandler SelectedItemChanged;
+
+        protected virtual void OnSelectedItemChanged()
+        {
+            SelectedItemChanged?.Invoke(this, new EventArgs());
+        }
+
 
         /// <summary>
         /// Wrapper for list items to use custom string formatting
@@ -213,10 +238,13 @@ namespace Acacia.Controls
                 if (_dataSource != value)
                 {
                     _dataSource = value;
+                    _displayItemCache.Clear();
                     UpdateItems();
                 }
             }
         }
+
+        private readonly Dictionary<object, DisplayItem> _displayItemCache = new Dictionary<object, DisplayItem>();
 
         private void UpdateItems()
         {
@@ -228,12 +256,17 @@ namespace Acacia.Controls
                 int selected = -1;
                 foreach (object item in _dataSource.FilteredItems)
                 {
-                    DisplayItem displayItem = new DisplayItem(this, item);
-                    if (displayItem.Equals(_selectedItem))
+                    DisplayItem displayItem;
+                    if (!_displayItemCache.TryGetValue(item, out displayItem))
+                    {
+                        displayItem = new DisplayItem(this, item);
+                        _displayItemCache.Add(item, displayItem);
+                    }
+
+                    if (displayItem == _selectedItem)
                         selected = _list.Items.Count;
                     _list.Items.Add(displayItem);
                 }
-                System.Diagnostics.Trace.WriteLine(string.Format("FILTER: {0}", _list.Items.Count, selected));
 
                 // Select the current item only if new number of items is smaller. This means we don't keep selection
                 // when the user is removing text, only when they are typing more.
@@ -277,7 +310,7 @@ namespace Acacia.Controls
         protected void SetItemSize(Size size)
         {
             ItemHeight = size.Height;
-            _list.Width = size.Width;
+            _list.ItemWidth = size.Width;
         }
 
         protected override void OnTextChanged(EventArgs e)
@@ -290,7 +323,10 @@ namespace Acacia.Controls
                 DataSource.Filter = new KDataFilter(Text);
                 UpdateItems();
 
-                DroppedDown = true;
+                if (_settingText == 0)
+                {
+                    DroppedDown = true;
+                }
             }
         }
 
@@ -322,8 +358,12 @@ namespace Acacia.Controls
                 // Enter commits the selected index and closes the drop down
                 case Keys.Enter:
                 case Keys.Tab:
-                    _list.CommitSelection();
-                    DroppedDown = false;
+                    if (DroppedDown)
+                    {
+                        if (_list.SelectedIndex >= 0)
+                            _list.CommitSelection();
+                        DroppedDown = false;
+                    }
                     e.IsInputKey = e.KeyCode == Keys.Enter;
                     break;
                 default:
