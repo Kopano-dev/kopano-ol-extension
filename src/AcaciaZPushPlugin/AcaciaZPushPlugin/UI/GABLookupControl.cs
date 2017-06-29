@@ -216,7 +216,7 @@ namespace Acacia.UI
 
                 // Setting the datasource will trigger a select if there is a match
                 BeginUpdate();
-                    DataSource = users;
+                    //DataSource = users;
                     //SetItemsCore(users);
                     if (dropDown && text.Length != 0)
                         DroppedDown = true;

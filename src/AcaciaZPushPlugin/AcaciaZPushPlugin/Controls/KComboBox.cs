@@ -45,13 +45,17 @@ namespace Acacia.Controls
             protected override void OnMouseLeave(EventArgs e)
             {
                 base.OnMouseLeave(e);
-                SelectedIndex = _committedIndex;
+                ResetSelectedIndex();
             }
 
             protected override void OnVisibleChanged(EventArgs e)
             {
                 base.OnVisibleChanged(e);
-                SelectedIndex = _committedIndex;
+            }
+
+            private void ResetSelectedIndex()
+            {
+                SelectedIndex = _committedIndex >= Items.Count ? -1 : _committedIndex;
             }
 
             protected override void OnMouseDown(MouseEventArgs e)
@@ -90,11 +94,17 @@ namespace Acacia.Controls
             {
                 // Don't notify until committed
             }
+
+            public void ItemsChanged(int selectIndex)
+            {
+                _committedIndex = SelectedIndex = selectIndex;
+
+            }
         }
 
-        #endregion
-
         private readonly DropList _list;
+
+        #endregion
 
         #region Items properties
 
@@ -108,19 +118,14 @@ namespace Acacia.Controls
         [Category("Behavior")]
         public int ItemHeight { get { return _list.ItemHeight; } set { _list.ItemHeight = value; } }
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        [Editor("System.Windows.Forms.Design.ListControlStringCollectionEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
-        [Localizable(true)]
-        [MergableProperty(false)]
-        [Category("Behavior")]
-        public ListBox.ObjectCollection Items { get { return _list.Items; } }
-
         [DefaultValue(8)]
         [Localizable(true)]
         [Category("Behavior")]
         public int MaxDropDownItems { get; set; }
 
         #endregion
+
+        private DisplayItem _selectedItem;
 
         public KComboBox()
         {
@@ -136,11 +141,13 @@ namespace Acacia.Controls
         {
             if (_list.SelectedIndex >= 0)
             {
-                Text = _list.SelectedItem.ToString();
+                _selectedItem = (DisplayItem)_list.SelectedItem;
+                Text = _selectedItem.ToString();
             }
             else
             {
                 Text = "";
+                _selectedItem = null;
             }
         }
 
@@ -154,24 +161,96 @@ namespace Acacia.Controls
             _list.EndUpdate();
         }
 
-        public object DataSource
+        /// <summary>
+        /// Wrapper for list items to use custom string formatting
+        /// </summary>
+        private class DisplayItem
         {
-            get
+            private readonly KComboBox _owner;
+            private readonly object _item;
+
+            public DisplayItem(KComboBox owner, object item)
             {
-                return _list.DataSource;
+                this._owner = owner;
+                this._item = item;
             }
 
+            public override string ToString()
+            {
+                return _owner.DataSource.GetItemText(_item);
+            }
+
+            public override bool Equals(object obj)
+            {
+                bool result = obj is DisplayItem && ((DisplayItem)obj)._item == _item;
+                return result;
+            }
+
+            public override int GetHashCode()
+            {
+                return ToString().GetHashCode();
+            }
+        }
+
+        private KDataSourceRaw _dataSource;
+        public KDataSourceRaw DataSource
+        {
+            get { return _dataSource; }
             set
             {
-                _list.BindingContext = new BindingContext();
-                _list.DataSource = value;
-                _list.SelectedIndex = -1;
+                if (_dataSource != value)
+                {
+                    _dataSource = value;
+                    UpdateItems();
+                }
+            }
+        }
+
+        private void UpdateItems()
+        {
+            int oldCount = _list.Items.Count;
+            _list.BeginUpdate();
+            try
+            {
+                _list.Items.Clear();
+                int selected = -1;
+                foreach (object item in _dataSource.FilteredItems)
+                {
+                    DisplayItem displayItem = new DisplayItem(this, item);
+                    if (displayItem.Equals(_selectedItem))
+                        selected = _list.Items.Count;
+                    _list.Items.Add(displayItem);
+                }
+                System.Diagnostics.Trace.WriteLine(string.Format("FILTER: {0}", _list.Items.Count, selected));
+
+                // Select the current item only if new number of items is smaller. This means we don't keep selection
+                // when the user is removing text, only when they are typing more.
+                _list.ItemsChanged(_list.Items.Count < oldCount ? selected : -1);
+            }
+            finally
+            {
+                _list.EndUpdate();
+            }
+            UpdateDropDownLayout();
+        }
+
+        protected override void OnTextChanged(EventArgs e)
+        {
+            base.OnTextChanged(e);
+
+            // Update the filter
+            if (DataSource != null)
+            {
+                DataSource.Filter = new KDataFilter(Text);
+                UpdateItems();
+
+                DroppedDown = true;
             }
         }
 
         protected override int GetDropDownHeightMax()
         {
-            return Util.Bound(Items.Count, 1, MaxDropDownItems) * ItemHeight + _list.Margin.Vertical;
+            return Util.Bound(_list.Items.Count, 1, MaxDropDownItems) * ItemHeight + _list.Margin.Vertical;
         }
 
         protected override int GetDropDownHeightMin()

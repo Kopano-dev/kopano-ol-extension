@@ -175,10 +175,12 @@ namespace Acacia.Controls
 
             public Control Control
             {
-                get
-                {
-                    return ((ToolStripControlHost)Items[0]).Control;
-                }
+                get { return ControlHost.Control; }
+            }
+
+            public ToolStripControlHost ControlHost
+            {
+                get { return (ToolStripControlHost)Items[0]; }
             }
 
             public DropDown(KAbstractComboBox owner, Control control)
@@ -303,6 +305,17 @@ namespace Acacia.Controls
 
         private void ShowDropDown()
         {
+            UpdateDropDownLayout();
+
+            // Show the drop down below the current control
+            _dropDown.Show(this.PointToScreen(new Point(0, Height - 1)));
+        }
+
+        protected void UpdateDropDownLayout()
+        {
+            if (_dropDown == null)
+                return;
+
             // Calculate the dimensions of the drop-down
             int maxHeight = GetDropDownHeightMax();
             int minHeight = GetDropDownHeightMin();
@@ -313,8 +326,13 @@ namespace Acacia.Controls
 
             DropControl.MaximumSize = DropControl.MinimumSize = new Size(width, height);
 
-            // Show the drop down below the current control
-            _dropDown.Show(this.PointToScreen(new Point(0, Height - 1)));
+            _dropDown.Control.Bounds = _dropDown.ControlHost.Bounds;
+            System.Diagnostics.Trace.WriteLine(string.Format(
+                "Layout: {0}, host: {1}, control: {2}",
+                height,
+                _dropDown.ControlHost.Bounds,
+                _dropDown.Control.Bounds
+                ));
         }
 
         protected abstract int GetDropDownHeightMax();
