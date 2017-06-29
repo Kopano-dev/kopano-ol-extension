@@ -28,12 +28,22 @@ namespace Acacia.Controls
             private readonly KComboBox _owner;
             private int _committedIndex = -1;
 
-            public DropList(KComboBox owner)
+            public DropList(KComboBox owner, bool ownerDraw)
             {
                 this._owner = owner;
                 SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
                 SetStyle(ControlStyles.Selectable, false);
                 BorderStyle = BorderStyle.None;
+
+                if (ownerDraw)
+                {
+                    DrawMode = DrawMode.OwnerDrawFixed;
+                }
+            }
+
+            protected override void OnDrawItem(DrawItemEventArgs e)
+            {
+                _owner.OnDrawItem(e);
             }
 
             protected override void OnMouseMove(MouseEventArgs e)
@@ -98,7 +108,6 @@ namespace Acacia.Controls
             public void ItemsChanged(int selectIndex)
             {
                 _committedIndex = SelectedIndex = selectIndex;
-
             }
         }
 
@@ -127,10 +136,14 @@ namespace Acacia.Controls
 
         private DisplayItem _selectedItem;
 
-        public KComboBox()
+        public KComboBox() : this(false)
         {
+        }
+
+        protected internal KComboBox(bool ownerDraw)
+        { 
             MaxDropDownItems = 8;
-            _list = new DropList(this);
+            _list = new DropList(this, ownerDraw);
             _list.IntegralHeight = true;
             _list.TabStop = false;
             _list.SelectedIndexChanged += _list_SelectedIndexChanged;
@@ -164,31 +177,30 @@ namespace Acacia.Controls
         /// <summary>
         /// Wrapper for list items to use custom string formatting
         /// </summary>
-        private class DisplayItem
+        public class DisplayItem
         {
             private readonly KComboBox _owner;
-            private readonly object _item;
+            public readonly object Item;
 
             public DisplayItem(KComboBox owner, object item)
             {
                 this._owner = owner;
-                this._item = item;
+                this.Item = item;
             }
 
             public override string ToString()
             {
-                return _owner.DataSource.GetItemText(_item);
+                return _owner.DataSource.GetItemText(Item);
             }
 
             public override bool Equals(object obj)
             {
-                bool result = obj is DisplayItem && ((DisplayItem)obj)._item == _item;
-                return result;
+                return obj is DisplayItem && ((DisplayItem)obj).Item == Item;
             }
 
             public override int GetHashCode()
             {
-                return ToString().GetHashCode();
+                return Item.GetHashCode();
             }
         }
 
@@ -226,12 +238,46 @@ namespace Acacia.Controls
                 // Select the current item only if new number of items is smaller. This means we don't keep selection
                 // when the user is removing text, only when they are typing more.
                 _list.ItemsChanged(_list.Items.Count < oldCount ? selected : -1);
+
+                MeasureItems();
+                UpdateDropDownLayout();
             }
             finally
             {
                 _list.EndUpdate();
             }
-            UpdateDropDownLayout();
+        }
+
+        protected IEnumerable<DisplayItem> DisplayItems
+        {
+            get
+            {
+                foreach (object item in _list.Items)
+                    yield return (DisplayItem)item;
+            }
+        }
+
+        protected DisplayItem GetDisplayItem(int index)
+        {
+            return (DisplayItem)_list.Items[index];
+        }
+
+        protected int DisplayItemCount
+        {
+            get { return _list.Items.Count; }
+        }
+
+        virtual protected void OnDrawItem(DrawItemEventArgs e) { }
+
+        protected virtual void MeasureItems()
+        {
+            // Virtual placeholder
+        }
+
+        protected void SetItemSize(Size size)
+        {
+            ItemHeight = size.Height;
+            _list.Width = size.Width;
         }
 
         protected override void OnTextChanged(EventArgs e)
@@ -265,6 +311,10 @@ namespace Acacia.Controls
                 // Forward cursor keys to the list
                 case Keys.Down:
                 case Keys.Up:
+                case Keys.PageDown:
+                case Keys.PageUp:
+                case Keys.Home:
+                case Keys.End:
                     User32.SendMessage(_list.Handle, (int)WM.KEYDOWN, new IntPtr((int)e.KeyCode), IntPtr.Zero);
                     e.IsInputKey = true;
                     break;
