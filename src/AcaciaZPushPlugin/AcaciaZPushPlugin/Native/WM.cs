@@ -45,7 +45,9 @@ namespace Acacia.Native
 
         LBUTTONDOWN = 0x0201,
         RBUTTONDOWN = 0x0204,
-        MBUTTONDOWN = 0x0207
+        MBUTTONDOWN = 0x0207,
+
+        MOUSEWHEEL = 0x020A,
 
     }
 }

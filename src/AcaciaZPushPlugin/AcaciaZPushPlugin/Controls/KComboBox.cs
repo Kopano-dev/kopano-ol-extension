@@ -381,5 +381,17 @@ namespace Acacia.Controls
                     break;
             }
         }
+
+        protected override void DefWndProc(ref Message m)
+        {
+            switch ((WM)m.Msg)
+            {
+                // Forward mouse wheel messages to the list
+                case WM.MOUSEWHEEL:
+                    m.Result = (IntPtr) User32.SendMessage(_list.Handle, m.Msg, m.WParam, m.LParam);
+                    return;
+            }
+            base.DefWndProc(ref m);
+        }
     }
 }
