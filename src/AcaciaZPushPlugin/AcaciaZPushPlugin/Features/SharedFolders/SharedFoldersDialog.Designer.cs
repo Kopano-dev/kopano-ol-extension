@@ -35,7 +35,6 @@
             this._layoutMain = new System.Windows.Forms.TableLayoutPanel();
             this._layoutSelectUser = new System.Windows.Forms.TableLayoutPanel();
             this.labelSelectUser = new System.Windows.Forms.Label();
-            this._layoutCenterGABLookup = new System.Windows.Forms.TableLayoutPanel();
             this.gabLookup = new Acacia.UI.GABLookupControl();
             this.buttonOpenUser = new System.Windows.Forms.Button();
             this.kTreeFolders = new Acacia.Controls.KTree();
@@ -53,7 +52,6 @@
             this._mainBusyHider.SuspendLayout();
             this._layoutMain.SuspendLayout();
             this._layoutSelectUser.SuspendLayout();
-            this._layoutCenterGABLookup.SuspendLayout();
             this._layoutOptions.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,7 +83,7 @@
             // 
             resources.ApplyResources(this._layoutSelectUser, "_layoutSelectUser");
             this._layoutSelectUser.Controls.Add(this.labelSelectUser, 0, 0);
-            this._layoutSelectUser.Controls.Add(this._layoutCenterGABLookup, 1, 0);
+            this._layoutSelectUser.Controls.Add(this.gabLookup, 1, 0);
             this._layoutSelectUser.Controls.Add(this.buttonOpenUser, 2, 0);
             this._layoutSelectUser.Name = "_layoutSelectUser";
             // 
@@ -93,12 +91,6 @@
             // 
             resources.ApplyResources(this.labelSelectUser, "labelSelectUser");
             this.labelSelectUser.Name = "labelSelectUser";
-            // 
-            // _layoutCenterGABLookup
-            // 
-            resources.ApplyResources(this._layoutCenterGABLookup, "_layoutCenterGABLookup");
-            this._layoutCenterGABLookup.Controls.Add(this.gabLookup, 0, 1);
-            this._layoutCenterGABLookup.Name = "_layoutCenterGABLookup";
             // 
             // gabLookup
             // 
@@ -221,8 +213,6 @@
             this._layoutMain.PerformLayout();
             this._layoutSelectUser.ResumeLayout(false);
             this._layoutSelectUser.PerformLayout();
-            this._layoutCenterGABLookup.ResumeLayout(false);
-            this._layoutCenterGABLookup.PerformLayout();
             this._layoutOptions.ResumeLayout(false);
             this._layoutOptions.PerformLayout();
             this.ResumeLayout(false);
@@ -246,7 +236,6 @@
         private System.Windows.Forms.Label labelPermissionsValue;
         private Controls.KBusyHider _mainBusyHider;
         private Controls.KDialogButtons dialogButtons;
-        private System.Windows.Forms.TableLayoutPanel _layoutCenterGABLookup;
         private UI.GABLookupControl gabLookup;
         private System.Windows.Forms.Label _labelReminders;
         private System.Windows.Forms.CheckBox checkReminders;

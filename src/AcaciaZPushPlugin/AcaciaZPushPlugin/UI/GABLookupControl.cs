@@ -33,6 +33,13 @@ namespace Acacia.UI
 {
     public partial class GABLookupControl : KComboBoxCustomDraw
     {
+        private class NotFoundGABUser : GABUser
+        {
+            public NotFoundGABUser(string userName) : base(userName)
+            {
+            }
+        }
+
         private class GABDataSource : KDataSource<GABUser>
         {
             private readonly GABHandler _gab;
@@ -82,6 +89,14 @@ namespace Acacia.UI
                     item.UserName?.ToLower().StartsWith(s) == true ||
                     item.EmailAddress?.ToLower().StartsWith(s) == true;
             }
+
+            public override object NotFoundItem
+            {
+                get
+                {
+                    return new NotFoundGABUser(Filter.FilterText);
+                }
+            }
         }
 
         public GABLookupControl() : this(null)
@@ -95,6 +110,15 @@ namespace Acacia.UI
         }
 
         #region Properties and events
+
+
+        [Category("Appearance")]
+        [Localizable(true)]
+        public string NotFoundText
+        {
+            get;
+            set;
+        }
 
         #region SelectedUser
 
@@ -202,7 +226,7 @@ namespace Acacia.UI
 
             Size nameSize = TextRenderer.MeasureText(e.Graphics, item.FullName, Font);
             Size loginSize = TextRenderer.MeasureText(e.Graphics, item.UserName, Font);
-            Size emailSize = TextRenderer.MeasureText(e.Graphics, item.EmailAddress, Font);
+            Size emailSize = TextRenderer.MeasureText(e.Graphics, GetSecondLine(item), Font);
 
             e.ItemWidth = Math.Max(emailSize.Width, nameSize.Width + loginSize.Width + NameSpacing.Width) + 
                     ItemPadding.Horizontal;
@@ -210,6 +234,14 @@ namespace Acacia.UI
                     ItemPadding.Vertical +
                     NameSpacing.Height +
                     BorderThickness + BorderPadding.Vertical;
+        }
+
+        private string GetSecondLine(GABUser item)
+        {
+            if (item is NotFoundGABUser)
+                return NotFoundText;
+            else
+                return item.EmailAddress;
         }
 
         protected override void OnDrawItem(DrawItemEventArgs e)
@@ -237,7 +269,8 @@ namespace Acacia.UI
             // Draw the email below
             pt.Y += Math.Max(nameSize.Height, loginSize.Height) + NameSpacing.Height;
             pt.X = e.Bounds.X + ItemPadding.Left;
-            TextRenderer.DrawText(e.Graphics, item.EmailAddress, Font, pt, e.ForeColor);
+
+            TextRenderer.DrawText(e.Graphics, GetSecondLine(item), Font, pt, e.ForeColor);
 
             // Draw a separator line
             if (e.Index < DisplayItemCount - 1)

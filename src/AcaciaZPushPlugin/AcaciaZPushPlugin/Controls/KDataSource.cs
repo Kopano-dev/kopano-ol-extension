@@ -23,6 +23,7 @@ namespace Acacia.Controls
         System.Collections.IEnumerable FilteredItems { get; }
         KDataFilter Filter { get; set; }
         string GetItemText(object item);
+        object NotFoundItem { get; }
     }
 
     abstract public class KDataSource<T> : KDataSourceRaw
@@ -71,6 +72,11 @@ namespace Acacia.Controls
         {
             get;
             set;
+        }
+
+        virtual public object NotFoundItem
+        {
+            get { return null; }
         }
 
         IEnumerable KDataSourceRaw.Items { get{return Items;}}

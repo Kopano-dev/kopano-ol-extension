@@ -268,6 +268,16 @@ namespace Acacia.Controls
                     _list.Items.Add(displayItem);
                 }
 
+                if (_list.Items.Count == 0)
+                {
+                    // Create a not-found item if requested
+                    object item = _dataSource.NotFoundItem;
+                    if (item != null)
+                    {
+                        _list.Items.Add(new DisplayItem(this, item));
+                    }
+                }
+
                 // Select the current item only if new number of items is smaller. This means we don't keep selection
                 // when the user is removing text, only when they are typing more.
                 _list.ItemsChanged(_list.Items.Count < oldCount ? selected : -1);
