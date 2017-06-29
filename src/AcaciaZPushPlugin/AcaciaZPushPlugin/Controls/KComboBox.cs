@@ -14,31 +14,35 @@ namespace Acacia.Controls
 {
     public class KComboBox : KAbstractComboBox
     {
-        private class KListBox : ListBox
+        #region Drop-down list
+
+        private class DropList : ListBox
         {
             private readonly KComboBox _owner;
-            private int _hoverIndex = -1;
+            private int _highlightIndex = -1;
 
-            public KListBox(KComboBox owner)
+            public DropList(KComboBox owner)
             {
                 this._owner = owner;
                 SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
                 DrawMode = DrawMode.OwnerDrawFixed;
                 SetStyle(ControlStyles.Selectable, false);
-                //ItemHeight = 23;
                 BorderStyle = BorderStyle.None;
             }
 
             protected override void OnMouseMove(MouseEventArgs e)
             {
+                // Use the mouse to highlight the current item
                 int newIndex = IndexFromPoint(PointToClient(Cursor.Position));
-                if (newIndex != _hoverIndex)
+                if (newIndex != _highlightIndex)
                 {
-                    int oldIndex = _hoverIndex;
-                    _hoverIndex = newIndex;
+                    int oldIndex = _highlightIndex;
+                    _highlightIndex = newIndex;
+
+                    // Invalidate the affected items, which may include a previously selected one
                     InvalidateItem(oldIndex);
-                    InvalidateItem(_hoverIndex);
-                    if (SelectedIndex != oldIndex && SelectedIndex != _hoverIndex)
+                    InvalidateItem(_highlightIndex);
+                    if (SelectedIndex != oldIndex && SelectedIndex != _highlightIndex)
                         InvalidateItem(SelectedIndex);
                 }
             }
@@ -46,21 +50,21 @@ namespace Acacia.Controls
             protected override void OnMouseLeave(EventArgs e)
             {
                 base.OnMouseLeave(e);
-                _hoverIndex = -1;
+                _highlightIndex = -1;
             }
 
             protected override void OnMouseDown(MouseEventArgs e)
             {
                 base.OnMouseDown(e);
-                // Perform the select here. 
-                // TODO: this really is for ComboBox, where the list hides before the event is handled
+
+                // Perform the select when the mouse is clicked
                 SelectedIndex = IndexFromPoint(PointToClient(Cursor.Position));
             }
 
             protected override void OnVisibleChanged(EventArgs e)
             {
                 base.OnVisibleChanged(e);
-                _hoverIndex = -1;
+                _highlightIndex = -1;
             }
 
             private void InvalidateItem(int index)
@@ -74,9 +78,9 @@ namespace Acacia.Controls
             {
                 // Create a custom event instance to be able to set the selected state for mouse hover
                 DrawItemState state = e.State;
-                if (_hoverIndex >= 0)
+                if (_highlightIndex >= 0)
                 {
-                    state = _hoverIndex == e.Index ? DrawItemState.Selected : DrawItemState.None;
+                    state = _highlightIndex == e.Index ? DrawItemState.Selected : DrawItemState.None;
                 }
                 DrawItemEventArgs draw = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, state);
                 draw.DrawBackground();
@@ -97,14 +101,11 @@ namespace Acacia.Controls
 
             protected override void DefWndProc(ref Message m)
             {
-                const int WM_MOUSEACTIVATE = 0x21;
-                const int MA_NOACTIVATE = 0x0003;
-
-                switch (m.Msg)
+                switch ((WM)m.Msg)
                 {
                     // Prevent mouse activity from grabbing the focus away from the edit
-                    case WM_MOUSEACTIVATE:
-                        m.Result = (IntPtr)MA_NOACTIVATE;
+                    case WM.MOUSEACTIVATE:
+                        m.Result = (IntPtr)MA.NOACTIVATE;
                         return;
                 }
                 base.DefWndProc(ref m);
@@ -112,12 +113,15 @@ namespace Acacia.Controls
 
             public override Size GetPreferredSize(Size proposedSize)
             {
+                // Preferred size is simply the size of the (maximum) number of items
                 Size prefSize = base.GetPreferredSize(proposedSize);
-                return new Size(prefSize.Width, ItemHeight * _owner.MaxDropDownItems);
+                return new Size(prefSize.Width, ItemHeight * Math.Min(Items.Count, _owner.MaxDropDownItems));
             }
         }
 
-        private readonly KListBox _list;
+        #endregion
+
+        private readonly DropList _list;
         private int _ignoreListEvents;
 
         #region Items properties
@@ -149,19 +153,11 @@ namespace Acacia.Controls
         public KComboBox()
         {
             MaxDropDownItems = 8;
-            _list = new KListBox(this);
+            _list = new DropList(this);
             _list.IntegralHeight = true;
             _list.TabStop = false;
-            DropControl = _list;
-            _list.DisplayMember = "DisplayName"; // TODO: remove from here
             _list.SelectedIndexChanged += _list_SelectedIndexChanged;
-            _list.GotFocus += _list_GotFocus;
-        }
-
-        private void _list_GotFocus(object sender, EventArgs e)
-        {
-            System.Diagnostics.Trace.WriteLine("_list_GotFocus");
-
+            DropControl = _list;
         }
 
         private void _list_SelectedIndexChanged(object sender, EventArgs e)
