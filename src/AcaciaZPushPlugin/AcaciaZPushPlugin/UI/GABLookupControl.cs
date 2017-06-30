@@ -249,7 +249,24 @@ namespace Acacia.UI
             GABUser item = (GABUser)e.Item;
 
             // Draw the background
-            e.DrawBackground();
+            if (e.State == DrawItemState.Selected)
+            {
+                // If the item is selected, we don't want the separating border to get selected too.
+                // So draw the normal background in the border area
+                Rectangle rect = e.Bounds;
+                rect.Y = rect.Bottom - BorderPadding.Vertical - BorderThickness;
+                rect.Height = BorderPadding.Vertical + BorderThickness;
+                new System.Windows.Forms.DrawItemEventArgs(e.Graphics, e.Font, rect, e.Index, DrawItemState.None).DrawBackground();
+
+                // And the selected background in the item area.
+                rect.Y = e.Bounds.Y;
+                rect.Height = e.Bounds.Height - BorderPadding.Vertical - BorderThickness;
+                new System.Windows.Forms.DrawItemEventArgs(e.Graphics, e.Font, rect, e.Index, DrawItemState.Selected).DrawBackground();
+            }
+            else
+            {
+                e.DrawBackground();
+            }
 
             // Get the sizes
             Size nameSize = TextRenderer.MeasureText(e.Graphics, item.FullName, Font);
