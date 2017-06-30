@@ -108,8 +108,9 @@ namespace Acacia.Controls
             _edit.PreviewKeyDown += _edit_PreviewKeyDown;
         }
 
-        public void FocusEdit()
+        protected override void OnGotFocus(EventArgs e)
         {
+            // Make the edit active
             _edit.Select();
         }
 

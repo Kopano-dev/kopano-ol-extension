@@ -70,6 +70,7 @@
             this._mainBusyHider.Controls.Add(this._layoutMain);
             resources.ApplyResources(this._mainBusyHider, "_mainBusyHider");
             this._mainBusyHider.Name = "_mainBusyHider";
+            this._mainBusyHider.TabStop = true;
             // 
             // _layoutMain
             // 
@@ -78,6 +79,7 @@
             this._layoutMain.Controls.Add(this.kTreeFolders, 0, 1);
             this._layoutMain.Controls.Add(this._layoutOptions, 0, 2);
             this._layoutMain.Name = "_layoutMain";
+            this._layoutMain.TabStop = true;
             // 
             // _layoutSelectUser
             // 
@@ -86,6 +88,7 @@
             this._layoutSelectUser.Controls.Add(this.gabLookup, 1, 0);
             this._layoutSelectUser.Controls.Add(this.buttonOpenUser, 2, 0);
             this._layoutSelectUser.Name = "_layoutSelectUser";
+            this._layoutSelectUser.TabStop = true;
             // 
             // labelSelectUser
             // 

@@ -190,7 +190,7 @@
     <value>260, 23</value>
   </data>
   <data name="gabLookup.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;gabLookup.Name" xml:space="preserve">
     <value>gabLookup</value>
@@ -286,7 +286,7 @@
     <value>442, 277</value>
   </data>
   <data name="kTreeFolders.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;kTreeFolders.Name" xml:space="preserve">
     <value>kTreeFolders</value>

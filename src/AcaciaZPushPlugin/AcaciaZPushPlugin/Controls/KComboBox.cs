@@ -16,6 +16,13 @@ namespace Acacia.Controls
     {
         #region Drop-down list
 
+        protected enum CommitSource
+        {
+            MouseClick,
+            KeyTab,
+            KeyEnter
+        }
+
         /// <summary>
         /// Custom list for the drop-down. Performs a few functions:
         /// - Prevents grabbing the focus away from the edit when clicked
@@ -73,7 +80,7 @@ namespace Acacia.Controls
             {
                 // Select the item under the mouse and commit
                 SelectedIndex = IndexFromPoint(PointToClient(Cursor.Position));
-                CommitSelection();
+                CommitSelection(CommitSource.MouseClick);
             }
 
             protected override void DefWndProc(ref Message m)
@@ -96,8 +103,10 @@ namespace Acacia.Controls
                 return new Size(w, ItemHeight * Math.Min(Items.Count, _owner.MaxDropDownItems));
             }
 
-            public void CommitSelection()
+            public CommitSource _commitSource;
+            public void CommitSelection(CommitSource source)
             {
+                _commitSource = source;
                 _committedIndex = SelectedIndex;
                 base.OnSelectedIndexChanged(new EventArgs());
             }
@@ -166,6 +175,8 @@ namespace Acacia.Controls
             }
             OnSelectedItemChanged();
         }
+
+        protected CommitSource GetCommitSource() { return _list._commitSource; }
 
         public DisplayItem SelectedItem
         {
@@ -371,7 +382,7 @@ namespace Acacia.Controls
                     if (DroppedDown)
                     {
                         if (_list.SelectedIndex >= 0)
-                            _list.CommitSelection();
+                            _list.CommitSelection(e.KeyCode == Keys.Enter ? CommitSource.KeyEnter : CommitSource.KeyTab);
                         DroppedDown = false;
                     }
                     e.IsInputKey = e.KeyCode == Keys.Enter;

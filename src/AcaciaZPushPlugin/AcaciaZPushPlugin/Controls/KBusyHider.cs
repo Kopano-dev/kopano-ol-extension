@@ -33,6 +33,7 @@ namespace Acacia.Controls
         private KBusyIndicator _busyOverlay = null;
         private KBusyIndicator _completeOverlay = null;
         private string _busyText;
+        private readonly List<Action> _doneActions = new List<Action>();
 
         public bool Busy
         {
@@ -59,6 +60,21 @@ namespace Acacia.Controls
             }
         }
 
+        /// <summary>
+        /// Executes the action when no longer busy. If not busy now, the action is executed straight away.
+        /// </summary>
+        public void OnDoneBusy(Action action)
+        {
+            if (!Busy)
+            {
+                action();
+            }
+            else
+            {
+                _doneActions.Add(action);
+            }
+        }
+
         private void RemoveOverlay(KBusyIndicator overlay)
         {
             Controls.Remove(overlay);
@@ -66,6 +82,11 @@ namespace Acacia.Controls
             // And enable the controls
             foreach (Control control in Controls)
                 control.Enabled = true;
+
+            // Excute any actions
+            foreach (Action action in _doneActions)
+                action();
+            _doneActions.Clear();
         }
 
         private KBusyIndicator CreateOverlay(string text, bool showProgress)

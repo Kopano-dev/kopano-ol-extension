@@ -163,7 +163,8 @@ namespace Acacia.UI
         protected override void OnSelectedItemChanged()
         {
             _selectedUser = (GABUser)SelectedItem?.Item;
-            SelectedUserChanged?.Invoke(this, new SelectedUserEventArgs(_selectedUser, true));
+            // If the tab key was used to select, the user wants to click open
+            SelectedUserChanged?.Invoke(this, new SelectedUserEventArgs(_selectedUser, GetCommitSource() != CommitSource.KeyTab));
         }
 
         #endregion

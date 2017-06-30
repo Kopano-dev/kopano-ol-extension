@@ -249,5 +249,12 @@ namespace Acacia.Native
         public static extern int GetSystemMetrics(SystemMetric nIndex);
 
         #endregion
+
+        #region Focus
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Winapi)]
+        public static extern IntPtr GetFocus();
+
+        #endregion
     }
 }

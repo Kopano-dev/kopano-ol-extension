@@ -148,12 +148,21 @@ namespace Acacia.Features.SharedFolders
                     };
                     FocusNode(node);
                 }
-                kTreeFolders.Focus();
+                SetInitialFocus(kTreeFolders);
             }
             else
             {
-                gabLookup.FocusEdit();
+                SetInitialFocus(gabLookup);
             }
+        }
+
+        private void SetInitialFocus(Control control)
+        {
+            // If busy, setting the focus doesn't work, as the control is enabled. Wait until done.
+            BusyHider.OnDoneBusy(() =>
+            {
+                control.Focus();
+            });
         }
 
         private void dialogButtons_Apply(object sender, EventArgs e)
