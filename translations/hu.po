@@ -291,8 +291,8 @@ msgstr "Beállítások ablak megnyitása, amiben a bővítmény beállításait 
 #: AcaciaZPushPlugin\Properties\Resources\OOFStartup_Message
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFStartup_Message"
-msgid "Out of Office is currently enabled on account '{0}'. Would you like to change the settings?"
-msgstr "A Házon kívüli automatikus válasz be van kapcsolva erre a fiókra: '{0}'. Meg kívánod változtatni a beállításokat?"
+msgid "Out of Office is currently enabled on account \'{0}\'. Would you like to change the settings?"
+msgstr "A Házon kívüli automatikus válasz be van kapcsolva erre a fiókra: \'{0}\'. Meg kívánod változtatni a beállításokat?"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFStartup_Title
 #, csharp-format
@@ -531,13 +531,13 @@ msgstr "Megosztott mappa megnyitása"
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_AddSharedFolder_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_AddSharedFolder_Screentip"
-msgid "Open another user's shared folders"
+msgid "Open another user\'s shared folders"
 msgstr "Más felhasználó megosztott mappájának megnyitása"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_AddSharedFolder_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_AddSharedFolder_Supertip"
-msgid "Open another user's shared folders"
+msgid "Open another user\'s shared folders"
 msgstr "Más felhasználó megosztott mappájának megnyitása"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Adding_Label
@@ -1067,8 +1067,8 @@ msgstr "Szinkronizálás állapota"
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Body"
-msgid "The contacts folder '{0}' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click 'Yes' to restart Outlook now, or 'No' if you plan to restart Outlook later."
-msgstr "Új névjegyalbum a szerveren: '{0}'. A mappa szinkronizálásra kerül, de amíg nem indítja újra az Outlookot nem fogja látni a Névjegyalbum mappák között. Kattintson a 'Yes'-re ha újra kívánja indítani az Outlookot most, vagy a 'No'-ra, amennyiben később kívánja újraindítani."
+msgid "The contacts folder \'{0}\' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click \'Yes\' to restart Outlook now, or \'No\' if you plan to restart Outlook later."
+msgstr "Új névjegyalbum a szerveren: \'{0}\'. A mappa szinkronizálásra kerül, de amíg nem indítja újra az Outlookot nem fogja látni a Névjegyalbum mappák között. Kattintson a \'Yes\'-re ha újra kívánja indítani az Outlookot most, vagy a \'No\'-ra, amennyiben később kívánja újraindítani."
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Title
@@ -1080,7 +1080,7 @@ msgstr "Névjegy mappa"
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Body"
-msgid "The password for account '{0}' is not available. Advanced Z-Push features will not work."
+msgid "The password for account \'{0}\' is not available. Advanced Z-Push features will not work."
 msgstr "A fiók ({0}) jelszava nem elérhető. A kibővített Z-Push szolgáltatások nem működnek."
 
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Title
@@ -1203,7 +1203,7 @@ msgstr ""
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Body"
-msgid "Changing other people's private events is not allowed."
+msgid "Changing other people\'s private events is not allowed."
 msgstr ""
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Title
