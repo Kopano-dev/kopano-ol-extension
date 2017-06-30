@@ -456,8 +456,8 @@ msgstr "Opens the settings dialog, which allows configuration of the plugin and 
 #: AcaciaZPushPlugin\Properties\Resources\OOFStartup_Message
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFStartup_Message"
-msgid "Out of Office is currently enabled on account \'{0}\'. Would you like to change the settings?"
-msgstr "Out of Office is currently enabled on account \'{0}\'. Would you like to change the settings?"
+msgid "Out of Office is currently enabled on account '{0}'. Would you like to change the settings?"
+msgstr "Out of Office is currently enabled on account '{0}'. Would you like to change the settings?"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFStartup_Title
 #, csharp-format
@@ -758,8 +758,8 @@ msgstr "Shows the about dialog, which contains licensing and version information
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Body"
-msgid "The contacts folder \'{0}\' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click \'Yes\' to restart Outlook now, or \'No\' if you plan to restart Outlook later."
-msgstr "The contacts folder \'{0}\' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click \'Yes\' to restart Outlook now, or \'No\' if you plan to restart Outlook later."
+msgid "The contacts folder '{0}' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click 'Yes' to restart Outlook now, or 'No' if you plan to restart Outlook later."
+msgstr "The contacts folder '{0}' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click 'Yes' to restart Outlook now, or 'No' if you plan to restart Outlook later."
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Title
@@ -771,8 +771,8 @@ msgstr "Contacts folder"
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Body"
-msgid "The password for account \'{0}\' is not available. Advanced Z-Push features will not work."
-msgstr "The password for account \'{0}\' is not available. Advanced Z-Push features will not work."
+msgid "The password for account '{0}' is not available. Advanced Z-Push features will not work."
+msgstr "The password for account '{0}' is not available. Advanced Z-Push features will not work."
 
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Title
 #, csharp-format
@@ -894,8 +894,8 @@ msgstr "Synchronisation stalled - {0}"
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Body"
-msgid "Changing other people\'s private events is not allowed."
-msgstr "Changing other people\'s private events is not allowed."
+msgid "Changing other people's private events is not allowed."
+msgstr "Changing other people's private events is not allowed."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Title
 #, csharp-format
