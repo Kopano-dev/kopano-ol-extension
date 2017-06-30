@@ -2,9 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-06-14 15:43+0000\n"
+"PO-Revision-Date: 2017-06-30 06:49+0000\n"
 "Last-Translator: Felix <f.bartels@kopano.com>\n"
-"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-extension/de/>\n"
+"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-"
+"extension/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1215,11 +1216,10 @@ msgstr "Privater Termin"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\gabLookup.NotFoundText"
 msgid "The user was not found"
-msgstr ""
+msgstr "Der Benutzer konnte nicht gefunden werden"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\gabLookup.Placeholder
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\gabLookup.Placeholder"
 msgid "Start typing name"
-msgstr ""
-
+msgstr "Tippe um die Suche zu starten"
