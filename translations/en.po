@@ -172,18 +172,6 @@ msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\labelS
 msgid "Open folders for user"
 msgstr "Open folders for user"
 
-#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\gabLookup.NotFoundText
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\gabLookup.NotFoundText"
-msgid "The user was not found"
-msgstr "The user was not found"
-
-#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\gabLookup.Placeholder
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\gabLookup.Placeholder"
-msgid "Start typing name"
-msgstr "Start typing name"
-
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\buttonOpenUser.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\buttonOpenUser.Text"
@@ -202,12 +190,6 @@ msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_label
 msgid "Send as owner"
 msgstr "Send as owner"
 
-#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelReminders.Text
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelReminders.Text"
-msgid "Show reminders"
-msgstr "Show reminders"
-
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelPermissions.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelPermissions.Text"
@@ -219,6 +201,12 @@ msgstr "Permissions"
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\labelPermissionsValue.Text"
 msgid "Permissions"
 msgstr "Permissions"
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelReminders.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelReminders.Text"
+msgid "Show reminders"
+msgstr "Show reminders"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\$this.Text
 #, csharp-format
