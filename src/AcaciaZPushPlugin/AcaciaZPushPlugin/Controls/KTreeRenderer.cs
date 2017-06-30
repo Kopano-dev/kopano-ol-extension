@@ -117,6 +117,8 @@ namespace Acacia.Controls
             Rectangle containerRect = dims.NodeRect;
             containerRect.X = _clientRect.X;
             containerRect.Width = Math.Max(_totalRect.Width, _clientRect.Width);
+            // Overlap the rectangle with the control border, to prevent duplicate lines
+            containerRect = containerRect.Expand(new Padding(_tree.BorderThickness));
 
             // Selection background
             RenderNodeOutline(graphics, node, _tree.FullRowSelect ? containerRect : dims.NodeRect, highlight);

@@ -66,6 +66,11 @@ namespace Acacia.Controls
         private readonly VisualStyleRenderer _treeViewGlyphHotClosed = new VisualStyleRenderer(TREEVIEW, 4, 1);
         private readonly VisualStyleRenderer _treeViewGlyphHotOpened = new VisualStyleRenderer(TREEVIEW, 4, 2);
 
+        // We use the combo box styles for the outline
+        private readonly VisualStyleRenderer _treeViewBorderNormal = new VisualStyleRenderer("COMBOBOX", 4, 1);
+        private readonly VisualStyleRenderer _treeViewBorderFocus = new VisualStyleRenderer("COMBOBOX", 4, 2);
+        private readonly VisualStyleRenderer _treeViewBorderDisabled = new VisualStyleRenderer("COMBOBOX", 4, 4);
+
         private Size? _glyphSize;
 
         protected override Size GetExpanderSize(Graphics graphics, KTreeNode node)
@@ -124,8 +129,10 @@ namespace Acacia.Controls
         protected override void RenderNodeOutline(Graphics graphics, KTreeNode node, Rectangle rect, KTreeNodeMeasurements.Part? highlight)
         {
             // Draw one pixel too far, to overlap top and bottom borders for a continuous selection
-
             Rectangle highlightRect = new Rectangle(rect.X, rect.Y, rect.Width, rect.Height + 1);
+            // If full-row selecting, compensate for shifted rectangle.
+            if (_tree.FullRowSelect)
+                highlightRect.Height -= 2 * _tree.BorderThickness;
             if (_tree.ActiveNode == node && _tree.Focused)
             {
                 if (node.IsSelected)
@@ -148,11 +155,20 @@ namespace Acacia.Controls
 
         public override void RenderControlBorder(Graphics graphics, Rectangle rect)
         {
-            Color color = (_tree.Enabled ? _treeViewItemNormal : _treeViewItemDisabled).GetColor(ColorProperty.BorderColor);
-            using (Pen pen = new Pen(_tree.Enabled ? Color.Black : SystemColors.GrayText))
+            VisualStyleRenderer style;
+            if (_tree.Enabled)
             {
-                graphics.DrawRectangle(pen, new Rectangle(rect.X, rect.Y, rect.Width - 1, rect.Height - 1));
+                if (_tree.Focused)
+                    style = _treeViewBorderFocus;
+                else
+                    style = _treeViewBorderNormal;
             }
+            else
+            {
+                style = _treeViewBorderDisabled;
+            }
+
+            style.DrawBackground(graphics, rect, graphics.ClipBounds.ToRectangle());
         }
     }
 }

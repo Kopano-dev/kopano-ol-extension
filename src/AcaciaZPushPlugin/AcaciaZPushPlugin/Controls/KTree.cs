@@ -1,6 +1,6 @@
 ﻿/// Project   :   Kopano OL Extension
 /// 
-/// Copyright 2016 Kopano b.v.
+/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -138,6 +138,13 @@ namespace Acacia.Controls
             set { _nodeIdent = value; Rerender(); }
         }
 
+        public int BorderThickness
+        {
+            get
+            {
+                return BorderStyle == BorderStyle.FixedSingle ? 1 : 0;
+            }
+        }
         #endregion
 
         #region Images
@@ -416,6 +423,8 @@ namespace Acacia.Controls
         { 
             if (newHighlight != _highlightNode || _highlightPart != newPart)
             {
+                bool oldFocused = Focused;
+
                 KTreeNode old = _highlightNode;
 
                 if (newHighlight != null && !newHighlight.IsSelectable)
@@ -428,6 +437,10 @@ namespace Acacia.Controls
                     _highlightNode = newHighlight;
                     _highlightPart = newPart;
                 }
+
+                // Update the border if required
+                if (oldFocused != Focused)
+                    RedrawBorder();
 
                 // Render old node without highlight
                 if (old != null)
@@ -609,21 +622,6 @@ namespace Acacia.Controls
                 break;
             }
         }
-
-        #endregion
-
-        #region Columns
-        // TODO
-        /*
-        private readonly TreeViewColumnCollection _columns;
-
-        [Category("Columns")]
-        [Browsable(true)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public TreeViewColumnCollection Columns
-        {
-            get { return _columns; }
-        }*/
 
         #endregion
 
@@ -864,6 +862,10 @@ namespace Acacia.Controls
             e.Graphics.FillRectangle(SystemBrushes.Control,
                 ClientSize.Width - VerticalScrollBarWidth, ClientSize.Height - HorizontalScrollBarHeight,
                 VerticalScrollBarWidth, HorizontalScrollBarHeight);
+
+            // The scrollbars sometimes get lost, force a repaint
+            _verticalScrollBar.Refresh();
+            _horizontalScrollBar.Refresh();
         }
 
         #endregion
@@ -1081,19 +1083,68 @@ namespace Acacia.Controls
 
         #endregion
 
-        #region Focus
+        #region Border
+
+        public override bool Focused
+        {
+            get
+            {
+                return base.Focused || _highlightNode != null;
+            }
+        }
 
         protected override void OnGotFocus(EventArgs e)
         {
             base.OnGotFocus(e);
-            Invalidate();
+            RedrawBorder();
         }
 
         protected override void OnLostFocus(EventArgs e)
         {
             base.OnLostFocus(e);
-            Invalidate();
+            RedrawBorder();
         }
+
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
+            RedrawBorder();
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == (int)WM.NCPAINT)
+            {
+                IntPtr hDC = User32.GetWindowDC(m.HWnd);
+                try
+                {
+                    using (Graphics g = Graphics.FromHdc(hDC))
+                    {
+                        _renderer.RenderControlBorder(g, new Rectangle(0, 0, Width, Height));
+                    }
+                }
+                finally
+                {
+                    User32.ReleaseDC(m.HWnd, hDC);
+                }
+                return;
+            }
+            base.WndProc(ref m);
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            RedrawBorder();
+        }
+
+        private void RedrawBorder()
+        {
+            // Force NCPaint update
+            User32.RedrawWindow(this.Handle, IntPtr.Zero, IntPtr.Zero,
+                        User32.RedrawWindowFlags.Frame | User32.RedrawWindowFlags.Invalidate);
+        }
+
 
         #endregion
 
@@ -1111,56 +1162,5 @@ namespace Acacia.Controls
 
         #endregion
 
-        #region Disabled state
-
-        protected override void OnEnabledChanged(EventArgs e)
-        {
-            base.OnEnabledChanged(e);
-            RedrawBorder();
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == (int)WM.NCPAINT)
-            {
-                WmNcPaint(ref m);
-                return;
-            }
-            base.WndProc(ref m);
-        }
-
-        private void WmNcPaint(ref Message m)
-        {
-            if (BorderStyle == BorderStyle.None)
-                return;
-
-            IntPtr hDC = User32.GetWindowDC(m.HWnd);
-            try
-            {
-                using (Graphics g = Graphics.FromHdc(hDC))
-                {
-                    _renderer.RenderControlBorder(g, new Rectangle(0, 0, Width, Height));
-                }
-            }
-            finally
-            {
-                User32.ReleaseDC(m.HWnd, hDC);
-            }
-        }
-
-        protected override void OnResize(EventArgs e)
-        {
-            base.OnResize(e);
-            RedrawBorder();
-        }
-
-        private void RedrawBorder()
-        { 
-            // Force NCPaint update
-            User32.RedrawWindow(this.Handle, IntPtr.Zero, IntPtr.Zero, 
-                User32.RedrawWindowFlags.Frame | User32.RedrawWindowFlags.Invalidate /*| User32.RedrawWindowFlags.UpdateNow*/);
-        }
-
-        #endregion
     }
 }

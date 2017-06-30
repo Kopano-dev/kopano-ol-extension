@@ -131,6 +131,11 @@ namespace Acacia.Controls
             return new Point(_this.Left, _this.Top);
         }
 
+        public static Rectangle ToRectangle(this RectangleF _this)
+        {
+            return new Rectangle((int)_this.X, (int)_this.Y, (int)_this.Width, (int)_this.Height);
+        }
+
         #endregion
     }
 }
