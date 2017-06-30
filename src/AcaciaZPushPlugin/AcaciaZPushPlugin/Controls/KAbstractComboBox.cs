@@ -1,4 +1,5 @@
 ﻿using Acacia.Native;
+using Acacia.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,10 +12,13 @@ using System.Windows.Forms;
 
 namespace Acacia.Controls
 {
-    public abstract class KAbstractComboBox : ContainerControl, IMessageFilter
+    public abstract class KAbstractComboBox : ContainerControl
     {
         #region Properties
 
+        /// <summary>
+        /// Hide the AutoSize property, it is always enabled
+        /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         override public bool AutoSize { get { return base.AutoSize; } set { base.AutoSize = value; } }
 
@@ -40,12 +44,41 @@ namespace Acacia.Controls
             set { _edit.PlaceholderFont = value; }
         }
 
+        /// <summary>
+        /// The control to set in the drop-down
+        /// </summary>
+        protected Control DropControl
+        {
+            get
+            {
+                return _dropDown?.Control;
+            }
+            set
+            {
+                _dropDown = new DropDown(this, value);
+            }
+        }
 
-        #endregion
+        protected int _settingText = 0;
 
-        #region Components
-
-        private KTextBox _edit;
+        override public string Text
+        {
+            get { return _edit.Text; }
+            set
+            {
+                ++_settingText;
+                try
+                {
+                    _edit.Text = value;
+                    // Set the cursor after the text
+                    _edit.Select(_edit.Text.Length, 0);
+                }
+                finally
+                {
+                    --_settingText;
+                }
+            }
+        }
 
         #endregion
 
@@ -55,28 +88,24 @@ namespace Acacia.Controls
         {
             AutoSize = true;
             SetupRenderer();
-
-            _edit = new KTextBox();
-            _edit.BorderStyle = BorderStyle.None;
-            Controls.Add(_edit);
-            _state.AddControl(_edit);
-            _edit.TextChanged += _edit_TextChanged;
+            SetupEdit();
         }
-
 
         #endregion
 
         #region Text edit
 
-        private void _edit_TextChanged(object sender, EventArgs e)
-        {
-            OnTextChanged(new EventArgs());
-        }
+        private KTextBox _edit;
 
-        override public string Text
+        private void SetupEdit()
         {
-            get { return _edit.Text; }
-            set { _edit.Text = value; }
+            _edit = new KTextBox();
+            _edit.BorderStyle = BorderStyle.None;
+            Controls.Add(_edit);
+            _state.AddControl(_edit);
+            _edit.TextChanged += _edit_TextChanged;
+            _edit.LostFocus += _edit_LostFocus;
+            _edit.PreviewKeyDown += _edit_PreviewKeyDown;
         }
 
         public void FocusEdit()
@@ -84,138 +113,177 @@ namespace Acacia.Controls
             _edit.Select();
         }
 
+        private void _edit_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Escape:
+                    // Escape closes the drop-down
+                    if (DroppedDown)
+                    {
+                        DroppedDown = false;
+                        // Grab the keypress to prevent closing a dialog
+                        e.IsInputKey = true;
+                        return;
+                    }
+                    break;
+                case Keys.Down:
+                    // Down opens the drop down
+                    if (!DroppedDown)
+                    {
+                        DroppedDown = true;
+                        e.IsInputKey = true;
+                        return;
+                    }
+                    break;
+            }
+            OnPreviewKeyDown(e);
+        }
+
+        private void _edit_LostFocus(object sender, EventArgs e)
+        {
+            // Close the drop down when losing focus. This also handles the case when another window is selected,
+            // as that causes the focus to be taken away
+            DroppedDown = false;
+        }
+
+        private void _edit_TextChanged(object sender, EventArgs e)
+        {
+            OnTextChanged(new EventArgs());
+        }
+
         #endregion
 
         #region Drop down
 
-        public Control DropControl
+        /// <summary>
+        /// Custom drop down. Registers a message filter when shown to close on clicks outside the drop-down.
+        /// This is required as the default AutoClose behaviour consumes all keyboard events.
+        /// </summary>
+        private class DropDown : ToolStripDropDown, IMessageFilter
         {
-            get
+            /// <summary>
+            /// Custom renderer that renders the border using the combo focus style.
+            /// </summary>
+            private class DropDownRenderer : ToolStripRenderer
             {
-                return _dropControl;
+                private readonly KVisualStyle<COMBOBOXPARTS, State>.Part _style;
+
+                public DropDownRenderer(KVisualStyle<COMBOBOXPARTS, State>.Part style)
+                {
+                    this._style = style;
+                }
+
+                protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
+                {
+                    _style.DrawBackground(e.Graphics, State.Pressed, e.AffectedBounds);
+                }
             }
-            set
+
+            private readonly KAbstractComboBox _owner;
+
+            public Control Control
             {
-                _dropControl = value;
-                SetupDropDown();
+                get { return ControlHost.Control; }
             }
-        }
 
-        private ToolStripDropDown _dropDown;
-        private Control _dropControl;
-        private ToolStripControlHost _dropListHost;
-
-        private void SetupDropDown()
-        {
-            _dropListHost = new ToolStripControlHost(_dropControl);
-            _dropListHost.Padding = new Padding(0);
-            _dropListHost.Margin = new Padding(0);
-            _dropListHost.AutoSize = false;
-
-            _dropDown = new ToolStripDropDown();
-            _dropDown.Padding = new Padding(0);
-            _dropDown.Margin = new Padding(0);
-            _dropDown.AutoSize = true;
-            _dropDown.DropShadowEnabled = false;
-            _dropDown.Items.Add(_dropListHost);
-            _dropDown.Closed += _dropDown_Closed;
-            _dropDown.AutoClose = false;
-
-            Application.AddMessageFilter(this);
-        }
-        
-        protected override void OnHandleDestroyed(EventArgs e)
-        {
-            Application.RemoveMessageFilter(this);
-            base.OnHandleDestroyed(e);
-        }
-
-        public bool PreFilterMessage(ref Message m)
-        {
-            switch ((WM)m.Msg)
+            public ToolStripControlHost ControlHost
             {
-                case WM.KEYDOWN:
-                    System.Diagnostics.Trace.WriteLine("KEYMESSAGE: " + m);
-                    switch((VirtualKeys)m.WParam.ToInt32())
-                    {
-                        case VirtualKeys.Escape:
-                            // Escape closes the popup
-                            if (DroppedDown)
-                            {
-                                DroppedDown = false;
-                                return true;
-                            }
-                            break;
-                        case VirtualKeys.Down:
-                            // Down opens the drop down
-                            if (!DroppedDown)
-                            {
-                                DroppedDown = true;
-                                return true;
-                            }
-                            break;
-                    }
-                    break;
-                case WM.CHAR:
-                case WM.KEYUP:
-                    System.Diagnostics.Trace.WriteLine("KEYMESSAGE: " + m);
-                    break;
-                case WM.LBUTTONDOWN:
-                case WM.RBUTTONDOWN:
-                case WM.MBUTTONDOWN:
-                case WM.NCLBUTTONDOWN:
-                case WM.NCRBUTTONDOWN:
-                case WM.NCMBUTTONDOWN:
-                    if (_dropDown.Visible)
-                    {
-                        //
-                        // When a mouse button is pressed, we should determine if it is within the client coordinates
-                        // of the active dropdown.  If not, we should dismiss it.
-                        //
-                        int i = unchecked((int)(long)m.LParam);
-                        short x = (short)(i & 0xFFFF);
-                        short y = (short)((i >> 16) & 0xffff);
-                        Point pt = new Point(x, y);
+                get { return (ToolStripControlHost)Items[0]; }
+            }
 
-                        // Map to global coordinates
-                        User32.MapWindowPoints(m.HWnd, IntPtr.Zero, ref pt, 1);
-                        System.Diagnostics.Trace.WriteLine(string.Format("MOUSE: {0} - {1}", pt, _dropDown.Bounds));
-                        if (!_dropDown.Bounds.Contains(pt))
+            public DropDown(KAbstractComboBox owner, Control control)
+            {
+                this._owner = owner;
+
+                KVisualStyle<COMBOBOXPARTS, State>.Part style = owner._style[COMBOBOXPARTS.CP_BORDER];
+                Renderer = new DropDownRenderer(style);
+                using (Graphics graphics = CreateGraphics())
+                {
+                    Padding = style?.GetMargins(graphics, State.Pressed) ?? new Padding();
+                }
+
+                Margin = new Padding(0);
+                AutoSize = true;
+                DropShadowEnabled = false;
+                AutoClose = false;
+
+                // Add a host for the control
+                ToolStripControlHost host = new ToolStripControlHost(control);
+                host.Padding = new Padding(0);
+                host.Margin = new Padding(0);
+                host.AutoSize = true;
+                Items.Add(host);
+            }
+
+            protected override void OnVisibleChanged(EventArgs e)
+            {
+                base.OnVisibleChanged(e);
+
+                // Only register the message filter when it can do something useful
+                if (Visible)
+                    Application.AddMessageFilter(this);
+                else
+                    Application.RemoveMessageFilter(this);
+            }
+
+            public bool PreFilterMessage(ref Message m)
+            {
+                // Handle mouse clicks to close the popup
+                switch ((WM)m.Msg)
+                {
+                    case WM.LBUTTONDOWN:
+                    case WM.RBUTTONDOWN:
+                    case WM.MBUTTONDOWN:
+                        return CheckMouseDown(m, false);
+                    case WM.NCLBUTTONDOWN:
+                    case WM.NCRBUTTONDOWN:
+                    case WM.NCMBUTTONDOWN:
+                        return CheckMouseDown(m, true);
+                }
+                return false;
+            }
+
+            private bool CheckMouseDown(Message m, bool nonClient)
+            {
+                Point pt = User32.GetPointLParam(m.LParam);
+                Point ptOrig = pt;
+                if (!nonClient)
+                {
+                    // Map to global coordinates, non-client ones already are
+                    User32.MapWindowPoints(m.HWnd, IntPtr.Zero, ref pt, 1);
+                }
+
+                // Check if the click was inside the drop-down
+                if (!Bounds.Contains(pt))
+                {
+                    // Outside the drop-down, check if it was inside the combo box
+
+                    // Map to the combo box coordinates
+                    User32.MapWindowPoints(IntPtr.Zero, _owner.Handle, ref pt, 1);
+                    if (_owner.ClientRectangle.Contains(pt))
+                    {
+                        // Clicked inside the combo box. If the click was on the button, return true to prevent opening
+                        // the popup again.
+                        if (_owner._stateButton.Rectangle.Contains(pt))
                         {
-                            // the user has clicked outside the dropdown
-                            User32.MapWindowPoints(m.HWnd, Handle, ref pt, 1);
-                            if (!ClientRectangle.Contains(pt))
-                            {
-                                // the user has clicked outside the combo
-                                DroppedDown = false;
-                            }
+                            return true;
                         }
                     }
-                    break;
+                    else
+                    {
+                        // Outside the drop-down, close it
+                        Close();
+                    }
+                }
+                return false;
             }
-            return false;
         }
 
-        // Cannot use visibility of _dropDown to keep the open state, as clicking on the button already
-        // hides the popup before the event handler is shown.
-        private bool _isDroppedDown;
-        private bool _clickedButton;
-
-        private void _dropDown_Closed(object sender, ToolStripDropDownClosedEventArgs e)
-        {
-            /*if (_stateButton.IsMouseOver)
-            {
-                _clickedButton = true;
-            }*/
-            _isDroppedDown = false;
-        }
+        private DropDown _dropDown;
 
         private void Button_Clicked()
         {
-            /*if (_clickedButton)
-                _clickedButton = false;
-            else
-                DroppedDown = true;*/
             DroppedDown = !DroppedDown;
             this._edit.Focus();
         }
@@ -225,29 +293,53 @@ namespace Acacia.Controls
         {
             get
             {
-                return _isDroppedDown;
+                return _dropDown?.Visible == true;
             }
 
             set
             {
-                if (value != _isDroppedDown)
+                if (value != DroppedDown)
                 {
                     if (value)
                     {
-                        _dropListHost.Control.Width = this.Width;
-                        _dropListHost.Control.Height = 200;
-                        _dropListHost.Control.Refresh();
-                        _dropDown.Show(this.PointToScreen(new Point(0, Height)));
-                        _dropDown.Capture = true;
+                        ShowDropDown();
                     }
                     else
                     {
                         _dropDown.Close();
                     }
-                    _isDroppedDown = value;
                 }
             }
         }
+
+        private void ShowDropDown()
+        {
+            UpdateDropDownLayout();
+
+            // Show the drop down below the current control
+            _dropDown.Show(this.PointToScreen(new Point(0, Height - 1)));
+        }
+
+        protected void UpdateDropDownLayout()
+        {
+            if (_dropDown == null)
+                return;
+
+            // Calculate the dimensions of the drop-down
+            int maxHeight = GetDropDownHeightMax();
+            int minHeight = GetDropDownHeightMin();
+
+            Size prefSize = DropControl.GetPreferredSize(new Size(Width - _dropDown.Padding.Horizontal, maxHeight - _dropDown.Padding.Vertical));
+            int width = Util.Bound(prefSize.Width, Width - _dropDown.Padding.Horizontal, Width * 2);
+            int height = Util.Bound(prefSize.Height, minHeight, maxHeight);
+
+            DropControl.MaximumSize = DropControl.MinimumSize = new Size(width, height);
+
+            _dropDown.Control.Bounds = _dropDown.ControlHost.Bounds;
+        }
+
+        protected abstract int GetDropDownHeightMax();
+        protected abstract int GetDropDownHeightMin();
 
         #endregion
 
@@ -306,7 +398,6 @@ namespace Acacia.Controls
         protected override void OnPaint(PaintEventArgs e)
         {
             _style[COMBOBOXPARTS.CP_BORDER]?.DrawBackground(e.Graphics, _state.Root.State, ClientRectangle);
-            System.Diagnostics.Trace.WriteLine(string.Format("BUTTON: {0}", _stateButton.State));
             _style[COMBOBOXPARTS.CP_DROPDOWNBUTTON]?.DrawBackground(e.Graphics, _stateButton.State, _stateButton.Rectangle);
         }
 

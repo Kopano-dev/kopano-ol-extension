@@ -1,4 +1,6 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿
+using Acacia.Stubs;
+/// Copyright 2016 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -13,7 +15,6 @@
 /// along with this program.If not, see<http://www.gnu.org/licenses/>.
 /// 
 /// Consult LICENSE file for details
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,8 +37,9 @@ namespace Acacia.ZPush
 
         public readonly string FullName;
         public readonly string UserName;
+        public readonly string EmailAddress;
 
-        public GABUser(string displayName, string userName)
+        private GABUser(string displayName, string userName)
         {
             this.FullName = displayName;
             this.UserName = userName;
@@ -47,6 +49,13 @@ namespace Acacia.ZPush
         {
             this.FullName = userName;
             this.UserName = userName;
+        }
+
+        public GABUser(IContactItem item)
+        {
+            this.FullName = item.FullName;
+            this.EmailAddress = item.Email1Address;
+            this.UserName = item.CustomerID;
         }
 
         public int CompareTo(GABUser other)

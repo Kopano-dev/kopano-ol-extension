@@ -1,4 +1,4 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -31,8 +31,74 @@ using Acacia.Controls;
 
 namespace Acacia.UI
 {
-    public partial class GABLookupControl : KComboBox
+    public partial class GABLookupControl : KComboBoxCustomDraw
     {
+        private class NotFoundGABUser : GABUser
+        {
+            public NotFoundGABUser(string userName) : base(userName)
+            {
+            }
+        }
+
+        private class GABDataSource : KDataSource<GABUser>
+        {
+            private readonly GABHandler _gab;
+            private readonly List<GABUser> _users;
+
+            public GABDataSource(GABHandler gab)
+            {
+                this._gab = gab;
+
+                _users = new List<GABUser>();
+                foreach (IItem item in _gab.Contacts.Items.Sort("FullName", false))
+                {
+                    if (item is IContactItem)
+                        _users.Add(new GABUser((IContactItem)item));
+                }
+            }
+
+            public override IEnumerable<GABUser> Items
+            {
+                get
+                {
+                    return _users;
+                }
+            }
+
+            protected override string GetItemText(GABUser item)
+            {
+                // If there is a filter, try to complete that
+                if (!string.IsNullOrEmpty(Filter?.FilterText))
+                {
+                    string s = Filter?.FilterText.ToLower();
+                    if (item.UserName?.ToLower().StartsWith(s) == true)
+                        return item.UserName;
+                    else if (item.FullName?.ToLower().StartsWith(s) == true)
+                        return item.FullName;
+                    else if (item.EmailAddress?.ToLower().StartsWith(s) == true)
+                        return item.EmailAddress;
+                }
+                return item.UserName;
+            }
+
+            protected override bool MatchesFilter(GABUser item)
+            {
+                string s = Filter.FilterText.ToLower();
+                return
+                    item.FullName?.ToLower().StartsWith(s) == true ||
+                    item.UserName?.ToLower().StartsWith(s) == true ||
+                    item.EmailAddress?.ToLower().StartsWith(s) == true;
+            }
+
+            public override object NotFoundItem
+            {
+                get
+                {
+                    return new NotFoundGABUser(Filter.FilterText);
+                }
+            }
+        }
+
         public GABLookupControl() : this(null)
         {
         }
@@ -40,10 +106,19 @@ namespace Acacia.UI
         public GABLookupControl(GABHandler gab)
         {
             InitializeComponent();
-            this.GAB = gab;
+            GAB = gab;
         }
 
         #region Properties and events
+
+
+        [Category("Appearance")]
+        [Localizable(true)]
+        public string NotFoundText
+        {
+            get;
+            set;
+        }
 
         #region SelectedUser
 
@@ -64,40 +139,31 @@ namespace Acacia.UI
         [Category("Behavior")]
         public event SelectedUserEventHandler SelectedUserChanged;
 
+        private GABUser _selectedUser;
         public GABUser SelectedUser
         {
             get
             {
-                /*if (SelectedValue == null)
-                    return new GABUser(Text, Text);
-                else
-                    return (GABUser)SelectedValue;*/
-                return null;
+                return _selectedUser;
             }
             set
             {
-                /*if (value == null)
-                {
-                    SelectedIndex = -1;
-                    Text = "";
-                }
-                else
-                {
-
-                }*/
+                _selectedUser = null;
+                Select(value);
             }
         }
 
-        private void SetSelectedUser(GABUser user, bool isChosen)
+        protected override void OnTextChanged(EventArgs e)
         {
-            if (SelectedUser != user || isChosen)
-            {
-                System.Diagnostics.Trace.WriteLine(string.Format("SELECT: {0} -> {1} : {2}", SelectedUser, user, isChosen));
-                if (isChosen)
-                    SelectedUser = user;
-                if (SelectedUserChanged != null)
-                    SelectedUserChanged(this, new SelectedUserEventArgs(user, isChosen));
-            }
+            base.OnTextChanged(e);
+            _selectedUser = string.IsNullOrEmpty(Text) ? null : new GABUser(Text);
+            SelectedUserChanged?.Invoke(this, new SelectedUserEventArgs(_selectedUser, false));
+        }
+
+        protected override void OnSelectedItemChanged()
+        {
+            _selectedUser = (GABUser)SelectedItem?.Item;
+            SelectedUserChanged?.Invoke(this, new SelectedUserEventArgs(_selectedUser, true));
         }
 
         #endregion
@@ -117,7 +183,7 @@ namespace Acacia.UI
                 if (_gab != value)
                 {
                     _gab = value;
-                    LookupUsers(false);
+                    DataSource =  _gab == null ? null : new GABDataSource(_gab);
                 }
             }
         }
@@ -125,153 +191,94 @@ namespace Acacia.UI
         #endregion
 
         #endregion
-
-        protected override void OnTextChanged(EventArgs e)
-        {
-            LookupUsers(true);
-            SelectCurrentUser(false);
-        }
-
-        private void SelectCurrentUser(bool isChosen)
-        {
-            /*GABUser user = null;
-            // Select whatever is currently in the text box as a user
-            if (DataSource != null)
-            {
-                // Find if there's a user matching
-                user = ((List<GABUser>)DataSource).FirstOrDefault((u) => u.DisplayName == Text);
-            }
-            if (user == null && Text.Length > 0)
-            {
-                // Make a new one
-                user = new GABUser(Text, Text);
-            }
-            SetSelectedUser(user, isChosen);*/
-        }
-
-        /*private bool _needUpdate;
-
-        protected override void OnTextUpdate(EventArgs e)
-        {
-            _needUpdate = true;
-        }
-
-        protected override void OnSelectedIndexChanged(EventArgs e)
-        {
-            base.OnSelectedIndexChanged(e);
-            SetSelectedUser((GABUser)SelectedItem, true);
-        }
-
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            base.OnKeyDown(e);
-            if (e.KeyCode == Keys.Enter)
-            {
-                SelectCurrentUser(true);
-            }
-            else
-            {
-                SetSelectedUser(null, false);
-            }
-        }
-        
-        protected override void OnDataSourceChanged(EventArgs e)
-        {
-            // Suppress to prevent automatic selection
-        }*/
-
-        private string _lastText;
-        private List<GABUser> _allUsers;
-
-        private void LookupUsers(bool dropDown)
-        {
-            // Cannot lookup if there is no GAB
-            if (_gab == null)
-                return;
-
-            string text = this.Text;
-            // Only search if the text actually changed
-            if (_lastText != text)
-            {
-                // Limit search results if there is a filter, otherwise show everything
-                List<GABUser> users;
-                if (text.Length == 0)
-                {
-                    // Cache the list of all users
-                    if (_allUsers == null)
-                    {
-                        _allUsers = Lookup("", int.MaxValue);
-                    }
-                    users = _allUsers;
-                }
-                else
-                {
-                    users = Lookup(text, 8);
-                }
-
-                // Sort the users if we have them
-                users.Sort();
-
-                _lastText = text;
-
-                // Setting the datasource will trigger a select if there is a match
-                BeginUpdate();
-                    DataSource = users;
-                    //SetItemsCore(users);
-                    if (dropDown)
-                        DroppedDown = true;
-                    //Cursor.Current = Cursors.Default;
-                    //Text = _lastText;
-                    //SelectionLength = 0;
-                    //SelectionStart = _lastText.Length;
-                EndUpdate();
-            }
-        }
-
-        #region Lookup helpers
-        // TODO: these probably belong in GAB
-
-        public List<GABUser> Lookup(string text, int max)
-        {
-            // Begin GAB lookup, search on full name or username
-            using (ISearch<IContactItem> search = _gab.Contacts.Search<IContactItem>())
-            {
-                ISearchOperator oper = search.AddOperator(SearchOperator.Or);
-                oper.AddField("urn:schemas:contacts:cn").SetOperation(SearchOperation.Like, text + "%");
-                oper.AddField("urn:schemas:contacts:customerid").SetOperation(SearchOperation.Like, text + "%");
-
-                // Fetch the results up to the limit.
-                // TODO: make limit a property?
-                List<GABUser> users = new List<GABUser>();
-                foreach (IContactItem result in search.Search(max))
-                {
-                    users.Add(new GABUser(result.FullName, result.CustomerID));
-                }
-
-                return users;
-            }
-        }
 
         public GABUser LookupExact(string username)
         {
-            if (_gab?.Contacts != null)
+            string s = username.ToLower();
+            if (DataSource != null)
             {
-                // Begin GAB lookup, search on full name or username
-                using (ISearch<IContactItem> search = _gab.Contacts.Search<IContactItem>())
+                foreach(GABUser user in DataSource.Items)
                 {
-                    search.AddField("urn:schemas:contacts:customerid").SetOperation(SearchOperation.Equal, username);
-
-                    // Fetch the result, if any.
-                    List<GABUser> users = new List<GABUser>();
-                    using (IContactItem result = search.SearchOne())
+                    if (
+                        user.FullName?.ToLower().Equals(s) == true ||
+                        user.UserName?.ToLower().Equals(s) == true ||
+                        user.EmailAddress?.ToLower().Equals(s) == true
+                        )
                     {
-                        if (result != null)
-                            return new GABUser(result.FullName, result.CustomerID);
+                        return user;
                     }
                 }
             }
 
             return new GABUser(username);
+        }
+
+        #region Rendering
+
+        private static readonly Size NameSpacing = new Size(12, 4);
+        private static readonly Padding ItemPadding = new Padding(5);
+        private static readonly Padding BorderPadding = new Padding(2);
+        private const int BorderThickness = 1;
+
+        protected override void OnMeasureItem(MeasureItemEventArgs e)
+        {
+            GABUser item = (GABUser)e.Item;
+
+            Size nameSize = TextRenderer.MeasureText(e.Graphics, item.FullName, Font);
+            Size loginSize = TextRenderer.MeasureText(e.Graphics, item.UserName, Font);
+            Size emailSize = TextRenderer.MeasureText(e.Graphics, GetSecondLine(item), Font);
+
+            e.ItemWidth = Math.Max(emailSize.Width, nameSize.Width + loginSize.Width + NameSpacing.Width) + 
+                    ItemPadding.Horizontal;
+            e.ItemHeight = emailSize.Height + Math.Max(nameSize.Height, loginSize.Height) + 
+                    ItemPadding.Vertical +
+                    NameSpacing.Height +
+                    BorderThickness + BorderPadding.Vertical;
+        }
+
+        private string GetSecondLine(GABUser item)
+        {
+            if (item is NotFoundGABUser)
+                return NotFoundText;
+            else
+                return item.EmailAddress;
+        }
+
+        protected override void OnDrawItem(DrawItemEventArgs e)
+        {
+            GABUser item = (GABUser)e.Item;
+
+            // Draw the background
+            e.DrawBackground();
+
+            // Get the sizes
+            Size nameSize = TextRenderer.MeasureText(e.Graphics, item.FullName, Font);
+            Size loginSize = TextRenderer.MeasureText(e.Graphics, item.UserName, Font);
+            Size emailSize = TextRenderer.MeasureText(e.Graphics, item.EmailAddress, Font);
+
+            // Draw the full name top-left
+            Point pt = e.Bounds.TopLeft();
+            pt.Y += ItemPadding.Top;
+            pt.X += ItemPadding.Left;
+            TextRenderer.DrawText(e.Graphics, item.FullName, Font, pt, e.ForeColor);
+
+            // Draw the username top-right
+            pt.X = e.Bounds.Right - loginSize.Width - ItemPadding.Right;
+            TextRenderer.DrawText(e.Graphics, item.UserName, Font, pt, e.ForeColor);
+
+            // Draw the email below
+            pt.Y += Math.Max(nameSize.Height, loginSize.Height) + NameSpacing.Height;
+            pt.X = e.Bounds.X + ItemPadding.Left;
+
+            TextRenderer.DrawText(e.Graphics, GetSecondLine(item), Font, pt, e.ForeColor);
+
+            // Draw a separator line
+            if (e.Index < DisplayItemCount - 1)
+            {
+                int lineY = e.Bounds.Bottom - 1 - BorderThickness - BorderPadding.Bottom;
+                e.Graphics.DrawLine(Pens.LightGray, BorderPadding.Left, lineY, e.Bounds.Width - BorderPadding.Right, lineY);
+            }
+
         }
 
         #endregion

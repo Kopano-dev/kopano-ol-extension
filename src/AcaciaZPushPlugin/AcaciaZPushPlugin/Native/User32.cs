@@ -78,6 +78,21 @@ namespace Acacia.Native
         [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
         public static extern int MapWindowPoints(IntPtr hWndFrom, IntPtr hWndTo, [In, Out] ref Point pt, int cPoints);
 
+        public static int GetXLParam(IntPtr lParam)
+        {
+            return lParam.ToInt32() & 0xFFFF;
+        }
+
+        public static int GetYLParam(IntPtr lParam)
+        {
+            return (lParam.ToInt32() >> 16) & 0xFFFF;
+        }
+
+        public static Point GetPointLParam(IntPtr lParam)
+        {
+            return new Point(GetXLParam(lParam), GetYLParam(lParam));
+        }
+
         #endregion
 
         #region Messages

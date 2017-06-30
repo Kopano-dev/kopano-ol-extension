@@ -148,8 +148,12 @@ namespace Acacia.Features.SharedFolders
                     };
                     FocusNode(node);
                 }
+                kTreeFolders.Focus();
             }
-            kTreeFolders.Focus();
+            else
+            {
+                gabLookup.FocusEdit();
+            }
         }
 
         private void dialogButtons_Apply(object sender, EventArgs e)

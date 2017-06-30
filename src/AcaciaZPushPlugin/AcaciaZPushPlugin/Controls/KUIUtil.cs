@@ -24,7 +24,7 @@ using System.Windows.Forms;
 
 namespace Acacia.Controls
 {
-    internal static class KUIUtil
+    public static class KUIUtil
     {
         #region Geometry
 
@@ -124,6 +124,11 @@ namespace Acacia.Controls
             r.Width -= padding.Horizontal;
             r.Height -= padding.Vertical;
             return r;
+        }
+
+        public static Point TopLeft(this Rectangle _this)
+        {
+            return new Point(_this.Left, _this.Top);
         }
 
         #endregion

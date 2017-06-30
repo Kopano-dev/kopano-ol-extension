@@ -23,8 +23,15 @@ using System.Text;
 
 namespace Acacia.Native
 {
+    public enum MA : int
+    {
+        NOACTIVATE = 0x0003
+    }
+
     public enum WM : int
     {
+        MOUSEACTIVATE = 0x0021,
+
         NCHITTEST = 0x0084,
         NCPAINT = 0x0085,
 
@@ -38,7 +45,9 @@ namespace Acacia.Native
 
         LBUTTONDOWN = 0x0201,
         RBUTTONDOWN = 0x0204,
-        MBUTTONDOWN = 0x0207
+        MBUTTONDOWN = 0x0207,
+
+        MOUSEWHEEL = 0x020A,
 
     }
 }

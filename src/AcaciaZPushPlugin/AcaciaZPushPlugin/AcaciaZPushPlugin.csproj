@@ -226,9 +226,13 @@
     <Compile Include="Controls\KComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\KComboBoxCustomDraw.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\KCopyLabel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\KDataSource.cs" />
     <Compile Include="Controls\KDialogButtons.cs">
       <SubType>UserControl</SubType>
     </Compile>

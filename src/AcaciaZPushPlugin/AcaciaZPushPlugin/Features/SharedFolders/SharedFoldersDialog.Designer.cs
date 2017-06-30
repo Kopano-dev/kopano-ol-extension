@@ -35,25 +35,23 @@
             this._layoutMain = new System.Windows.Forms.TableLayoutPanel();
             this._layoutSelectUser = new System.Windows.Forms.TableLayoutPanel();
             this.labelSelectUser = new System.Windows.Forms.Label();
-            this.buttonOpenUser = new System.Windows.Forms.Button();
-            this._layoutCenterGABLookup = new System.Windows.Forms.TableLayoutPanel();
             this.gabLookup = new Acacia.UI.GABLookupControl();
+            this.buttonOpenUser = new System.Windows.Forms.Button();
             this.kTreeFolders = new Acacia.Controls.KTree();
             this._layoutOptions = new System.Windows.Forms.TableLayoutPanel();
             this._labelName = new System.Windows.Forms.Label();
             this.textName = new System.Windows.Forms.TextBox();
             this._labelSendAs = new System.Windows.Forms.Label();
             this.checkSendAs = new System.Windows.Forms.CheckBox();
-            this._labelPermissions = new System.Windows.Forms.Label();
-            this.labelPermissionsValue = new System.Windows.Forms.Label();
             this._labelReminders = new System.Windows.Forms.Label();
             this.checkReminders = new System.Windows.Forms.CheckBox();
+            this._labelPermissions = new System.Windows.Forms.Label();
+            this.labelPermissionsValue = new System.Windows.Forms.Label();
             this.dialogButtons = new Acacia.Controls.KDialogButtons();
             this._layout.SuspendLayout();
             this._mainBusyHider.SuspendLayout();
             this._layoutMain.SuspendLayout();
             this._layoutSelectUser.SuspendLayout();
-            this._layoutCenterGABLookup.SuspendLayout();
             this._layoutOptions.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,27 +83,14 @@
             // 
             resources.ApplyResources(this._layoutSelectUser, "_layoutSelectUser");
             this._layoutSelectUser.Controls.Add(this.labelSelectUser, 0, 0);
+            this._layoutSelectUser.Controls.Add(this.gabLookup, 1, 0);
             this._layoutSelectUser.Controls.Add(this.buttonOpenUser, 2, 0);
-            this._layoutSelectUser.Controls.Add(this._layoutCenterGABLookup, 1, 0);
             this._layoutSelectUser.Name = "_layoutSelectUser";
             // 
             // labelSelectUser
             // 
             resources.ApplyResources(this.labelSelectUser, "labelSelectUser");
             this.labelSelectUser.Name = "labelSelectUser";
-            // 
-            // buttonOpenUser
-            // 
-            resources.ApplyResources(this.buttonOpenUser, "buttonOpenUser");
-            this.buttonOpenUser.Name = "buttonOpenUser";
-            this.buttonOpenUser.UseVisualStyleBackColor = true;
-            this.buttonOpenUser.Click += new System.EventHandler(this.buttonOpenUser_Click);
-            // 
-            // _layoutCenterGABLookup
-            // 
-            resources.ApplyResources(this._layoutCenterGABLookup, "_layoutCenterGABLookup");
-            this._layoutCenterGABLookup.Controls.Add(this.gabLookup, 0, 1);
-            this._layoutCenterGABLookup.Name = "_layoutCenterGABLookup";
             // 
             // gabLookup
             // 
@@ -114,8 +99,17 @@
             this.gabLookup.DroppedDown = false;
             this.gabLookup.GAB = null;
             this.gabLookup.Name = "gabLookup";
+            this.gabLookup.PlaceholderColor = System.Drawing.Color.Gray;
+            this.gabLookup.PlaceholderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gabLookup.SelectedUser = null;
             this.gabLookup.SelectedUserChanged += new Acacia.UI.GABLookupControl.SelectedUserEventHandler(this.gabLookup_SelectedUserChanged);
+            // 
+            // buttonOpenUser
+            // 
+            resources.ApplyResources(this.buttonOpenUser, "buttonOpenUser");
+            this.buttonOpenUser.Name = "buttonOpenUser";
+            this.buttonOpenUser.UseVisualStyleBackColor = true;
+            this.buttonOpenUser.Click += new System.EventHandler(this.buttonOpenUser_Click);
             // 
             // kTreeFolders
             // 
@@ -140,10 +134,10 @@
             this._layoutOptions.Controls.Add(this.textName, 1, 0);
             this._layoutOptions.Controls.Add(this._labelSendAs, 0, 1);
             this._layoutOptions.Controls.Add(this.checkSendAs, 1, 1);
-            this._layoutOptions.Controls.Add(this._labelPermissions, 0, 3);
-            this._layoutOptions.Controls.Add(this.labelPermissionsValue, 1, 3);
             this._layoutOptions.Controls.Add(this._labelReminders, 0, 2);
             this._layoutOptions.Controls.Add(this.checkReminders, 1, 2);
+            this._layoutOptions.Controls.Add(this._labelPermissions, 0, 3);
+            this._layoutOptions.Controls.Add(this.labelPermissionsValue, 1, 3);
             this._layoutOptions.Name = "_layoutOptions";
             // 
             // _labelName
@@ -170,16 +164,6 @@
             this.checkSendAs.UseVisualStyleBackColor = true;
             this.checkSendAs.CheckedChanged += new System.EventHandler(this.checkSendAs_CheckedChanged);
             // 
-            // _labelPermissions
-            // 
-            resources.ApplyResources(this._labelPermissions, "_labelPermissions");
-            this._labelPermissions.Name = "_labelPermissions";
-            // 
-            // labelPermissionsValue
-            // 
-            resources.ApplyResources(this.labelPermissionsValue, "labelPermissionsValue");
-            this.labelPermissionsValue.Name = "labelPermissionsValue";
-            // 
             // _labelReminders
             // 
             resources.ApplyResources(this._labelReminders, "_labelReminders");
@@ -191,6 +175,16 @@
             this.checkReminders.Name = "checkReminders";
             this.checkReminders.UseVisualStyleBackColor = true;
             this.checkReminders.CheckedChanged += new System.EventHandler(this.checkReminders_CheckedChanged);
+            // 
+            // _labelPermissions
+            // 
+            resources.ApplyResources(this._labelPermissions, "_labelPermissions");
+            this._labelPermissions.Name = "_labelPermissions";
+            // 
+            // labelPermissionsValue
+            // 
+            resources.ApplyResources(this.labelPermissionsValue, "labelPermissionsValue");
+            this.labelPermissionsValue.Name = "labelPermissionsValue";
             // 
             // dialogButtons
             // 
@@ -219,7 +213,6 @@
             this._layoutMain.PerformLayout();
             this._layoutSelectUser.ResumeLayout(false);
             this._layoutSelectUser.PerformLayout();
-            this._layoutCenterGABLookup.ResumeLayout(false);
             this._layoutOptions.ResumeLayout(false);
             this._layoutOptions.PerformLayout();
             this.ResumeLayout(false);
@@ -243,7 +236,6 @@
         private System.Windows.Forms.Label labelPermissionsValue;
         private Controls.KBusyHider _mainBusyHider;
         private Controls.KDialogButtons dialogButtons;
-        private System.Windows.Forms.TableLayoutPanel _layoutCenterGABLookup;
         private UI.GABLookupControl gabLookup;
         private System.Windows.Forms.Label _labelReminders;
         private System.Windows.Forms.CheckBox checkReminders;
