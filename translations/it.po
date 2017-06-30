@@ -65,7 +65,7 @@ msgstr "Cercare contatti nella Global Address Book"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\FreeBusy\\FreeBusySettings\\labelUseAccount.Text"
 msgid "Use account: "
-msgstr "Utilizza l'account: "
+msgstr "Utilizza l\'account: "
 
 #: AcaciaZPushPlugin\Features\GAB\GABSettings\buttonGABResync.Text
 #, csharp-format
@@ -260,7 +260,7 @@ msgid ""
 "Out of office has been enabled, but the server could not handle your full request.\n"
 "\n"
 msgstr ""
-"Fuori Sede abilitato, ma il server non è stato in grado di gestire l'intera richiesta\n"
+"Fuori Sede abilitato, ma il server non è stato in grado di gestire l\'intera richiesta\n"
 "\n"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_Disabled
@@ -363,13 +363,13 @@ msgstr "Apri cartelle condivise"
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_AddSharedFolder_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_AddSharedFolder_Screentip"
-msgid "Open another user's shared folders"
+msgid "Open another user\'s shared folders"
 msgstr "Apre le cartelle condivise da altri utenti"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_AddSharedFolder_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_AddSharedFolder_Supertip"
-msgid "Open another user's shared folders"
+msgid "Open another user\'s shared folders"
 msgstr "Apre le cartelle condivise da altri utenti"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_Settings_Label
@@ -393,8 +393,8 @@ msgstr "Apre la finestra delle impostazioni, da cui è possibile configurare il 
 #: AcaciaZPushPlugin\Properties\Resources\OOFStartup_Message
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFStartup_Message"
-msgid "Out of Office is currently enabled on account '{0}'. Would you like to change the settings?"
-msgstr "Il Fuori Sede è attualmente abilitato per l'account '{0}'. Si desidera disabilitarlo?"
+msgid "Out of Office is currently enabled on account \'{0}\'. Would you like to change the settings?"
+msgstr "Il Fuori Sede è attualmente abilitato per l\'account \'{0}\'. Si desidera disabilitarlo?"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFStartup_Title
 #, csharp-format
@@ -827,7 +827,7 @@ msgstr "Chiudere"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\labelSelectUser.Text"
 msgid "Open folders for user"
-msgstr "Apri cartella per l'utente"
+msgstr "Apri cartella per l\'utente"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\buttonOpenUser.Text
 #, csharp-format
@@ -1031,7 +1031,7 @@ msgstr ""
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Body"
-msgid "The contacts folder '{0}' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click 'Yes' to restart Outlook now, or 'No' if you plan to restart Outlook later."
+msgid "The contacts folder \'{0}\' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click \'Yes\' to restart Outlook now, or \'No\' if you plan to restart Outlook later."
 msgstr ""
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
@@ -1044,7 +1044,7 @@ msgstr ""
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Body"
-msgid "The password for account '{0}' is not available. Advanced Z-Push features will not work."
+msgid "The password for account \'{0}\' is not available. Advanced Z-Push features will not work."
 msgstr ""
 
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Title
@@ -1167,7 +1167,7 @@ msgstr ""
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Body"
-msgid "Changing other people's private events is not allowed."
+msgid "Changing other people\'s private events is not allowed."
 msgstr ""
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Title
