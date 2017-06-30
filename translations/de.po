@@ -1069,10 +1069,10 @@ msgstr "Status der Synchronisation"
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Body"
 msgid "The contacts folder \'{0}\' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click \'Yes\' to restart Outlook now, or \'No\' if you plan to restart Outlook later."
 msgstr ""
-"Der Kontaktordner '{0}' wurde entdeckt. Er wird bereits synchronisiert, aber "
+"Der Kontaktordner \'{0}'\ wurde entdeckt. Er wird bereits synchronisiert, aber "
 "wird von Outlook bis zu einem Neustart nicht in der Liste der Kontaktordner "
-"angezeigt. Mit Klick auf 'Ja' wird Outlook sofort neugestartet, falls Sie "
-"planen Outlook später neuzustarten drücken Sie bitte 'Nein'."
+"angezeigt. Mit Klick auf \'Ja\' wird Outlook sofort neugestartet, falls Sie "
+"planen Outlook später neuzustarten drücken Sie bitte \'Nein\'."
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Title
