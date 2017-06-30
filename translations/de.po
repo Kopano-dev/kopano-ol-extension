@@ -4,8 +4,7 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2017-06-30 06:52+0000\n"
 "Last-Translator: Felix <f.bartels@kopano.com>\n"
-"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-"
-"extension/de/>\n"
+"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-extension/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -291,8 +290,8 @@ msgstr "Öffnet einen Dialog zur Konfiguration des Plugins und für den Zugriff 
 #: AcaciaZPushPlugin\Properties\Resources\OOFStartup_Message
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFStartup_Message"
-msgid "Out of Office is currently enabled on account \'{0}\'. Would you like to change the settings?"
-msgstr "Eine Abwesenheitsbenachrichtigung ist derzeit für den Account \'{0}\' aktiviert. Möchten Sie dies ändern?"
+msgid "Out of Office is currently enabled on account '{0}'. Would you like to change the settings?"
+msgstr "Eine Abwesenheitsbenachrichtigung ist derzeit für den Account '{0}' aktiviert. Möchten Sie dies ändern?"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFStartup_Title
 #, csharp-format
@@ -531,13 +530,13 @@ msgstr "Geteilten Ordner öffnen"
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_AddSharedFolder_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_AddSharedFolder_Screentip"
-msgid "Open another user\'s shared folders"
+msgid "Open another user's shared folders"
 msgstr "Die geteilten Ordner eines anderen Benutzers öffnen"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_AddSharedFolder_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_AddSharedFolder_Supertip"
-msgid "Open another user\'s shared folders"
+msgid "Open another user's shared folders"
 msgstr "Die geteilten Ordner eines anderen Benutzers öffnen"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Adding_Label
@@ -1067,12 +1066,8 @@ msgstr "Status der Synchronisation"
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Body"
-msgid "The contacts folder \'{0}\' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click \'Yes\' to restart Outlook now, or \'No\' if you plan to restart Outlook later."
-msgstr ""
-"Der Kontaktordner \'{0}'\ wurde entdeckt. Er wird bereits synchronisiert, aber "
-"wird von Outlook bis zu einem Neustart nicht in der Liste der Kontaktordner "
-"angezeigt. Mit Klick auf \'Ja\' wird Outlook sofort neugestartet, falls Sie "
-"planen Outlook später neuzustarten drücken Sie bitte \'Nein\'."
+msgid "The contacts folder '{0}' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click 'Yes' to restart Outlook now, or 'No' if you plan to restart Outlook later."
+msgstr "Der Kontaktordner '{0}' wurde entdeckt. Er wird bereits synchronisiert, aber wird von Outlook bis zu einem Neustart nicht in der Liste der Kontaktordner angezeigt. Mit Klick auf 'Ja' wird Outlook sofort neugestartet, falls Sie planen Outlook später neuzustarten drücken Sie bitte 'Nein'."
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Title
@@ -1084,8 +1079,8 @@ msgstr "Kontaktordner"
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Body"
-msgid "The password for account \'{0}\' is not available. Advanced Z-Push features will not work."
-msgstr "Das Passwort für den Account \\\'{0}\\\' ist nicht verfügbar. Weiterführende Funktionen von Z-Push werden nicht funktionieren."
+msgid "The password for account '{0}' is not available. Advanced Z-Push features will not work."
+msgstr "Das Passwort für den Account '{0}' ist nicht verfügbar. Weiterführende Funktionen von Z-Push werden nicht funktionieren."
 
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Title
 #, csharp-format
@@ -1207,7 +1202,7 @@ msgstr "Synchronisationsprobleme - {0}"
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Body"
-msgid "Changing other people\'s private events is not allowed."
+msgid "Changing other people's private events is not allowed."
 msgstr "Das verändern von privaten Terminen in geteilten Ordnern ist nicht erlaubt."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Title
@@ -1227,3 +1222,4 @@ msgstr "Der Benutzer konnte nicht gefunden werden"
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\gabLookup.Placeholder"
 msgid "Start typing name"
 msgstr "Tippe um die Suche zu starten"
+
