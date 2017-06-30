@@ -84,7 +84,7 @@ namespace Acacia.Features.SyncState
             get { return GetOption(OPTION_CHECK_SYNC_STALL); }
             set { SetOption(OPTION_CHECK_SYNC_STALL, value); }
         }
-        private static readonly BoolOption OPTION_CHECK_SYNC_STALL = new BoolOption("CheckSyncStall", false);
+        private static readonly BoolOption OPTION_CHECK_SYNC_STALL = new BoolOption("CheckSyncStall", true);
 
         [AcaciaOption("Sets the period that triggers a full resynchronisation suggestion. Note that the check is only performed " +
                       "when the synchronisation state is being updated, so the effective period may be longer than this.")]
