@@ -76,22 +76,22 @@ msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnLine.Text
 msgid "Line"
 msgstr ""
 
-#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabProperties.Text
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnEvent.Text
 #, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabProperties.Text"
-msgid "General"
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnEvent.Text"
+msgid "Event"
 msgstr ""
 
-#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabWrapperTypes.Text
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnCount.Text
 #, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabWrapperTypes.Text"
-msgid "Wrapper types"
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnCount.Text"
+msgid "Count"
 msgstr ""
 
-#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabWrapperLocations.Text
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnId.Text
 #, csharp-format
-msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabWrapperLocations.Text"
-msgid "Wrapper locations"
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnId.Text"
+msgid "Id"
 msgstr ""
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonGC.Text
@@ -118,6 +118,12 @@ msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonLog.Text"
 msgid "Log"
 msgstr ""
 
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabProperties.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabProperties.Text"
+msgid "General"
+msgstr ""
+
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader1.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader1.Text"
@@ -130,6 +136,12 @@ msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader2.T
 msgid "Count"
 msgstr ""
 
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabWrapperTypes.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabWrapperTypes.Text"
+msgid "Wrapper types"
+msgstr ""
+
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader3.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader3.Text"
@@ -140,6 +152,24 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader4.Text"
 msgid "Count"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabWrapperLocations.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabWrapperLocations.Text"
+msgid "Wrapper locations"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnEvents.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnEvents.Text"
+msgid "Events"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabItemEvents.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabItemEvents.Text"
+msgid "Item events"
 msgstr ""
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\$this.Text
