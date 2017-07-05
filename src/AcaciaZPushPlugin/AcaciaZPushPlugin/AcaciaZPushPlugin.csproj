@@ -388,6 +388,9 @@
     <Compile Include="UI\Outlook\MenuItem.cs" />
     <Compile Include="UI\Outlook\Types.cs" />
     <Compile Include="Utils\CompletionTracker.cs" />
+    <Compile Include="Utils\DisposableTracer.cs" />
+    <Compile Include="Utils\DisposableTracerDummy.cs" />
+    <Compile Include="Utils\DisposableTracerFull.cs" />
     <Compile Include="Utils\DisposableWrapper.cs" />
     <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="Utils\RegistryUtil.cs" />

@@ -107,6 +107,15 @@ namespace Acacia
         }
         private static readonly BoolOption COM_RELEASE = new BoolOption("COMRelease", true);
 
+        [AcaciaOption("Enables tracing of wrapper allocation. Should only be enabled for debugging, as it's very " +
+                      "resource intensive.")]
+        public bool WrapperTrace
+        {
+            get { return GetOption(null, WRAPPER_TRACE); }
+            set { SetOption(null, WRAPPER_TRACE, value); }
+        }
+        private static readonly BoolOption WRAPPER_TRACE = new BoolOption("WrapperTrace", false);
+
         [AcaciaOption("Enables or disables logging completely.")]
         public bool Logging
         {

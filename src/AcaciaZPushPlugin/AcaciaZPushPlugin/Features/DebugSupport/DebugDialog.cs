@@ -1,4 +1,4 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -35,17 +35,104 @@ namespace Acacia.Features.DebugSupport
 {
     public partial class DebugDialog : KopanoDialog
     {
+        private readonly DisposableTracerFull _tracer;
 
         public DebugDialog()
         {
             InitializeComponent();
             Properties.SelectedObject = new DebugInfo();
+
+            _tracer = DisposableWrapper.GetTracer();
+            if (_tracer == null)
+            {
+                // If we don't have a wrapper tracer, hide the tabs
+                _tabs.SizeMode = TabSizeMode.Fixed;
+                _tabs.ItemSize = new Size(0, 1);
+            }
+            else
+            {
+                listWrapperTypes.ListViewItemSorter = new WrapperCountSorter();
+                listWrapperLocations.ListViewItemSorter = new WrapperCountSorter();
+                RefreshWrappers();
+
+                // Make it a bit bigger
+                Width = Width + 400;
+                Height = Height + 200;
+            }
         }
 
         private void UpdateFields()
         {
             Properties.Refresh();
+            RefreshWrappers();
         }
+
+        #region Wrappers
+
+        private void RefreshWrappers()
+        {
+            // Wrapper types
+            listWrapperTypes.Items.Clear();
+            foreach(KeyValuePair<Type, int> type in _tracer.GetTypes())
+            {
+                string name = type.Key.Name;
+                if (type.Key.DeclaringType != null)
+                    name = type.Key.DeclaringType.Name + "." + name;
+                
+                ListViewItem item = new ListViewItem(name);
+                item.ToolTipText = type.Key.FullName;
+                item.SubItems.Add(type.Value.ToString());
+                listWrapperTypes.Items.Add(item);
+            }
+
+            listWrapperTypes.Columns[0].Width = -2;
+            listWrapperTypes.Columns[1].Width = -2;
+
+            // Wrapper locations
+            listWrapperLocations.Items.Clear();
+            foreach (KeyValuePair<DisposableTracerFull.CustomTrace, int> entry in _tracer.GetLocations())
+            {
+                ListViewItem item = new ListViewItem(entry.Key.DisplayName);
+                item.SubItems.Add(entry.Value.ToString());
+                item.Tag = entry.Key;
+                listWrapperLocations.Items.Add(item);
+            }
+
+            listWrapperLocations.Columns[0].Width = -2;
+            listWrapperLocations.Columns[1].Width = -2;
+        }
+
+        private class WrapperCountSorter : IComparer
+        {
+            public int Compare(object x, object y)
+            {
+                int ix = int.Parse(((ListViewItem)x).SubItems[1].Text);
+                int iy = int.Parse(((ListViewItem)y).SubItems[1].Text);
+                return iy - ix;
+            }
+        }
+
+        private void listWrapperLocations_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listStackTrace.Items.Clear();
+            if (listWrapperLocations.SelectedItems.Count > 0)
+            {
+                DisposableTracerFull.CustomTrace trace = (DisposableTracerFull.CustomTrace)listWrapperLocations.SelectedItems[0].Tag;
+                foreach(DisposableTracerFull.CustomFrame frame in trace.Frames)
+                {
+                    ListViewItem item = new ListViewItem(frame.MethodName);
+                    item.SubItems.Add(frame.LineNumber.ToString());
+                    item.SubItems.Add(frame.FileName ?? "");
+                    listStackTrace.Items.Add(item);
+                }
+            }
+            foreach (ColumnHeader header in listStackTrace.Columns)
+                header.Width = -2;
+        }
+
+        #endregion
+
+        #region Cycling
 
         private class DebugCycleInfo
         {
@@ -108,6 +195,12 @@ namespace Acacia.Features.DebugSupport
 
         private DebugCycleInfo cycle;
 
+        /// <summary>
+        /// Runs the specific number of cycles. In each cycle the GAB is resynced. This is to test
+        /// memory errors, which show most frequently when using the GAB, as that touches most of 
+        /// the code.
+        /// </summary>
+        /// <param name="count">The number of cycles to run</param>
         internal void DebugCycle(int count)
         {
             GAB.FeatureGAB gab = ThisAddIn.Instance.GetFeature<GAB.FeatureGAB>();
@@ -117,6 +210,8 @@ namespace Acacia.Features.DebugSupport
                 cycle.Run();
             }
         }
+
+        #endregion
 
         #region Logging
 

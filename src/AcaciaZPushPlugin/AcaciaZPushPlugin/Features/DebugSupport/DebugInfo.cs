@@ -273,7 +273,7 @@ namespace Acacia.Features.DebugSupport
 
         #endregion
 
-#region Helpers
+        #region Helpers
 
         private string TimeToString(Stopwatch time)
         {
@@ -297,6 +297,6 @@ namespace Acacia.Features.DebugSupport
             return string.Format("{0:n1} {1}", dValue, SizeSuffixes[i]);
         }
 
-#endregion
+        #endregion
     }
 }
