@@ -51,9 +51,11 @@ namespace Acacia.Features.DebugSupport
             }
             else
             {
-                listWrapperTypes.ListViewItemSorter = new WrapperCountSorter();
-                listWrapperLocations.ListViewItemSorter = new WrapperCountSorter();
+                listWrapperTypes.ListViewItemSorter = new WrapperCountSorter(1);
+                listWrapperLocations.ListViewItemSorter = new WrapperCountSorter(1);
+                listItemEvents.ListViewItemSorter = new WrapperCountSorter(0);
                 RefreshWrappers();
+                RefreshItemEvents();
 
                 // Make it a bit bigger
                 Width = Width + 400;
@@ -65,6 +67,7 @@ namespace Acacia.Features.DebugSupport
         {
             Properties.Refresh();
             RefreshWrappers();
+            RefreshItemEvents();
         }
 
         #region Wrappers
@@ -104,10 +107,17 @@ namespace Acacia.Features.DebugSupport
 
         private class WrapperCountSorter : IComparer
         {
+            private readonly int _index;
+
+            public WrapperCountSorter(int index)
+            {
+                this._index = index;
+            }
+
             public int Compare(object x, object y)
             {
-                int ix = int.Parse(((ListViewItem)x).SubItems[1].Text);
-                int iy = int.Parse(((ListViewItem)y).SubItems[1].Text);
+                int ix = int.Parse(((ListViewItem)x).SubItems[_index].Text);
+                int iy = int.Parse(((ListViewItem)y).SubItems[_index].Text);
                 return iy - ix;
             }
         }
@@ -127,6 +137,42 @@ namespace Acacia.Features.DebugSupport
                 }
             }
             foreach (ColumnHeader header in listStackTrace.Columns)
+                header.Width = -2;
+        }
+
+        #endregion
+
+        #region Item events
+
+        private void RefreshItemEvents()
+        {
+            listItemEvents.Items.Clear();
+            foreach(MailEvents.MailEventDebug events in MailEvents.MailEventsDebug)
+            {
+                ListViewItem item = new ListViewItem(events.Id);
+                item.Tag = events;
+                item.SubItems.Add(string.Join(", ", events.GetEvents()));
+                listItemEvents.Items.Add(item);
+            }
+
+            foreach (ColumnHeader header in listItemEvents.Columns)
+                header.Width = -2;
+        }
+
+        private void listItemEvents_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listItemEventDetails.Items.Clear();
+            if (listItemEvents.SelectedItems.Count > 0)
+            {
+                MailEvents.MailEventDebug debug = (MailEvents.MailEventDebug)listItemEvents.SelectedItems[0].Tag;
+                foreach (MailEvents.DebugEvent evt in typeof(MailEvents.DebugEvent).GetEnumValues())
+                {
+                    ListViewItem item = new ListViewItem(evt.ToString());
+                    item.SubItems.Add(debug.GetEventCount(evt).ToString());
+                    listItemEventDetails.Items.Add(item);
+                }
+            }
+            foreach (ColumnHeader header in listItemEventDetails.Columns)
                 header.Width = -2;
         }
 
