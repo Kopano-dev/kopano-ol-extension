@@ -386,10 +386,11 @@ namespace Acacia.Utils
 
         public static IEnumerable<MailEventDebug> MailEventsDebug
         {
-            get { return _hookers.Values; }
+            get { return _hookers?.Values; }
         }
 
-        private static readonly ConcurrentDictionary<int, MailEventDebugImpl> _hookers = new ConcurrentDictionary<int, MailEventDebugImpl>();
+        private static readonly ConcurrentDictionary<int, MailEventDebugImpl> _hookers = 
+            GlobalOptions.INSTANCE.WrapperTrace ? new ConcurrentDictionary<int, MailEventDebugImpl>() : null;
         private static int _nextHookerId;
 
         private class MailEventHooker : DisposableWrapper
@@ -400,8 +401,11 @@ namespace Acacia.Utils
 
             public MailEventHooker(IItem item, MailEvents events)
             {
-                _debug = new MailEventDebugImpl(Interlocked.Increment(ref _nextHookerId));
-                _hookers.TryAdd(_debug._id, _debug);
+                if (_hookers != null)
+                {
+                    _debug = new MailEventDebugImpl(Interlocked.Increment(ref _nextHookerId));
+                    _hookers.TryAdd(_debug._id, _debug);
+                }
 
                 this._item = item;
                 this._events = events;
@@ -412,17 +416,21 @@ namespace Acacia.Utils
             {
                 if (_item != null)
                 {
-                    _debug.RecordEvent(DebugEvent.Dispose);
                     _item.Dispose();
                     _item = null;
                 }
-                MailEventDebugImpl dummy;
-                _hookers.TryRemove(_debug._id, out dummy);
+
+                if (_debug != null)
+                {
+                    _debug.RecordEvent(DebugEvent.Dispose);
+                    MailEventDebugImpl dummy;
+                    _hookers.TryRemove(_debug._id, out dummy);
+                }
             }
 
             ~MailEventHooker()
             {
-                _debug.RecordEvent(DebugEvent.GC);
+                _debug?.RecordEvent(DebugEvent.GC);
             }
 
             private void HookEvents(bool add)
@@ -456,52 +464,48 @@ namespace Acacia.Utils
 
             private void HandleBeforeDelete(object item, ref bool cancel)
             {
-                _debug.RecordEvent(DebugEvent.BeforeDelete);
-                //using (IItem wrapped = item.WrapOrDefault<IItem>(false))
-                  //  _events.OnBeforeDelete(wrapped, ref cancel);
+                _debug?.RecordEvent(DebugEvent.BeforeDelete);
+                using (IItem wrapped = item.WrapOrDefault<IItem>(false))
+                    _events.OnBeforeDelete(wrapped, ref cancel);
             }
 
             private void HandleForward(object response, ref bool cancel)
             {
-                _debug.RecordEvent(DebugEvent.Forward);
-                //using (IItem wrapped = response.WrapOrDefault<IItem>(false))
-                  //  _events.OnForward(_item as IMailItem, wrapped as IMailItem);
+                _debug?.RecordEvent(DebugEvent.Forward);
+                using (IItem wrapped = response.WrapOrDefault<IItem>(false))
+                    _events.OnForward(_item as IMailItem, wrapped as IMailItem);
             }
 
             private void HandlePropertyChange(string name)
             {
-                _debug.RecordEvent(DebugEvent.PropertyChange);
-                //_events.OnPropertyChange(_item, name);
+                _debug?.RecordEvent(DebugEvent.PropertyChange);
+                _events.OnPropertyChange(_item, name);
             }
 
             private void HandleRead()
             {
-                _debug.RecordEvent(DebugEvent.Read);
+                _debug?.RecordEvent(DebugEvent.Read);
                 // TODO: should this not be simply an IItem?
-                IMailItem mail = _item as IMailItem;
-                if (mail != null)
-                {
-                    _events.OnRead(mail);
-                }
+                _events.OnRead(_item as IMailItem);
             }
 
             private void HandleReply(object response, ref bool cancel)
             {
-                _debug.RecordEvent(DebugEvent.Reply);
-                //using (IItem wrapped = response.WrapOrDefault<IItem>(false))
-                  //  _events.OnReply(_item as IMailItem, wrapped as IMailItem);
+                _debug?.RecordEvent(DebugEvent.Reply);
+                using (IItem wrapped = response.WrapOrDefault<IItem>(false))
+                    _events.OnReply(_item as IMailItem, wrapped as IMailItem);
             }
 
             private void HandleReplyAll(object response, ref bool cancel)
             {
-                _debug.RecordEvent(DebugEvent.ReplyAll);
-                //using (IItem wrapped = response.WrapOrDefault<IItem>(false))
-                  //  _events.OnReplyAll(_item as IMailItem, wrapped as IMailItem);
+                _debug?.RecordEvent(DebugEvent.ReplyAll);
+                using (IItem wrapped = response.WrapOrDefault<IItem>(false))
+                    _events.OnReplyAll(_item as IMailItem, wrapped as IMailItem);
             }
 
             private void HandleUnload()
             {
-                _debug.RecordEvent(DebugEvent.Unload);
+                _debug?.RecordEvent(DebugEvent.Unload);
                 // All events must be unhooked on unload, otherwise a resource leak is created.
                 HookEvents(false);
                 Dispose();
@@ -509,8 +513,8 @@ namespace Acacia.Utils
 
             private void HandleWrite(ref bool cancel)
             {
-                _debug.RecordEvent(DebugEvent.Write);
-                //_events.OnWrite(_item, ref cancel);
+                _debug?.RecordEvent(DebugEvent.Write);
+                _events.OnWrite(_item, ref cancel);
             }
         }
 

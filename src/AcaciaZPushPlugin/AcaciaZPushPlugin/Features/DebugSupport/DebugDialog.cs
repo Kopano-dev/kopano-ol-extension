@@ -74,6 +74,9 @@ namespace Acacia.Features.DebugSupport
 
         private void RefreshWrappers()
         {
+            if (_tracer == null)
+                return;
+
             // Wrapper types
             listWrapperTypes.Items.Clear();
             foreach(KeyValuePair<Type, int> type in _tracer.GetTypes())
@@ -146,6 +149,9 @@ namespace Acacia.Features.DebugSupport
 
         private void RefreshItemEvents()
         {
+            if (_tracer == null)
+                return;
+
             listItemEvents.Items.Clear();
             foreach(MailEvents.MailEventDebug events in MailEvents.MailEventsDebug)
             {
