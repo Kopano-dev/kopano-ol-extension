@@ -2,9 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-06-30 10:04+0000\n"
-"Last-Translator: Patrick Simpson <p.simpson@etosis.com>\n"
-"Language-Team: Dutch <http://translate.kopano.io/projects/kopano/kopano-ol-extension/nl/>\n"
+"PO-Revision-Date: 2017-07-05 12:32+0000\n"
+"Last-Translator: Bob <b.huisman@kopano.com>\n"
+"Language-Team: Dutch <http://translate.kopano.io/projects/kopano/kopano-ol-"
+"extension/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -1227,25 +1228,25 @@ msgstr "Type naam"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnMethod.Text"
 msgid "Method"
-msgstr ""
+msgstr "Methode"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnFile.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnFile.Text"
 msgid "File"
-msgstr ""
+msgstr "Bestand"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnLine.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnLine.Text"
 msgid "Line"
-msgstr ""
+msgstr "Regel"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabProperties.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabProperties.Text"
 msgid "General"
-msgstr ""
+msgstr "Algemeen"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabWrapperTypes.Text
 #, csharp-format
@@ -1263,23 +1264,22 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader1.Text"
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader2.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader2.Text"
 msgid "Count"
-msgstr ""
+msgstr "Aantal"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader3.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader3.Text"
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader4.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader4.Text"
 msgid "Count"
-msgstr ""
-
+msgstr "Aantal"
