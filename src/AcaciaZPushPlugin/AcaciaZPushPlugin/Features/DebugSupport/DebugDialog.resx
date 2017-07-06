@@ -142,6 +142,30 @@
   <data name="columnLine.Text" xml:space="preserve">
     <value>Line</value>
   </data>
+  <metadata name="columnEvent.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <data name="columnEvent.Text" xml:space="preserve">
+    <value>Event</value>
+  </data>
+  <data name="columnEvent.Width" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <metadata name="columnCount.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <data name="columnCount.Text" xml:space="preserve">
+    <value>Count</value>
+  </data>
+  <metadata name="columnId.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <data name="columnId.Text" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="columnId.Width" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tableMain.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -161,325 +185,10 @@
   <data name="flowButtons.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;buttonGC.Name" xml:space="preserve">
-    <value>buttonGC</value>
-  </data>
-  <data name="&gt;&gt;buttonGC.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonGC.Parent" xml:space="preserve">
-    <value>flowButtons</value>
-  </data>
-  <data name="&gt;&gt;buttonGC.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;buttonRefresh.Name" xml:space="preserve">
-    <value>buttonRefresh</value>
-  </data>
-  <data name="&gt;&gt;buttonRefresh.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonRefresh.Parent" xml:space="preserve">
-    <value>flowButtons</value>
-  </data>
-  <data name="&gt;&gt;buttonRefresh.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;buttonClose.Name" xml:space="preserve">
-    <value>buttonClose</value>
-  </data>
-  <data name="&gt;&gt;buttonClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonClose.Parent" xml:space="preserve">
-    <value>flowButtons</value>
-  </data>
-  <data name="&gt;&gt;buttonClose.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;buttonLog.Name" xml:space="preserve">
-    <value>buttonLog</value>
-  </data>
-  <data name="&gt;&gt;buttonLog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonLog.Parent" xml:space="preserve">
-    <value>flowButtons</value>
-  </data>
-  <data name="&gt;&gt;buttonLog.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="flowButtons.FlowDirection" type="System.Windows.Forms.FlowDirection, System.Windows.Forms">
-    <value>RightToLeft</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="flowButtons.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 703</value>
-  </data>
-  <data name="flowButtons.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 3, 4, 3</value>
-  </data>
-  <data name="flowButtons.Size" type="System.Drawing.Size, System.Drawing">
-    <value>615, 64</value>
-  </data>
-  <data name="flowButtons.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;flowButtons.Name" xml:space="preserve">
-    <value>flowButtons</value>
-  </data>
-  <data name="&gt;&gt;flowButtons.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;flowButtons.Parent" xml:space="preserve">
-    <value>tableMain</value>
-  </data>
-  <data name="&gt;&gt;flowButtons.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;Properties.Name" xml:space="preserve">
-    <value>Properties</value>
-  </data>
-  <data name="&gt;&gt;Properties.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Properties.Parent" xml:space="preserve">
-    <value>_tabProperties</value>
-  </data>
-  <data name="&gt;&gt;Properties.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="_tabProperties.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 33</value>
-  </data>
-  <data name="_tabProperties.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="_tabProperties.Size" type="System.Drawing.Size, System.Drawing">
-    <value>609, 657</value>
-  </data>
-  <data name="_tabProperties.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="_tabProperties.Text" xml:space="preserve">
-    <value>General</value>
-  </data>
-  <data name="&gt;&gt;_tabProperties.Name" xml:space="preserve">
-    <value>_tabProperties</value>
-  </data>
-  <data name="&gt;&gt;_tabProperties.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;_tabProperties.Parent" xml:space="preserve">
-    <value>_tabs</value>
-  </data>
-  <data name="&gt;&gt;_tabProperties.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;listWrapperTypes.Name" xml:space="preserve">
-    <value>listWrapperTypes</value>
-  </data>
-  <data name="&gt;&gt;listWrapperTypes.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;listWrapperTypes.Parent" xml:space="preserve">
-    <value>_tabWrapperTypes</value>
-  </data>
-  <data name="&gt;&gt;listWrapperTypes.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="_tabWrapperTypes.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 33</value>
-  </data>
-  <data name="_tabWrapperTypes.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="_tabWrapperTypes.Size" type="System.Drawing.Size, System.Drawing">
-    <value>609, 657</value>
-  </data>
-  <data name="_tabWrapperTypes.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="_tabWrapperTypes.Text" xml:space="preserve">
-    <value>Wrapper types</value>
-  </data>
-  <data name="&gt;&gt;_tabWrapperTypes.Name" xml:space="preserve">
-    <value>_tabWrapperTypes</value>
-  </data>
-  <data name="&gt;&gt;_tabWrapperTypes.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;_tabWrapperTypes.Parent" xml:space="preserve">
-    <value>_tabs</value>
-  </data>
-  <data name="&gt;&gt;_tabWrapperTypes.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="_layoutLocations.ColumnCount" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="listStackTrace.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="listStackTrace.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 328</value>
-  </data>
-  <data name="listStackTrace.Size" type="System.Drawing.Size, System.Drawing">
-    <value>597, 320</value>
-  </data>
-  <data name="listStackTrace.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;listStackTrace.Name" xml:space="preserve">
-    <value>listStackTrace</value>
-  </data>
-  <data name="&gt;&gt;listStackTrace.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;listStackTrace.Parent" xml:space="preserve">
-    <value>_layoutLocations</value>
-  </data>
-  <data name="&gt;&gt;listStackTrace.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="listWrapperLocations.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="listWrapperLocations.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="listWrapperLocations.Size" type="System.Drawing.Size, System.Drawing">
-    <value>597, 319</value>
-  </data>
-  <data name="listWrapperLocations.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;listWrapperLocations.Name" xml:space="preserve">
-    <value>listWrapperLocations</value>
-  </data>
-  <data name="&gt;&gt;listWrapperLocations.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;listWrapperLocations.Parent" xml:space="preserve">
-    <value>_layoutLocations</value>
-  </data>
-  <data name="&gt;&gt;listWrapperLocations.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="_layoutLocations.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="_layoutLocations.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="_layoutLocations.RowCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="_layoutLocations.Size" type="System.Drawing.Size, System.Drawing">
-    <value>603, 651</value>
-  </data>
-  <data name="_layoutLocations.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;_layoutLocations.Name" xml:space="preserve">
-    <value>_layoutLocations</value>
-  </data>
-  <data name="&gt;&gt;_layoutLocations.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;_layoutLocations.Parent" xml:space="preserve">
-    <value>_tabWrapperLocations</value>
-  </data>
-  <data name="&gt;&gt;_layoutLocations.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="_layoutLocations.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="listStackTrace" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="listWrapperLocations" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,20" /&gt;&lt;Rows Styles="Percent,50,Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="_tabWrapperLocations.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 33</value>
-  </data>
-  <data name="_tabWrapperLocations.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="_tabWrapperLocations.Size" type="System.Drawing.Size, System.Drawing">
-    <value>609, 657</value>
-  </data>
-  <data name="_tabWrapperLocations.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="_tabWrapperLocations.Text" xml:space="preserve">
-    <value>Wrapper locations</value>
-  </data>
-  <data name="&gt;&gt;_tabWrapperLocations.Name" xml:space="preserve">
-    <value>_tabWrapperLocations</value>
-  </data>
-  <data name="&gt;&gt;_tabWrapperLocations.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;_tabWrapperLocations.Parent" xml:space="preserve">
-    <value>_tabs</value>
-  </data>
-  <data name="&gt;&gt;_tabWrapperLocations.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="_tabs.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="_tabs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="_tabs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>617, 694</value>
-  </data>
-  <data name="_tabs.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;_tabs.Name" xml:space="preserve">
-    <value>_tabs</value>
-  </data>
-  <data name="&gt;&gt;_tabs.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;_tabs.Parent" xml:space="preserve">
-    <value>tableMain</value>
-  </data>
-  <data name="&gt;&gt;_tabs.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tableMain.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="tableMain.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 3, 4, 3</value>
-  </data>
-  <data name="tableMain.RowCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="tableMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>623, 770</value>
-  </data>
-  <data name="tableMain.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;tableMain.Name" xml:space="preserve">
-    <value>tableMain</value>
-  </data>
-  <data name="&gt;&gt;tableMain.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tableMain.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tableMain.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tableMain.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="flowButtons" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="_tabs" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,100,AutoSize,0,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
   <data name="buttonGC.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="buttonGC.Location" type="System.Drawing.Point, System.Drawing">
     <value>483, 6</value>
   </data>
@@ -597,6 +306,33 @@
   <data name="&gt;&gt;buttonLog.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="flowButtons.FlowDirection" type="System.Windows.Forms.FlowDirection, System.Windows.Forms">
+    <value>RightToLeft</value>
+  </data>
+  <data name="flowButtons.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 703</value>
+  </data>
+  <data name="flowButtons.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="flowButtons.Size" type="System.Drawing.Size, System.Drawing">
+    <value>615, 64</value>
+  </data>
+  <data name="flowButtons.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;flowButtons.Name" xml:space="preserve">
+    <value>flowButtons</value>
+  </data>
+  <data name="&gt;&gt;flowButtons.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;flowButtons.Parent" xml:space="preserve">
+    <value>tableMain</value>
+  </data>
+  <data name="&gt;&gt;flowButtons.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="Properties.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -627,6 +363,45 @@
   <data name="&gt;&gt;Properties.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="_tabProperties.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 33</value>
+  </data>
+  <data name="_tabProperties.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="_tabProperties.Size" type="System.Drawing.Size, System.Drawing">
+    <value>609, 657</value>
+  </data>
+  <data name="_tabProperties.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="_tabProperties.Text" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="&gt;&gt;_tabProperties.Name" xml:space="preserve">
+    <value>_tabProperties</value>
+  </data>
+  <data name="&gt;&gt;_tabProperties.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_tabProperties.Parent" xml:space="preserve">
+    <value>_tabs</value>
+  </data>
+  <data name="&gt;&gt;_tabProperties.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="columnHeader1.Text" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="columnHeader1.Width" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="columnHeader2.Text" xml:space="preserve">
+    <value>Count</value>
+  </data>
+  <data name="columnHeader2.Width" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
   <data name="listWrapperTypes.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -651,17 +426,59 @@
   <data name="&gt;&gt;listWrapperTypes.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="columnHeader1.Text" xml:space="preserve">
-    <value>Type</value>
+  <data name="_tabWrapperTypes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 33</value>
   </data>
-  <data name="columnHeader1.Width" type="System.Int32, mscorlib">
-    <value>44</value>
+  <data name="_tabWrapperTypes.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
   </data>
-  <data name="columnHeader2.Text" xml:space="preserve">
-    <value>Count</value>
+  <data name="_tabWrapperTypes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>609, 657</value>
   </data>
-  <data name="columnHeader2.Width" type="System.Int32, mscorlib">
-    <value>44</value>
+  <data name="_tabWrapperTypes.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="_tabWrapperTypes.Text" xml:space="preserve">
+    <value>Wrapper types</value>
+  </data>
+  <data name="&gt;&gt;_tabWrapperTypes.Name" xml:space="preserve">
+    <value>_tabWrapperTypes</value>
+  </data>
+  <data name="&gt;&gt;_tabWrapperTypes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_tabWrapperTypes.Parent" xml:space="preserve">
+    <value>_tabs</value>
+  </data>
+  <data name="&gt;&gt;_tabWrapperTypes.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="_layoutLocations.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="listStackTrace.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="listStackTrace.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 328</value>
+  </data>
+  <data name="listStackTrace.Size" type="System.Drawing.Size, System.Drawing">
+    <value>597, 320</value>
+  </data>
+  <data name="listStackTrace.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;listStackTrace.Name" xml:space="preserve">
+    <value>listStackTrace</value>
+  </data>
+  <data name="&gt;&gt;listStackTrace.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;listStackTrace.Parent" xml:space="preserve">
+    <value>_layoutLocations</value>
+  </data>
+  <data name="&gt;&gt;listStackTrace.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="columnHeader3.Text" xml:space="preserve">
     <value>Type</value>
@@ -674,6 +491,255 @@
   </data>
   <data name="columnHeader4.Width" type="System.Int32, mscorlib">
     <value>44</value>
+  </data>
+  <data name="listWrapperLocations.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="listWrapperLocations.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="listWrapperLocations.Size" type="System.Drawing.Size, System.Drawing">
+    <value>597, 319</value>
+  </data>
+  <data name="listWrapperLocations.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;listWrapperLocations.Name" xml:space="preserve">
+    <value>listWrapperLocations</value>
+  </data>
+  <data name="&gt;&gt;listWrapperLocations.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;listWrapperLocations.Parent" xml:space="preserve">
+    <value>_layoutLocations</value>
+  </data>
+  <data name="&gt;&gt;listWrapperLocations.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="_layoutLocations.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="_layoutLocations.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="_layoutLocations.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="_layoutLocations.Size" type="System.Drawing.Size, System.Drawing">
+    <value>603, 651</value>
+  </data>
+  <data name="_layoutLocations.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;_layoutLocations.Name" xml:space="preserve">
+    <value>_layoutLocations</value>
+  </data>
+  <data name="&gt;&gt;_layoutLocations.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_layoutLocations.Parent" xml:space="preserve">
+    <value>_tabWrapperLocations</value>
+  </data>
+  <data name="&gt;&gt;_layoutLocations.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="_layoutLocations.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="listStackTrace" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="listWrapperLocations" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,20" /&gt;&lt;Rows Styles="Percent,50,Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="_tabWrapperLocations.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 33</value>
+  </data>
+  <data name="_tabWrapperLocations.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="_tabWrapperLocations.Size" type="System.Drawing.Size, System.Drawing">
+    <value>609, 657</value>
+  </data>
+  <data name="_tabWrapperLocations.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="_tabWrapperLocations.Text" xml:space="preserve">
+    <value>Wrapper locations</value>
+  </data>
+  <data name="&gt;&gt;_tabWrapperLocations.Name" xml:space="preserve">
+    <value>_tabWrapperLocations</value>
+  </data>
+  <data name="&gt;&gt;_tabWrapperLocations.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_tabWrapperLocations.Parent" xml:space="preserve">
+    <value>_tabs</value>
+  </data>
+  <data name="&gt;&gt;_tabWrapperLocations.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="_layoutItemEvents.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="listItemEventDetails.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="listItemEventDetails.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 328</value>
+  </data>
+  <data name="listItemEventDetails.Size" type="System.Drawing.Size, System.Drawing">
+    <value>597, 320</value>
+  </data>
+  <data name="listItemEventDetails.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;listItemEventDetails.Name" xml:space="preserve">
+    <value>listItemEventDetails</value>
+  </data>
+  <data name="&gt;&gt;listItemEventDetails.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;listItemEventDetails.Parent" xml:space="preserve">
+    <value>_layoutItemEvents</value>
+  </data>
+  <data name="&gt;&gt;listItemEventDetails.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="columnEvents.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <data name="columnEvents.Text" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <data name="listItemEvents.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="listItemEvents.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="listItemEvents.Size" type="System.Drawing.Size, System.Drawing">
+    <value>597, 319</value>
+  </data>
+  <data name="listItemEvents.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;listItemEvents.Name" xml:space="preserve">
+    <value>listItemEvents</value>
+  </data>
+  <data name="&gt;&gt;listItemEvents.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;listItemEvents.Parent" xml:space="preserve">
+    <value>_layoutItemEvents</value>
+  </data>
+  <data name="&gt;&gt;listItemEvents.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="_layoutItemEvents.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="_layoutItemEvents.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="_layoutItemEvents.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="_layoutItemEvents.Size" type="System.Drawing.Size, System.Drawing">
+    <value>603, 651</value>
+  </data>
+  <data name="_layoutItemEvents.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;_layoutItemEvents.Name" xml:space="preserve">
+    <value>_layoutItemEvents</value>
+  </data>
+  <data name="&gt;&gt;_layoutItemEvents.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_layoutItemEvents.Parent" xml:space="preserve">
+    <value>_tabItemEvents</value>
+  </data>
+  <data name="&gt;&gt;_layoutItemEvents.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="_layoutItemEvents.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="listItemEventDetails" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="listItemEvents" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,20" /&gt;&lt;Rows Styles="Percent,50,Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="_tabItemEvents.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 33</value>
+  </data>
+  <data name="_tabItemEvents.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="_tabItemEvents.Size" type="System.Drawing.Size, System.Drawing">
+    <value>609, 657</value>
+  </data>
+  <data name="_tabItemEvents.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="_tabItemEvents.Text" xml:space="preserve">
+    <value>Item events</value>
+  </data>
+  <data name="&gt;&gt;_tabItemEvents.Name" xml:space="preserve">
+    <value>_tabItemEvents</value>
+  </data>
+  <data name="&gt;&gt;_tabItemEvents.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_tabItemEvents.Parent" xml:space="preserve">
+    <value>_tabs</value>
+  </data>
+  <data name="&gt;&gt;_tabItemEvents.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="_tabs.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="_tabs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="_tabs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>617, 694</value>
+  </data>
+  <data name="_tabs.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;_tabs.Name" xml:space="preserve">
+    <value>_tabs</value>
+  </data>
+  <data name="&gt;&gt;_tabs.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_tabs.Parent" xml:space="preserve">
+    <value>tableMain</value>
+  </data>
+  <data name="&gt;&gt;_tabs.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tableMain.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="tableMain.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="tableMain.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tableMain.Size" type="System.Drawing.Size, System.Drawing">
+    <value>623, 770</value>
+  </data>
+  <data name="tableMain.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tableMain.Name" xml:space="preserve">
+    <value>tableMain</value>
+  </data>
+  <data name="&gt;&gt;tableMain.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableMain.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tableMain.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tableMain.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="flowButtons" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="_tabs" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,100,AutoSize,0,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -714,6 +780,24 @@
   <data name="&gt;&gt;columnLine.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;columnEvent.Name" xml:space="preserve">
+    <value>columnEvent</value>
+  </data>
+  <data name="&gt;&gt;columnEvent.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;columnCount.Name" xml:space="preserve">
+    <value>columnCount</value>
+  </data>
+  <data name="&gt;&gt;columnCount.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;columnId.Name" xml:space="preserve">
+    <value>columnId</value>
+  </data>
+  <data name="&gt;&gt;columnId.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;columnHeader1.Name" xml:space="preserve">
     <value>columnHeader1</value>
   </data>
@@ -736,6 +820,12 @@
     <value>columnHeader4</value>
   </data>
   <data name="&gt;&gt;columnHeader4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;columnEvents.Name" xml:space="preserve">
+    <value>columnEvents</value>
+  </data>
+  <data name="&gt;&gt;columnEvents.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

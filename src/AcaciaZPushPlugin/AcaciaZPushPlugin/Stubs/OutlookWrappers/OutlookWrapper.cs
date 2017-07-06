@@ -41,36 +41,9 @@ namespace Acacia.Stubs.OutlookWrappers
         {
         }
 
-        protected override void DoRelease()
-        {
-            // Always release props, as we allocated that
-            if (_props != null)
-            {
-                ComRelease.Release(_props);
-                _props = null;
-            }
-
-            base.DoRelease();
-        }
-
         #endregion
 
         #region Properties implementation
-
-        // Assigned in Props, released in DoRelease
-        private NSOutlook.PropertyAccessor _props;
-
-        private NSOutlook.PropertyAccessor Props
-        {
-            get
-            {
-                if (_props == null)
-                {
-                    _props = GetPropertyAccessor();
-                }
-                return _props;
-            }
-        }
 
         /// <summary>
         /// Returns the wrapped item's property accessor.
@@ -145,11 +118,11 @@ namespace Acacia.Stubs.OutlookWrappers
             // into a string which must be parsed again.
             get
             {
-                return Props.GetProperty(OutlookConstants.PR_CATEGORIES);
+                return (string[])GetProperty(OutlookConstants.PR_CATEGORIES);
             }
             set
             {
-                Props.SetProperty(OutlookConstants.PR_CATEGORIES, value);
+                SetProperty(OutlookConstants.PR_CATEGORIES, value);
             }
         }
 
@@ -159,7 +132,7 @@ namespace Acacia.Stubs.OutlookWrappers
             {
                 try
                 {
-                    return Props.GetProperty(OutlookConstants.PR_ATTR_HIDDEN);
+                    return (bool)GetProperty(OutlookConstants.PR_ATTR_HIDDEN);
                 }
                 catch(System.Exception)
                 {
@@ -168,30 +141,51 @@ namespace Acacia.Stubs.OutlookWrappers
             }
             set
             {
-                Props.SetProperty(OutlookConstants.PR_ATTR_HIDDEN, value);
+                SetProperty(OutlookConstants.PR_ATTR_HIDDEN, value);
             }
         }
 
         public object GetProperty(string property)
         {
+            NSOutlook.PropertyAccessor props = GetPropertyAccessor();
             try
             {
-                object val = Props.GetProperty(property);
+                object val = props.GetProperty(property);
                 if (val is DBNull)
                     return null;
                 return val;
             }
             catch(System.Exception) { return null; }
+            finally
+            {
+                ComRelease.Release(props);
+            }
         }
 
         public void SetProperty(string property, object value)
         {
-            Props.SetProperty(property, value);
+            NSOutlook.PropertyAccessor props = GetPropertyAccessor();
+            try
+            {
+                props.SetProperty(property, value);
+            }
+            finally
+            {
+                ComRelease.Release(props);
+            }
         }
 
         public void SetProperties(string[] properties, object[] values)
         {
-            Props.SetProperties(properties, values);
+            NSOutlook.PropertyAccessor props = GetPropertyAccessor();
+            try
+            {
+                props.SetProperties(properties, values);
+            }
+            finally
+            {
+                ComRelease.Release(props);
+            }
         }
 
         #endregion
