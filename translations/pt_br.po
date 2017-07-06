@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-12 14:56+0000\n"
-"PO-Revision-Date: 2017-07-06 14:36+0000\n"
+"PO-Revision-Date: 2017-07-06 14:42+0000\n"
 "Last-Translator: Sebastian <s.kummer@kopano.com>\n"
 "Language-Team: Portuguese (Brazil) "
 "<http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt_BR/>\n"
@@ -1007,49 +1007,49 @@ msgstr "Geral"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabWrapperTypes.Text"
 msgid "Wrapper types"
-msgstr "Wrapper types"
+msgstr "Tipos de Wrapper"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabWrapperLocations.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabWrapperLocations.Text"
 msgid "Wrapper locations"
-msgstr "Wrapper locations"
+msgstr "Localizações do Wrapper"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader1.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader1.Text"
 msgid "Type"
-msgstr "Type"
+msgstr "Tipo"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader2.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader2.Text"
 msgid "Count"
-msgstr "Count"
+msgstr "Quantia"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader3.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader3.Text"
 msgid "Type"
-msgstr "Type"
+msgstr "Tipo"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader4.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader4.Text"
 msgid "Count"
-msgstr "Count"
+msgstr "Quantia"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnEvent.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnEvent.Text"
 msgid "Event"
-msgstr "Event"
+msgstr "Evento"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnCount.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnCount.Text"
 msgid "Count"
-msgstr "Count"
+msgstr "Quantia"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnId.Text
 #, csharp-format
@@ -1061,10 +1061,10 @@ msgstr "Id"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnEvents.Text"
 msgid "Events"
-msgstr "Events"
+msgstr "Eventos"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabItemEvents.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabItemEvents.Text"
 msgid "Item events"
-msgstr "Item events"
+msgstr "Eventos de ítems"
