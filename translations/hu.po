@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-06 11:27+0000\n"
-"PO-Revision-Date: 2017-06-28 16:11+0000\n"
+"PO-Revision-Date: 2017-07-17 16:56+0000\n"
 "Last-Translator: Zoltan Kiss <zoltan.kiss@serverside.hu>\n"
-"Language-Team: Hungarian <http://translate.kopano.io/projects/kopano/kopano-ol-extension/hu/>\n"
+"Language-Team: Hungarian <http://translate.kopano.io/projects/kopano/kopano-"
+"ol-extension/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -965,13 +966,13 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\GAB\\GABSettings\\checkFaxNumbers.Text"
 msgid "Synchronise fax numbers"
-msgstr ""
+msgstr "Fax számok szinkronizálása"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelReminders.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelReminders.Text"
 msgid "Show reminders"
-msgstr ""
+msgstr "Emlékeztetők megjelenítése"
 
 #: AcaciaZPushPlugin\Features\Signatures\SignaturesSettings\checkForceSet.Text
 #, csharp-format
@@ -1137,54 +1138,59 @@ msgstr "A szinkronizálás állapota"
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Supertip"
 msgid "Open the \"Synchronisation\" dialog, in which the synchronisation state can be viewed and managed."
 msgstr ""
+"A \"szinkronizáció\" párbeszédpanel megnyitása, ahol a szinkronizálás "
+"állapota megtekinthető és kezelhető."
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_FullResync_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_FullResync_Body"
 msgid "To fully resynchronise, Outlook must be restarted and all local data will be removed. Fetching all the data from the server again may take some time. Are you sure you want to resynchronise all data?"
 msgstr ""
+"Teljes újraszinkronizáláshoz az Outlookot újra kell indítani és minden "
+"helyben tárolt adat törlésre kerül. Az adatok betöltése a szerverről újra "
+"időbe telhet. Biztosan újra kívánja szinkronizálni az adatokat?"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_FullResync_Caption
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_FullResync_Caption"
 msgid "Full Resynchronisation"
-msgstr ""
+msgstr "Teljes újraszinkronizálás"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Resync_Body_GAB
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Resync_Body_GAB"
 msgid "The Global Address Book has been scheduled for resynchronisation."
-msgstr ""
+msgstr "A központi címjegyzék újraszinkronizálása ütemezve lett."
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Resync_Caption
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Resync_Caption"
 msgid "Resynchronisation"
-msgstr ""
+msgstr "Újraszinkronizálás"
 
 #: AcaciaZPushPlugin\Properties\Resources\ServerSync_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\ServerSync_Label"
 msgid "The server data is being synchronised."
-msgstr ""
+msgstr "A szerver adatai szinkronizálás alatt állnak."
 
 #: AcaciaZPushPlugin\Properties\Resources\ServerSync_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\ServerSync_Title"
 msgid "Server data"
-msgstr ""
+msgstr "Szerver adatok"
 
 #: AcaciaZPushPlugin\Properties\Resources\GABSync_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABSync_Label"
 msgid "The global address book is being synchronised."
-msgstr ""
+msgstr "A közös címjegyzék szinkronizálás alatt áll."
 
 #: AcaciaZPushPlugin\Properties\Resources\GABSync_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABSync_Title"
 msgid "Global Address Book"
-msgstr ""
+msgstr "Közös címjegyzék"
 
 #. {0} will be replaced with the account name
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Stalled_Body
@@ -1192,37 +1198,40 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Stalled_Body"
 msgid "It appears synchronisation has stalled for account {0}. This can be fixed by performing a full resynchronisation. Would you like to perform this resynchronisation now?"
 msgstr ""
+"Új tűnik, hogy a szinkronizálás megállt a következő fiókban: {0}. Ez "
+"javítható egy teljes újraszinkronizálással. Kívánja elindítani a teljes "
+"újraszinkronizálást most?"
 
 #. {0} will be replaced with the account name
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Stalled_Caption
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Stalled_Caption"
 msgid "Synchronisation stalled - {0}"
-msgstr ""
+msgstr "Szinkronizálás megállt - {0}"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Body"
 msgid "Changing other people\'s private events is not allowed."
-msgstr ""
+msgstr "Megosztott mappák privát elemeinek módosítása nem lehetséges."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Title"
 msgid "Private event"
-msgstr ""
+msgstr "Privát esemény"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\gabLookup.NotFoundText
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\gabLookup.NotFoundText"
 msgid "The user was not found"
-msgstr ""
+msgstr "A felhasználó nem található"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\gabLookup.Placeholder
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\gabLookup.Placeholder"
 msgid "Start typing name"
-msgstr ""
+msgstr "Kereséshez kezdjen gépelni egy nevet"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnMethod.Text
 #, csharp-format
@@ -1234,19 +1243,19 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnFile.Text"
 msgid "File"
-msgstr ""
+msgstr "Fájl"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnLine.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnLine.Text"
 msgid "Line"
-msgstr ""
+msgstr "Sor"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabProperties.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabProperties.Text"
 msgid "General"
-msgstr ""
+msgstr "Általános"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabWrapperTypes.Text
 #, csharp-format
@@ -1264,7 +1273,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader1.Text"
 msgid "Type"
-msgstr ""
+msgstr "Típus"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader2.Text
 #, csharp-format
@@ -1276,7 +1285,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader3.Text"
 msgid "Type"
-msgstr ""
+msgstr "Típus"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader4.Text
 #, csharp-format
@@ -1288,7 +1297,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnEvent.Text"
 msgid "Event"
-msgstr ""
+msgstr "Esemény"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnCount.Text
 #, csharp-format
@@ -1300,17 +1309,16 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnId.Text"
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnEvents.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnEvents.Text"
 msgid "Events"
-msgstr ""
+msgstr "Események"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabItemEvents.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabItemEvents.Text"
 msgid "Item events"
 msgstr ""
-
