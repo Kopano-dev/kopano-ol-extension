@@ -80,9 +80,12 @@ namespace Acacia.Features.BCC
             {
                 using (IRecipients recipients = mail.Recipients)
                 {
-                    using (IRecipient recip = CreateRecipient(recipients, decoded))
+                    foreach (string entry in decoded.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None))
                     {
-                        recip.Type = MailRecipientType.BCC;
+                        using (IRecipient recip = CreateRecipient(recipients, entry))
+                        {
+                            recip.Type = MailRecipientType.BCC;
+                        }
                     }
                 }
             }
