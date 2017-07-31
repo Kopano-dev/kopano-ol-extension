@@ -5,8 +5,7 @@ msgstr ""
 "POT-Creation-Date: 2016-06-06 11:27+0000\n"
 "PO-Revision-Date: 2017-07-17 16:56+0000\n"
 "Last-Translator: Zoltan Kiss <zoltan.kiss@serverside.hu>\n"
-"Language-Team: Hungarian <http://translate.kopano.io/projects/kopano/kopano-"
-"ol-extension/hu/>\n"
+"Language-Team: Hungarian <http://translate.kopano.io/projects/kopano/kopano-ol-extension/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1137,18 +1136,13 @@ msgstr "A szinkronizálás állapota"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Supertip"
 msgid "Open the \"Synchronisation\" dialog, in which the synchronisation state can be viewed and managed."
-msgstr ""
-"A \"szinkronizáció\" párbeszédpanel megnyitása, ahol a szinkronizálás "
-"állapota megtekinthető és kezelhető."
+msgstr "A \"szinkronizáció\" párbeszédpanel megnyitása, ahol a szinkronizálás állapota megtekinthető és kezelhető."
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_FullResync_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_FullResync_Body"
 msgid "To fully resynchronise, Outlook must be restarted and all local data will be removed. Fetching all the data from the server again may take some time. Are you sure you want to resynchronise all data?"
-msgstr ""
-"Teljes újraszinkronizáláshoz az Outlookot újra kell indítani és minden "
-"helyben tárolt adat törlésre kerül. Az adatok betöltése a szerverről újra "
-"időbe telhet. Biztosan újra kívánja szinkronizálni az adatokat?"
+msgstr "Teljes újraszinkronizáláshoz az Outlookot újra kell indítani és minden helyben tárolt adat törlésre kerül. Az adatok betöltése a szerverről újra időbe telhet. Biztosan újra kívánja szinkronizálni az adatokat?"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_FullResync_Caption
 #, csharp-format
@@ -1197,10 +1191,7 @@ msgstr "Közös címjegyzék"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Stalled_Body"
 msgid "It appears synchronisation has stalled for account {0}. This can be fixed by performing a full resynchronisation. Would you like to perform this resynchronisation now?"
-msgstr ""
-"Új tűnik, hogy a szinkronizálás megállt a következő fiókban: {0}. Ez "
-"javítható egy teljes újraszinkronizálással. Kívánja elindítani a teljes "
-"újraszinkronizálást most?"
+msgstr "Új tűnik, hogy a szinkronizálás megállt a következő fiókban: {0}. Ez javítható egy teljes újraszinkronizálással. Kívánja elindítani a teljes újraszinkronizálást most?"
 
 #. {0} will be replaced with the account name
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Stalled_Caption
@@ -1322,3 +1313,4 @@ msgstr "Események"
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabItemEvents.Text"
 msgid "Item events"
 msgstr ""
+
