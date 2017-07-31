@@ -158,6 +158,7 @@ namespace Acacia.Features.DebugSupport
                 ListViewItem item = new ListViewItem(events.Id);
                 item.Tag = events;
                 item.SubItems.Add(string.Join(", ", events.GetEvents()));
+                item.SubItems.Add(events.Subject);
                 listItemEvents.Items.Add(item);
             }
 
@@ -175,11 +176,21 @@ namespace Acacia.Features.DebugSupport
                 {
                     ListViewItem item = new ListViewItem(evt.ToString());
                     item.SubItems.Add(debug.GetEventCount(evt).ToString());
+
+                    if (evt == MailEvents.DebugEvent.PropertyChange)
+                        item.SubItems.Add(string.Join(", ", debug.Properties));
+
                     listItemEventDetails.Items.Add(item);
                 }
             }
             foreach (ColumnHeader header in listItemEventDetails.Columns)
                 header.Width = -2;
+        }
+
+        private void buttonCleanGC_Click(object sender, EventArgs e)
+        {
+            MailEvents.MailEventsDebugClean();
+            RefreshItemEvents();
         }
 
         #endregion

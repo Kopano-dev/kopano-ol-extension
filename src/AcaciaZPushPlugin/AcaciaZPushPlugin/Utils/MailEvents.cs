@@ -1,4 +1,4 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -380,13 +380,27 @@ namespace Acacia.Utils
         public interface MailEventDebug
         {
             string Id { get; }
+            string Subject { get; }
             int GetEventCount(DebugEvent which);
             IEnumerable<DebugEvent> GetEvents();
+            IEnumerable<string> Properties { get; }
         }
 
         public static IEnumerable<MailEventDebug> MailEventsDebug
         {
             get { return _hookers?.Values; }
+        }
+
+        public static void MailEventsDebugClean()
+        {
+            foreach (MailEventDebugImpl impl in _hookers.Values)
+            {
+                if (impl.GetEventCount(DebugEvent.GC) > 0)
+                {
+                    MailEventDebugImpl dummy;
+                    _hookers.TryRemove(impl._id, out dummy);
+                }
+            }
         }
 
         private static readonly ConcurrentDictionary<int, MailEventDebugImpl> _hookers = 
@@ -423,14 +437,13 @@ namespace Acacia.Utils
                 if (_debug != null)
                 {
                     _debug.RecordEvent(DebugEvent.Dispose);
-                    MailEventDebugImpl dummy;
-                    _hookers.TryRemove(_debug._id, out dummy);
                 }
             }
 
             ~MailEventHooker()
             {
                 _debug?.RecordEvent(DebugEvent.GC);
+                _debug?.Finished();
             }
 
             private void HookEvents(bool add)
@@ -478,13 +491,17 @@ namespace Acacia.Utils
 
             private void HandlePropertyChange(string name)
             {
-                _debug?.RecordEvent(DebugEvent.PropertyChange);
+                _debug?.RecordEvent(DebugEvent.PropertyChange, name);
                 _events.OnPropertyChange(_item, name);
             }
 
             private void HandleRead()
             {
-                _debug?.RecordEvent(DebugEvent.Read);
+                if (_debug != null)
+                {
+                    _debug.RecordEvent(DebugEvent.Read);
+                    _debug.Subject = _item.Subject;
+                }
                 // TODO: should this not be simply an IItem?
                 _events.OnRead(_item as IMailItem);
             }
@@ -521,8 +538,14 @@ namespace Acacia.Utils
         private class MailEventDebugImpl : MailEventDebug
         { 
             private readonly ConcurrentDictionary<DebugEvent, int> _eventCounts = new ConcurrentDictionary<DebugEvent, int>();
+            private readonly List<string> _properties = new List<string>();
 
             public readonly int _id;
+            public DateTime? GCTime
+            {
+                get;
+                private set;
+            }
 
             public MailEventDebugImpl(int id)
             {
@@ -536,9 +559,11 @@ namespace Acacia.Utils
                 return count;
             }
 
-            public void RecordEvent(DebugEvent which)
+            public void RecordEvent(DebugEvent which, string property = null)
             {
                 _eventCounts.AddOrUpdate(which, 1, (i, value) => value + 1);
+                if (property != null)
+                    _properties.Add(property);
             }
 
             public IEnumerable<DebugEvent> GetEvents()
@@ -546,7 +571,18 @@ namespace Acacia.Utils
                 return _eventCounts.Keys;
             }
 
+            public IEnumerable<string> Properties
+            {
+                get { return _properties; }
+            }
+
+            public void Finished()
+            {
+                GCTime = DateTime.Now;
+            }
+
             public string Id { get { return _id.ToString(); } }
+            public string Subject { get; set; }
         }
 
         #endregion

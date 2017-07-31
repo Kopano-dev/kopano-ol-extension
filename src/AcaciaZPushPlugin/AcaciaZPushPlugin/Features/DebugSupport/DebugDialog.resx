@@ -166,6 +166,18 @@
   <data name="columnId.Width" type="System.Int32, mscorlib">
     <value>44</value>
   </data>
+  <metadata name="columnEvents.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <data name="columnEvents.Text" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <metadata name="columnSubject.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <data name="columnSubject.Text" xml:space="preserve">
+    <value>Subject</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tableMain.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -576,14 +588,17 @@
   <data name="_layoutItemEvents.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
+  <data name="columnProperties.Text" xml:space="preserve">
+    <value>Properties</value>
+  </data>
   <data name="listItemEventDetails.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="listItemEventDetails.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 328</value>
+    <value>3, 305</value>
   </data>
   <data name="listItemEventDetails.Size" type="System.Drawing.Size, System.Drawing">
-    <value>597, 320</value>
+    <value>597, 296</value>
   </data>
   <data name="listItemEventDetails.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -600,12 +615,6 @@
   <data name="&gt;&gt;listItemEventDetails.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <metadata name="columnEvents.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>False</value>
-  </metadata>
-  <data name="columnEvents.Text" xml:space="preserve">
-    <value>Events</value>
-  </data>
   <data name="listItemEvents.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -613,7 +622,7 @@
     <value>3, 3</value>
   </data>
   <data name="listItemEvents.Size" type="System.Drawing.Size, System.Drawing">
-    <value>597, 319</value>
+    <value>597, 296</value>
   </data>
   <data name="listItemEvents.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -630,6 +639,66 @@
   <data name="&gt;&gt;listItemEvents.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="_layoutEventsButtons.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="_layoutEventsButtons.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="buttonCleanGC.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="buttonCleanGC.Location" type="System.Drawing.Point, System.Drawing">
+    <value>465, 3</value>
+  </data>
+  <data name="buttonCleanGC.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 35</value>
+  </data>
+  <data name="buttonCleanGC.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="buttonCleanGC.Text" xml:space="preserve">
+    <value>Remove GC</value>
+  </data>
+  <data name="&gt;&gt;buttonCleanGC.Name" xml:space="preserve">
+    <value>buttonCleanGC</value>
+  </data>
+  <data name="&gt;&gt;buttonCleanGC.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonCleanGC.Parent" xml:space="preserve">
+    <value>_layoutEventsButtons</value>
+  </data>
+  <data name="&gt;&gt;buttonCleanGC.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="_layoutEventsButtons.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="_layoutEventsButtons.FlowDirection" type="System.Windows.Forms.FlowDirection, System.Windows.Forms">
+    <value>RightToLeft</value>
+  </data>
+  <data name="_layoutEventsButtons.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 607</value>
+  </data>
+  <data name="_layoutEventsButtons.Size" type="System.Drawing.Size, System.Drawing">
+    <value>597, 41</value>
+  </data>
+  <data name="_layoutEventsButtons.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;_layoutEventsButtons.Name" xml:space="preserve">
+    <value>_layoutEventsButtons</value>
+  </data>
+  <data name="&gt;&gt;_layoutEventsButtons.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_layoutEventsButtons.Parent" xml:space="preserve">
+    <value>_layoutItemEvents</value>
+  </data>
+  <data name="&gt;&gt;_layoutEventsButtons.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="_layoutItemEvents.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -637,7 +706,7 @@
     <value>3, 3</value>
   </data>
   <data name="_layoutItemEvents.RowCount" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="_layoutItemEvents.Size" type="System.Drawing.Size, System.Drawing">
     <value>603, 651</value>
@@ -658,7 +727,7 @@
     <value>0</value>
   </data>
   <data name="_layoutItemEvents.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="listItemEventDetails" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="listItemEvents" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,20" /&gt;&lt;Rows Styles="Percent,50,Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="listItemEventDetails" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="listItemEvents" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="_layoutEventsButtons" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,50,Percent,50,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="_tabItemEvents.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 33</value>
@@ -798,6 +867,18 @@
   <data name="&gt;&gt;columnId.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;columnEvents.Name" xml:space="preserve">
+    <value>columnEvents</value>
+  </data>
+  <data name="&gt;&gt;columnEvents.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;columnSubject.Name" xml:space="preserve">
+    <value>columnSubject</value>
+  </data>
+  <data name="&gt;&gt;columnSubject.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;columnHeader1.Name" xml:space="preserve">
     <value>columnHeader1</value>
   </data>
@@ -822,10 +903,10 @@
   <data name="&gt;&gt;columnHeader4.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;columnEvents.Name" xml:space="preserve">
-    <value>columnEvents</value>
+  <data name="&gt;&gt;columnProperties.Name" xml:space="preserve">
+    <value>columnProperties</value>
   </data>
-  <data name="&gt;&gt;columnEvents.Type" xml:space="preserve">
+  <data name="&gt;&gt;columnProperties.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

@@ -36,6 +36,7 @@
             System.Windows.Forms.ColumnHeader columnCount;
             System.Windows.Forms.ColumnHeader columnId;
             System.Windows.Forms.ColumnHeader columnEvents;
+            System.Windows.Forms.ColumnHeader columnSubject;
             this.tableMain = new System.Windows.Forms.TableLayoutPanel();
             this.flowButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonGC = new System.Windows.Forms.Button();
@@ -59,6 +60,9 @@
             this._layoutItemEvents = new System.Windows.Forms.TableLayoutPanel();
             this.listItemEventDetails = new System.Windows.Forms.ListView();
             this.listItemEvents = new System.Windows.Forms.ListView();
+            this._layoutEventsButtons = new System.Windows.Forms.FlowLayoutPanel();
+            this.buttonCleanGC = new System.Windows.Forms.Button();
+            this.columnProperties = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnMethod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnFile = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnLine = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -66,6 +70,7 @@
             columnCount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnEvents = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            columnSubject = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tableMain.SuspendLayout();
             this.flowButtons.SuspendLayout();
             this._tabs.SuspendLayout();
@@ -75,6 +80,7 @@
             this._layoutLocations.SuspendLayout();
             this._tabItemEvents.SuspendLayout();
             this._layoutItemEvents.SuspendLayout();
+            this._layoutEventsButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // columnMethod
@@ -100,6 +106,14 @@
             // columnId
             // 
             resources.ApplyResources(columnId, "columnId");
+            // 
+            // columnEvents
+            // 
+            resources.ApplyResources(columnEvents, "columnEvents");
+            // 
+            // columnSubject
+            // 
+            resources.ApplyResources(columnSubject, "columnSubject");
             // 
             // tableMain
             // 
@@ -262,13 +276,15 @@
             resources.ApplyResources(this._layoutItemEvents, "_layoutItemEvents");
             this._layoutItemEvents.Controls.Add(this.listItemEventDetails, 0, 1);
             this._layoutItemEvents.Controls.Add(this.listItemEvents, 0, 0);
+            this._layoutItemEvents.Controls.Add(this._layoutEventsButtons, 0, 2);
             this._layoutItemEvents.Name = "_layoutItemEvents";
             // 
             // listItemEventDetails
             // 
             this.listItemEventDetails.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             columnEvent,
-            columnCount});
+            columnCount,
+            this.columnProperties});
             resources.ApplyResources(this.listItemEventDetails, "listItemEventDetails");
             this.listItemEventDetails.FullRowSelect = true;
             this.listItemEventDetails.MultiSelect = false;
@@ -281,7 +297,8 @@
             // 
             this.listItemEvents.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             columnId,
-            columnEvents});
+            columnEvents,
+            columnSubject});
             resources.ApplyResources(this.listItemEvents, "listItemEvents");
             this.listItemEvents.FullRowSelect = true;
             this.listItemEvents.HideSelection = false;
@@ -293,9 +310,22 @@
             this.listItemEvents.View = System.Windows.Forms.View.Details;
             this.listItemEvents.SelectedIndexChanged += new System.EventHandler(this.listItemEvents_SelectedIndexChanged);
             // 
-            // columnEvents
+            // _layoutEventsButtons
             // 
-            resources.ApplyResources(columnEvents, "columnEvents");
+            resources.ApplyResources(this._layoutEventsButtons, "_layoutEventsButtons");
+            this._layoutEventsButtons.Controls.Add(this.buttonCleanGC);
+            this._layoutEventsButtons.Name = "_layoutEventsButtons";
+            // 
+            // buttonCleanGC
+            // 
+            resources.ApplyResources(this.buttonCleanGC, "buttonCleanGC");
+            this.buttonCleanGC.Name = "buttonCleanGC";
+            this.buttonCleanGC.UseVisualStyleBackColor = true;
+            this.buttonCleanGC.Click += new System.EventHandler(this.buttonCleanGC_Click);
+            // 
+            // columnProperties
+            // 
+            resources.ApplyResources(this.columnProperties, "columnProperties");
             // 
             // DebugDialog
             // 
@@ -317,6 +347,9 @@
             this._layoutLocations.ResumeLayout(false);
             this._tabItemEvents.ResumeLayout(false);
             this._layoutItemEvents.ResumeLayout(false);
+            this._layoutItemEvents.PerformLayout();
+            this._layoutEventsButtons.ResumeLayout(false);
+            this._layoutEventsButtons.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -347,5 +380,8 @@
         private System.Windows.Forms.TableLayoutPanel _layoutItemEvents;
         private System.Windows.Forms.ListView listItemEventDetails;
         private System.Windows.Forms.ListView listItemEvents;
+        private System.Windows.Forms.FlowLayoutPanel _layoutEventsButtons;
+        private System.Windows.Forms.Button buttonCleanGC;
+        private System.Windows.Forms.ColumnHeader columnProperties;
     }
 }
