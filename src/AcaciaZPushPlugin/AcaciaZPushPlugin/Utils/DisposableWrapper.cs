@@ -42,12 +42,15 @@ namespace Acacia.Utils
 
         private bool _isDisposed;
         public readonly System.Diagnostics.StackTrace StackTrace;
+        private readonly int _traceId;
+        public int TraceId { get { return _traceId; } }
+        public bool IsDisposed { get { return _isDisposed; } }
 
         protected DisposableWrapper()
         {
             Interlocked.Increment(ref Statistics.CreatedWrappers);
             this.StackTrace = new System.Diagnostics.StackTrace(1, true);
-            tracer.Created(this);
+            tracer.Created(this, out _traceId);
         }
 
         ~DisposableWrapper()

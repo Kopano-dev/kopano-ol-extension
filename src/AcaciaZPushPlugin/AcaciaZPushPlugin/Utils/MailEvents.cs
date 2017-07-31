@@ -377,15 +377,6 @@ namespace Acacia.Utils
             GC
         }
 
-        public interface MailEventDebug
-        {
-            string Id { get; }
-            string Subject { get; }
-            int GetEventCount(DebugEvent which);
-            IEnumerable<DebugEvent> GetEvents();
-            IEnumerable<string> Properties { get; }
-        }
-
         public static IEnumerable<MailEventDebug> MailEventsDebug
         {
             get { return _hookers?.Values; }
@@ -405,24 +396,32 @@ namespace Acacia.Utils
 
         private static readonly ConcurrentDictionary<int, MailEventDebugImpl> _hookers = 
             GlobalOptions.INSTANCE.WrapperTrace ? new ConcurrentDictionary<int, MailEventDebugImpl>() : null;
-        private static int _nextHookerId;
 
-        private class MailEventHooker : DisposableWrapper
+        private class MailEventHooker : DisposableWrapper, IDebugDisposable
         {
             private readonly MailEventDebugImpl _debug;
             private IItem _item;
             private readonly MailEvents _events;
 
+            public string DebugContext
+            {
+                get
+                {
+                    return "Events for " + _item.DebugContext;
+                }
+            }
+
             public MailEventHooker(IItem item, MailEvents events)
             {
+                this._item = item;
+                this._events = events;
+
                 if (_hookers != null)
                 {
-                    _debug = new MailEventDebugImpl(Interlocked.Increment(ref _nextHookerId));
+                    _debug = new MailEventDebugImpl(TraceId, _item);
                     _hookers.TryAdd(_debug._id, _debug);
                 }
 
-                this._item = item;
-                this._events = events;
                 HookEvents(true);
             }
 
@@ -535,21 +534,34 @@ namespace Acacia.Utils
             }
         }
 
+        public interface MailEventDebug
+        {
+            string Id { get; }
+            int ItemId { get; }
+            string Subject { get; }
+            int GetEventCount(DebugEvent which);
+            IEnumerable<DebugEvent> GetEvents();
+            IEnumerable<string> Properties { get; }
+        }
+
+
         private class MailEventDebugImpl : MailEventDebug
         { 
             private readonly ConcurrentDictionary<DebugEvent, int> _eventCounts = new ConcurrentDictionary<DebugEvent, int>();
             private readonly List<string> _properties = new List<string>();
 
             public readonly int _id;
+            private readonly int _itemId;
             public DateTime? GCTime
             {
                 get;
                 private set;
             }
 
-            public MailEventDebugImpl(int id)
+            public MailEventDebugImpl(int id, IItem item)
             {
                 this._id = id;
+                _itemId = item.TraceId;
             }
 
             public int GetEventCount(DebugEvent which)
@@ -564,6 +576,8 @@ namespace Acacia.Utils
                 _eventCounts.AddOrUpdate(which, 1, (i, value) => value + 1);
                 if (property != null)
                     _properties.Add(property);
+                Logger.Instance.TraceExtra(typeof(DisposableTracerFull), "{0}: {1}{2}", _itemId, which, property,
+                    property == null ? "" : (" " + property));
             }
 
             public IEnumerable<DebugEvent> GetEvents()
@@ -582,6 +596,7 @@ namespace Acacia.Utils
             }
 
             public string Id { get { return _id.ToString(); } }
+            public int ItemId { get { return _itemId; } }
             public string Subject { get; set; }
         }
 

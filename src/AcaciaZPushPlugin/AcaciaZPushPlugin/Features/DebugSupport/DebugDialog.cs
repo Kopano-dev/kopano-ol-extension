@@ -51,6 +51,7 @@ namespace Acacia.Features.DebugSupport
             }
             else
             {
+                listWrappers.ListViewItemSorter = new WrapperCountSorter(0);
                 listWrapperTypes.ListViewItemSorter = new WrapperCountSorter(1);
                 listWrapperLocations.ListViewItemSorter = new WrapperCountSorter(1);
                 listItemEvents.ListViewItemSorter = new WrapperCountSorter(0);
@@ -77,6 +78,25 @@ namespace Acacia.Features.DebugSupport
             if (_tracer == null)
                 return;
 
+            // Wrappers
+            listWrappers.Items.Clear();
+            foreach (DisposableTracerFull.DisposableInfo wrapperInfo in _tracer.GetActive())
+            {
+                Type type = wrapperInfo.WrapperType;
+                string name = type.Name;
+                if (type.DeclaringType != null)
+                    name = type.DeclaringType.Name + "." + name;
+
+                ListViewItem item = new ListViewItem(wrapperInfo.TraceId.ToString());
+                item.Tag = wrapperInfo;
+                item.ToolTipText = type.FullName;
+                item.SubItems.Add(name);
+                item.SubItems.Add(wrapperInfo.Subject);
+                listWrappers.Items.Add(item);
+            }
+            foreach (ColumnHeader header in listWrappers.Columns)
+                header.Width = -2;
+
             // Wrapper types
             listWrapperTypes.Items.Clear();
             foreach(KeyValuePair<Type, int> type in _tracer.GetTypes())
@@ -90,9 +110,8 @@ namespace Acacia.Features.DebugSupport
                 item.SubItems.Add(type.Value.ToString());
                 listWrapperTypes.Items.Add(item);
             }
-
-            listWrapperTypes.Columns[0].Width = -2;
-            listWrapperTypes.Columns[1].Width = -2;
+            foreach (ColumnHeader header in listWrapperTypes.Columns)
+                header.Width = -2;
 
             // Wrapper locations
             listWrapperLocations.Items.Clear();
@@ -103,9 +122,8 @@ namespace Acacia.Features.DebugSupport
                 item.Tag = entry.Key;
                 listWrapperLocations.Items.Add(item);
             }
-
-            listWrapperLocations.Columns[0].Width = -2;
-            listWrapperLocations.Columns[1].Width = -2;
+            foreach (ColumnHeader header in listWrapperLocations.Columns)
+                header.Width = -2;
         }
 
         private class WrapperCountSorter : IComparer
@@ -143,6 +161,19 @@ namespace Acacia.Features.DebugSupport
                 header.Width = -2;
         }
 
+        private void SelectWrapper(int id)
+        {
+            foreach(ListViewItem item in listWrappers.Items)
+            {
+                if (((DisposableTracerFull.DisposableInfo)item.Tag).TraceId == id)
+                {
+                    item.Selected = true;
+                    break;
+                }
+            }
+            _tabs.SelectedTab = _tabWrappers;
+        }
+
         #endregion
 
         #region Item events
@@ -158,6 +189,7 @@ namespace Acacia.Features.DebugSupport
                 ListViewItem item = new ListViewItem(events.Id);
                 item.Tag = events;
                 item.SubItems.Add(string.Join(", ", events.GetEvents()));
+                item.SubItems.Add(events.ItemId.ToString());
                 item.SubItems.Add(events.Subject);
                 listItemEvents.Items.Add(item);
             }
@@ -187,10 +219,42 @@ namespace Acacia.Features.DebugSupport
                 header.Width = -2;
         }
 
+        private void listItemEvents_DoubleClick(object sender, EventArgs e)
+        {
+            if (listItemEvents.SelectedItems.Count > 0)
+            {
+                MailEvents.MailEventDebug events = (MailEvents.MailEventDebug)listItemEvents.SelectedItems[0].Tag;
+
+                // Switch to wrappers tab and select the wrapper
+                SelectWrapper(events.ItemId);
+            }
+        }
+
         private void buttonCleanGC_Click(object sender, EventArgs e)
         {
             MailEvents.MailEventsDebugClean();
             RefreshItemEvents();
+        }
+
+        private void buttonCopyFilter_Click(object sender, EventArgs e)
+        {
+            if (listItemEvents.SelectedItems.Count > 0)
+            {
+                MailEvents.MailEventDebug events = (MailEvents.MailEventDebug)listItemEvents.SelectedItems[0].Tag;
+                List<string> ids = new List<string>();
+                foreach(ListViewItem item in listItemEvents.Items)
+                {
+                    MailEvents.MailEventDebug current = (MailEvents.MailEventDebug)item.Tag;
+                    if (current.Subject?.Equals(events.Subject) == true)
+                    {
+                        ids.Add(": " + current.Id);
+                        ids.Add(": " + current.ItemId.ToString());
+                    }
+                }
+
+                string filter = string.Join("|", ids);
+                Clipboard.SetText(filter);
+            }
         }
 
         #endregion

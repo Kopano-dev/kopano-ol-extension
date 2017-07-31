@@ -50,7 +50,14 @@ namespace Acacia.Stubs.OutlookWrappers
             {
                 ComRelease.Release(_item);
             }
+            else
+            {
+
+            }
         }
+
+
+        virtual public string DebugContext { get { return null; } }
 
     }
 }

@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Threading;
+using Acacia.Stubs;
 
 namespace Acacia.Utils
 {
@@ -145,25 +147,49 @@ namespace Acacia.Utils
             }
         }
 
+        private int _nextId;
+
         private readonly ConcurrentDictionary<Type, int> _types = new ConcurrentDictionary<Type, int>();
         private readonly ConcurrentDictionary<CustomTrace, int> _locations = new ConcurrentDictionary<CustomTrace, int>();
+        private readonly ConcurrentDictionary<int, DisposableInfo> _all = new ConcurrentDictionary<int, DisposableInfo>();
 
-        public void Created(DisposableWrapper wrapper)
+        private void LogWrapperEvent(DisposableWrapper wrapper, int id, string name, bool stack)
         {
+            IDebugDisposable debug = wrapper as IDebugDisposable;
+            Logger.Instance.TraceExtra(typeof(DisposableTracerFull), "{0}: {1}, disposed={2}, release={3}{4}", name, id, 
+                debug?.IsDisposed,
+                (wrapper as IComWrapper)?.MustRelease,
+                stack ? ("\n" + new CustomTrace(new StackTrace(2, true)).ToString()) : "");
+        }
+
+        public void Created(DisposableWrapper wrapper, out int id)
+        {
+            id = Interlocked.Increment(ref _nextId);
+            _all.TryAdd(id, new DisposableInfoImpl(wrapper, id));
             _types.AddOrUpdate(wrapper.GetType(), 1, (i, value) => value + 1);
             _locations.AddOrUpdate(new CustomTrace(wrapper.StackTrace), 1, (i, value) => value + 1);
+            LogWrapperEvent(wrapper, id, "Created", true);
         }
 
         public void Deleted(DisposableWrapper wrapper, bool wasDisposed)
         {
             if (!wasDisposed)
             {
-                _types.AddOrUpdate(wrapper.GetType(), 0, (i, value) => value - 1);
-                _locations.AddOrUpdate(new CustomTrace(wrapper.StackTrace), 0, (i, value) => value - 1);
+                DisposedInternal(wrapper);
             }
+
+            DisposableInfo dummy;
+            _all.TryRemove(wrapper.TraceId, out dummy);
+            LogWrapperEvent(wrapper, wrapper.TraceId, "Deleted", true);
         }
 
         public void Disposed(DisposableWrapper wrapper)
+        {
+            LogWrapperEvent(wrapper, wrapper.TraceId, "Disposed", true);
+            DisposedInternal(wrapper);
+        }
+
+        private void DisposedInternal(DisposableWrapper wrapper)
         {
             _types.AddOrUpdate(wrapper.GetType(), 0, (i, value) => value - 1);
             _locations.AddOrUpdate(new CustomTrace(wrapper.StackTrace), 0, (i, value) => value - 1);
@@ -177,6 +203,62 @@ namespace Acacia.Utils
         public IEnumerable<KeyValuePair<CustomTrace, int>> GetLocations()
         {
             return _locations;
+        }
+
+        public interface DisposableInfo
+        {
+            int TraceId { get; }
+            Type WrapperType { get; }
+            string Subject { get; }
+        }
+
+        private class DisposableInfoImpl : DisposableInfo
+        {
+            public int TraceId { get; private set; }
+            public Type WrapperType { get; private set; }
+
+            private readonly WeakReference<IDebugDisposable> _item;
+            public string Subject
+            {
+                get
+                {
+                    if (_item == null)
+                        return null;
+
+                    IDebugDisposable item;
+                    if (_item.TryGetTarget(out item))
+                    {
+                        if (item.IsDisposed)
+                            return "<DISPOSED>";
+
+                        try
+                        {
+                            return item.DebugContext;
+                        }
+                        catch(Exception)
+                        {
+                            // Exception may happen if the item is not fully loaded yet
+                            return "<NOT LOADED>";
+                        }
+                    }
+                    return "<GC>";
+                }
+            }
+
+            public DisposableInfoImpl(DisposableWrapper wrapper, int id)
+            {
+                TraceId = id;
+                WrapperType = wrapper.GetType();
+                if (wrapper is IDebugDisposable)
+                {
+                    _item = new WeakReference<IDebugDisposable>((IDebugDisposable)wrapper);
+                }
+            }
+        }
+
+        public IEnumerable<DisposableInfo> GetActive()
+        {
+            return _all.Values;
         }
     }
 }

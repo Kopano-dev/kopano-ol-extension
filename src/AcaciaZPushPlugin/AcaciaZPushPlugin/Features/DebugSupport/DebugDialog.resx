@@ -402,6 +402,96 @@
   <data name="&gt;&gt;_tabProperties.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="_layoutWrappers.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="columnHeader5.Text" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="columnHeader6.Text" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="columnHeader7.Text" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="listWrappers.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="listWrappers.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="listWrappers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>603, 651</value>
+  </data>
+  <data name="listWrappers.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;listWrappers.Name" xml:space="preserve">
+    <value>listWrappers</value>
+  </data>
+  <data name="&gt;&gt;listWrappers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;listWrappers.Parent" xml:space="preserve">
+    <value>_layoutWrappers</value>
+  </data>
+  <data name="&gt;&gt;listWrappers.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="_layoutWrappers.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="_layoutWrappers.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="_layoutWrappers.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="_layoutWrappers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>609, 657</value>
+  </data>
+  <data name="_layoutWrappers.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;_layoutWrappers.Name" xml:space="preserve">
+    <value>_layoutWrappers</value>
+  </data>
+  <data name="&gt;&gt;_layoutWrappers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_layoutWrappers.Parent" xml:space="preserve">
+    <value>_tabWrappers</value>
+  </data>
+  <data name="&gt;&gt;_layoutWrappers.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="_layoutWrappers.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="listWrappers" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="_tabWrappers.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 33</value>
+  </data>
+  <data name="_tabWrappers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>609, 657</value>
+  </data>
+  <data name="_tabWrappers.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="_tabWrappers.Text" xml:space="preserve">
+    <value>Wrappers</value>
+  </data>
+  <data name="&gt;&gt;_tabWrappers.Name" xml:space="preserve">
+    <value>_tabWrappers</value>
+  </data>
+  <data name="&gt;&gt;_tabWrappers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_tabWrappers.Parent" xml:space="preserve">
+    <value>_tabs</value>
+  </data>
+  <data name="&gt;&gt;_tabWrappers.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="columnHeader1.Text" xml:space="preserve">
     <value>Type</value>
   </data>
@@ -463,7 +553,7 @@
     <value>_tabs</value>
   </data>
   <data name="&gt;&gt;_tabWrapperTypes.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="_layoutLocations.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
@@ -583,7 +673,7 @@
     <value>_tabs</value>
   </data>
   <data name="&gt;&gt;_tabWrapperLocations.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="_layoutItemEvents.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
@@ -614,6 +704,9 @@
   </data>
   <data name="&gt;&gt;listItemEventDetails.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="columnItemId.Text" xml:space="preserve">
+    <value>ItemId</value>
   </data>
   <data name="listItemEvents.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -671,6 +764,33 @@
   </data>
   <data name="&gt;&gt;buttonCleanGC.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="buttonCopyFilter.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="buttonCopyFilter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>350, 3</value>
+  </data>
+  <data name="buttonCopyFilter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 35</value>
+  </data>
+  <data name="buttonCopyFilter.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="buttonCopyFilter.Text" xml:space="preserve">
+    <value>Copy filter</value>
+  </data>
+  <data name="&gt;&gt;buttonCopyFilter.Name" xml:space="preserve">
+    <value>buttonCopyFilter</value>
+  </data>
+  <data name="&gt;&gt;buttonCopyFilter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonCopyFilter.Parent" xml:space="preserve">
+    <value>_layoutEventsButtons</value>
+  </data>
+  <data name="&gt;&gt;buttonCopyFilter.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="_layoutEventsButtons.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -754,7 +874,7 @@
     <value>_tabs</value>
   </data>
   <data name="&gt;&gt;_tabItemEvents.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="_tabs.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -879,6 +999,24 @@
   <data name="&gt;&gt;columnSubject.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;columnHeader5.Name" xml:space="preserve">
+    <value>columnHeader5</value>
+  </data>
+  <data name="&gt;&gt;columnHeader5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;columnHeader6.Name" xml:space="preserve">
+    <value>columnHeader6</value>
+  </data>
+  <data name="&gt;&gt;columnHeader6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;columnHeader7.Name" xml:space="preserve">
+    <value>columnHeader7</value>
+  </data>
+  <data name="&gt;&gt;columnHeader7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;columnHeader1.Name" xml:space="preserve">
     <value>columnHeader1</value>
   </data>
@@ -907,6 +1045,12 @@
     <value>columnProperties</value>
   </data>
   <data name="&gt;&gt;columnProperties.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;columnItemId.Name" xml:space="preserve">
+    <value>columnItemId</value>
+  </data>
+  <data name="&gt;&gt;columnItemId.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

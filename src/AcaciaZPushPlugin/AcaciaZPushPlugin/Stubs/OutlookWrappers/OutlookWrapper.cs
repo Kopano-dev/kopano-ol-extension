@@ -193,5 +193,16 @@ namespace Acacia.Stubs.OutlookWrappers
         public override abstract string ToString();
         public abstract IStore GetStore();
         public abstract void Delete();
+
+        override public string DebugContext
+        {
+            get
+            {
+                if (this is IItem)
+                    return ((IItem)this).Subject;
+                return EntryID;
+            }
+        }
+
     }
 }

@@ -8,7 +8,7 @@ namespace Acacia.Utils
 {
     public interface DisposableTracer
     {
-        void Created(DisposableWrapper wrapper);
+        void Created(DisposableWrapper wrapper, out int id);
         void Deleted(DisposableWrapper wrapper, bool wasDisposed);
         void Disposed(DisposableWrapper wrapper);
     }

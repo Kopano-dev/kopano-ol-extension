@@ -21,7 +21,14 @@ using System.Threading.Tasks;
 
 namespace Acacia.Stubs
 {
-    public interface IComWrapper : IDisposable
+    public interface IDebugDisposable : IDisposable
+    {
+        int TraceId { get; }
+        string DebugContext { get; }
+        bool IsDisposed { get; }
+    }
+
+    public interface IComWrapper : IDebugDisposable
     {
         bool MustRelease { get; set; }
     }

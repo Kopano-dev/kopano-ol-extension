@@ -8,8 +8,9 @@ namespace Acacia.Utils
 {
     public class DisposableTracerDummy : DisposableTracer
     {
-        public void Created(DisposableWrapper wrapper)
+        public void Created(DisposableWrapper wrapper, out int id)
         {
+            id = -1;
         }
 
         public void Deleted(DisposableWrapper wrapper, bool wasDisposed)
