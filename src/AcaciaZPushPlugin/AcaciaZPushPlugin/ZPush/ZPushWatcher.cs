@@ -52,15 +52,17 @@ namespace Acacia.ZPush
             Accounts = new ZPushAccounts(this, addIn);
 
             // Need to keep a link to keep receiving events
+            // Might be null when starting a compose window only
             _explorer = _addIn.GetActiveExplorer();
-            _explorer.SelectionChange += Explorer_SelectionChange;
+            if (_explorer != null)
+                _explorer.SelectionChange += Explorer_SelectionChange;
         }
 
         protected override void DoRelease()
         {
             Accounts.Dispose();
             Sync.Dispose();
-            _explorer.Dispose();
+            _explorer?.Dispose();
         }
 
         /// <summary>

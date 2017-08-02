@@ -137,6 +137,8 @@ namespace Acacia.ZPush
 
         public ZPushAccount GetAccount(IStore store)
         {
+            if (store == null)
+                return null;
             ZPushAccount value = null;
             _accountsByStoreId.TryGetValue(store.StoreID, out value);
             return value;

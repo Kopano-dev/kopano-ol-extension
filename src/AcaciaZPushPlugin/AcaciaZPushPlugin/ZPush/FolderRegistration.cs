@@ -74,6 +74,8 @@ namespace Acacia.ZPush
             // TODO: cache folder id per store
             using (IStore store = folder.GetStore())
             {
+                if (store == null)
+                    return false;
                 return folder.EntryID == store.GetDefaultFolderId(_folder);
             }
         }

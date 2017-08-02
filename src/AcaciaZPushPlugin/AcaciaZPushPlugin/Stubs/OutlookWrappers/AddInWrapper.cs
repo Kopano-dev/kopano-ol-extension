@@ -251,7 +251,10 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public IExplorer GetActiveExplorer()
         {
-            return new ExplorerWrapper(_app.ActiveExplorer());
+            NSOutlook.Explorer explorer = _app.ActiveExplorer();
+            if (explorer == null)
+                return null;
+            return new ExplorerWrapper(explorer);
         }
 
         public IInspectors GetInspectors()
