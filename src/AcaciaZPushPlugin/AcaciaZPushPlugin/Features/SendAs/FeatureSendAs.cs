@@ -1,4 +1,4 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -25,6 +25,7 @@ using Acacia.ZPush;
 using Acacia.Features.SharedFolders;
 using Acacia.ZPush.API.SharedFolders;
 using static Acacia.DebugOptions;
+using Acacia.Features.GAB;
 
 namespace Acacia.Features.SendAs
 {
@@ -90,7 +91,7 @@ namespace Acacia.Features.SendAs
                         {
                             Logger.Instance.Trace(this, "Checking, Shared folder owner: {0}", shared.Store.UserName);
                             // It's a shared folder, use the owner as the sender if possible
-                            using (IRecipient recip = ThisAddIn.Instance.ResolveRecipient(shared.Store.UserName))
+                            using (IRecipient recip = FindSendAsSender(zpush, shared.Store))
                             {
                                 Logger.Instance.Trace(this, "Checking, Shared folder owner recipient: {0}", recip.Name);
                                 if (recip != null && recip.IsResolved)
@@ -103,13 +104,60 @@ namespace Acacia.Features.SendAs
                                 }
                                 else
                                 {
-                                    Logger.Instance.Trace(this, "Unable to resolve sender");
+                                    Logger.Instance.Error(this, "Unable to resolve sender: {0}", shared.Store.UserName);
                                 }
                             }
                         }
                     }
                 }
             }
+        }
+
+        [AcaciaOption("Disables GAB look ups for senders. GAB lookups are required if a username exists on different accounts, " +
+                      "as in that case Outlook fails to determine the email address of the sender.")]
+        public bool GABLookup
+        {
+            get { return GetOption(OPTION_GAB_LOOKUP); }
+            set { SetOption(OPTION_GAB_LOOKUP, value); }
+        }
+        private static readonly BoolOption OPTION_GAB_LOOKUP = new BoolOption("GABLookup", true);
+
+        internal IRecipient FindSendAsSender(ZPushAccount zpush, GABUser user)
+        {
+            // First try a simple resolve, this will work if the username is unique
+            IRecipient recip = ThisAddIn.Instance.ResolveRecipient(user.UserName);
+            if (recip != null)
+            {
+                // If it's resolved, we're good. Otherwise dispose and continue
+                if (recip.IsResolved)
+                    return recip;
+                else
+                    recip.Dispose();
+            }
+
+            // Search through GAB to find the user
+            if (GABLookup)
+            {
+                GABHandler handler = FeatureGAB.FindGABForAccount(zpush);
+                if (handler != null && handler.Contacts != null)
+                {
+                    // Look for the email address. If found, use the account associated with the GAB
+                    using (ISearch<IContactItem> search = handler.Contacts.Search<IContactItem>())
+                    {
+                        search.AddField("urn:schemas:contacts:customerid").SetOperation(SearchOperation.Equal, user.UserName);
+                        using (IContactItem result = search.SearchOne())
+                        {
+                            if (result != null)
+                            {
+                                // Try resolving by email
+                                return ThisAddIn.Instance.ResolveRecipient(result.Email1Address);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
 
         private void MailEvents_ItemSend(IMailItem item, ref bool cancel)
