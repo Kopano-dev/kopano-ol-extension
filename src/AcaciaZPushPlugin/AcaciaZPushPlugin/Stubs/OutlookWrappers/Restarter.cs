@@ -69,7 +69,7 @@ namespace Acacia.Stubs.OutlookWrappers
                 string path = account.Account.BackingFilePath;
                 if (!string.IsNullOrEmpty(path) && System.IO.Path.GetExtension(path) == ".ost")
                 {
-                    commandLine += " /cleankoe" + Util.QuoteCommandLine(path);
+                    commandLine += " /cleankoe " + Util.QuoteCommandLine(path);
                 }
             }
             foreach(KeyValuePair<ZPushAccount, GABUser> share in _shares)
