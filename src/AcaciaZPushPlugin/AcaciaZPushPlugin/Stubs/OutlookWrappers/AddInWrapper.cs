@@ -156,56 +156,9 @@ namespace Acacia.Stubs.OutlookWrappers
             _stores.Start();
         }
 
-        public void Restart(bool closeWindows)
+        public IRestarter Restarter()
         {
-            DoRestart(closeWindows, null);
-        }
-
-        private void DoRestart(bool closeWindows, string additionalCommandLine)
-        {
-            // Can not use the assembly location, as that is in the GAC
-            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-            UriBuilder uri = new UriBuilder(codeBase);
-            string path = Uri.UnescapeDataString(uri.Path);
-            // Create the path to the restarter
-            path = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(path), "OutlookRestarter.exe");
-
-            // Use the current command line, with a profile command if not specified
-            string commandLine = Environment.CommandLine;
-            // This selects both /profile and /profiles. In that case we don't specify the profile, otherwise
-            // we specify the current profile
-            // It seems to be impossible to escape a profile name with a quote, so in that case ignore it
-            if (!commandLine.ToLower().Contains("/profile") && !ProfileName.Contains("\""))
-            {
-                commandLine += " /profile " + Util.QuoteCommandLine(ProfileName);
-            }
-
-            if (!string.IsNullOrEmpty(additionalCommandLine))
-            {
-                commandLine = commandLine + " " + additionalCommandLine;
-            }
-
-            // Run that
-            Process process = new Process();
-            process.StartInfo = new ProcessStartInfo(path, Process.GetCurrentProcess().Id + " " + commandLine);
-            process.Start();
-
-            // And close us and any other windows
-            Quit(closeWindows);
-        }
-
-        public void RestartResync(ZPushAccount[] accounts)
-        {
-            string commandLine = "";
-            foreach(ZPushAccount account in accounts)
-            {
-                string path = account.Account.BackingFilePath;
-                if (!string.IsNullOrEmpty(path) && System.IO.Path.GetExtension(path) == ".ost")
-                {
-                    commandLine += "/cleankoe " + Util.QuoteCommandLine(path);
-                }
-            }
-            DoRestart(true, commandLine);
+            return new Restarter(this);
         }
 
         public void Quit(bool closeWindows)

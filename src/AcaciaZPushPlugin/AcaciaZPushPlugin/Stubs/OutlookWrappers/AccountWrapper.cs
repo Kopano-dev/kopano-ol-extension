@@ -160,8 +160,15 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             get
             {
-                byte[] encrypted = (byte[])Registry.GetValue(_regPath, OutlookConstants.REG_VAL_EAS_PASSWORD, null);
-                return PasswordEncryption.Decrypt(encrypted);
+                return PasswordEncryption.Decrypt(EncryptedPassword);
+            }
+        }
+        [Browsable(false)]
+        public byte[] EncryptedPassword
+        {
+            get
+            {
+                return (byte[])Registry.GetValue(_regPath, OutlookConstants.REG_VAL_EAS_PASSWORD, null);
             }
         }
 

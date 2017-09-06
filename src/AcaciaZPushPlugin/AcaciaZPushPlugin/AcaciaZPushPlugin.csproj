@@ -355,6 +355,7 @@
     <Compile Include="Stubs\IPicture.cs" />
     <Compile Include="Stubs\IRecipient.cs" />
     <Compile Include="Stubs\IRecipients.cs" />
+    <Compile Include="Stubs\IRestarter.cs" />
     <Compile Include="Stubs\ISignature.cs" />
     <Compile Include="Stubs\ISignatures.cs" />
     <Compile Include="Stubs\IStores.cs" />
@@ -375,6 +376,7 @@
     <Compile Include="Stubs\OutlookWrappers\RecipientsWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\RecipientWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\InspectorsWrapper.cs" />
+    <Compile Include="Stubs\OutlookWrappers\Restarter.cs" />
     <Compile Include="Stubs\OutlookWrappers\SignaturesWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\SignatureWrapper.cs" />
     <Compile Include="Stubs\OutlookWrappers\StoresWrapper.cs" />

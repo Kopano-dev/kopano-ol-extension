@@ -42,6 +42,7 @@ namespace Acacia.Stubs
         string DeviceId { get; }
 
         SecureString Password { get; }
+        byte[] EncryptedPassword { get; }
 
         bool HasPassword { get; }
 

@@ -553,7 +553,9 @@ namespace Acacia.Features.SyncState
                     MessageBoxIcon.Error
                     ) == DialogResult.Yes)
                 {
-                    ThisAddIn.Instance.RestartResync(account);
+                    IRestarter restarter = ThisAddIn.Instance.Restarter();
+                    restarter.ResyncAccounts(account);
+                    restarter.Restart();
                 }
             });
         }
@@ -693,7 +695,9 @@ namespace Acacia.Features.SyncState
                         
                         return true; 
                     case ResyncOption.Full:
-                        ThisAddIn.Instance.RestartResync(_accounts);
+                        IRestarter restarter = ThisAddIn.Instance.Restarter();
+                        restarter.ResyncAccounts(_accounts);
+                        restarter.Restart();
                         return true;
                 }
                 return true;

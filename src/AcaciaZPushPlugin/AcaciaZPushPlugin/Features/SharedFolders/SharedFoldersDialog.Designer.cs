@@ -129,6 +129,7 @@
             this.kTreeFolders.NodePadding = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.kTreeFolders.CheckStateChanged += new Acacia.Controls.KTree.CheckStateChangedHandler(this.kTreeFolders_CheckStateChanged);
             this.kTreeFolders.SelectionChanged += new Acacia.Controls.KTree.SelectionChangedDelegate(this.kTreeFolders_SelectionChanged);
+            this.kTreeFolders.DoubleClick += new System.EventHandler(this.kTreeFolders_DoubleClick);
             // 
             // _layoutOptions
             // 

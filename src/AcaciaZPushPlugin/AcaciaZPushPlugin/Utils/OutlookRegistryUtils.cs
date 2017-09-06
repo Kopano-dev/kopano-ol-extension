@@ -25,6 +25,11 @@ namespace Acacia.Utils
 {
     public static class OutlookRegistryUtils
     {
+        public static RegistryKey OpenProfileOutlookKey(string profile, RegistryKeyPermissionCheck permissions = RegistryKeyPermissionCheck.Default)
+        {
+            string path = string.Format(OutlookConstants.REG_SUBKEY_ACCOUNTS, profile);
+            return OpenOutlookKey(path, permissions);
+        }
 
         public static RegistryKey OpenOutlookKey(string suffix = null, RegistryKeyPermissionCheck permissions = RegistryKeyPermissionCheck.Default)
         {

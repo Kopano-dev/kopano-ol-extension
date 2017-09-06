@@ -162,7 +162,9 @@ namespace Acacia.Features.SecondaryContacts
                                     MessageBoxIcon.Information
                                 ) == DialogResult.Yes)
                     {
-                        ThisAddIn.Instance.Restart(true);
+                        IRestarter restarter = ThisAddIn.Instance.Restarter();
+                        restarter.CloseWindows = true;
+                        restarter.Restart();
                         return true;
                     }
                 }

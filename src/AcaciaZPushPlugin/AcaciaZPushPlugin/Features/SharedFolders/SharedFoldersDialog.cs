@@ -576,5 +576,23 @@ namespace Acacia.Features.SharedFolders
         }
 
         #endregion
+
+        private void kTreeFolders_DoubleClick(object sender, EventArgs e)
+        {
+            // TODO: This is some testing code for [KOE-123]
+            /*
+            if (ModifierKeys.HasFlag(Keys.Shift) && kTreeFolders.SelectedNodes.Count == 1)
+            {
+                KTreeNode selected = kTreeFolders.SelectedNodes.First();
+                if (selected is StoreTreeNode)
+                {
+                    // Open store for user
+                    Acacia.Stubs.IRestarter restarter = ThisAddIn.Instance.Restarter();
+                    restarter.CloseWindows = true;
+                    restarter.OpenShare(this._account, ((StoreTreeNode)selected).User);
+                    restarter.Restart();
+                }
+            }*/
+        }
     }
 }

@@ -292,8 +292,7 @@ namespace Acacia.Stubs.OutlookWrappers
             NSOutlook.NameSpace session = _item.Session;
             try
             {
-                string path = string.Format(OutlookConstants.REG_SUBKEY_ACCOUNTS, session.CurrentProfileName);
-                return OutlookRegistryUtils.OpenOutlookKey(path);
+                return OutlookRegistryUtils.OpenProfileOutlookKey(session.CurrentProfileName);
             }
             finally
             {
