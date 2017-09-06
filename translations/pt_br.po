@@ -5,8 +5,7 @@ msgstr ""
 "POT-Creation-Date: 2016-12-12 14:56+0000\n"
 "PO-Revision-Date: 2017-08-09 18:28+0000\n"
 "Last-Translator: Sebastian <s.kummer@kopano.com>\n"
-"Language-Team: Portuguese (Brazil) "
-"<http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt_BR/>\n"
 "Language: pt_br\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -334,8 +333,8 @@ msgstr "Abre o dialogo de configurações, que permite a configuração do plugi
 #: AcaciaZPushPlugin\Properties\Resources\OOFStartup_Message
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFStartup_Message"
-msgid "Out of Office is currently enabled on account \'{0}\'. Would you like to change the settings?"
-msgstr "Fora-do-escritório está habilitado na conta  \'{0}\'. Gostaria de modificar essas configurações?"
+msgid "Out of Office is currently enabled on account '{0}'. Would you like to change the settings?"
+msgstr "Fora-do-escritório está habilitado na conta  '{0}'. Gostaria de modificar essas configurações?"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFStartup_Title
 #, csharp-format
@@ -702,7 +701,7 @@ msgstr "Sobre"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Screentip"
 msgid "About dialog"
-msgstr "Diálogo \'Sobre\'"
+msgstr "Diálogo 'Sobre'"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Supertip
 #, csharp-format
@@ -822,8 +821,8 @@ msgstr "Estado de Ressincronização"
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Body"
-msgid "The contacts folder \'{0}\' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click \'Yes\' to restart Outlook now, or \'No\' if you plan to restart Outlook later."
-msgstr "A pasta de contatos \'{0}\' foi descoberta. Está sendo sincronizado, mas não aparecerá na lista de pastas de contatos até o Outlook ser reiniciado. Clique em \'Sim\' para reiniciar o Outlook agora ou \'Não\' se você planeja reiniciar o Outlook mais tarde."
+msgid "The contacts folder '{0}' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click 'Yes' to restart Outlook now, or 'No' if you plan to restart Outlook later."
+msgstr "A pasta de contatos '{0}' foi descoberta. Está sendo sincronizado, mas não aparecerá na lista de pastas de contatos até o Outlook ser reiniciado. Clique em 'Sim' para reiniciar o Outlook agora ou 'Não' se você planeja reiniciar o Outlook mais tarde."
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Title
@@ -835,8 +834,8 @@ msgstr "Pasta de contatos"
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Body"
-msgid "The password for account \'{0}\' is not available. Advanced Z-Push features will not work."
-msgstr "A senha da conta \'{0}\' não está disponível. Recursos avançados do Z-Push não funcionarão."
+msgid "The password for account '{0}' is not available. Advanced Z-Push features will not work."
+msgstr "A senha da conta '{0}' não está disponível. Recursos avançados do Z-Push não funcionarão."
 
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Title
 #, csharp-format
@@ -958,7 +957,7 @@ msgstr "Sincronização parada - {0}"
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Body"
-msgid "Changing other people\'s private events is not allowed."
+msgid "Changing other people's private events is not allowed."
 msgstr "Alterar eventos particulares de outras pessoas não é permitido."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Title
@@ -1122,3 +1121,4 @@ msgstr "Remover GC"
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonCopyFilter.Text"
 msgid "Copy filter"
 msgstr "Copiar filtro"
+
