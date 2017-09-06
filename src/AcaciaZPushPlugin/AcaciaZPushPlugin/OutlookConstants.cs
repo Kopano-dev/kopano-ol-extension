@@ -89,6 +89,9 @@ namespace Acacia
 
         public const string PR_CONTAINER_CLASS = PROP + "3613" + PT_UNICODE;
 
+        public const string PR_ENTRYID = PROP + "0FFF" + PT_BINARY;
+        public const string PR_PARENT_ENTRYID = PROP + "0E09" + PT_BINARY;
+
         #endregion
 
         #region Email specific

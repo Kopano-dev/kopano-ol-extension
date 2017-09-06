@@ -49,7 +49,7 @@ namespace Acacia.ZPush
 
         public override bool IsApplicable(IFolder folder)
         {
-            return folder.ItemType == _itemType;
+            return folder != null && folder.ItemType == _itemType;
         }
 
         public override string ToString()
@@ -71,6 +71,8 @@ namespace Acacia.ZPush
 
         public override bool IsApplicable(IFolder folder)
         {
+            if (folder == null)
+                return false;
             // TODO: cache folder id per store
             using (IStore store = folder.GetStore())
             {

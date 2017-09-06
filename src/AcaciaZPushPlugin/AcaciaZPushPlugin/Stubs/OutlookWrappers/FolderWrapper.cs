@@ -79,7 +79,7 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public string FullFolderPath { get { return _item.FullFolderPath; } }
 
-        override public IFolder Parent
+        override protected IFolder ParentUnchecked
         {
             get
             {
@@ -87,19 +87,7 @@ namespace Acacia.Stubs.OutlookWrappers
                 return Mapping.Wrap<IFolder>(_item.Parent as NSOutlook.Folder);
             }
         }
-
-        override public string ParentEntryID
-        {
-            get
-            {
-                using (ComRelease com = new ComRelease())
-                {
-                    NSOutlook.Folder parent = com.Add(_item.Parent);
-                    return parent?.EntryID;
-                }
-            }
-        }
-
+        
         /// <summary>
         /// Checks if the folder is at the specified depth. The root folder is at depth 0, its children at depth 1, etc.
         /// This function exists because sometimes it's need to determine if a folder is at a specific depth; using this

@@ -57,6 +57,9 @@ namespace Acacia.Features.SecondaryContacts
 
             public override bool IsApplicable(IFolder folder)
             {
+                if (folder == null)
+                    return false;
+
                 // Check the sync type.
                 // Also allow again if the sync type is user contact, it may not have been fully patched.
                 if (FolderUtils.GetFolderSyncType(folder) != OutlookConstants.SyncType.Unknown &&

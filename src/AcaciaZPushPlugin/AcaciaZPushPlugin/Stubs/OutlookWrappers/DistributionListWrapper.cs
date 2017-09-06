@@ -236,33 +236,12 @@ namespace Acacia.Stubs.OutlookWrappers
 
         override public string EntryID { get { return _item.EntryID; } }
 
-        override public IFolder Parent
+        override protected IFolder ParentUnchecked
         {
             get
             {
                 // The wrapper manages the returned folder
                 return Mapping.Wrap<IFolder>(_item.Parent as NSOutlook.Folder);
-            }
-        }
-
-        override public string ParentEntryID
-        {
-            get
-            {
-                using (ComRelease com = new ComRelease())
-                {
-                    NSOutlook.Folder parent = com.Add(_item.Parent);
-                    return parent?.EntryID;
-                }
-            }
-        }
-
-        override public IStore GetStore()
-        {
-            using (ComRelease com = new ComRelease())
-            {
-                NSOutlook.Folder parent = com.Add(_item.Parent);
-                return Mapping.Wrap(parent?.Store);
             }
         }
 

@@ -82,9 +82,45 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public abstract string EntryID { get; }
-        public abstract IFolder Parent { get; }
-        public abstract string ParentEntryID { get; }
+        abstract public string EntryID
+        {
+            get;
+        }
+
+        public IFolder Parent
+        {
+            get
+            {
+                if (!CanAccessParent)
+                    return null;
+
+                return ParentUnchecked;
+            }
+        }
+
+        protected abstract IFolder ParentUnchecked { get; }
+
+        private bool CanAccessParent
+        {
+            get
+            {
+                // [KOE-132]: Somehow when sending mail through other applications, accessing parent
+                // causes an access violation on Outlook 2013. I have been unable to fully determine
+                // the exact cause, but the entry id seems to be null and the parent entry id set in
+                // this case. So just avoid that.
+                if (GetProperty(OutlookConstants.PR_ENTRYID) == null && GetProperty(OutlookConstants.PR_PARENT_ENTRYID) != null)
+                    return false;
+                return true;
+            }
+        }
+
+        public string ParentEntryID
+        {
+            get
+            {
+                return StringUtil.BytesToHex((byte[])GetProperty(OutlookConstants.PR_PARENT_ENTRYID));
+            }
+        }
 
         virtual public string StoreID
         {
@@ -190,9 +226,17 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #endregion
 
+        virtual public IStore GetStore()
+        {
+            using (IFolder parent = Parent)
+            {
+                return parent?.GetStore();
+            }
+        }
+
         public override abstract string ToString();
-        public abstract IStore GetStore();
         public abstract void Delete();
+
 
         override public string DebugContext
         {

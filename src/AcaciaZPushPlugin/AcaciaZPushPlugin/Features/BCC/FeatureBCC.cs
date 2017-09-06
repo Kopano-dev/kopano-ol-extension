@@ -44,7 +44,7 @@ namespace Acacia.Features.BCC
                         // Check we're in the SentMail folder
                         using (IFolder folder = mail.Parent)
                         {
-                            if (_folderRegistration.IsApplicable(folder))
+                            if (folder != null && _folderRegistration.IsApplicable(folder))
                                 CheckBCC(mail);
                         }
                     };
