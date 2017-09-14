@@ -76,9 +76,13 @@ namespace OutlookRestarter
                             string path = procArgs[i];
                             HandleCleanKoe(path);
                         }
-                        else
+                        else if (procArgs[i].StartsWith("/"))
                         {
                             useArgs.Add(procArgs[i]);
+                        }
+                        else 
+                        {
+                            useArgs.Add("\"" + procArgs[i] + "\"");
                         }
                     }
                     string argsString = string.Join(" ", useArgs);
