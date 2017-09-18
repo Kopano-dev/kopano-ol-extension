@@ -1076,6 +1076,24 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modifying shared folders locally is not supported. Please use the &apos;Shared Folders&apos; dialog to modify these folders..
+        /// </summary>
+        internal static string SharedFolders_LocalFolder_Body {
+            get {
+                return ResourceManager.GetString("SharedFolders_LocalFolder_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shared folders.
+        /// </summary>
+        internal static string SharedFolders_LocalFolder_Title {
+            get {
+                return ResourceManager.GetString("SharedFolders_LocalFolder_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No shared folders are available or you do not have permissions to view the root of the inbox..
         /// </summary>
         internal static string SharedFolders_None {

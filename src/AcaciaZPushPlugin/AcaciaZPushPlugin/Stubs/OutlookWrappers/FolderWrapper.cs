@@ -341,6 +341,52 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
+        private IFolder_BeforeFolderMove _beforeFolderMove;
+        public event IFolder_BeforeFolderMove BeforeFolderMove
+        {
+            add
+            {
+                if (_beforeFolderMove == null)
+                    HookBeforeFolderMove(true);
+                _beforeFolderMove += value;
+            }
+            remove
+            {
+                _beforeFolderMove -= value;
+                if (_beforeFolderMove == null)
+                    HookBeforeFolderMove(false);
+            }
+        }
+
+        private void HookBeforeFolderMove(bool hook)
+        {
+            if (hook)
+                _item.BeforeFolderMove += HandleBeforeFolderMove;
+            else
+                _item.BeforeFolderMove -= HandleBeforeFolderMove;
+        }
+
+        private void HandleBeforeFolderMove(NSOutlook.MAPIFolder target, ref bool cancel)
+        {
+            try
+            {
+                if (_beforeFolderMove != null)
+                {
+                    using (IFolder targetWrapped = Mapping.Wrap<IFolder>(target, false))
+                    {
+                        if (targetWrapped != null)
+                        {
+                            _beforeFolderMove(this, targetWrapped, ref cancel);
+                        }
+                    }
+                }
+            }
+            catch (System.Exception e)
+            {
+                Logger.Instance.Error(this, "Exception in HandleBeforeItemMove: {0}", e);
+            }
+        }
+
         public void SetCustomIcon(IPicture icon)
         {
             _item.SetCustomIcon(((PictureWrapper)icon).RawItem as StdPicture);
