@@ -2,10 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-09-06 13:46+0000\n"
+"PO-Revision-Date: 2017-07-06 07:00+0000\n"
 "Last-Translator: Felix <f.bartels@kopano.com>\n"
-"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-"
-"extension/de/>\n"
+"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-extension/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1318,52 +1317,53 @@ msgstr "Elementereignis"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnSubject.Text"
 msgid "Subject"
-msgstr "Betreff"
+msgstr ""
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader5.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader5.Text"
 msgid "Id"
-msgstr "Id"
+msgstr ""
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader6.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader6.Text"
 msgid "Type"
-msgstr "Typ"
+msgstr ""
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader7.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader7.Text"
 msgid "Subject"
-msgstr "Betreff"
+msgstr ""
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabWrappers.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabWrappers.Text"
 msgid "Wrappers"
-msgstr "Wrapper"
+msgstr ""
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnProperties.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnProperties.Text"
 msgid "Properties"
-msgstr "Eigenschaften"
+msgstr ""
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnItemId.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnItemId.Text"
 msgid "ItemId"
-msgstr "Element Id"
+msgstr ""
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonCleanGC.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonCleanGC.Text"
 msgid "Remove GC"
-msgstr "GC entfernen"
+msgstr ""
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonCopyFilter.Text
-#, csharp-format, fuzzy
+#, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonCopyFilter.Text"
 msgid "Copy filter"
-msgstr "Filter kopieren"
+msgstr ""
+
