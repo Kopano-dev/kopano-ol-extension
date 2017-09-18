@@ -1120,3 +1120,15 @@ msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonCopyFilte
 msgid "Copy filter"
 msgstr ""
 
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_LocalFolder_Body
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_LocalFolder_Body"
+msgid "Modifying shared folders locally is not supported. Please use the 'Shared Folders' dialog to modify these folders."
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_LocalFolder_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_LocalFolder_Title"
+msgid "Shared folders"
+msgstr ""
+

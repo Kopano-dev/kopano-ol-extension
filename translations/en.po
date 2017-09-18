@@ -1047,6 +1047,18 @@ msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Ti
 msgid "Private event"
 msgstr "Private event"
 
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_LocalFolder_Body
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_LocalFolder_Body"
+msgid "Modifying shared folders locally is not supported. Please use the 'Shared Folders' dialog to modify these folders."
+msgstr "Modifying shared folders locally is not supported. Please use the 'Shared Folders' dialog to modify these folders."
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_LocalFolder_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_LocalFolder_Title"
+msgid "Shared folders"
+msgstr "Shared folders"
+
 #: AcaciaZPushPlugin\UI\ProgressDialog\labelMessage.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\ProgressDialog\\labelMessage.Text"
