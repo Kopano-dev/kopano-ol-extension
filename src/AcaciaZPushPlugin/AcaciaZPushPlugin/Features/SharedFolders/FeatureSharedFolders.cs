@@ -71,6 +71,8 @@ namespace Acacia.Features.SharedFolders
 
             // Private shared appointment
             SetupPrivateAppointmentSuppression();
+
+            SetupHierarchyChangeSuppression();
         }
 
         #region UI
@@ -285,6 +287,120 @@ namespace Acacia.Features.SharedFolders
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning
                         );
+        }
+
+        #endregion
+
+        #region Hierarchy changes
+
+        private class SharedFolderRegistration : FolderRegistration
+        {
+            public SharedFolderRegistration(Feature feature) : base(feature)
+            {
+            }
+
+            public override bool IsApplicable(IFolder folder)
+            {
+                if (folder.SyncId != null && folder.SyncId.IsShared)
+                    return true;
+
+                using (IFolder parent = folder.Parent)
+                {
+                    if (parent != null)
+                        return IsApplicable(parent);
+                }
+
+                return false;
+            }
+        }
+
+        private void SetupHierarchyChangeSuppression()
+        {
+            Watcher.WatchFolder(new SharedFolderRegistration(this), 
+                    OnSharedFolderDiscovered, 
+                    OnSharedFolderChanged,
+                    OnSharedFolderRemoved);
+        }
+
+        private void OnSharedFolderDiscovered(IFolder folder)
+        {
+            Logger.Instance.Trace(this, "Shared folder discovered: {0} - {1}", folder.Name, folder.SyncId);
+            if (folder.SyncId == null || !folder.SyncId.IsShared)
+            {
+                Logger.Instance.Warning(this, "Local folder created in shared folder, deleting: {0} - {1}", folder.Name, folder.SyncId);
+                // This is a new, locally created folder. Warn and remove
+                MessageBox.Show(ThisAddIn.Instance.Window,
+                                Properties.Resources.SharedFolders_LocalFolder_Body,
+                                Properties.Resources.SharedFolders_LocalFolder_Title,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning
+                            );
+                folder.Delete();
+                Logger.Instance.Warning(this, "Local folder created in shared folder, deleted: {0} - {1}", folder.Name, folder.SyncId);
+            }
+            else
+            {
+                folder.BeforeFolderMove += Folder_BeforeFolderMove;
+
+                // Check if it was renamed before the events were fully set up
+                CheckSharedFolderRename(folder);
+            }
+        }
+
+        private void Folder_BeforeFolderMove(IFolder src, IFolder moveTo, ref bool cancel)
+        {
+            Logger.Instance.Fatal(this, "SHARED FOLDER MOVE: {0}", moveTo.Name);
+            
+            MessageBox.Show(ThisAddIn.Instance.Window,
+                            Properties.Resources.SharedFolders_LocalFolder_Body,
+                            Properties.Resources.SharedFolders_LocalFolder_Title,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+            cancel = true;
+        }
+
+        private void OnSharedFolderChanged(IFolder folder)
+        {
+            Logger.Instance.Trace(this, "Shared folder changed: {0} - {1}", folder.Name, folder.SyncId);
+            CheckSharedFolderRename(folder);
+        }
+
+        private void CheckSharedFolderRename(IFolder folder)
+        { 
+            if (folder.SyncId != null && folder.SyncId.IsShared)
+            {
+                string originalName = (string)folder.GetProperty(OutlookConstants.PR_ZPUSH_NAME);
+                // The folder.name property is sometimes cached, check against the MAPI property
+                string currentName = (string)folder.GetProperty(OutlookConstants.PR_DISPLAY_NAME_W);
+                if (currentName != originalName)
+                {
+                    Logger.Instance.Warning(this, "Shared folder renamed, renaming back: {0} - {1} - {2}", folder.Name, folder.SyncId, originalName);
+                    // This is a locally renamed folder. Warn and rename back
+                    MessageBox.Show(ThisAddIn.Instance.Window,
+                                    Properties.Resources.SharedFolders_LocalFolder_Body,
+                                    Properties.Resources.SharedFolders_LocalFolder_Title,
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning
+                                );
+                    // Update both name and display name
+                    folder.Name = originalName;
+                    folder.SetProperty(OutlookConstants.PR_DISPLAY_NAME_W, originalName);
+                    Logger.Instance.Warning(this, "Shared folder renamed, renamed back: {0} - {1} - {2}", folder.Name, folder.SyncId, originalName);
+                }
+            }
+        }
+
+        private void OnSharedFolderRemoved(IFolder folder)
+        {
+            Logger.Instance.Fatal(this, "Shared folder removed, undeleting: {0}", folder.Name);
+            MessageBox.Show(ThisAddIn.Instance.Window,
+                            Properties.Resources.SharedFolders_LocalFolder_Body,
+                            Properties.Resources.SharedFolders_LocalFolder_Title,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+            //folder.Delete();
         }
 
         #endregion

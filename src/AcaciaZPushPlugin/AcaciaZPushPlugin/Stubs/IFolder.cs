@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 namespace Acacia.Stubs
 {
     public delegate void IFolder_BeforeItemMove(IFolder src, IItem item, IFolder target, ref bool cancel);
+    public delegate void IFolder_BeforeFolderMove(IFolder src, IFolder moveTo, ref bool cancel);
 
     public interface IFolder : IBase
     {
@@ -95,6 +96,7 @@ namespace Acacia.Stubs
         #region Events
 
         event IFolder_BeforeItemMove BeforeItemMove;
+        event IFolder_BeforeFolderMove BeforeFolderMove;
 
         #endregion
 

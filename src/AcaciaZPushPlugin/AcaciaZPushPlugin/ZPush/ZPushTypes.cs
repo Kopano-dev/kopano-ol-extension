@@ -79,7 +79,7 @@ namespace Acacia.ZPush
         /// <summary>
         /// Checks if this is a SyncId for a shared folders
         /// </summary>
-        public bool IsShared { get { return _id.StartsWith("S"); } }
+        public bool IsShared { get { return _id.StartsWith("S") || _id.StartsWith("C") || _id.StartsWith("G"); } }
 
         #region Standard overrides
 

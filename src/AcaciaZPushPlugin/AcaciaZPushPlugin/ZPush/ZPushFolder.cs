@@ -194,6 +194,7 @@ namespace Acacia.ZPush
                 foreach (var entry in remove)
                 {
                     Logger.Instance.Debug(this, "Removing subfolder {0}, {1}", Name, entry.Key);
+                    _watcher.OnFolderRemoved(entry.Value);
                     _children.Remove(entry.Key);
                     entry.Value.Cleanup();
                 }

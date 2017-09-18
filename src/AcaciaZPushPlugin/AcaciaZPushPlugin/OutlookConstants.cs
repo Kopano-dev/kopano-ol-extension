@@ -84,6 +84,7 @@ namespace Acacia
         public const string PR_ATTR_HIDDEN = PROP + "10F4" + PT_BOOLEAN;
 
         public const string PR_DISPLAY_NAME = PROP + "3001" + PT_STRING8;
+        public const string PR_DISPLAY_NAME_W = PROP + "3001" + PT_UNICODE;
 
         public const string PR_SUBJECT = PROP + "0037" + PT_UNICODE;
 
@@ -138,6 +139,7 @@ namespace Acacia
         public const string PR_ZPUSH_SYNC_ID = PROP + "6A18" + PT_STRING8;
         public const string PR_ZPUSH_FOLDER_ID = PROP + "6A19" + PT_STRING8;
         public const string PR_ZPUSH_MESSAGE_ID = PROP + "6B20" + PT_STRING8;
+        public const string PR_ZPUSH_NAME = PROP + "6915" + PT_UNICODE;
 
         // TODO: names for these, use MFCMAPI
         public const string PR_EAS_SYNC1 = PROP + "6A17" + PT_BOOLEAN;
@@ -146,7 +148,6 @@ namespace Acacia
         public const string PR_EAS_SYNCTYPE = PROP + "6A1A" + PT_LONG;
         public const string PR_EAS_SYNC2 = PROP + "6A1D" + PT_BOOLEAN;
         public const string PR_NET_FOLDER_FLAGS = PROP + "36DE" + PT_LONG;
-        public const string PR_EAS_NAME = PROP + "6915" + PT_UNICODE;
 
         public enum SyncType
         {

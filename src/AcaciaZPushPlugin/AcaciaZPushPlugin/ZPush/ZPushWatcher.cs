@@ -212,10 +212,11 @@ namespace Acacia.ZPush
 
         #region Folders
 
-        private class FolderWatcher
+        public class FolderWatcher
         {
-            public FolderEventHandler Discovered;
-            public FolderEventHandler Changed;
+            public FolderEventHandler Discovered { get; set; }
+            public FolderEventHandler Changed { get; set; }
+            public FolderEventHandler Removed { get; set; }
 
             public void OnDiscovered(IFolder folder)
             {
@@ -228,6 +229,28 @@ namespace Acacia.ZPush
                 if (Changed != null)
                     Changed(folder);
             }
+
+            public void OnRemoved(IFolder folder)
+            {
+                if (Removed != null)
+                    Removed(folder);
+            }
+
+            internal void Dispatch(ZPushFolder folder, EventKind kind)
+            {
+                switch (kind)
+                {
+                    case EventKind.Discovered:
+                        OnDiscovered(folder.Folder);
+                        break;
+                    case EventKind.Changed:
+                        OnChanged(folder.Folder);
+                        break;
+                    case EventKind.Removed:
+                        OnRemoved(folder.Folder);
+                        break;
+                }
+            }
         }
 
         private readonly ConcurrentDictionary<FolderRegistration, FolderWatcher> _folderWatchers = new ConcurrentDictionary<FolderRegistration, FolderWatcher>();
@@ -239,10 +262,12 @@ namespace Acacia.ZPush
             _rootFolder = new ZPushFolder(this, account.Account.Store.GetRootFolder());
         }
 
-        public void WatchFolder(FolderRegistration folder, FolderEventHandler handler, FolderEventHandler changedHandler = null)
+        public FolderWatcher WatchFolder(FolderRegistration folder, FolderEventHandler handler, 
+                                         FolderEventHandler changedHandler = null,
+                                         FolderEventHandler removedHandler = null)
         {
             if (!DebugOptions.GetOption(null, DebugOptions.WATCHER_ENABLED))
-                return;
+                return null;
 
             FolderWatcher watcher;
             if (!_folderWatchers.TryGetValue(folder, out watcher))
@@ -254,15 +279,19 @@ namespace Acacia.ZPush
             watcher.Discovered += handler;
             if (changedHandler != null)
                 watcher.Changed += changedHandler;
+            if (removedHandler != null)
+                watcher.Removed += removedHandler;
 
             // Check existing folders for events
-            foreach(ZPushFolder existing in _allFolders)
+            foreach (ZPushFolder existing in _allFolders)
             {
                 if (folder.IsApplicable(existing.Folder))
                 {
-                    DispatchFolderEvent(folder, watcher, existing, true);
+                    DispatchFolderEvent(folder, watcher, existing, EventKind.Discovered);
                 }
             }
+
+            return watcher;
         }
 
         private readonly List<ZPushFolder> _allFolders = new List<ZPushFolder>();
@@ -271,34 +300,44 @@ namespace Acacia.ZPush
         {
             Logger.Instance.Trace(this, "Folder discovered: {0}", folder);
             _allFolders.Add(folder);
-            DispatchFolderEvents(folder, true);
+            DispatchFolderEvents(folder, EventKind.Discovered);
         }
 
         internal void OnFolderChanged(ZPushFolder folder)
         {
             Logger.Instance.Trace(this, "Folder changed: {0}", folder);
-            DispatchFolderEvents(folder, false);
+            DispatchFolderEvents(folder, EventKind.Changed);
         }
 
-        private void DispatchFolderEvents(ZPushFolder folder, bool isNew)
+        internal void OnFolderRemoved(ZPushFolder folder)
+        {
+            Logger.Instance.Trace(this, "Folder removed: {0}", folder);
+            DispatchFolderEvents(folder, EventKind.Removed);
+        }
+
+        internal enum EventKind
+        {
+            Discovered,
+            Changed,
+            Removed
+        }
+
+        private void DispatchFolderEvents(ZPushFolder folder, EventKind kind)
         {
             // See if anybody is interested
             foreach (KeyValuePair<FolderRegistration, FolderWatcher> entry in _folderWatchers)
             {
                 if (entry.Key.IsApplicable(folder.Folder))
                 {
-                    DispatchFolderEvent(entry.Key, entry.Value, folder, isNew);
+                    DispatchFolderEvent(entry.Key, entry.Value, folder, kind);
                 }
             }
         }
 
-        private void DispatchFolderEvent(FolderRegistration reg, FolderWatcher watcher, ZPushFolder folder, bool isNew)
+        private void DispatchFolderEvent(FolderRegistration reg, FolderWatcher watcher, ZPushFolder folder, EventKind kind)
         {
-            Logger.Instance.Debug(this, "Folder event: {0}, {1}, {2}", folder, reg, isNew);
-            if (isNew)
-                watcher.OnDiscovered(folder.Folder);
-            else
-                watcher.OnChanged(folder.Folder);
+            Logger.Instance.Debug(this, "Folder event: {0}, {1}, {2}", folder, reg, kind);
+            watcher.Dispatch(folder, kind);
         }
 
         internal bool ShouldFolderBeWatched(ZPushFolder parent, IFolder child)
