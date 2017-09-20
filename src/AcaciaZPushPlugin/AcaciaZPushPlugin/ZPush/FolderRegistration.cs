@@ -36,6 +36,25 @@ namespace Acacia.ZPush
         abstract public bool IsApplicable(IFolder folder);
     }
 
+    public class FolderRegistrationAny : FolderRegistration
+    {
+        public FolderRegistrationAny(Feature feature)
+        :
+        base(feature)
+        {
+        }
+
+        public override bool IsApplicable(IFolder folder)
+        {
+            return folder != null;
+        }
+
+        public override string ToString()
+        {
+            return Feature.Name;
+        }
+    }
+
     public class FolderRegistrationTyped : FolderRegistration
     {
         private readonly ItemType _itemType;
