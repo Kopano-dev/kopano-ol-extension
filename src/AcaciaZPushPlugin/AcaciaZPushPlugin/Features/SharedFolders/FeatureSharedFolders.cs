@@ -314,12 +314,32 @@ namespace Acacia.Features.SharedFolders
             }
         }
 
+        [AcaciaOption("If enabled, modifications to the local hierarchy of shared folders is suppressed. " +
+                      "This should only be disabled for debug purposes.")]
+        public bool SuppressHierarchyChanges
+        {
+            get { return GetOption(OPTION_SUPPRESS_HIERARCHY_CHANGES); }
+            set { SetOption(OPTION_SUPPRESS_HIERARCHY_CHANGES, value); }
+        }
+        private static readonly BoolOption OPTION_SUPPRESS_HIERARCHY_CHANGES =
+                new BoolOption("SuppressHierarchyChanges", true);
+
         private void SetupHierarchyChangeSuppression()
         {
-            Watcher.WatchFolder(new SharedFolderRegistration(this), 
-                    OnSharedFolderDiscovered, 
-                    OnSharedFolderChanged,
-                    OnSharedFolderRemoved);
+            if (SuppressHierarchyChanges)
+            {
+                Watcher.WatchFolder(new SharedFolderRegistration(this),
+                        OnSharedFolderDiscovered,
+                        OnSharedFolderChanged,
+                        OnSharedFolderRemoved);
+
+                // Register for any folder move
+                Watcher.WatchFolder(new FolderRegistrationAny(this),
+                        (folder) =>
+                            {
+                                folder.BeforeFolderMove += Folder_BeforeFolderMove;
+                            });
+            }
         }
 
         private void OnSharedFolderDiscovered(IFolder folder)
@@ -340,8 +360,6 @@ namespace Acacia.Features.SharedFolders
             }
             else
             {
-                folder.BeforeFolderMove += Folder_BeforeFolderMove;
-
                 // Check if it was renamed before the events were fully set up
                 CheckSharedFolderRename(folder);
             }
@@ -349,15 +367,19 @@ namespace Acacia.Features.SharedFolders
 
         private void Folder_BeforeFolderMove(IFolder src, IFolder moveTo, ref bool cancel)
         {
-            Logger.Instance.Fatal(this, "SHARED FOLDER MOVE: {0}", moveTo.Name);
-            
-            MessageBox.Show(ThisAddIn.Instance.Window,
-                            Properties.Resources.SharedFolders_LocalFolder_Body,
-                            Properties.Resources.SharedFolders_LocalFolder_Title,
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning
-                        );
-            cancel = true;
+            if (src.SyncId?.IsShared == true || moveTo.SyncId?.IsShared == true)
+            {
+                // Suppress any move of or into a shared folder
+                Logger.Instance.Warning(this, "Shared folder move: {0} - {1}", src.Name, moveTo.Name);
+
+                MessageBox.Show(ThisAddIn.Instance.Window,
+                                Properties.Resources.SharedFolders_LocalFolder_Body,
+                                Properties.Resources.SharedFolders_LocalFolder_Title,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning
+                            );
+                cancel = true;
+            }
         }
 
         private void OnSharedFolderChanged(IFolder folder)
