@@ -322,7 +322,7 @@ namespace Acacia.Features.SharedFolders
             set { SetOption(OPTION_SUPPRESS_HIERARCHY_CHANGES, value); }
         }
         private static readonly BoolOption OPTION_SUPPRESS_HIERARCHY_CHANGES =
-                new BoolOption("SuppressHierarchyChanges", true);
+                new BoolOption("SuppressHierarchyChanges", false);
 
         private void SetupHierarchyChangeSuppression()
         {
