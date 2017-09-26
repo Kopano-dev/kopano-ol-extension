@@ -70,6 +70,9 @@ namespace Acacia.ZPush
 
         public static ContactStringReplacer FromGAB(GABHandler gab, GABUser user)
         {
+            if (gab?.Contacts == null || user == null)
+                return null;
+
             using (ISearch<IContactItem> search = gab.Contacts.Search<IContactItem>())
             {
                 search.AddField("urn:schemas:contacts:customerid").SetOperation(SearchOperation.Equal, user.UserName);
