@@ -98,6 +98,7 @@ namespace Acacia.ZPush
 
         public BackendId(string id) : base(id) { }
         public BackendId(int id) : base(id) { }
+        public BackendId(long id) : base(id.ToString()) { }
 
         #region Standard overrides
 
