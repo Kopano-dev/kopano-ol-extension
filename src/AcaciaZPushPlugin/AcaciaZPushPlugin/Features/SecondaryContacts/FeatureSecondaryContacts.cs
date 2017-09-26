@@ -126,8 +126,9 @@ namespace Acacia.Features.SecondaryContacts
                 // Update the icon.
                 using (IExplorer explorer = ThisAddIn.Instance.GetActiveExplorer())
                 using (ICommandBars cmdBars = explorer.GetCommandBars())
+                using (IPicture icon = cmdBars.GetMso("ShowContactPage").GetPicture(new Size(16, 16)))
                 {
-                    folder.SetCustomIcon(cmdBars.GetMso("ShowContactPage").GetPicture(new Size(16, 16)));
+                    folder.SetCustomIcon(icon);
                 }
 
                 // Patch the name
