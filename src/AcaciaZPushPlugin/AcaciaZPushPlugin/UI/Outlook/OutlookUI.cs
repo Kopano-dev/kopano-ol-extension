@@ -210,7 +210,13 @@ namespace Acacia.UI.Outlook
                     if (!b.Large)
                         buttons.AppendLine(b.ToXml());
 
-                ribbon = string.Format(RIBBON_XML, Properties.Resources.Ribbon_Title, buttons);
+                string title = Properties.Resources.Ribbon_Title;
+                // Convert to upper case for Outlook 2013, to match other ribbons
+                if (ThisAddIn.Instance.Version.StartsWith("15."))
+                {
+                    title = title.ToUpper();
+                }
+                ribbon = string.Format(RIBBON_XML, title, buttons);
             }
 
             // Context menus
