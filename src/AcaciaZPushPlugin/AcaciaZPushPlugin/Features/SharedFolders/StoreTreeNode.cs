@@ -127,15 +127,23 @@ namespace Acacia.Features.SharedFolders
                 {
                     using (ContactStringReplacer replacer = ContactStringReplacer.FromGAB(_gab, _user))
                     {
-                        replacer.TokenOpen = "%";
-                        replacer.TokenClose = "%";
-                        replacer.UnknownReplacer = (token) =>
+                        if (replacer == null)
                         {
-                            if (token == "foldername")
-                                return folder.Name;
-                            return "";
-                        };
-                        folder.DefaultName = replacer.Replace(_feature.DefaultFolderNameFormat);
+                            // No gab available, default to old
+                            folder.DefaultName = folder.Name + " - " + folder.Store.UserName;
+                        }
+                        else
+                        {
+                            replacer.TokenOpen = "%";
+                            replacer.TokenClose = "%";
+                            replacer.UnknownReplacer = (token) =>
+                            {
+                                if (token == "foldername")
+                                    return folder.Name;
+                                return "";
+                            };
+                            folder.DefaultName = replacer.Replace(_feature.DefaultFolderNameFormat);
+                        }
                     }
                 }
                 return folder.DefaultName;

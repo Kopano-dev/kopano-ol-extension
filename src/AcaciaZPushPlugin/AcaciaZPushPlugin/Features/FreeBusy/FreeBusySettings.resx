@@ -133,13 +133,13 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="checkGABLookup.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 2</value>
+    <value>4, 4</value>
   </data>
   <data name="checkGABLookup.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="checkGABLookup.Size" type="System.Drawing.Size, System.Drawing">
-    <value>222, 17</value>
+    <value>395, 29</value>
   </data>
   <data name="checkGABLookup.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -166,13 +166,13 @@
     <value>True</value>
   </data>
   <data name="labelUseAccount.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 30</value>
+    <value>4, 55</value>
   </data>
   <data name="labelUseAccount.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="labelUseAccount.Size" type="System.Drawing.Size, System.Drawing">
-    <value>74, 30</value>
+    <value>132, 56</value>
   </data>
   <data name="labelUseAccount.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -199,13 +199,13 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="comboDefaultAccount.Location" type="System.Drawing.Point, System.Drawing">
-    <value>80, 32</value>
+    <value>144, 59</value>
   </data>
   <data name="comboDefaultAccount.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="comboDefaultAccount.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 21</value>
+    <value>318, 32</value>
   </data>
   <data name="comboDefaultAccount.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -229,13 +229,13 @@
     <value>0, 0</value>
   </data>
   <data name="tableLayoutPanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 60</value>
+    <value>466, 111</value>
   </data>
   <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -259,16 +259,16 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+    <value>11, 24</value>
   </data>
   <data name="$this.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 60</value>
+    <value>466, 111</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FreeBusySettings</value>
