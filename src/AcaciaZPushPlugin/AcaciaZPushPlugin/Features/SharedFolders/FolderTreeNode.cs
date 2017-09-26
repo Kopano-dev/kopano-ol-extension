@@ -58,6 +58,14 @@ namespace Acacia.Features.SharedFolders
             base.OnCheckStateChanged();
         }
 
+        public string DefaultName
+        {
+            get
+            {
+                return _store.DefaultNameForFolder(AvailableFolder);
+            }
+        }
+
         public AvailableFolder AvailableFolder { get { return _folder; } }
 
         public bool IsShared { get { return CheckState != System.Windows.Forms.CheckState.Unchecked; } }

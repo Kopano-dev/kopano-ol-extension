@@ -95,14 +95,14 @@ namespace Acacia.ZPush.API.SharedFolders
         /// <summary>
         /// Creates an instances for the specified folder.
         /// </summary>
-        public SharedFolder(AvailableFolder folder)
+        public SharedFolder(AvailableFolder folder, string name)
         {
             _data = new SoapData()
             {
                 store = folder.Store.UserName,
                 folderid = folder.BackendId,
                 parentid = folder.ParentIdAsBackend,
-                name = folder.DefaultName,
+                name = name,
                 type = OutlookConstants.USER_SYNC_TYPES[(int)folder.Type],
                 flags = folder.Type.IsMail() ? ShareFlags.SendAsOwner : ShareFlags.None
             };

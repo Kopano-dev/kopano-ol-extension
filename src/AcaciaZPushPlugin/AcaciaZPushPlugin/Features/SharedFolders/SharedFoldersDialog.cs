@@ -260,7 +260,8 @@ namespace Acacia.Features.SharedFolders
                 }
 
                 // Add the node
-                node = new StoreTreeNode(_folders, user, user.DisplayName, currentShares ?? new Dictionary<BackendId, SharedFolder>());
+                node = new StoreTreeNode(_folders, gabLookup.GAB,
+                                         user, user.DisplayName, currentShares ?? new Dictionary<BackendId, SharedFolder>());
                 node.DirtyChanged += UserSharesChanged;
                 _userFolders.Add(user, node);
                 kTreeFolders.RootNodes.Add(node);
@@ -524,7 +525,7 @@ namespace Acacia.Features.SharedFolders
                 _optionNameNode.SharedFolder = _optionNameNode.SharedFolder.WithName(textName.Text);
 
                 // If the share name matches the folder name, track update
-                bool track = _optionNameNode.SharedFolder.Name == _optionNameNode.AvailableFolder.DefaultName;
+                bool track = _optionNameNode.SharedFolder.Name ==  _optionNameNode.DefaultName;
                 _optionNameNode.SharedFolder = _optionNameNode.SharedFolder.WithFlagTrackShareName(track);
             }
         }

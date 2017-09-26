@@ -457,6 +457,7 @@
     <Compile Include="Utils\TasksBackground.cs" />
     <Compile Include="Utils\TasksMainThread.cs" />
     <Compile Include="Utils\TasksSynchronous.cs" />
+    <Compile Include="ZPush\ContactStringReplacer.cs" />
     <Compile Include="ZPush\Delegates.cs" />
     <Compile Include="ZPush\FolderRegistration.cs" />
     <Compile Include="ZPush\GABUser.cs" />
