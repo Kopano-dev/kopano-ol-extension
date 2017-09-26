@@ -41,6 +41,8 @@ namespace Acacia.Features.SharedFolders
                 _query.Dispose();
         }
 
+        public FeatureSharedFolders Feature { get { return _feature; } }
+
         #region API
 
         /// <summary>

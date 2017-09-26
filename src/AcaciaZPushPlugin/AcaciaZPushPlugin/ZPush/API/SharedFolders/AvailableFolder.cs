@@ -78,21 +78,14 @@ namespace Acacia.ZPush.API.SharedFolders
 
         public string Name { get { return _data.displayname; } }
 
-        public string DefaultName
-        {
-            get
-            {
-                // Default include the store name in root folders
-                if (ParentId.IsNone)
-                    return Name + " - " + Store.UserName;
-                else
-                    return Name;
-            }
-        }
-
         public OutlookConstants.SyncType Type { get { return _data.type; } }
 
         public GABUser Store { get; private set; }
+
+        /// <summary>
+        /// Cache for DefaultName, used by StoreTreeNode.
+        /// </summary>
+        public string DefaultName { get; set; }
 
         #endregion
 

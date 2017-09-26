@@ -295,27 +295,16 @@ namespace Acacia.Features.Signatures
         }
 
         private void ReplacePlaceholders(GABHandler gab, params string[] signatures)
-        { 
-            IContactItem us = null;
+        {
+            ContactStringReplacer replacer = null;
             try
             {
-                IAccount account = gab.ActiveAccount.Account;
-
-                // Look for the email address. If found, use the account associated with the GAB
-                using (ISearch<IContactItem> search = gab.Contacts.Search<IContactItem>())
-                {
-                    search.AddField("urn:schemas:contacts:customerid").SetOperation(SearchOperation.Equal, account.UserName);
-                    IItem result = search.SearchOne();
-                    us = result as IContactItem;
-                    if (result != null && result != us)
-                        result.Dispose();
-                }
-
-                if (us != null)
+                replacer = ContactStringReplacer.FindUs(gab);
+                if (replacer != null)
                 {
                     foreach (string signatureName in signatures)
                     {
-                        ReplacePlaceholders(gab.ActiveAccount, us, signatureName);
+                        ReplacePlaceholders(replacer, signatureName);
                     }
                 }
             }
@@ -325,12 +314,12 @@ namespace Acacia.Features.Signatures
             }
             finally
             {
-                if (us != null)
-                    us.Dispose();
+                if (replacer != null)
+                    replacer.Dispose();
             }
         }
 
-        private void ReplacePlaceholders(ZPushAccount account, IContactItem us, string signatureName)
+        private void ReplacePlaceholders(ContactStringReplacer replacer, string signatureName)
         {
             if (string.IsNullOrEmpty(signatureName))
                 return;
@@ -347,35 +336,7 @@ namespace Acacia.Features.Signatures
                         string template = signature.GetContentTemplate(format);
                         if (template != null)
                         {
-                            string replaced = template.ReplaceStringTokens("{%", "}", (token) =>
-                            {
-                                // TODO: generalise this
-                                if (token == "firstname") return us.FirstName ?? "";
-                                if (token == "initials") return us.Initials ?? "";
-                                if (token == "lastname") return us.LastName ?? "";
-                                if (token == "displayname") return us.FullName ?? "";
-                                if (token == "title") return us.JobTitle ?? "";
-                                if (token == "company") return us.CompanyName ?? "";
-                                // TODO if (token == "department") return us.;
-                                if (token == "office") return us.OfficeLocation ?? "";
-                                // if (token == "assistant") return us.;
-                                if (token == "phone") return us.BusinessTelephoneNumber ?? us.MobileTelephoneNumber ?? "";
-                                if (token == "primary_email") return us.Email1Address ?? "";
-                                if (token == "address") return us.BusinessAddress ?? "";
-                                if (token == "city") return us.BusinessAddressCity ?? "";
-                                if (token == "state") return us.BusinessAddressState ?? "";
-                                if (token == "zipcode") return us.BusinessAddressPostalCode ?? "";
-                                if (token == "country") return us.BusinessAddressState ?? "";
-                                if (token == "phone_business") return us.BusinessTelephoneNumber ?? "";
-                                // TODO if (token == "phone_business2") return us.BusinessTelephoneNumber;
-                                if (token == "phone_fax") return us.BusinessFaxNumber ?? "";
-                                // TODO if (token == "phone_assistant") return us.FirstName;
-                                if (token == "phone_home") return us.HomeTelephoneNumber ?? "";
-                                //if (token == "phone_home2") return us.HomeTelephoneNumber;
-                                if (token == "phone_mobile") return us.MobileTelephoneNumber ?? "";
-                                if (token == "phone_pager") return us.PagerNumber ?? "";
-                                return "";
-                            });
+                            string replaced = replacer.Replace(template);
                             signature.SetContent(replaced, format);
                         }
                     }

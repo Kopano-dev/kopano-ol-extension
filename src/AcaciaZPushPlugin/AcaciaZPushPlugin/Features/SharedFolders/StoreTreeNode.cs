@@ -26,6 +26,7 @@ using System.Threading;
 using Acacia.ZPush.API.SharedFolders;
 using Acacia.ZPush.Connect;
 using Acacia.Native;
+using Acacia.Features.GAB;
 
 namespace Acacia.Features.SharedFolders
 {
@@ -41,11 +42,19 @@ namespace Acacia.Features.SharedFolders
         private readonly Dictionary<BackendId, SharedFolder> _initialShares;
         private readonly Dictionary<BackendId, SharedFolder> _currentShares;
 
-        public StoreTreeNode(SharedFoldersManager folders, GABUser user, string text, Dictionary<BackendId, SharedFolder> currentFolders)
+        private readonly FeatureSharedFolders _feature;
+        private readonly GABHandler _gab;
+        private readonly GABUser _user;
+
+        public StoreTreeNode(SharedFoldersManager folders, GABHandler gab, GABUser user, string text, 
+                             Dictionary<BackendId, SharedFolder> currentFolders)
         :
         base(text)
         {
             this._initialShares = currentFolders;
+            this._feature = folders.Feature;
+            this._gab = gab;
+            this._user = user;
 
             // Create an empty current state. When loading the nodes, the shares will be added. This has the benefit of
             // cleaning up automatically any obsolote shares.
@@ -92,7 +101,7 @@ namespace Acacia.Features.SharedFolders
 
         private SharedFolder CreateDefaultShare(AvailableFolder folder)
         {
-            SharedFolder share = new SharedFolder(folder);
+            SharedFolder share = new SharedFolder(folder, DefaultNameForFolder(folder));
             
             // Default send as for mail folders
             if (folder.Type.IsMail())
@@ -109,16 +118,44 @@ namespace Acacia.Features.SharedFolders
             }
         }
 
+        internal string DefaultNameForFolder(AvailableFolder folder)
+        {
+            // Default include the store name in root folders
+            if (folder.ParentId.IsNone)
+            {
+                if (folder.DefaultName == null)
+                {
+                    using (ContactStringReplacer replacer = ContactStringReplacer.FromGAB(_gab, _user))
+                    {
+                        replacer.TokenOpen = "%";
+                        replacer.TokenClose = "%";
+                        replacer.UnknownReplacer = (token) =>
+                        {
+                            if (token == "foldername")
+                                return folder.Name;
+                            return "";
+                        };
+                        folder.DefaultName = replacer.Replace(_feature.DefaultFolderNameFormat);
+                    }
+                }
+                return folder.DefaultName;
+            }
+            else
+            {
+                return folder.Name;
+            }
+        }
+
         private SharedFolder GetInitialShareState(AvailableFolder folder)
         {
             SharedFolder state;
             if (_initialShares.TryGetValue(folder.BackendId, out state))
             {
                 // If the folder has been renamed, update if we're tracing it.
-                if (state.Name != folder.DefaultName)
+                if (state.Name != DefaultNameForFolder(folder))
                 {
                     if (state.FlagUpdateShareName)
-                        state = state.WithName(folder.DefaultName);
+                        state = state.WithName(DefaultNameForFolder(folder));
                 }
                 return state;
             }

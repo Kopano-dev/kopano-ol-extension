@@ -17,6 +17,7 @@
 using Acacia.Stubs;
 using Acacia.UI;
 using Acacia.UI.Outlook;
+using Acacia.Utils;
 using Acacia.ZPush;
 using Acacia.ZPush.API.SharedFolders;
 using Acacia.ZPush.Connect;
@@ -55,6 +56,13 @@ namespace Acacia.Features.SharedFolders
             set { SetOption(OPTION_REMINDERS_KEEP_RUNNING, value); }
         }
         private static readonly BoolOption OPTION_REMINDERS_KEEP_RUNNING = new BoolOption("RemindersKeepRunning", true);
+
+        [AcaciaOption("The format for local names of shared folders. May contain contact fields and %foldername%.")]
+        public string DefaultFolderNameFormat
+        {
+            get { return RegistryUtil.GetConfigValue("SharedFolders", "DefaultFolderNameFormat", "%foldername% - %username%"); }
+            set { RegistryUtil.SetConfigValue("SharedFolders", "DefaultFolderNameFormat", value, Microsoft.Win32.RegistryValueKind.String); }
+        }
 
         #endregion
 
