@@ -1,4 +1,4 @@
-﻿/// Copyright 2017 Kopano b.v.
+/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -13,7 +13,7 @@
 /// along with this program.If not, see<http://www.gnu.org/licenses/>.
 /// 
 /// Consult LICENSE file for details
-
+using Acacia.Features.SecondaryContacts;
 using Acacia.Stubs;
 using Acacia.UI;
 using Acacia.UI.Outlook;
@@ -395,7 +395,9 @@ namespace Acacia.Features.SharedFolders
                 string originalName = (string)folder.GetProperty(OutlookConstants.PR_ZPUSH_NAME);
                 // The folder.name property is sometimes cached, check against the MAPI property
                 string currentName = (string)folder.GetProperty(OutlookConstants.PR_DISPLAY_NAME_W);
-                if (currentName != originalName)
+                if (currentName != originalName && 
+                    // Secondary contacts renames folder, check for that
+                    !FeatureSecondaryContacts.IsSecondaryFolderRename(originalName, currentName))
                 {
                     Logger.Instance.Warning(this, "Shared folder renamed, renaming back: {0} - {1} - {2}", folder.Name, folder.SyncId, originalName);
                     // This is a locally renamed folder. Warn and rename back
