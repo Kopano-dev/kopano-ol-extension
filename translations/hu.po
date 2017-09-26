@@ -3,10 +3,9 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-06 11:27+0000\n"
-"PO-Revision-Date: 2017-09-24 20:26+0000\n"
+"PO-Revision-Date: 2017-07-17 16:56+0000\n"
 "Last-Translator: Zoltan Kiss <zoltan.kiss@serverside.hu>\n"
-"Language-Team: Hungarian <http://translate.kopano.io/projects/kopano/kopano-"
-"ol-extension/hu/>\n"
+"Language-Team: Hungarian <http://translate.kopano.io/projects/kopano/kopano-ol-extension/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1319,7 +1318,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnSubject.Text"
 msgid "Subject"
-msgstr "Tárgy"
+msgstr ""
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader5.Text
 #, csharp-format
@@ -1331,13 +1330,13 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader6.Text"
 msgid "Type"
-msgstr "Típus"
+msgstr ""
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader7.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader7.Text"
 msgid "Subject"
-msgstr "Tárgy"
+msgstr ""
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabWrappers.Text
 #, csharp-format
@@ -1349,7 +1348,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnProperties.Text"
 msgid "Properties"
-msgstr "Tulajdonságok"
+msgstr ""
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnItemId.Text
 #, csharp-format
@@ -1379,4 +1378,5 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_LocalFolder_Title"
 msgid "Shared folders"
-msgstr "Megosztott mappák"
+msgstr ""
+
