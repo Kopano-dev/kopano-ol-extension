@@ -78,6 +78,11 @@ namespace Acacia.Features.SecondaryContacts
             }
         }
 
+        public static bool IsSecondaryFolderRename(string oldName, string newName)
+        {
+            return newName + SUFFIX_CONTACTS == oldName;
+        }
+
         // Contains the ids of folders for which we've shown a warning. This is both to prevent
         // warning multiple times and to detect the case when the app has been restarted.
         private readonly HashSet<string> _warnedFolders = new HashSet<string>();
