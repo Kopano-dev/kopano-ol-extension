@@ -80,7 +80,8 @@ namespace Acacia.ZPush
                 IContactItem contact = result as IContactItem;
                 if (result != null && result != contact)
                     result.Dispose();
-
+                if (contact == null)
+                    return null;
                 return new ContactStringReplacer(contact);
             }
 
