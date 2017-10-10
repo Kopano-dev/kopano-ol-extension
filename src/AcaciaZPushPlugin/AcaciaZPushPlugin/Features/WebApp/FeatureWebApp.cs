@@ -123,10 +123,11 @@ namespace Acacia.Features.WebApp
 
             // Find kdiscover
             string kdiscover = txt.FirstOrDefault((record) => record.StartsWith(TXT_KDISCOVER));
+            Logger.Instance.Trace(this, "kdiscover: {0} -> {1}", account.Account.DomainName, kdiscover);
             if (string.IsNullOrEmpty(kdiscover))
                 return null;
 
-            string url = kdiscover.Substring(TXT_KDISCOVER.Length + 1).Trim();
+            string url = kdiscover.Substring(TXT_KDISCOVER.Length).Trim();
             if (string.IsNullOrWhiteSpace(url))
                 return null;
 
