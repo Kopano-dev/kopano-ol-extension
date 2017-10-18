@@ -356,27 +356,30 @@ namespace Acacia.Features.SyncState
                 HashSet<string> syncingNow = new HashSet<string>();
 
                 // Check all syncing data
-                foreach (KeyValuePair<string, DeviceDetails.ContentData> contentEntry in details.Content)
+                if (details.Content != null)
                 {
-                    DeviceDetails.ContentData content = contentEntry.Value;
-                    content.Key = contentEntry.Key;
-
-                    if (content.IsSyncing)
+                    foreach (KeyValuePair<string, DeviceDetails.ContentData> contentEntry in details.Content)
                     {
-                        // If the current session is not syncing, this is a restart. Clear stat
-                        if (!IsSyncing)
+                        DeviceDetails.ContentData content = contentEntry.Value;
+                        content.Key = contentEntry.Key;
+
+                        if (content.IsSyncing)
                         {
-                            _syncContent.Clear();
-                            debug.AppendLine("Starting new SyncSession");
+                            // If the current session is not syncing, this is a restart. Clear stat
+                            if (!IsSyncing)
+                            {
+                                _syncContent.Clear();
+                                debug.AppendLine("Starting new SyncSession");
+                            }
+
+                            // Add to the syncing content
+                            IsSyncing = true;
+                            _syncContent[content.Key] = content;
+                            syncingNow.Add(content.Key);
+
+                            debug.AppendLine(string.Format("\tFolder: {0} \tSync: {1} \tStatus: {2} / {3}",
+                                        content.Key, content.IsSyncing, content.Sync.done, content.Sync.total));
                         }
-
-                        // Add to the syncing content
-                        IsSyncing = true;
-                        _syncContent[content.Key] = content;
-                        syncingNow.Add(content.Key);
-
-                        debug.AppendLine(string.Format("\tFolder: {0} \tSync: {1} \tStatus: {2} / {3}",
-                                    content.Key, content.IsSyncing, content.Sync.done, content.Sync.total));
                     }
                 }
 

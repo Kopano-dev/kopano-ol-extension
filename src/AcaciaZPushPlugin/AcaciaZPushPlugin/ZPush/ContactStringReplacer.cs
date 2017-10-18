@@ -81,6 +81,9 @@ namespace Acacia.ZPush
                 if (result != null && result != contact)
                     result.Dispose();
 
+                if (contact == null)
+                    return null;
+
                 return new ContactStringReplacer(contact);
             }
 
