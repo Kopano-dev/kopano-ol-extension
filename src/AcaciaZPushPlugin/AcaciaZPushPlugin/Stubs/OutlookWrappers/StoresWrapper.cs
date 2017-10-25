@@ -62,11 +62,34 @@ namespace Acacia.Stubs.OutlookWrappers
 
         #region Implementation
 
+        /// <summary>
+        /// When iterating stores, an exception in any of the stores terminates the iteration.
+        /// This checks each entry.
+        /// </summary>
+        private IEnumerable<NSOutlook.Store> IteratorStoresSafe(bool logException = false)
+        {
+            for (int i = 0; i < _item.Count; ++i)
+            {
+                NSOutlook.Store store;
+                try
+                {
+                    store = _item[i + 1];
+                }
+                catch (Exception e)
+                {
+                    if (logException)
+                        Logger.Instance.Error(this, "Unable to open store at index {0}: {1}", i, e);
+                    continue;
+                }
+                yield return store;
+            }
+        }
+
         public void Start()
         {
             // Check existing stores
-            foreach(NSOutlook.Store store in _item)
-            {
+            foreach(NSOutlook.Store store in IteratorStoresSafe(true))
+            { 
                 Tasks.Task(null, null, "AddStore", () =>
                 {
                     StoreAdded(store);
@@ -93,7 +116,7 @@ namespace Acacia.Stubs.OutlookWrappers
             {
                 // Accessing the store object causes random crashes, simply iterate to find new stores
                 Logger.Instance.Trace(this, "StoreAdded");
-                foreach (NSOutlook.Store rawStore in _item)
+                foreach (NSOutlook.Store rawStore in IteratorStoresSafe())
                 {
                     if (!_accountsByStoreId.ContainsKey(rawStore.StoreID))
                     {
@@ -149,7 +172,7 @@ namespace Acacia.Stubs.OutlookWrappers
             {
                 // Collect all the store ids
                 HashSet<string> stores = new HashSet<string>();
-                foreach (NSOutlook.Store store in _item)
+                foreach (NSOutlook.Store store in IteratorStoresSafe())
                 {
                     try
                     {
@@ -210,7 +233,7 @@ namespace Acacia.Stubs.OutlookWrappers
 
         public IEnumerator<IStore> GetEnumerator()
         {
-            foreach (NSOutlook.Store store in _item)
+            foreach (NSOutlook.Store store in IteratorStoresSafe())
             {
                 yield return Mapping.Wrap(store);
             }
@@ -218,7 +241,7 @@ namespace Acacia.Stubs.OutlookWrappers
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            foreach (NSOutlook.Store store in _item)
+            foreach (NSOutlook.Store store in IteratorStoresSafe())
             {
                 yield return Mapping.Wrap(store);
             }
