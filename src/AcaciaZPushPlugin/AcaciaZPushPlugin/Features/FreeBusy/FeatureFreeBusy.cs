@@ -113,12 +113,53 @@ namespace Acacia.Features.FreeBusy
         private const string REG_VALUE = @"Read URL";
         internal const string URL_IDENTIFIER = "zpush";
         private const int DEFAULT_PORT = 18632;
-        private const string URL_PREFIX = @"http://127.0.0.1:{0}/" + URL_IDENTIFIER + "/";
+        private const string URL_BASE = @"http://127.0.0.1:";
+        private const string URL_PREFIX = URL_BASE + @"{0}/" + URL_IDENTIFIER + "/";
+
+        // The placeholders in URL are replaced by Outlook
         private const string URL = URL_PREFIX + "%NAME%@%SERVER%";
 
         private void Worker()
         {
             Port = DEFAULT_PORT;
+
+            // Check the URL to reuse the port number if possible
+            try
+            {
+                using (RegistryKey key = OutlookRegistryUtils.OpenOutlookKey(REG_KEY))
+                {
+                    if (key != null)
+                    {
+                        string oldURL = key.GetValueString(REG_VALUE);
+                        if (oldURL.StartsWith(URL_BASE))
+                        {
+                            string rest = oldURL.Substring(URL_BASE.Length);
+                            int sep = rest.IndexOf('/');
+                            if (sep >= 0)
+                                rest = rest.Substring(0, sep);
+                            int port = int.Parse(rest);
+                            if (port > 0 && port < 65536)
+                                Port = port;
+                        }
+                    }
+                }
+            }
+            catch (Exception) { Port = DEFAULT_PORT; }
+
+            TcpListener listener;
+            
+            listener = new TcpListener(IPAddress.Loopback, Port);
+            try
+            {
+                listener.Start();
+            }
+            catch(SocketException)
+            {
+                // Error opening port, try with a default one
+                listener = new TcpListener(IPAddress.Loopback, 0);
+                listener.Start();
+                Port = ((IPEndPoint)listener.LocalEndpoint).Port;
+            }
 
             // Register URL
             using (RegistryKey key = OutlookRegistryUtils.OpenOutlookKey(REG_KEY, Microsoft.Win32.RegistryKeyPermissionCheck.ReadWriteSubTree))
@@ -135,8 +176,6 @@ namespace Acacia.Features.FreeBusy
             FreeBusyServer server = new FreeBusyServer(this);
 
             // Run
-            TcpListener listener = new TcpListener(IPAddress.Loopback, Port);
-            listener.Start();
             for (;;)
             {
                 Interlocked.Increment(ref _iterationCount);
