@@ -155,6 +155,9 @@ namespace Acacia
                 Acacia.Features.DebugSupport.Statistics.StartupTime.Stop();
                 foreach (Feature feature in Features)
                     feature.AfterStartup();
+
+                // Initial send receive
+                ThisAddIn.Instance.SendReceive();
             }
             catch (System.Exception e)
             {
