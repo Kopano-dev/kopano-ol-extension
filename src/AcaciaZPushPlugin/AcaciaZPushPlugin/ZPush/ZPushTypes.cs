@@ -69,6 +69,14 @@ namespace Acacia.ZPush
         #endregion
     }
 
+    public enum SyncKind
+    {
+        Normal,
+        Shared,
+        Configured,
+        GAB
+    }
+
     public class SyncId : ZPushId
     {
         public static readonly SyncId NONE = new SyncId("0");
@@ -76,10 +84,24 @@ namespace Acacia.ZPush
         public SyncId(string id) : base(id) { }
         public SyncId(int id) : base(id) { }
 
+
+        public SyncKind Kind
+        {
+            get
+            {
+                if (_id.StartsWith("S"))
+                    return SyncKind.Shared;
+                if (_id.StartsWith("C"))
+                    return SyncKind.Configured;
+                if (_id.StartsWith("G"))
+                    return SyncKind.GAB;
+                return SyncKind.Normal;
+            }
+        }
         /// <summary>
         /// Checks if this is a SyncId for a shared folders
         /// </summary>
-        public bool IsShared { get { return _id.StartsWith("S") || _id.StartsWith("C") || _id.StartsWith("G"); } }
+        public bool IsCustom { get { return Kind != SyncKind.Normal; } }
 
         #region Standard overrides
 
