@@ -88,7 +88,7 @@ namespace Acacia.Features.SharedFolders
 
         private bool CanManageFolder(MenuItem<IFolder> b, IFolder folder)
         {
-            return folder.SyncId?.IsShared == true;
+            return folder.SyncId?.IsCustom == true;
         }
 
         private void ManageFolder(IFolder folder)
@@ -151,7 +151,7 @@ namespace Acacia.Features.SharedFolders
             // Check that we can get the id
             SyncId folderId = folder.SyncId;
             Logger.Instance.Trace(this, "GetSharedFolder1: {0}", folderId);
-            if (folderId == null || !folderId.IsShared)
+            if (folderId == null || !folderId.IsCustom)
                 return null;
 
             // Get the ZPush account
@@ -310,7 +310,7 @@ namespace Acacia.Features.SharedFolders
 
             public override bool IsApplicable(IFolder folder)
             {
-                if (folder.SyncId != null && folder.SyncId.IsShared)
+                if (folder.SyncId != null && folder.SyncId.IsCustom)
                     return true;
 
                 using (IFolder parent = folder.Parent)
@@ -354,7 +354,7 @@ namespace Acacia.Features.SharedFolders
         private void OnSharedFolderDiscovered(IFolder folder)
         {
             Logger.Instance.Trace(this, "Shared folder discovered: {0} - {1}", folder.Name, folder.SyncId);
-            if (folder.SyncId == null || !folder.SyncId.IsShared)
+            if (folder.SyncId == null || !folder.SyncId.IsCustom)
             {
                 Logger.Instance.Warning(this, "Local folder created in shared folder, deleting: {0} - {1}", folder.Name, folder.SyncId);
                 // This is a new, locally created folder. Warn and remove
@@ -376,7 +376,7 @@ namespace Acacia.Features.SharedFolders
 
         private void Folder_BeforeFolderMove(IFolder src, IFolder moveTo, ref bool cancel)
         {
-            if (src.SyncId?.IsShared == true || moveTo.SyncId?.IsShared == true)
+            if (src.SyncId?.IsCustom == true || moveTo.SyncId?.IsCustom == true)
             {
                 // Suppress any move of or into a shared folder
                 Logger.Instance.Warning(this, "Shared folder move: {0} - {1}", src.Name, moveTo.Name);
@@ -399,7 +399,7 @@ namespace Acacia.Features.SharedFolders
 
         private void CheckSharedFolderRename(IFolder folder)
         { 
-            if (folder.SyncId != null && folder.SyncId.IsShared)
+            if (folder.SyncId != null && folder.SyncId.IsCustom)
             {
                 string originalName = (string)folder.GetProperty(OutlookConstants.PR_ZPUSH_NAME);
                 // The folder.name property is sometimes cached, check against the MAPI property

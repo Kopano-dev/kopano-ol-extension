@@ -1059,6 +1059,16 @@ msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_LocalFolder_Tit
 msgid "Shared folders"
 msgstr "Shared folders"
 
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Node_Readonly_ToolTip
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Node_Readonly_ToolTip"
+msgid ""
+"The folder has been configured by your system administrator and cannot be modified. \n"
+"Please contact your system administrator for any required changes."
+msgstr ""
+"The folder has been configured by your system administrator and cannot be modified. \n"
+"Please contact your system administrator for any required changes."
+
 #: AcaciaZPushPlugin\UI\ProgressDialog\labelMessage.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\ProgressDialog\\labelMessage.Text"

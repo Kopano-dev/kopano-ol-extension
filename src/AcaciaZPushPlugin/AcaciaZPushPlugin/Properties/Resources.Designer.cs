@@ -1094,6 +1094,16 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The folder has been configured by your system administrator and cannot be modified. 
+        ///Please contact your system administrator for any required changes..
+        /// </summary>
+        internal static string SharedFolders_Node_Readonly_ToolTip {
+            get {
+                return ResourceManager.GetString("SharedFolders_Node_Readonly_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No shared folders are available or you do not have permissions to view the root of the inbox..
         /// </summary>
         internal static string SharedFolders_None {

@@ -409,6 +409,7 @@ namespace Acacia.Features.SharedFolders
                 OptionSendAs = null;
                 OptionReminders = null;
                 OptionPermissions = null;
+                bool readOnly = false;
 
                 foreach (KTreeNode node in nodes)
                 {
@@ -420,6 +421,10 @@ namespace Acacia.Features.SharedFolders
                     // Can only set options for shared folders
                     if (!folderNode.IsShared)
                         continue;
+
+                    // Set all controls to read-only if any of the nodes is read-only
+                    if (folderNode.IsReadOnly)
+                        readOnly = true;
 
                     SharedFolder share = folderNode.SharedFolder;
                     AvailableFolder folder = folderNode.AvailableFolder;
@@ -497,6 +502,9 @@ namespace Acacia.Features.SharedFolders
                         checkReminders.ThreeState = true;
                     }
                 }
+
+                // Apply read-only state
+                _layoutOptions.Enabled = !readOnly;
             }
             finally
             {

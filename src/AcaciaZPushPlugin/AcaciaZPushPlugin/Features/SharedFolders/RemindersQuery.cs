@@ -17,7 +17,8 @@ namespace Acacia.Features.SharedFolders
         private readonly FeatureSharedFolders _feature;
         private readonly IFolder _folder;
         private SearchQuery _queryRoot;
-        private SearchQuery.Or _queryCustom;
+        private SearchQuery.Or _queryCustomShared;
+        private SearchQuery.Or _queryCustomConfigured;
         private bool _queryCustomModified;
 
         public RemindersQuery(FeatureSharedFolders feature, IStore store)
@@ -28,7 +29,7 @@ namespace Acacia.Features.SharedFolders
 
         public bool Open()
         {
-            if (_queryCustom != null)
+            if (_queryCustomShared != null && _queryCustomConfigured != null)
                 return true;
             try
             {
@@ -39,30 +40,34 @@ namespace Acacia.Features.SharedFolders
 
                 SearchQuery.And root = (SearchQuery.And)_queryRoot;
                 // TODO: more strict checking of query
-                if (root.Operands.Count == 3)
+                if (root.Operands.Count == 5)
                 {
-                    this._queryCustom = root.Operands.ElementAt(2) as SearchQuery.Or;
-                    if (this._queryCustom != null)
+                    this._queryCustomShared = root.Operands.ElementAt(2) as SearchQuery.Or;
+                    this._queryCustomConfigured = root.Operands.ElementAt(3) as SearchQuery.Or;
+                    if (this._queryCustomShared != null)
                     {
                         // TODO: check property test
                         return true;
                     }
                 }
+                else if (root.Operands.Count == 3)
+                {
+                    // KOE-98 introduced also checking of G and C prefixes, which are not yet present
+                    _queryCustomShared = root.Operands.ElementAt(2) as SearchQuery.Or;
+                }
 
                 // We have the root, but not the custom query. Create it.
                 Logger.Instance.Debug(this, "Creating custom query");
-                _queryCustom = new SearchQuery.Or();
-
-                // Add the prefix exclusion for shared folders
-                _queryCustom.Add(
-                    new SearchQuery.Not(
-                        new SearchQuery.PropertyContent(
-                            PROP_FOLDER, SearchQuery.ContentMatchOperation.Prefix, SearchQuery.ContentMatchModifiers.None, "S"
-                        )
+                if (_queryCustomShared == null)
+                    _queryCustomShared = AddCustomQuery(root, "S");
+                _queryCustomConfigured = AddCustomQuery(root, "C");
+                // Add the G (GAB) exclusion. Folders will never have a flag with this prefix, so it's simpler
+                root.Operands.Add(new SearchQuery.Not(
+                    new SearchQuery.PropertyContent(
+                        PROP_FOLDER, SearchQuery.ContentMatchOperation.Prefix, SearchQuery.ContentMatchModifiers.None, "G"
                     )
-                );
+                ));
 
-                root.Operands.Add(_queryCustom);
                 Logger.Instance.Debug(this, "Modified query:\n{0}", root.ToString());
                 // Store it
                 FolderQuery = root;
@@ -72,7 +77,24 @@ namespace Acacia.Features.SharedFolders
             {
                 Logger.Instance.Error(this, "Exception in Open: {0}", e);
             }
-            return _queryCustom != null;
+            return _queryCustomShared != null && _queryCustomConfigured != null;
+        }
+
+        private SearchQuery.Or AddCustomQuery(SearchQuery.And root, string prefix)
+        {
+            SearchQuery.Or custom = new SearchQuery.Or();
+
+            // Add the prefix exclusion
+            custom.Add(
+                new SearchQuery.Not(
+                    new SearchQuery.PropertyContent(
+                        PROP_FOLDER, SearchQuery.ContentMatchOperation.Prefix, SearchQuery.ContentMatchModifiers.None, prefix
+                    )
+                )
+            );
+
+            root.Operands.Add(custom);
+            return custom;
         }
 
         public string LogContextId
@@ -117,15 +139,28 @@ namespace Acacia.Features.SharedFolders
 
         public void UpdateReminders(SyncId folderId, bool wantReminders)
         {
-            Logger.Instance.Trace(this, "Setting reminders for folder {0}: {1}", wantReminders, folderId);
+            Logger.Instance.Trace(this, "Setting reminders for folder {0}: {1} ({2})", wantReminders, folderId, folderId?.Kind);
+            switch(folderId.Kind)
+            {
+                case SyncKind.Configured:
+                    UpdateReminders(_queryCustomConfigured, folderId, wantReminders);
+                    break;
+                case SyncKind.Shared:
+                    UpdateReminders(_queryCustomShared, folderId, wantReminders);
+                    break;
+            }
+        }
+
+        private void UpdateReminders(SearchQuery.Or query, SyncId folderId, bool wantReminders)
+        {
             string prefix = MakeFolderPrefix(folderId);
             if (prefix == null)
                 return;
 
             // Find existing
-            for (int i = 0; i < _queryCustom.Operands.Count;)
+            for (int i = 0; i < query.Operands.Count;)
             {
-                SearchQuery.PropertyContent element = _queryCustom.Operands[i] as SearchQuery.PropertyContent;
+                SearchQuery.PropertyContent element = query.Operands[i] as SearchQuery.PropertyContent;
                 if (element != null && prefix == (string)element.Content)
                 {
                     Logger.Instance.Trace(this, "Found at {0}: {1}", i, folderId);
@@ -134,7 +169,8 @@ namespace Acacia.Features.SharedFolders
                         return;
 
                     // Otherwise remove it. Still continue looking for others, just in case of duplicates
-                    _queryCustom.Operands.RemoveAt(i);
+                    query.Operands.RemoveAt(i);
+                    _queryCustomModified = true;
                 }
                 else ++i;
             }
@@ -143,7 +179,7 @@ namespace Acacia.Features.SharedFolders
             if (wantReminders)
             {
                 Logger.Instance.Trace(this, "Adding reminders for {0}", folderId);
-                _queryCustom.Operands.Add(new SearchQuery.PropertyContent(
+                query.Operands.Add(new SearchQuery.PropertyContent(
                     PROP_FOLDER, SearchQuery.ContentMatchOperation.Prefix, SearchQuery.ContentMatchModifiers.None, prefix
                 ));
                 _queryCustomModified = true;
@@ -152,19 +188,37 @@ namespace Acacia.Features.SharedFolders
 
         public void RemoveStaleReminders(IEnumerable<SyncId> wanted)
         {
-            // Collect the valid prefixes
-            HashSet<string> prefixes = new HashSet<string>();
+            // Group the valid prefixes on type
+            HashSet<string> prefixesS = new HashSet<string>();
+            HashSet<string> prefixesC = new HashSet<string>();
             foreach (SyncId id in wanted)
             {
                 string prefix = MakeFolderPrefix(id);
                 if (prefix != null)
-                    prefixes.Add(prefix);
+                {
+                    switch (id.Kind)
+                    {
+                        case SyncKind.Configured:
+                            prefixesC.Add(prefix);
+                            break;
+                        case SyncKind.Shared:
+                            prefixesS.Add(prefix);
+                            break;
+                    }
+                }
             }
 
+            // Update the queries
+            RemoveStaleReminders(prefixesS, _queryCustomShared);
+            RemoveStaleReminders(prefixesC, _queryCustomConfigured);
+        }
+
+        private void RemoveStaleReminders(ISet<string> prefixes, SearchQuery.Or query)
+        { 
             // Remove all operands for which we do not want the prefix
-            for (int i = 0; i < _queryCustom.Operands.Count;)
+            for (int i = 0; i < query.Operands.Count;)
             {
-                SearchQuery.PropertyContent element = _queryCustom.Operands[i] as SearchQuery.PropertyContent;
+                SearchQuery.PropertyContent element = query.Operands[i] as SearchQuery.PropertyContent;
                 if (element != null)
                 {
                     string prefix = (string)element.Content;
@@ -175,7 +229,7 @@ namespace Acacia.Features.SharedFolders
                     }
 
                     Logger.Instance.Trace(this, "Unwanted prefix at {0}: {1}", i, prefix);
-                    _queryCustom.Operands.RemoveAt(i);
+                    query.Operands.RemoveAt(i);
                     _queryCustomModified = true;
                 }
                 else ++i;
@@ -186,7 +240,7 @@ namespace Acacia.Features.SharedFolders
         {
             // Sanity check. The check for shared folders also excludes any weird ids; e.g. if permissions are wrong,
             // this will not be a sync id, but a backend id.
-            if (folderId == null || !folderId.IsShared)
+            if (folderId == null || !folderId.IsCustom)
                 return null;
             return folderId.ToString() + ":";
         }

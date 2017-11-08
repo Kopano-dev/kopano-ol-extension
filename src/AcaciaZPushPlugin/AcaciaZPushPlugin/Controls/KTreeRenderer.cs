@@ -132,7 +132,7 @@ namespace Acacia.Controls
             // Checkbox
             if (_tree.CheckManager != null && node.HasCheckBox)
             {
-                RenderCheckBox(graphics, node, dims.GetPartRect(KTreeNodeMeasurements.Part.CheckBox, true), highlight);
+                RenderCheckBox(graphics, node, dims.GetPartRect(KTreeNodeMeasurements.Part.CheckBox, true), highlight, node.CheckBoxEnabled);
             }
 
             // Images
@@ -159,10 +159,12 @@ namespace Acacia.Controls
         protected abstract void RenderNodeOutline(Graphics graphics, KTreeNode node, Rectangle rect, KTreeNodeMeasurements.Part? highlight);
         internal protected abstract void RenderNodeExpander(Graphics graphics, KTreeNode node, Rectangle rect, KTreeNodeMeasurements.Part? highlight);
 
-        protected virtual void RenderCheckBox(Graphics graphics, KTreeNode node, Rectangle rect, KTreeNodeMeasurements.Part? highlight)
+        protected virtual void RenderCheckBox(Graphics graphics, KTreeNode node, Rectangle rect, KTreeNodeMeasurements.Part? highlight, bool enabled)
         {
             int state = (int)node.CheckState * 4 + 1;
-            if (highlight != null && highlight.Value == KTreeNodeMeasurements.Part.CheckBox)
+            if (!enabled)
+                state += 3;
+            else if (highlight != null && highlight.Value == KTreeNodeMeasurements.Part.CheckBox)
                 state += 1;
 
             CheckBoxRenderer.DrawCheckBox(graphics, rect.Location, (CheckBoxState)state);
