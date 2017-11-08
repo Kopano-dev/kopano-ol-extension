@@ -127,6 +127,20 @@ namespace Acacia.Controls
             }
         }
 
+        private bool _checkBoxEnabled = true;
+        public bool CheckBoxEnabled
+        {
+            get { return _checkBoxEnabled; }
+            set
+            {
+                if (_checkBoxEnabled != value)
+                {
+                    _checkBoxEnabled = value;
+                    Owner?.Rerender(this);
+                }
+            }
+        }
+
         private bool _isExpanded;
         public bool IsExpanded
         {

@@ -261,8 +261,7 @@ namespace Acacia.Features.SharedFolders
 
                 // Add the node
                 node = new StoreTreeNode(_folders, gabLookup.GAB,
-                                         user, user.DisplayName, currentShares ?? new Dictionary<BackendId, SharedFolder>(),
-                                         false);
+                                         user, user.DisplayName, currentShares ?? new Dictionary<BackendId, SharedFolder>());
                 node.DirtyChanged += UserSharesChanged;
                 _userFolders.Add(user, node);
                 kTreeFolders.RootNodes.Add(node);

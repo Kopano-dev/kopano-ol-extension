@@ -30,7 +30,7 @@ namespace Acacia.Features.SharedFolders
         private readonly StoreTreeNode _store;
         private readonly AvailableFolder _folder;
         private SharedFolder _share;
-        public bool IsReadOnly { get { return _store.IsReadOnly; } }
+        public readonly bool IsReadOnly;
 
         public FolderTreeNode(StoreTreeNode store, AvailableFolder folder, SharedFolder share)
         {
@@ -40,7 +40,9 @@ namespace Acacia.Features.SharedFolders
 
             this.Text = folder.Name;
 
-            HasCheckBox = !IsReadOnly;
+            IsReadOnly = share?.SyncId?.Kind == SyncKind.Configured;
+            HasCheckBox = true;
+            CheckBoxEnabled = !IsReadOnly;
 
             // Image
             // TODO: clean this up

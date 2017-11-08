@@ -97,7 +97,7 @@ namespace Acacia.Controls
 
         private void ToggleCheck(KTreeNode node)
         {
-            if (_checkManager == null || node == null)
+            if (_checkManager == null || node == null || !node.CheckBoxEnabled)
                 return;
 
             if (!SelectedNodes.Contains(node) || SelectedNodes.Count == 1)
