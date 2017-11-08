@@ -156,8 +156,8 @@ namespace Acacia
                 foreach (Feature feature in Features)
                     feature.AfterStartup();
 
-                // Initial send receive
-                ThisAddIn.Instance.SendReceive();
+                // [KOE-148] Initial send receive
+                Instance.SendReceive();
             }
             catch (System.Exception e)
             {
