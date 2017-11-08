@@ -261,7 +261,8 @@ namespace Acacia.Features.SharedFolders
 
                 // Add the node
                 node = new StoreTreeNode(_folders, gabLookup.GAB,
-                                         user, user.DisplayName, currentShares ?? new Dictionary<BackendId, SharedFolder>());
+                                         user, user.DisplayName, currentShares ?? new Dictionary<BackendId, SharedFolder>(),
+                                         false);
                 node.DirtyChanged += UserSharesChanged;
                 _userFolders.Add(user, node);
                 kTreeFolders.RootNodes.Add(node);
@@ -409,6 +410,7 @@ namespace Acacia.Features.SharedFolders
                 OptionSendAs = null;
                 OptionReminders = null;
                 OptionPermissions = null;
+                bool readOnly = false;
 
                 foreach (KTreeNode node in nodes)
                 {
@@ -420,6 +422,10 @@ namespace Acacia.Features.SharedFolders
                     // Can only set options for shared folders
                     if (!folderNode.IsShared)
                         continue;
+
+                    // Set all controls to read-only if any of the nodes is read-only
+                    if (folderNode.IsReadOnly)
+                        readOnly = true;
 
                     SharedFolder share = folderNode.SharedFolder;
                     AvailableFolder folder = folderNode.AvailableFolder;
@@ -497,6 +503,9 @@ namespace Acacia.Features.SharedFolders
                         checkReminders.ThreeState = true;
                     }
                 }
+
+                // Apply read-only state
+                _layoutOptions.Enabled = !readOnly;
             }
             finally
             {

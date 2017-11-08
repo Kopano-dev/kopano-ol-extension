@@ -520,4 +520,8 @@
   <data name="SharedFolders_LocalFolder_Title" xml:space="preserve">
     <value>Shared folders</value>
   </data>
+  <data name="SharedFolders_Node_Readonly_ToolTip" xml:space="preserve">
+    <value>The folder has been configured by your system administrator and cannot be modified. 
+Please contact your system administrator for any required changes.</value>
+  </data>
 </root>

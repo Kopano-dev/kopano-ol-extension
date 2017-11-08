@@ -64,6 +64,7 @@ namespace Acacia.Controls
 
         public int? ImageIndex { get; set; }
         public object Tag { get; set; }
+        public string ToolTip { get; set; }
 
         #endregion
 

@@ -46,8 +46,11 @@ namespace Acacia.Features.SharedFolders
         private readonly GABHandler _gab;
         private readonly GABUser _user;
 
+        public readonly bool IsReadOnly;
+
         public StoreTreeNode(SharedFoldersManager folders, GABHandler gab, GABUser user, string text, 
-                             Dictionary<BackendId, SharedFolder> currentFolders)
+                             Dictionary<BackendId, SharedFolder> currentFolders,
+                             bool readOnly)
         :
         base(text)
         {
@@ -55,6 +58,7 @@ namespace Acacia.Features.SharedFolders
             this._feature = folders.Feature;
             this._gab = gab;
             this._user = user;
+            this.IsReadOnly = readOnly;
 
             // Create an empty current state. When loading the nodes, the shares will be added. This has the benefit of
             // cleaning up automatically any obsolote shares.
@@ -63,6 +67,7 @@ namespace Acacia.Features.SharedFolders
             ChildLoader = new UserFolderLoader(this, folders, user);
             ChildLoader.ReloadOnCloseOpen = true;
             HasCheckBox = false;
+            ApplyReadOnly(this, IsReadOnly);
 
             // TODO: better icons, better way of handling this
             ImageIndex = user == GABUser.USER_PUBLIC ? 0 : 11;
@@ -76,6 +81,11 @@ namespace Acacia.Features.SharedFolders
                 ChildLoader.Reload();
             };
             Control = _reloader;
+        }
+
+        private static void ApplyReadOnly(KTreeNode node, bool isReadOnly)
+        {
+            node.ToolTip = isReadOnly ? Properties.Resources.SharedFolders_Node_Readonly_ToolTip : null;
         }
 
         public GABUser User
@@ -264,6 +274,7 @@ namespace Acacia.Features.SharedFolders
                 // Create the tree node
                 SharedFolder share = rootNode.GetInitialShareState(folder);
                 FolderTreeNode child = new FolderTreeNode(rootNode, folder, share);
+                ApplyReadOnly(child, child.IsReadOnly);
 
                 // Add
                 children.Add(child);
