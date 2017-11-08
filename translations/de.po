@@ -2,9 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-07-06 07:00+0000\n"
+"PO-Revision-Date: 2017-11-08 13:11+0000\n"
 "Last-Translator: Felix <f.bartels@kopano.com>\n"
-"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-extension/de/>\n"
+"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-"
+"extension/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1317,67 +1318,70 @@ msgstr "Elementereignis"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnSubject.Text"
 msgid "Subject"
-msgstr ""
+msgstr "Betreff"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader5.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader5.Text"
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader6.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader6.Text"
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader7.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader7.Text"
 msgid "Subject"
-msgstr ""
+msgstr "Betreff"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabWrappers.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabWrappers.Text"
 msgid "Wrappers"
-msgstr ""
+msgstr "Wrapper"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnProperties.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnProperties.Text"
 msgid "Properties"
-msgstr ""
+msgstr "Eigenschaften"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnItemId.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnItemId.Text"
 msgid "ItemId"
-msgstr ""
+msgstr "ItemId"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonCleanGC.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonCleanGC.Text"
 msgid "Remove GC"
-msgstr ""
+msgstr "GC entfernen"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonCopyFilter.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonCopyFilter.Text"
 msgid "Copy filter"
-msgstr ""
+msgstr "Filter kopieren"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_LocalFolder_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_LocalFolder_Body"
 msgid "Modifying shared folders locally is not supported. Please use the 'Shared Folders' dialog to modify these folders."
 msgstr ""
+"Die Bearbeitung von geteilten Ordner durch Outlook ist nicht gestattet. "
+"Bitte benutzen Sie den \"Geteilte Ordner\" Dialog um Änderungen "
+"durchzuführen."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_LocalFolder_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_LocalFolder_Title"
 msgid "Shared folders"
-msgstr ""
+msgstr "Geteilte Ordner"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Node_Readonly_ToolTip
 #, csharp-format
@@ -1386,4 +1390,6 @@ msgid ""
 "The folder has been configured by your system administrator and cannot be modified. \n"
 "Please contact your system administrator for any required changes."
 msgstr ""
-
+"Dieser Ordner wurde durch Ihren Administrator eingerichtet und kann nicht "
+"verändert werden.\n"
+"Bitte kontaktieren Sie Ihren Administrator für Änderungen."
