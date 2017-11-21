@@ -1141,6 +1141,6 @@ msgid ""
 "The folder has been configured by your system administrator and cannot be modified. \n"
 "Please contact your system administrator for any required changes."
 msgstr ""
-"Essa pasta foi configurada pelo administrador do sistema e não pode ser "
-"modificada. \n"
+"Essa pasta foi configurada pelo administrador do sistema e não pode ser modificada. \n"
 "Entre em contato com seu administrador para fazer essas modificações."
+
