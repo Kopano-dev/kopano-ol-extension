@@ -96,7 +96,8 @@ namespace Acacia.Utils
                 Marshal.Copy(plainTextBlob.pbData, plainText, 0, plainTextBlob.cbData);
 
                 SecureString plain = new SecureString();
-                foreach (char c in Encoding.Unicode.GetString(plainText))
+                string s = Encoding.Unicode.GetString(plainText);
+                foreach (char c in s)
                     if (c != 0)
                         plain.AppendChar(c);
                 Array.Clear(plainText, 0, plainText.Length);
