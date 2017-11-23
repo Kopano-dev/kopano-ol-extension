@@ -102,8 +102,8 @@ private:
 	static string WideToString(const wstring &s)
 	{
 		std::string result;
-		for (int i = 0; i < s.size(); ++i)
-			result += (char)s[i];
+		for (auto i = s.begin(); i != s.end(); ++i)
+			result += (char)*i;
 		return result;
 	}
 
