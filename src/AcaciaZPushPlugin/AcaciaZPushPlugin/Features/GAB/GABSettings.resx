@@ -127,13 +127,10 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="checkFaxNumbers.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 4</value>
-  </data>
-  <data name="checkFaxNumbers.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
+    <value>3, 26</value>
   </data>
   <data name="checkFaxNumbers.Size" type="System.Drawing.Size, System.Drawing">
-    <value>259, 29</value>
+    <value>250, 17</value>
   </data>
   <data name="checkFaxNumbers.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -148,28 +145,91 @@
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;checkFaxNumbers.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>_layout</value>
   </data>
   <data name="&gt;&gt;checkFaxNumbers.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="_layout.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="_layout.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="checkSMTPGroupsAsContacts.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkSMTPGroupsAsContacts.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="checkSMTPGroupsAsContacts.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="checkSMTPGroupsAsContacts.Size" type="System.Drawing.Size, System.Drawing">
+    <value>250, 17</value>
+  </data>
+  <data name="checkSMTPGroupsAsContacts.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="checkSMTPGroupsAsContacts.Text" xml:space="preserve">
+    <value>Synchronise groups with addresses as contacts</value>
+  </data>
+  <data name="&gt;&gt;checkSMTPGroupsAsContacts.Name" xml:space="preserve">
+    <value>checkSMTPGroupsAsContacts</value>
+  </data>
+  <data name="&gt;&gt;checkSMTPGroupsAsContacts.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkSMTPGroupsAsContacts.Parent" xml:space="preserve">
+    <value>_layout</value>
+  </data>
+  <data name="&gt;&gt;checkSMTPGroupsAsContacts.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="_layout.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="_layout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 2</value>
+  </data>
+  <data name="_layout.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="_layout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>256, 46</value>
+  </data>
+  <data name="_layout.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;_layout.Name" xml:space="preserve">
+    <value>_layout</value>
+  </data>
+  <data name="&gt;&gt;_layout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_layout.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;_layout.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="_layout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="checkFaxNumbers" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkSMTPGroupsAsContacts" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,20" /&gt;&lt;Rows Styles="Percent,50,Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>11, 24</value>
+    <value>6, 13</value>
   </data>
   <data name="$this.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
-  </data>
   <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>267, 37</value>
+    <value>260, 50</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>GABSettings</value>

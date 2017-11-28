@@ -46,6 +46,12 @@ namespace Acacia.Stubs.OutlookWrappers
             set { _item.FullName = value; }
         }
 
+        public string FileAs
+        {
+            get { return _item.FileAs; }
+            set { _item.FileAs = value; }
+        }
+
         public string FirstName
         {
             get { return _item.FirstName; }

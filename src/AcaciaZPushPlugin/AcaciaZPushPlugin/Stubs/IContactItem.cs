@@ -26,6 +26,7 @@ namespace Acacia.Stubs
     {
         string CustomerID { get; set; }
 
+        string FileAs { get; set; }
         string FullName { get; set; }
         string FirstName { get; set; }
         string LastName { get; set; }

@@ -519,7 +519,11 @@ namespace Acacia.Features.GAB
                 if (Get<string>(value, "initials") != null) contact.Initials = Get<string>(value, "initials");
                 if (Get<string>(value, "surname") != null) contact.LastName = Get<string>(value, "surname");
                 if (Get<string>(value, "title") != null) contact.JobTitle = Get<string>(value, "title");
-                if (Get<string>(value, "displayName") != null) contact.FullName = Get<string>(value, "displayName");
+                if (Get<string>(value, "displayName") != null)
+                {
+                    contact.FileAs = Get<string>(value, "displayName");
+                    contact.FullName = Get<string>(value, "displayName");
+                }
 
                 if (Get<string>(value, "smtpAddress") != null)
                 {
@@ -590,37 +594,101 @@ namespace Acacia.Features.GAB
             if (!_feature.CreateGroups)
                 return;
 
-            using (IDistributionList group = Contacts.Create<IDistributionList>())
+            string smtpAddress = Get<string> (value, "smtpAddress");
+            if (!string.IsNullOrEmpty(smtpAddress) && _feature.SMTPGroupsAsContacts)
             {
-                Logger.Instance.Debug(this, "Creating group: {0}", id);
-                group.DLName = Get<string>(value, "displayName");
-                if (Get<string>(value, "smtpAddress") != null)
+                // Create a contact
+                using (IContactItem contact = Contacts.Create<IContactItem>())
                 {
-                    group.SMTPAddress = Get<string>(value, "smtpAddress");
-                }
+                    Logger.Instance.Debug(this, "Creating group as contact: {0}", id);
+                    contact.FullName = contact.FileAs = Get<string>(value, "displayName");
+                    contact.Email1Address = smtpAddress;
+                    contact.Email1AddressType = "SMTP";
 
-                SetItemStandard(group, id, value, index);
-                group.Save();
+                    SetItemStandard(contact, id, value, index);
 
-                if (_feature.GroupMembers)
-                {
-                    ArrayList members = Get<ArrayList>(value, "members");
-                    if (members != null)
+                    if (_feature.GroupMembers)
                     {
-                        foreach (string memberId in members)
+                        // Add the group members as the body
+                        ArrayList members = Get<ArrayList>(value, "members");
+                        if (members != null)
                         {
-                            using (IItem item = FindItemById(memberId))
+                            string membersBody = null;
+                            foreach (string memberId in members)
                             {
-                                Logger.Instance.Debug(this, "Finding member {0} of {1}: {2}", memberId, id, item?.EntryID);
-                                if (item != null)
-                                    AddGroupMember(group, item);
+                                using (IItem item = FindItemById(memberId))
+                                {
+                                    Logger.Instance.Debug(this, "Finding member {0} of {1}: {2}", memberId, id, item?.EntryID);
+                                    if (item != null)
+                                    {
+                                        if (membersBody == null)
+                                            membersBody = "";
+                                        else
+                                            membersBody += "\n";
+
+                                        if (item is IContactItem)
+                                        {
+                                            IContactItem memberContact = (IContactItem)item;
+                                            membersBody += string.Format("{0} ({1})", memberContact.FullName, memberContact.Email1Address);
+                                        }
+                                        else if (item is IDistributionList)
+                                        {
+                                            IDistributionList memberGroup = (IDistributionList)item;
+                                            if (string.IsNullOrEmpty(memberGroup.SMTPAddress))
+                                                membersBody += memberGroup.DLName;
+                                            else
+                                                membersBody += string.Format("{0} ({1})", memberGroup.DLName, memberGroup.SMTPAddress);
+                                        }
+                                        else
+                                        {
+                                            membersBody += item.Subject;
+                                        }
+                                    }
+                                }
                             }
+                            contact.Body = membersBody;
                         }
                     }
-                    group.Save();
-                }
+                    contact.Save();
 
-                AddItemToGroups(group, id, value, index);
+                    AddItemToGroups(contact, id, value, index);
+                }
+            }
+            else
+            {
+                // Create a proper group
+                using (IDistributionList group = Contacts.Create<IDistributionList>())
+                {
+                    Logger.Instance.Debug(this, "Creating group: {0}", id);
+                    group.DLName = Get<string>(value, "displayName");
+                    if (smtpAddress != null)
+                    {
+                        group.SMTPAddress = smtpAddress;
+                    }
+
+                    SetItemStandard(group, id, value, index);
+                    group.Save();
+
+                    if (_feature.GroupMembers)
+                    {
+                        ArrayList members = Get<ArrayList>(value, "members");
+                        if (members != null)
+                        {
+                            foreach (string memberId in members)
+                            {
+                                using (IItem item = FindItemById(memberId))
+                                {
+                                    Logger.Instance.Debug(this, "Finding member {0} of {1}: {2}", memberId, id, item?.EntryID);
+                                    if (item != null)
+                                        AddGroupMember(group, item);
+                                }
+                            }
+                        }
+                        group.Save();
+                    }
+
+                    AddItemToGroups(group, id, value, index);
+                }
             }
         }
 

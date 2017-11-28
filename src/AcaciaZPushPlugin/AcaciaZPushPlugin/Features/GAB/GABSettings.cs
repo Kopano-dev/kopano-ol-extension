@@ -48,6 +48,7 @@ namespace Acacia.Features.GAB
             if (feature != null)
             {
                 checkFaxNumbers.Checked = feature.SyncFaxNumbers;
+                checkSMTPGroupsAsContacts.Checked = feature.SMTPGroupsAsContacts;
             }
         }
 
@@ -56,6 +57,12 @@ namespace Acacia.Features.GAB
             if (_feature != null)
                 _feature.SyncFaxNumbers = checkFaxNumbers.Checked;
 
+        }
+
+        private void checkSMTPGroupsAsContacts_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_feature != null)
+                _feature.SMTPGroupsAsContacts = checkSMTPGroupsAsContacts.Checked;
         }
     }
 }

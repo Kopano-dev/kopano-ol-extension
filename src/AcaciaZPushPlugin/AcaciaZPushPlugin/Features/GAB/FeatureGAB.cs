@@ -237,6 +237,14 @@ namespace Acacia.Features.GAB
         }
         private static readonly BoolOption OPTION_SUPPRESS_MODIFICATIONS = new BoolOption("SuppressModifications", true);
 
+        [AcaciaOption("If enabled, groups with an SMTP address are created as contacts.")]
+        public bool SMTPGroupsAsContacts
+        {
+            get { return GetOption(OPTION_SMTP_GROUPS_AS_CONTACTS); }
+            set { SetOption(OPTION_SMTP_GROUPS_AS_CONTACTS, value); }
+        }
+        private static readonly BoolOption OPTION_SMTP_GROUPS_AS_CONTACTS = new BoolOption("SMTPGroupsAsContacts", false);
+
         #endregion
 
         #region Modification suppression
