@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SharedFoldersDialog));
-            Acacia.Controls.KCheckManager.RecursiveThreeState recursiveThreeState1 = new Acacia.Controls.KCheckManager.RecursiveThreeState();
             this._layout = new System.Windows.Forms.TableLayoutPanel();
             this._mainBusyHider = new Acacia.Controls.KBusyHider();
             this._layoutMain = new System.Windows.Forms.TableLayoutPanel();
@@ -39,6 +38,9 @@
             this.buttonOpenUser = new System.Windows.Forms.Button();
             this.kTreeFolders = new Acacia.Controls.KTree();
             this._layoutOptions = new System.Windows.Forms.TableLayoutPanel();
+            this._labelWholeStore = new System.Windows.Forms.Label();
+            this.checkWholeStore = new System.Windows.Forms.CheckBox();
+            this.labelPermissionsValue = new System.Windows.Forms.Label();
             this._labelName = new System.Windows.Forms.Label();
             this.textName = new System.Windows.Forms.TextBox();
             this._labelSendAs = new System.Windows.Forms.Label();
@@ -46,7 +48,6 @@
             this._labelReminders = new System.Windows.Forms.Label();
             this.checkReminders = new System.Windows.Forms.CheckBox();
             this._labelPermissions = new System.Windows.Forms.Label();
-            this.labelPermissionsValue = new System.Windows.Forms.Label();
             this.dialogButtons = new Acacia.Controls.KDialogButtons();
             this._layout.SuspendLayout();
             this._mainBusyHider.SuspendLayout();
@@ -118,8 +119,8 @@
             // 
             this.kTreeFolders.BackColor = System.Drawing.SystemColors.Window;
             this.kTreeFolders.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.kTreeFolders.CheckManager = recursiveThreeState1;
-            this.kTreeFolders.CheckStyle = Acacia.Controls.KCheckStyle.RecursiveThreeState;
+            this.kTreeFolders.CheckManager = null;
+            this.kTreeFolders.CheckStyle = Acacia.Controls.KCheckStyle.None;
             resources.ApplyResources(this.kTreeFolders, "kTreeFolders");
             this.kTreeFolders.FullRowSelect = true;
             this.kTreeFolders.Images = null;
@@ -129,20 +130,38 @@
             this.kTreeFolders.NodePadding = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.kTreeFolders.CheckStateChanged += new Acacia.Controls.KTree.CheckStateChangedHandler(this.kTreeFolders_CheckStateChanged);
             this.kTreeFolders.SelectionChanged += new Acacia.Controls.KTree.SelectionChangedDelegate(this.kTreeFolders_SelectionChanged);
-            this.kTreeFolders.DoubleClick += new System.EventHandler(this.kTreeFolders_DoubleClick);
             // 
             // _layoutOptions
             // 
             resources.ApplyResources(this._layoutOptions, "_layoutOptions");
-            this._layoutOptions.Controls.Add(this._labelName, 0, 0);
-            this._layoutOptions.Controls.Add(this.textName, 1, 0);
-            this._layoutOptions.Controls.Add(this._labelSendAs, 0, 1);
-            this._layoutOptions.Controls.Add(this.checkSendAs, 1, 1);
-            this._layoutOptions.Controls.Add(this._labelReminders, 0, 2);
-            this._layoutOptions.Controls.Add(this.checkReminders, 1, 2);
-            this._layoutOptions.Controls.Add(this._labelPermissions, 0, 3);
-            this._layoutOptions.Controls.Add(this.labelPermissionsValue, 1, 3);
+            this._layoutOptions.Controls.Add(this._labelWholeStore, 0, 0);
+            this._layoutOptions.Controls.Add(this.checkWholeStore, 1, 0);
+            this._layoutOptions.Controls.Add(this.labelPermissionsValue, 0, 4);
+            this._layoutOptions.Controls.Add(this._labelName, 0, 1);
+            this._layoutOptions.Controls.Add(this.textName, 1, 1);
+            this._layoutOptions.Controls.Add(this._labelSendAs, 0, 2);
+            this._layoutOptions.Controls.Add(this.checkSendAs, 1, 2);
+            this._layoutOptions.Controls.Add(this._labelReminders, 0, 3);
+            this._layoutOptions.Controls.Add(this.checkReminders, 1, 3);
+            this._layoutOptions.Controls.Add(this._labelPermissions, 0, 4);
             this._layoutOptions.Name = "_layoutOptions";
+            // 
+            // _labelWholeStore
+            // 
+            resources.ApplyResources(this._labelWholeStore, "_labelWholeStore");
+            this._labelWholeStore.Name = "_labelWholeStore";
+            // 
+            // checkWholeStore
+            // 
+            resources.ApplyResources(this.checkWholeStore, "checkWholeStore");
+            this.checkWholeStore.Name = "checkWholeStore";
+            this.checkWholeStore.UseVisualStyleBackColor = true;
+            this.checkWholeStore.CheckedChanged += new System.EventHandler(this.checkWholeStore_CheckedChanged);
+            // 
+            // labelPermissionsValue
+            // 
+            resources.ApplyResources(this.labelPermissionsValue, "labelPermissionsValue");
+            this.labelPermissionsValue.Name = "labelPermissionsValue";
             // 
             // _labelName
             // 
@@ -184,11 +203,6 @@
             // 
             resources.ApplyResources(this._labelPermissions, "_labelPermissions");
             this._labelPermissions.Name = "_labelPermissions";
-            // 
-            // labelPermissionsValue
-            // 
-            resources.ApplyResources(this.labelPermissionsValue, "labelPermissionsValue");
-            this.labelPermissionsValue.Name = "labelPermissionsValue";
             // 
             // dialogButtons
             // 
@@ -237,11 +251,13 @@
         private System.Windows.Forms.Label _labelSendAs;
         private System.Windows.Forms.CheckBox checkSendAs;
         private System.Windows.Forms.Label _labelPermissions;
-        private System.Windows.Forms.Label labelPermissionsValue;
+        private System.Windows.Forms.Label _labelWholeStore;
         private Controls.KBusyHider _mainBusyHider;
         private Controls.KDialogButtons dialogButtons;
         private UI.GABLookupControl gabLookup;
         private System.Windows.Forms.Label _labelReminders;
         private System.Windows.Forms.CheckBox checkReminders;
+        private System.Windows.Forms.CheckBox checkWholeStore;
+        private System.Windows.Forms.Label labelPermissionsValue;
     }
 }

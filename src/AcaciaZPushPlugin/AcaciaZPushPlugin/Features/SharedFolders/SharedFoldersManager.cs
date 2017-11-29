@@ -41,6 +41,11 @@ namespace Acacia.Features.SharedFolders
                 _query.Dispose();
         }
 
+        public bool SupportsWholeStore
+        {
+            get { return true; } // TODO: use capability
+        }
+
         public FeatureSharedFolders Feature { get { return _feature; } }
 
         #region API

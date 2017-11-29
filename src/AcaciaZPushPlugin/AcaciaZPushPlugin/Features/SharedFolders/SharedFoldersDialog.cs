@@ -16,6 +16,7 @@
 
 using Acacia.Controls;
 using Acacia.Features.GAB;
+using Acacia.Stubs;
 using Acacia.UI;
 using Acacia.UI.Outlook;
 using Acacia.ZPush;
@@ -37,6 +38,58 @@ namespace Acacia.Features.SharedFolders
 {
     public partial class SharedFoldersDialog : KDialogNew
     {
+        /// <summary>
+        /// Check manager that makes the store check box independent of the folder checkboxes, which are
+        /// still applied recursively
+        /// </summary>
+        private class ShareCheckManager : KCheckManager.RecursiveThreeState
+        {
+            public override KCheckStyle CheckStyle { get { return KCheckStyle.Custom; } }
+
+            protected override void SetParentCheckState(KTreeNode parent, CheckState childCheckState)
+            {
+                // The store node state is independent of the rest
+                if (parent == null || parent is StoreTreeNode)
+                    return;
+
+                base.SetParentCheckState(parent, childCheckState);
+            }
+
+            protected override void SetNodeCheckState(KTreeNode node, CheckState checkState)
+            {
+                // The store node state is independent of the rest
+                if (node is StoreTreeNode)
+                    node.CheckState = checkState;
+                else
+                    base.SetNodeCheckState(node, checkState);
+            }
+
+            protected override CheckState NextCheckState(KTreeNode node)
+            {
+                if (node is StoreTreeNode)
+                {
+                    // The store node has a two-state checkbox
+                    return (node.CheckState == CheckState.Checked) ? CheckState.Unchecked : CheckState.Checked;
+                }
+                else
+                {
+                    return base.NextCheckState(node);
+                }
+            }
+
+            public override void SetCheck(KTreeNode node, CheckState state)
+            {
+                if (node is StoreTreeNode)
+                {
+                    node.CheckStateDirect = state;
+                }
+                else
+                {
+                    base.SetCheck(node, state);
+                }
+            }
+        }
+
         private readonly ZPushAccount _account;
         private readonly SharedFoldersManager _folders;
         private readonly SyncId _initialSyncId;
@@ -66,6 +119,9 @@ namespace Acacia.Features.SharedFolders
                 "LastModifiedBy" // Store
 
                 ).Images;
+
+            // Set the check manager
+            kTreeFolders.CheckManager = new ShareCheckManager();
 
             // Add the email address to the title
             Text = string.Format(Text, account.Account.SmtpAddress);
@@ -143,10 +199,10 @@ namespace Acacia.Features.SharedFolders
                     {
                         KTreeNode folderNode = node.FindNode(_initialFolder);
                         if (folderNode != null)
-                            FocusNode(folderNode);
+                            FocusNode(folderNode, true);
                         context.AddBusy(-1);
                     };
-                    FocusNode(node);
+                    FocusNode(node, true);
                 }
                 SetInitialFocus(kTreeFolders);
             }
@@ -165,41 +221,77 @@ namespace Acacia.Features.SharedFolders
             });
         }
 
+        private class ApplyState
+        {
+            public int folders;
+            public readonly List<StoreTreeNode> stores = new List<StoreTreeNode>();
+        }
+
         private void dialogButtons_Apply(object sender, EventArgs e)
         {
             BusyText = Properties.Resources.SharedFolders_Applying_Label;
             KUITask.New((ctx) =>
             {
                 // We reuse the same busy indicationg for all calls. A count is kept to ensure it's removed.
-                int count = 0;
+                ApplyState state = new ApplyState();
 
                 foreach (StoreTreeNode storeNode in _userFolders.Values)
                 {
                     if (storeNode.IsDirty)
                     {
                         ctx.AddBusy(1);
-                        ++count;
+                        ++state.folders;
 
                         _folders.SetSharesForStore(storeNode.User, storeNode.CurrentShares, ctx.CancellationToken);
                     }
+
+                    if (storeNode.IsWholeStoreDirty)
+                    {
+                        state.stores.Add(storeNode);
+                    }
                 }
 
-                return count;
+                return state;
             })
-            .OnSuccess((ctx, count) =>
+            .OnSuccess((ctx, state) =>
             {
                 // Update UI state
                 foreach (StoreTreeNode storeNode in _userFolders.Values)
                     if (storeNode.IsDirty)
                         storeNode.ChangesApplied();
 
-                ctx.AddBusy(-count);
+                ctx.AddBusy(-state.folders);
 
-                // Sync account
-                _account.Account.SendReceive();
+                if (state.folders != 0)
+                {
+                    // Sync account
+                    _account.Account.SendReceive();
 
-                // Show success
-                ShowCompletion(Properties.Resources.SharedFolders_Applying_Success);
+                    // Show success
+                    ShowCompletion(Properties.Resources.SharedFolders_Applying_Success);
+                }
+
+                if (state.stores.Count > 0)
+                {
+                    bool restart = MessageBox.Show(ThisAddIn.Instance.Window,
+                                        "Outlook will be restarted to open the new stores",
+                                        "Open stores",
+                                        MessageBoxButtons.OKCancel,
+                                        MessageBoxIcon.Information
+                                    ) == DialogResult.OK;
+
+                    // Reset state. Also do this when restarting, to avoid warning message about unsaved changes
+                    foreach (StoreTreeNode node in state.stores)
+                        node.WantShare = node.IsShared;
+
+                    if (!restart)
+                        return;
+
+                    // Restart
+                    IRestarter restarter = ThisAddIn.Instance.Restarter();
+                    restarter.CloseWindows = true;
+                    restarter.Restart();
+                }
             }, true)
             .OnError((x) =>
             {
@@ -263,23 +355,24 @@ namespace Acacia.Features.SharedFolders
                 node = new StoreTreeNode(_folders, gabLookup.GAB,
                                          user, user.DisplayName, currentShares ?? new Dictionary<BackendId, SharedFolder>());
                 node.DirtyChanged += UserSharesChanged;
+                node.CheckStateChanged += WholeStoreShareChanged;
                 _userFolders.Add(user, node);
                 kTreeFolders.RootNodes.Add(node);
             }
 
             if (select)
             {
-                FocusNode(node);
+                FocusNode(node, false);
             }
         }
 
-        private void FocusNode(KTreeNode node)
+        private void FocusNode(KTreeNode node, bool expand)
         {
             // Scroll it to the top of the window
             kTreeFolders.SelectNode(node, KTree.ScrollMode.Top);
 
-            // Start loading folders
-            node.IsExpanded = true;
+            // Start loading folders if requested
+            node.IsExpanded = expand;
 
             // Clear any selected user
             gabLookup.SelectedUser = null;
@@ -288,12 +381,25 @@ namespace Acacia.Features.SharedFolders
             kTreeFolders.Focus();
         }
 
-        private readonly Dictionary<string, bool> _dirtyUsers = new Dictionary<string, bool>();
+        private readonly Dictionary<GABUser, bool> _dirtyWholeStores = new Dictionary<GABUser, bool>();
+        private readonly Dictionary<GABUser, bool> _dirtyUsers = new Dictionary<GABUser, bool>();
 
         private void UserSharesChanged(StoreTreeNode node)
         {
-            _dirtyUsers[node.User.UserName] = node.IsDirty;
-            dialogButtons.IsDirty = _dirtyUsers.Values.Any((x) => x);
+            _dirtyUsers[node.User] = node.IsDirty;
+            CheckDirty();
+        }
+
+        private void WholeStoreShareChanged(KTreeNode node)
+        {
+            StoreTreeNode storeNode = (StoreTreeNode)node;
+            _dirtyWholeStores[storeNode.User] = storeNode.IsWholeStoreDirty;
+            CheckDirty();
+        }
+
+        private void CheckDirty()
+        {
+            dialogButtons.IsDirty = _dirtyUsers.Values.Any((x) => x) || _dirtyWholeStores.Values.Any((x) => x);
         }
 
         #region Advanced options
@@ -392,6 +498,25 @@ namespace Acacia.Features.SharedFolders
         }
         private readonly List<FolderTreeNode> _optionPermissionNodes = new List<FolderTreeNode>();
 
+        private CheckState? OptionWholeStore
+        {
+            get
+            {
+                if (checkWholeStore.Visible)
+                    return checkWholeStore.CheckState;
+                return null;
+            }
+
+            set
+            {
+                _labelWholeStore.Visible = checkWholeStore.Visible = value != null;
+                if (value != null)
+                    checkWholeStore.CheckState = value.Value;
+            }
+        }
+        private readonly List<StoreTreeNode> _optionWholeStoreNodes = new List<StoreTreeNode>();
+        private readonly List<bool> _optionWholeStoreNodesInitial = new List<bool>();
+
         private void ShowOptions(KTreeNode[] nodes)
         {
             try
@@ -404,102 +529,146 @@ namespace Acacia.Features.SharedFolders
                 _optionRemindersNodes.Clear();
                 _optionRemindersInitial.Clear();
                 _optionPermissionNodes.Clear();
+                _optionWholeStoreNodes.Clear();
+                _optionWholeStoreNodesInitial.Clear();
                 OptionName = null;
                 OptionTrackName = null;
                 OptionSendAs = null;
                 OptionReminders = null;
                 OptionPermissions = null;
+                OptionWholeStore = null;
                 bool readOnly = false;
+                bool haveStoreNodes = false;
+                bool haveFolderNodes = false;
 
                 foreach (KTreeNode node in nodes)
                 {
                     // Ignore the root nodes
                     if (node is StoreTreeNode)
-                        continue;
-
-                    FolderTreeNode folderNode = (FolderTreeNode)node;
-                    // Can only set options for shared folders
-                    if (!folderNode.IsShared)
-                        continue;
-
-                    // Set all controls to read-only if any of the nodes is read-only
-                    if (folderNode.IsReadOnly)
-                        readOnly = true;
-
-                    SharedFolder share = folderNode.SharedFolder;
-                    AvailableFolder folder = folderNode.AvailableFolder;
-
-                    // Assume we will edit the name for this node; cleared below if there are multiple
-                    _optionNameNode = folderNode;
-
-                    if (folder.Type.IsMail())
                     {
-                        // Show send as if there are any mail folders
-                        _optionSendAsNodes.Add(folderNode);
-                        _optionSendAsInitial.Add(folderNode.SharedFolder.FlagSendAsOwner);
-                    }
-                    else if (folder.Type.IsAppointment())
-                    {
-                        // Show reminders for appointment folders
-                        _optionRemindersNodes.Add(folderNode);
-                        _optionRemindersInitial.Add(folderNode.SharedFolder.FlagCalendarReminders);
-                    }
+                        if (!_folders.SupportsWholeStore)
+                            continue;
 
-                    // Show permissions for all shared nodes
-                    _optionPermissionNodes.Add(folderNode);
+                        StoreTreeNode storeNode = (StoreTreeNode)node;
+                        haveStoreNodes = true;
+                        _optionWholeStoreNodes.Add(storeNode);
+                        _optionWholeStoreNodesInitial.Add(storeNode.IsShared);
+                    }
+                    else
+                    {
+                        FolderTreeNode folderNode = (FolderTreeNode)node;
+                        // Can only set options for shared folders
+                        if (!folderNode.IsShared)
+                            continue;
+
+                        haveFolderNodes = true;
+
+                        // Set all controls to read-only if any of the nodes is read-only
+                        if (folderNode.IsReadOnly)
+                            readOnly = true;
+
+                        SharedFolder share = folderNode.SharedFolder;
+                        AvailableFolder folder = folderNode.AvailableFolder;
+
+                        // Assume we will edit the name for this node; cleared below if there are multiple
+                        _optionNameNode = folderNode;
+
+                        if (folder.Type.IsMail())
+                        {
+                            // Show send as if there are any mail folders
+                            _optionSendAsNodes.Add(folderNode);
+                            _optionSendAsInitial.Add(folderNode.SharedFolder.FlagSendAsOwner);
+                        }
+                        else if (folder.Type.IsAppointment())
+                        {
+                            // Show reminders for appointment folders
+                            _optionRemindersNodes.Add(folderNode);
+                            _optionRemindersInitial.Add(folderNode.SharedFolder.FlagCalendarReminders);
+                        }
+
+                        // Show permissions for all shared nodes
+                        _optionPermissionNodes.Add(folderNode);
+                    }
                 }
 
                 // Now check consistency of the options
 
-                // Only show the name if there is a single node.
-                // We do that here so there doesn't have to be duplication if testing if it's sharedd,
-                // ect
-                if (_optionNameNode != null && nodes.Length == 1)
+                if (haveFolderNodes && haveStoreNodes)
                 {
-                    OptionName = _optionNameNode.SharedFolder.Name;
-                    OptionTrackName = _optionNameNode.SharedFolder.FlagUpdateShareName;
+                    // Mixed nodes, no options
+                    return;
+                }
+
+                if (haveStoreNodes)
+                {
+                    if (_optionWholeStoreNodes.Count > 0)
+                    {
+                        bool isShared = _optionWholeStoreNodes.First().WantShare;
+                        if (_optionWholeStoreNodes.All(x => x.WantShare == isShared))
+                        {
+                            OptionWholeStore = isShared ? CheckState.Checked : CheckState.Unchecked;
+                            checkWholeStore.ThreeState = false;
+                        }
+                        else
+                        {
+                            OptionWholeStore = CheckState.Indeterminate;
+                            checkWholeStore.ThreeState = true;
+                        }
+                    }
+
                 }
                 else
                 {
-                    _optionNameNode = null;
-                }
-
-                // Permissions shown if all are the same
-                if (_optionPermissionNodes.Count > 0)
-                {
-                    Permission? permissions = _optionPermissionNodes.First().SharedFolder.Permissions;
-                    if (_optionPermissionNodes.All(x => x.SharedFolder.Permissions == permissions))
-                        OptionPermissions = permissions;
-                }
-
-                // Send as shown if any node supports it
-                if (_optionSendAsNodes.Count > 0)
-                {
-                    bool sendAs = _optionSendAsNodes.First().SharedFolder.FlagSendAsOwner;
-                    if (_optionSendAsNodes.All(x => x.SharedFolder.FlagSendAsOwner == sendAs))
+                    // Only show the name if there is a single node.
+                    // We do that here so there doesn't have to be duplication if testing if it's sharedd,
+                    // ect
+                    if (_optionNameNode != null && nodes.Length == 1)
                     {
-                        OptionSendAs = sendAs ? CheckState.Checked : CheckState.Unchecked;
-                        checkSendAs.ThreeState = false;
+                        OptionName = _optionNameNode.SharedFolder.Name;
+                        OptionTrackName = _optionNameNode.SharedFolder.FlagUpdateShareName;
                     }
                     else
                     {
-                        OptionSendAs = CheckState.Indeterminate;
-                        checkSendAs.ThreeState = true;
+                        _optionNameNode = null;
                     }
-                }
-                // Reminders shown if any node supports it
-                if (_optionRemindersNodes.Count > 0)
-                {
-                    bool reminders = _optionRemindersNodes.First().SharedFolder.FlagCalendarReminders;
-                    if (_optionRemindersNodes.All(x => x.SharedFolder.FlagCalendarReminders == reminders))
+
+                    // Permissions shown if all are the same
+                    if (_optionPermissionNodes.Count > 0)
                     {
-                        OptionReminders = reminders ? CheckState.Checked : CheckState.Unchecked;
-                        checkReminders.ThreeState = false;
+                        Permission? permissions = _optionPermissionNodes.First().SharedFolder.Permissions;
+                        if (_optionPermissionNodes.All(x => x.SharedFolder.Permissions == permissions))
+                            OptionPermissions = permissions;
                     }
-                    else
+
+                    // Send as shown if any node supports it
+                    if (_optionSendAsNodes.Count > 0)
                     {
-                        OptionReminders = CheckState.Indeterminate;
-                        checkReminders.ThreeState = true;
+                        bool sendAs = _optionSendAsNodes.First().SharedFolder.FlagSendAsOwner;
+                        if (_optionSendAsNodes.All(x => x.SharedFolder.FlagSendAsOwner == sendAs))
+                        {
+                            OptionSendAs = sendAs ? CheckState.Checked : CheckState.Unchecked;
+                            checkSendAs.ThreeState = false;
+                        }
+                        else
+                        {
+                            OptionSendAs = CheckState.Indeterminate;
+                            checkSendAs.ThreeState = true;
+                        }
+                    }
+                    // Reminders shown if any node supports it
+                    if (_optionRemindersNodes.Count > 0)
+                    {
+                        bool reminders = _optionRemindersNodes.First().SharedFolder.FlagCalendarReminders;
+                        if (_optionRemindersNodes.All(x => x.SharedFolder.FlagCalendarReminders == reminders))
+                        {
+                            OptionReminders = reminders ? CheckState.Checked : CheckState.Unchecked;
+                            checkReminders.ThreeState = false;
+                        }
+                        else
+                        {
+                            OptionReminders = CheckState.Indeterminate;
+                            checkReminders.ThreeState = true;
+                        }
                     }
                 }
 
@@ -535,6 +704,23 @@ namespace Acacia.Features.SharedFolders
                 // If the share name matches the folder name, track update
                 bool track = _optionNameNode.SharedFolder.Name ==  _optionNameNode.DefaultName;
                 _optionNameNode.SharedFolder = _optionNameNode.SharedFolder.WithFlagTrackShareName(track);
+            }
+        }
+
+        private void checkWholeStore_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < _optionWholeStoreNodes.Count; ++i)
+            {
+                StoreTreeNode node = _optionWholeStoreNodes[i];
+                bool wholeStore = false;
+                switch (checkWholeStore.CheckState)
+                {
+                    case CheckState.Checked: wholeStore = true; break;
+                    case CheckState.Indeterminate: wholeStore = _optionWholeStoreNodesInitial[i]; break;
+                    case CheckState.Unchecked: wholeStore = false; break;
+                }
+
+                node.WantShare = wholeStore;
             }
         }
 
@@ -586,22 +772,5 @@ namespace Acacia.Features.SharedFolders
 
         #endregion
 
-        private void kTreeFolders_DoubleClick(object sender, EventArgs e)
-        {
-            // TODO: This is some testing code for [KOE-123]
-            /*
-            if (ModifierKeys.HasFlag(Keys.Shift) && kTreeFolders.SelectedNodes.Count == 1)
-            {
-                KTreeNode selected = kTreeFolders.SelectedNodes.First();
-                if (selected is StoreTreeNode)
-                {
-                    // Open store for user
-                    Acacia.Stubs.IRestarter restarter = ThisAddIn.Instance.Restarter();
-                    restarter.CloseWindows = true;
-                    restarter.OpenShare(this._account, ((StoreTreeNode)selected).User);
-                    restarter.Restart();
-                }
-            }*/
-        }
     }
 }

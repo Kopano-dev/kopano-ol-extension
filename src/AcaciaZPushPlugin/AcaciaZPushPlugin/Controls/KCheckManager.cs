@@ -29,7 +29,8 @@ namespace Acacia.Controls
         TwoState,
         ThreeState,
         Recursive,
-        RecursiveThreeState
+        RecursiveThreeState,
+        Custom
     }
 
     abstract public class KCheckManager
@@ -119,7 +120,7 @@ namespace Acacia.Controls
                     // Set the check state recursively
                     node.Owner?.BeginUpdate();
 
-                    SetNodeCheckState(node, NextCheckState(node.CheckState));
+                    SetNodeCheckState(node, NextCheckState(node));
 
                     // Update the parent state
                     SetParentCheckState(node.Parent, node.CheckState);
@@ -130,12 +131,12 @@ namespace Acacia.Controls
                 }
             }
 
-            protected virtual CheckState NextCheckState(CheckState checkState)
+            protected virtual CheckState NextCheckState(KTreeNode node)
             {
-                return (checkState == CheckState.Checked) ? CheckState.Unchecked : CheckState.Checked;
+                return (node.CheckState == CheckState.Checked) ? CheckState.Unchecked : CheckState.Checked;
             }
 
-            protected void SetParentCheckState(KTreeNode parent, CheckState childCheckState)
+            protected virtual void SetParentCheckState(KTreeNode parent, CheckState childCheckState)
             {
                 if (parent == null)
                     return;
@@ -174,11 +175,18 @@ namespace Acacia.Controls
                 SetParentCheckState(parent.Parent, parent.CheckState);
             }
 
-            private void SetNodeCheckState(KTreeNode node, CheckState checkState)
+            protected virtual void SetChildrenCheckState(KTreeNode parent, CheckState checkState)
+            {
+                foreach (KTreeNode child in parent.Children)
+                    SetNodeCheckState(child, checkState != CheckState.Indeterminate ? checkState : CheckState.Unchecked);
+            }
+
+            protected virtual void SetNodeCheckState(KTreeNode node, CheckState checkState)
             {
                 // Apply the children first, otherwise the node's check state will be based on that again
-                foreach (KTreeNode child in node.Children)
-                    SetNodeCheckState(child, checkState != CheckState.Indeterminate ? checkState : CheckState.Unchecked);
+                SetChildrenCheckState(node, checkState);
+
+                // Set the node now
                 node.CheckState = checkState;
             }
 
@@ -252,9 +260,9 @@ namespace Acacia.Controls
                 SetParentCheckState(node.Parent, state);
             }
 
-            protected override CheckState NextCheckState(CheckState checkState)
+            protected override CheckState NextCheckState(KTreeNode node)
             {
-                switch(checkState)
+                switch(node.CheckState)
                 {
                     case CheckState.Unchecked:
                         return CheckState.Indeterminate;

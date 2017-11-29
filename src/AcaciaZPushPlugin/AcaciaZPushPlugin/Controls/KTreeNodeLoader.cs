@@ -197,6 +197,11 @@ namespace Acacia.Controls
                 EndLoading(node);
         }
 
+        public void Reset()
+        {
+            State = LoadingState.NotLoaded;
+        }
+
         public void Reload()
         {
             if (State != LoadingState.Loading)

@@ -65,7 +65,7 @@ namespace Acacia.Features.SharedFolders
 
             ChildLoader = new UserFolderLoader(this, folders, user);
             ChildLoader.ReloadOnCloseOpen = true;
-            HasCheckBox = false;
+            HasCheckBox = folders.SupportsWholeStore;
             ApplyReadOnly(this, IsReadOnly);
 
             // TODO: better icons, better way of handling this
@@ -90,6 +90,38 @@ namespace Acacia.Features.SharedFolders
         public GABUser User
         {
             get { return ((UserFolderLoader)ChildLoader).User; }
+        }
+
+        public bool IsShared
+        {
+            get { return false; }
+        }
+
+        public bool WantShare
+        {
+            get
+            {
+                return CheckState != System.Windows.Forms.CheckState.Unchecked;
+            }
+
+            set
+            {
+                CheckState = value ? System.Windows.Forms.CheckState.Checked : System.Windows.Forms.CheckState.Unchecked;
+            }
+        }
+
+        protected override void OnCheckStateChanged()
+        {
+            base.OnCheckStateChanged();
+            if (WantShare)
+            {
+                // Reload, this will return no children
+                ChildLoader.Reload();
+            }
+            else
+            {
+                ChildLoader.Reset();
+            }
         }
 
         #region Share management
@@ -204,6 +236,14 @@ namespace Acacia.Features.SharedFolders
             }
         }
 
+        public bool IsWholeStoreDirty
+        {
+            get
+            {
+                return WantShare != IsShared;
+            }
+        }
+
         public void ChangesApplied()
         {
             // Save a copy of current folders to initial folders
@@ -232,6 +272,8 @@ namespace Acacia.Features.SharedFolders
 
             protected override object DoLoadChildren(KTreeNode node)
             {
+                if (!WantsChildren(node))
+                    return null;
                 return _folders.GetStoreFolders(User);
             }
 
@@ -257,8 +299,19 @@ namespace Acacia.Features.SharedFolders
                 }
             }
 
+            private static bool WantsChildren(KTreeNode node)
+            {
+                // No children if we're sharing the whole store
+                if (node is StoreTreeNode)
+                    return !((StoreTreeNode)node).WantShare;
+                return true;
+            }
+
             protected override void DoRenderChildren(KTreeNode node, object loaded, KTreeNodes children)
             {
+                if (!WantsChildren(node))
+                    return;
+
                 List<AvailableFolder> folders = (List<AvailableFolder>)loaded;
                 foreach (AvailableFolder folder in folders.OrderBy(f => f, new FolderComparer(true)))
                 {
@@ -319,6 +372,8 @@ namespace Acacia.Features.SharedFolders
                     case KTreeNodeLoader.LoadingState.Loading:
                         return Properties.Resources.SharedFolders_Loading;
                     case KTreeNodeLoader.LoadingState.Loaded:
+                        if (!WantsChildren(children.Parent))
+                            return null;
                         if (children.Count == 0)
                             return Properties.Resources.SharedFolders_None;
                         return null;
