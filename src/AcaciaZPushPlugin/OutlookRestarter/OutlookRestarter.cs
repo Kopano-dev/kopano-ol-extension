@@ -50,13 +50,15 @@ namespace OutlookRestarter
 
             try
             {
-                string procPath = args[1];
-                List<string> procArgs = args.Skip(2).ToList();
+                int procId = int.Parse(args[0]);
+                string arch = args[1];
+                string procPath = args[2];
+
+                List<string> procArgs = args.Skip(3).ToList();
                 try
                 {
                     Logger.Instance.Debug(typeof(OutlookRestarter), "Waiting1");
                     // Attempt waiting for the process to finish
-                    int procId = int.Parse(args[0]);
                     Logger.Instance.Debug(typeof(OutlookRestarter), "Waiting2");
                     Process proc = Process.GetProcessById(procId);
                     Logger.Instance.Debug(typeof(OutlookRestarter), "Waiting3");
@@ -76,6 +78,11 @@ namespace OutlookRestarter
                             string path = procArgs[i];
                             HandleCleanKoe(path);
                         }
+                        else if (procArgs[i] == "/sharekoe")
+                        {
+                            ++i;
+                            HandleShareKoe(arch, procArgs[i]);
+                        }
                         else if (procArgs[i].StartsWith("/"))
                         {
                             useArgs.Add(procArgs[i]);
@@ -87,6 +94,7 @@ namespace OutlookRestarter
                     }
                     string argsString = string.Join(" ", useArgs);
                     Logger.Instance.Debug(typeof(OutlookRestarter), "Parsed arguments: {0}", argsString);
+
                     // Start the process
                     Process process = new Process();
                     process.StartInfo = new ProcessStartInfo(procPath, argsString);
@@ -99,6 +107,40 @@ namespace OutlookRestarter
             {
                 Logger.Instance.Fatal(typeof(OutlookRestarter), "Exception: {0}", e);
             }
+        }
+
+        private static void HandleShareKoe(string arch, string rawArgs)
+        {
+            string baseDir = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+            string path = Path.Combine(baseDir, "EASAccount-" + arch + ".exe");
+            string[] args = rawArgs.Split(':');
+            for (int i = 0; i < args.Length; ++i)
+                args[i] = "\"" + args[i] + "\"";
+            string argsString = string.Join(" ", args);
+
+            Logger.Instance.Debug(typeof(OutlookRestarter), "Request to open account: {0}: {1}", path, argsString);
+
+            Process process = new Process();
+            process.StartInfo = new ProcessStartInfo(path, argsString);
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.ErrorDataReceived += (s, e) => 
+                {
+                    if (!string.IsNullOrEmpty(e.Data.Trim()))
+                        Logger.Instance.Warning(typeof(OutlookRestarter), "EASAccount: {0}", e.Data.Trim());
+                };
+            process.OutputDataReceived += (s, e) =>
+                {
+                    if (!string.IsNullOrEmpty(e.Data.Trim()))
+                        Logger.Instance.Debug(typeof(OutlookRestarter), "EASAccount: {0}", e.Data.Trim());
+                };
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            process.WaitForExit(FINISH_WAIT_TIME);
+            Logger.Instance.Debug(typeof(OutlookRestarter), "Opened accounts: {0}", argsString);
         }
 
         private static void HandleCleanKoe(string path)

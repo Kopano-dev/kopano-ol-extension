@@ -290,6 +290,8 @@ namespace Acacia.Features.SharedFolders
                     // Restart
                     IRestarter restarter = ThisAddIn.Instance.Restarter();
                     restarter.CloseWindows = true;
+                    foreach (StoreTreeNode node in state.stores)
+                        restarter.OpenShare(_account, node.User);
                     restarter.Restart();
                 }
             }, true)
@@ -362,7 +364,7 @@ namespace Acacia.Features.SharedFolders
 
             if (select)
             {
-                FocusNode(node, false);
+                FocusNode(node, !_folders.SupportsWholeStore);
             }
         }
 
@@ -392,6 +394,7 @@ namespace Acacia.Features.SharedFolders
 
         private void WholeStoreShareChanged(KTreeNode node)
         {
+            // TODO: check duplicate email address
             StoreTreeNode storeNode = (StoreTreeNode)node;
             _dirtyWholeStores[storeNode.User] = storeNode.IsWholeStoreDirty;
             CheckDirty();

@@ -304,7 +304,10 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             get { return _app.Version; }
         }
-
+        public string VersionMajor
+        {
+            get { return _app.Version.Split('.')[0]; }
+        }
 
         public FeatureType GetFeature<FeatureType>()
             where FeatureType : Feature

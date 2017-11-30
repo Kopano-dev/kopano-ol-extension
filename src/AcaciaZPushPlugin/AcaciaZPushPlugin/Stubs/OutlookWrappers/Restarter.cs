@@ -72,29 +72,27 @@ namespace Acacia.Stubs.OutlookWrappers
                     commandLine += " /cleankoe " + Util.QuoteCommandLine(path);
                 }
             }
-            foreach(KeyValuePair<ZPushAccount, GABUser> share in _shares)
+
+            if (_shares.Count > 0)
             {
-                using (RegistryKey key = OutlookRegistryUtils.OpenProfileOutlookKey(_addIn.ProfileName, RegistryKeyPermissionCheck.ReadWriteSubTree))
+                foreach (KeyValuePair<ZPushAccount, GABUser> share in _shares)
                 {
-                    int accountId = (int)key.GetValue(OutlookConstants.REG_VAL_NEXT_ACCOUNT_ID);
-                    using (RegistryKey accountKey = key.CreateSubKey(string.Format("{0:X8}", accountId)))
-                    {
-                        accountKey.SetValue(OutlookConstants.REG_VAL_ACCOUNTNAME, share.Value.UserName + " through " + share.Key.DisplayName);
-                        accountKey.SetValue(OutlookConstants.REG_VAL_DISPLAYNAME, "Share for " + share.Value.DisplayName);
-                        accountKey.SetValue(OutlookConstants.REG_VAL_EMAIL, "test" + share.Key.Account.SmtpAddress);
-                        accountKey.SetValue(OutlookConstants.REG_VAL_EAS_SERVER, share.Key.Account.ServerURL);
-                        accountKey.SetValue(OutlookConstants.REG_VAL_EAS_USERNAME, share.Key.Account.UserName + ".share." + share.Value.UserName);
-                        accountKey.SetValue(OutlookConstants.REG_VAL_EAS_PASSWORD, share.Key.Account.EncryptedPassword);
-                        //accountKey.SetValue(OutlookConstants.REG_VAL_EAS_DEVICEID, share.Key.Account.DeviceId);
-                        accountKey.SetValue("clsid", "{ED475415-B0D6-11D2-8C3B-00104B2A6676}");
-                    }
-                    key.SetValue(OutlookConstants.REG_VAL_NEXT_ACCOUNT_ID, accountId + 1);
+                    // TODO: escaping
+                    commandLine += " /sharekoe " + Util.QuoteCommandLine(_addIn.ProfileName + ":" + 
+                            _addIn.VersionMajor + ":" +
+                            share.Key.Account.AccountId + ":" + 
+                            share.Value.UserName + ":" + share.Value.EmailAddress + ":" +
+                            share.Value.EmailAddress);
                 }
             }
 
+            string arch = Environment.Is64BitProcess ? "x64" : "x86";
             // Run that
             Process process = new Process();
-            process.StartInfo = new ProcessStartInfo(RestarterPath, Process.GetCurrentProcess().Id + " " + commandLine);
+            process.StartInfo = new ProcessStartInfo(RestarterPath, 
+                    Process.GetCurrentProcess().Id + " " + 
+                    arch + " " +
+                    commandLine);
             process.Start();
 
             // And close us and any other windows

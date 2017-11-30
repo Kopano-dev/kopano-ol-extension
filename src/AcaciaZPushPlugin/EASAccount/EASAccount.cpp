@@ -1,15 +1,26 @@
 #include "EASAccount.h"
 
+static const wstring R_ACCOUNT_NAME = L"Account Name";
+static const wstring R_DISPLAY_NAME = L"Display Name";
+static const wstring R_SERVER_URL = L"EAS Server URL";
+static const wstring R_USERNAME = L"EAS User";
+static const wstring R_EMAIL = L"Email";
+static const wstring R_EMAIL_ORIGINAL = L"KOE Share For";
+static const wstring R_PASSWORD = L"EAS Password";
+
 struct Account
 {
 public:
 	wstring profileName;
+	wstring outlookVersion;
 	wstring accountName;
 	wstring displayName;
 	wstring email;
+	wstring emailOriginal;
 	wstring server;
 	wstring username;
 	wstring password;
+	vector<byte> encryptedPassword;
 	wstring dataFolder;
 private:
 	wstring path;
@@ -55,7 +66,50 @@ public:
 	void Create()
 	{
 		CheckInit();
-		
+		DeterminePath();
+
+		// Set up the account
+		OpenProfileAdmin();
+		EncryptPassword();
+		CreateMessageService();
+		GetEntryId();
+		CreateAccount();
+		CommitAccountKey();
+		PatchMessageStore();
+	}
+
+	void LoadFromAccountId(const wstring &accountId)
+	{
+		OpenAccountKey(accountId);
+
+		try
+		{ 
+			accountName = RegReadAccountKey(R_ACCOUNT_NAME);
+			displayName = RegReadAccountKey(R_DISPLAY_NAME);
+			email = RegReadAccountKey(R_EMAIL);
+			server = RegReadAccountKey(R_SERVER_URL);
+			username = RegReadAccountKey(R_USERNAME);
+			encryptedPassword = RegReadAccountKeyBinary(R_PASSWORD);
+		}
+		// Clean up
+		catch (...)
+		{
+			if (hKeyNewAccount)
+			{
+				RegCloseKey(hKeyNewAccount);
+				hKeyNewAccount = nullptr;
+			}
+			throw;
+		}
+		if (hKeyNewAccount)
+		{
+			RegCloseKey(hKeyNewAccount);
+			hKeyNewAccount = nullptr;
+		}
+	}
+private:
+	void DeterminePath()
+	{
 		// Determine the .ost path
 		if (dataFolder.empty())
 		{
@@ -65,25 +119,27 @@ public:
 		}
 		// Somehow it only works if there's a number in between parentheses
 		path = dataFolder + email + L" - " + profileName + L"(1).ost";
-
-		// Set up the account
-		OpenProfileAdmin();
-		CreateMessageService();
-		GetEntryId();
-		CreateAccount();
-		CommitAccountKey();
-		PatchMessageStore();
 	}
-private:
+
+	void EncryptPassword()
+	{
+		// TODO: handle the case password is not set in registry
+		if (encryptedPassword.empty())
+			encryptedPassword = EncryptPassword(password, L"EAS Password");
+	}
+
 	void CheckInit()
 	{
 		#define DoCheckInit(field) do{ if (field.empty()) throw exception("Field " #field " not initialised"); } while(0)
 		DoCheckInit(profileName);
+		DoCheckInit(outlookVersion);
 		DoCheckInit(accountName);
 		DoCheckInit(displayName);
 		DoCheckInit(email);
 		DoCheckInit(server);
 		DoCheckInit(username);
+		if (encryptedPassword.empty())
+			DoCheckInit(password);
 		#undef DoCheckInit
 	}
 
@@ -137,9 +193,8 @@ private:
 		msprops[2].Value.lpszW = (LPWSTR)displayName.c_str();
 
 		msprops[3].ulPropTag = PR_PROFILE_SECURE_MAILBOX;
-		vector<byte> encPassword = EncryptPassword(password, L"S010267f0");
-		msprops[3].Value.bin.cb = (ULONG)encPassword.size();
-		msprops[3].Value.bin.lpb = &encPassword[0];
+		msprops[3].Value.bin.cb = (ULONG)encryptedPassword.size();
+		msprops[3].Value.bin.lpb = &encryptedPassword[0];
 
 		msprops[4].ulPropTag = PR_RESOURCE_FLAGS;
 		msprops[4].Value.l = SERVICE_NO_PRIMARY_IDENTITY | SERVICE_CREATE_WITH_STORE;
@@ -182,13 +237,31 @@ private:
 		}
 	}
 
-	void AllocateAccountKey()
+	void OpenAccountsKey()
 	{
+		if (hKeyAccounts != nullptr)
+			return;
+
 		wchar_t keyPath[MAX_PATH];
 
 		// Open the accounts key
-		swprintf_s(keyPath, ARRAYSIZE(keyPath), KEY_ACCOUNTS, 16, profileName.c_str());
+		swprintf_s(keyPath, ARRAYSIZE(keyPath), KEY_ACCOUNTS, outlookVersion.c_str(), profileName.c_str());
 		CHECK_L(RegOpenKey(HKEY_CURRENT_USER, keyPath, &hKeyAccounts), "OpenAccountsKey");
+	}
+
+	void OpenAccountKey(const wstring &accountId)
+	{
+		OpenAccountsKey();
+
+		// Open the subkey
+		CHECK_L(RegOpenKey(hKeyAccounts, accountId.c_str(), &hKeyNewAccount), "OpenAccountKey");
+	}
+
+	void AllocateAccountKey()
+	{
+		OpenAccountsKey();
+
+		wchar_t keyPath[MAX_PATH];
 
 		// Get the NextAccountID value
 		DWORD size = sizeof(accountId);
@@ -197,6 +270,23 @@ private:
 		// Create the subkey
 		swprintf_s(keyPath, ARRAYSIZE(keyPath), L"%.8X", accountId);
 		CHECK_L(RegCreateKey(hKeyAccounts, keyPath, &hKeyNewAccount), "CreateAccountKey");
+	}
+
+	wstring RegReadAccountKey(const wstring &name)
+	{
+		wchar_t buffer[4096];
+		DWORD size = sizeof(buffer);
+		CHECK_L(RegQueryValueEx(hKeyNewAccount, name.c_str(), nullptr, nullptr, (LPBYTE)buffer, &size), "RegReadAccountKey");
+		return buffer;
+	}
+
+	vector<byte> RegReadAccountKeyBinary(const wstring &name)
+	{
+		vector<byte> buffer(4096);
+		DWORD size = (DWORD)buffer.size();
+		CHECK_L(RegQueryValueEx(hKeyNewAccount, name.c_str(), nullptr, nullptr, (LPBYTE)&buffer[0], &size), "RegReadAccountKey");
+		buffer.resize(size);
+		return buffer;
 	}
 
 	void WriteAccountKey(const wstring &name, const wstring &value)
@@ -290,15 +380,18 @@ private:
 		AllocateAccountKey();
 
 		// Write the values
-		WriteAccountKey(L"Account Name", accountName);
-		WriteAccountKey(L"Display Name", displayName);
-		WriteAccountKey(L"EAS Server URL", server);
-		WriteAccountKey(L"EAS User", username);
-		WriteAccountKey(L"Email", email);
+		WriteAccountKey(R_ACCOUNT_NAME, accountName);
+		WriteAccountKey(R_DISPLAY_NAME, displayName);
+		WriteAccountKey(R_SERVER_URL, server);
+		WriteAccountKey(R_USERNAME, username);
+		WriteAccountKey(R_EMAIL, email);
+
+		if (!emailOriginal.empty())
+			WriteAccountKey(R_EMAIL_ORIGINAL, emailOriginal);
+
 		WriteAccountKey(L"clsid", L"{ED475415-B0D6-11D2-8C3B-00104B2A6676}");
 
-		vector<byte> encrypted = EncryptPassword(password, L"EAS Password");
-		WriteAccountKey(L"EAS Password", &encrypted[0], encrypted.size());
+		WriteAccountKey(R_PASSWORD, &encryptedPassword[0], encryptedPassword.size());
 
 		WriteAccountKey(L"Service UID", &service, sizeof(service));
 
@@ -400,6 +493,9 @@ private:
 			// Delete existing store
 			DeleteFile(path.c_str());
 
+			if (entryId.size() == 0)
+				throw exception("entryId not initialised");
+
 			// Open the msg store to finalise creation
 			CHECK_H(session->OpenMsgStore(0, (ULONG)entryId.size(), (LPENTRYID)&entryId[0], nullptr,
 				MDB_NO_DIALOG | MDB_WRITE | MAPI_DEFERRED_ERRORS, &msgStore), "OpenMsgStore");
@@ -430,15 +526,27 @@ private:
 
 };
 
-int __cdecl wmain(int, wchar_t  **)
+int __cdecl wmain(int argc, wchar_t  **argv)
 {
-	// Parse the command line
-	// Usage:
 	Account account;
-
 	// Main
 	try
 	{
+		if (argc != 7)
+		{
+			fwprintf(stderr, L"EASAccount: <profile> <outlook version> <accountid> <username> <email> <display>\n");
+			exit(3);
+		}
+
+		account.profileName = argv[1];
+		account.outlookVersion = argv[2];
+		account.LoadFromAccountId(argv[3]);
+		account.username = account.username + L"+share+" + argv[4];
+		account.emailOriginal = account.email;
+		account.email = argv[5];
+		account.accountName = account.email;
+		account.displayName = argv[6];
+
 		// Create the account
 		account.Create();
 	}

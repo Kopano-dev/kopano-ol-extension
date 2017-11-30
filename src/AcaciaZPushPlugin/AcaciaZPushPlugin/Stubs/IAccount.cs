@@ -27,6 +27,8 @@ namespace Acacia.Stubs
     {
         AccountType AccountType { get; }
 
+        string AccountId { get; }
+
         IStore Store { get; }
 
         void SendReceive();

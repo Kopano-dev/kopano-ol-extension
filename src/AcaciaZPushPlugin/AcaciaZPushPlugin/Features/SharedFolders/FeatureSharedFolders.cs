@@ -65,6 +65,15 @@ namespace Acacia.Features.SharedFolders
             set { RegistryUtil.SetConfigValue("SharedFolders", "DefaultFolderNameFormat", value, Microsoft.Win32.RegistryValueKind.String); }
         }
 
+        [AcaciaOption("If enabled, the 'Impersonate' capability is added, allowing whole stores to be opened through " +
+                      "user impersonation; if Z-Push supports it.")]
+        public bool AllowImpersonate
+        {
+            get { return GetOption(OPTION_ALLOW_IMPERSONATE); }
+            set { SetOption(OPTION_ALLOW_IMPERSONATE, value); }
+        }
+        private static readonly BoolOption OPTION_ALLOW_IMPERSONATE = new BoolOption("AllowImpersonate", false);
+
         #endregion
 
         public override void Startup()
@@ -82,6 +91,13 @@ namespace Acacia.Features.SharedFolders
             SetupPrivateAppointmentSuppression();
 
             SetupHierarchyChangeSuppression();
+        }
+
+        override public void GetCapabilities(ZPushCapabilities caps)
+        {
+            base.GetCapabilities(caps);
+            if (AllowImpersonate)
+                caps.Add(Constants.ZPUSH_CAPABILITY_IMPERSONATE);
         }
 
         #region UI

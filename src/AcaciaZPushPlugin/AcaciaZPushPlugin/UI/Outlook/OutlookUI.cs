@@ -212,7 +212,7 @@ namespace Acacia.UI.Outlook
 
                 string title = Properties.Resources.Ribbon_Title;
                 // Convert to upper case for Outlook 2013, to match other ribbons
-                if (ThisAddIn.Instance.Version.StartsWith("15."))
+                if (ThisAddIn.Instance.VersionMajor.Equals("15"))
                 {
                     title = title.ToUpper();
                 }

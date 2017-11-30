@@ -38,7 +38,7 @@
 
 using namespace std;
 
-static const wchar_t *KEY_ACCOUNTS = L"SOFTWARE\\Microsoft\\Office\\%d.0\\Outlook\\Profiles\\%s\\9375CFF0413111d3B88A00104B2A6676";
+static const wchar_t *KEY_ACCOUNTS = L"SOFTWARE\\Microsoft\\Office\\%s.0\\Outlook\\Profiles\\%s\\9375CFF0413111d3B88A00104B2A6676";
 static const wchar_t *KEY_OLKMAIL = L"{ED475418-B0D6-11D2-8C3B-00104B2A6676}";
 static const wchar_t *KEY_OLKADDRESSBOOK = L"{ED475419-B0D6-11D2-8C3B-00104B2A6676}";
 static const wchar_t *KEY_OLKSTORE = L"{ED475420-B0D6-11D2-8C3B-00104B2A6676}";

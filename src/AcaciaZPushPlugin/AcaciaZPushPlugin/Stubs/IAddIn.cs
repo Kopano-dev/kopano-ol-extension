@@ -35,6 +35,7 @@ namespace Acacia.Stubs
         IEnumerable<Feature> Features { get; }
         IEnumerable<KeyValuePair<string,string>> COMAddIns { get; }
         string Version { get; }
+        string VersionMajor { get; }
         ISyncObject GetSyncObject();
 
         #region UI

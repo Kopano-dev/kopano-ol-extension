@@ -97,6 +97,7 @@ namespace Acacia
         public const string ZPUSH_CAPABILITY_NOTES = "notes";
         public const string ZPUSH_CAPABILITY_OUT_OF_OFFICE = "oof";
         public const string ZPUSH_CAPABILITY_OUT_OF_OFFICE_TIMES = "ooftime";
+        public const string ZPUSH_CAPABILITY_IMPERSONATE = "impersonate";
 
         #endregion
 
@@ -118,5 +119,6 @@ namespace Acacia
         public const string PLUGIN_REGISTRY_LOGLEVEL = "LogLevel";
 
         #endregion
+
     }
 }

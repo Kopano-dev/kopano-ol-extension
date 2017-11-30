@@ -35,11 +35,13 @@ namespace Acacia.Stubs.OutlookWrappers
     [TypeConverter(typeof(ExpandableObjectConverter))]
     class AccountWrapper : ComWrapper<NSOutlook.Application>, IAccount, LogContext
     {
+        private readonly string _accountId;
         private readonly string _regPath;
         private readonly IStore _store;
 
         internal AccountWrapper(NSOutlook.Application item, string regPath, IStore store) : base(item)
         {
+            this._accountId = System.IO.Path.GetFileName(regPath);
             this._regPath = regPath;
             this._store = store;
 
@@ -81,8 +83,13 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             get
             {
-                return (DeviceId == null) ? AccountType.Other : AccountType.EAS;
+                return (UserName == null) ? AccountType.Other : AccountType.EAS;
             }
+        }
+
+        public string AccountId
+        {
+            get { return _accountId; }
         }
 
         [Browsable(false)]
