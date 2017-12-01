@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-12 14:56+0000\n"
-"PO-Revision-Date: 2017-11-08 13:10+0000\n"
+"PO-Revision-Date: 2017-12-01 12:10+0000\n"
 "Last-Translator: Sebastian <s.kummer@kopano.com>\n"
-"Language-Team: Portuguese (Brazil) <http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) "
+"<http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt_BR/>\n"
 "Language: pt_br\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1148,17 +1149,16 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\GAB\\GABSettings\\checkSMTPGroupsAsContacts.Text"
 msgid "Synchronise groups with addresses as contacts"
-msgstr ""
+msgstr "Sincronizar grupos com endereço de email como contatos"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelWholeStore.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelWholeStore.Text"
 msgid "Open whole store"
-msgstr ""
+msgstr "Abrir outra conta"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelRestartRequired.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelRestartRequired.Text"
 msgid "(Requires restart)"
-msgstr ""
-
+msgstr "(Requer reiniciar Outlook)"
