@@ -284,6 +284,14 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
+        public string ShareFor
+        {
+            get
+            {
+                return RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_KOE_SHARE_FOR, null);
+            }
+        }
+
         #endregion
     }
 }

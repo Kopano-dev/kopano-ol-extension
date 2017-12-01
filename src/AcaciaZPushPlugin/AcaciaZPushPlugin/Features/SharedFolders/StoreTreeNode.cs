@@ -47,9 +47,10 @@ namespace Acacia.Features.SharedFolders
         private readonly GABUser _user;
 
         public readonly bool IsReadOnly;
+        public readonly bool IsShared;
 
         public StoreTreeNode(SharedFoldersManager folders, GABHandler gab, GABUser user, string text, 
-                             Dictionary<BackendId, SharedFolder> currentFolders)
+                             Dictionary<BackendId, SharedFolder> currentFolders, bool isShared)
         :
         base(text)
         {
@@ -58,6 +59,7 @@ namespace Acacia.Features.SharedFolders
             this._gab = gab;
             this._user = user;
             this.IsReadOnly = false;
+            this.IsShared = isShared;
 
             // Create an empty current state. When loading the nodes, the shares will be added. This has the benefit of
             // cleaning up automatically any obsolote shares.
@@ -80,6 +82,9 @@ namespace Acacia.Features.SharedFolders
                 ChildLoader.Reload();
             };
             Control = _reloader;
+
+            // Set up sharing
+            WantShare = isShared;
         }
 
         private static void ApplyReadOnly(KTreeNode node, bool isReadOnly)
@@ -90,11 +95,6 @@ namespace Acacia.Features.SharedFolders
         public GABUser User
         {
             get { return ((UserFolderLoader)ChildLoader).User; }
-        }
-
-        public bool IsShared
-        {
-            get { return false; }
         }
 
         public bool WantShare

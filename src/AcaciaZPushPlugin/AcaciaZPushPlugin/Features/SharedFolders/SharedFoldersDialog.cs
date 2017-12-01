@@ -93,10 +93,17 @@ namespace Acacia.Features.SharedFolders
         private readonly ZPushAccount _account;
         private readonly SharedFoldersManager _folders;
         private readonly SyncId _initialSyncId;
+        private ZPushAccount _initialAccount;
         private SharedFolder _initialFolder;
 
         public SharedFoldersDialog(FeatureSharedFolders feature, ZPushAccount account, SyncId initial = null)
         {
+            // If this is a shared store, open the account it's a share for, with the request account as the initial
+            if (account.ShareFor != null)
+            {
+                _initialAccount = account;
+                account = account.ShareForAccount;
+            }
             this._account = account;
             this._folders = feature.Manage(account);
             this._initialSyncId = initial;
@@ -142,6 +149,7 @@ namespace Acacia.Features.SharedFolders
                 .New((ctx) =>
                 {
                     // TODO: bind cancellation token to Cancel button
+
                     // Fetch current shares
                     ICollection<SharedFolder> folders = _folders.GetCurrentShares(ctx.CancellationToken);
 
@@ -175,12 +183,18 @@ namespace Acacia.Features.SharedFolders
                 // Add public folders
                 Dictionary<BackendId, SharedFolder> publicShares;
                 shares.TryGetValue(GABUser.USER_PUBLIC, out publicShares);
-                AddUserFolders(GABUser.USER_PUBLIC, publicShares, false);
+                AddUserFolders(GABUser.USER_PUBLIC, false, publicShares, false);
+
+                // Add shared stores
+                foreach (ZPushAccount shared in _account.SharedAccounts)
+                {
+                    AddUserFolders(new GABUser(shared.ShareUserName), true, null, false);
+                }
 
                 // Add any users for which we have shared folders
                 foreach (KeyValuePair<GABUser, Dictionary<BackendId, SharedFolder>> entry in shares.OrderBy(x => x.Key.DisplayName))
                     if (GABUser.USER_PUBLIC != entry.Key)
-                       AddUserFolders(entry.Key, entry.Value, false);
+                       AddUserFolders(entry.Key, false, entry.Value, false);
             }
             finally
             {
@@ -205,6 +219,14 @@ namespace Acacia.Features.SharedFolders
                     FocusNode(node, true);
                 }
                 SetInitialFocus(kTreeFolders);
+            }
+            else if (_initialAccount != null)
+            {
+                StoreTreeNode node;
+                if (_userFolders.TryGetValue(new GABUser(_initialAccount.ShareUserName), out node))
+                {
+                    FocusNode(node, true);
+                }
             }
             else
             {
@@ -237,6 +259,7 @@ namespace Acacia.Features.SharedFolders
 
                 foreach (StoreTreeNode storeNode in _userFolders.Values)
                 {
+                    // Check modified folders
                     if (storeNode.IsDirty)
                     {
                         ctx.AddBusy(1);
@@ -245,6 +268,7 @@ namespace Acacia.Features.SharedFolders
                         _folders.SetSharesForStore(storeNode.User, storeNode.CurrentShares, ctx.CancellationToken);
                     }
 
+                    // And modified stores
                     if (storeNode.IsWholeStoreDirty)
                     {
                         state.stores.Add(storeNode);
@@ -273,26 +297,44 @@ namespace Acacia.Features.SharedFolders
 
                 if (state.stores.Count > 0)
                 {
-                    bool restart = MessageBox.Show(ThisAddIn.Instance.Window,
-                                        "Outlook will be restarted to open the new stores",
-                                        "Open stores",
-                                        MessageBoxButtons.OKCancel,
-                                        MessageBoxIcon.Information
-                                    ) == DialogResult.OK;
+                    List<StoreTreeNode> add = new List<StoreTreeNode>();
 
-                    // Reset state. Also do this when restarting, to avoid warning message about unsaved changes
-                    foreach (StoreTreeNode node in state.stores)
-                        node.WantShare = node.IsShared;
+                    // Remove any unshared store
+                    foreach (StoreTreeNode store in state.stores)
+                    {
+                        if (store.WantShare)
+                        {
+                            add.Add(store);
+                            continue;
+                        }
 
-                    if (!restart)
-                        return;
 
-                    // Restart
-                    IRestarter restarter = ThisAddIn.Instance.Restarter();
-                    restarter.CloseWindows = true;
-                    foreach (StoreTreeNode node in state.stores)
-                        restarter.OpenShare(_account, node.User);
-                    restarter.Restart();
+                    }
+
+                    // Check for any new stores
+                    if (add.Count > 0)
+                    {
+                        bool restart = MessageBox.Show(ThisAddIn.Instance.Window,
+                                            "Outlook will be restarted to open the new stores",
+                                            "Open stores",
+                                            MessageBoxButtons.OKCancel,
+                                            MessageBoxIcon.Information
+                                        ) == DialogResult.OK;
+
+                        // Reset state. Also do this when restarting, to avoid warning message about unsaved changes
+                        foreach (StoreTreeNode node in state.stores)
+                            node.WantShare = node.IsShared;
+
+                        if (!restart)
+                            return;
+
+                        // Restart
+                        IRestarter restarter = ThisAddIn.Instance.Restarter();
+                        restarter.CloseWindows = true;
+                        foreach (StoreTreeNode node in state.stores)
+                            restarter.OpenShare(_account, node.User);
+                        restarter.Restart();
+                    }
                 }
             }, true)
             .OnError((x) =>
@@ -311,7 +353,7 @@ namespace Acacia.Features.SharedFolders
 
         private void buttonOpenUser_Click(object sender, EventArgs e)
         {
-            AddUserFolders(gabLookup.SelectedUser, null, true);
+            AddUserFolders(gabLookup.SelectedUser, false, null, true);
         }
 
         private void gabLookup_SelectedUserChanged(object source, GABLookupControl.SelectedUserEventArgs e)
@@ -320,7 +362,7 @@ namespace Acacia.Features.SharedFolders
                 
             if (e.IsChosen)
             {
-                AddUserFolders(e.SelectedUser, null, true);
+                AddUserFolders(e.SelectedUser, false, null, true);
             }
         }
 
@@ -338,7 +380,7 @@ namespace Acacia.Features.SharedFolders
 
         private readonly Dictionary<GABUser, StoreTreeNode> _userFolders = new Dictionary<GABUser, StoreTreeNode>();
 
-        private void AddUserFolders(GABUser user, Dictionary<BackendId, SharedFolder> currentShares, bool select)
+        private void AddUserFolders(GABUser user, bool wholeStore, Dictionary<BackendId, SharedFolder> currentShares, bool select)
         {
             if (user == null)
                 return;
@@ -355,7 +397,9 @@ namespace Acacia.Features.SharedFolders
 
                 // Add the node
                 node = new StoreTreeNode(_folders, gabLookup.GAB,
-                                         user, user.DisplayName, currentShares ?? new Dictionary<BackendId, SharedFolder>());
+                                         user, user.DisplayName, currentShares ?? new Dictionary<BackendId, SharedFolder>(),
+                                         wholeStore);
+                if (wholeStore)
                 node.DirtyChanged += UserSharesChanged;
                 node.CheckStateChanged += WholeStoreShareChanged;
                 _userFolders.Add(user, node);

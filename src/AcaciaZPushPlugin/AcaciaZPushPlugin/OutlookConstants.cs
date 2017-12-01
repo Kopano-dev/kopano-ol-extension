@@ -46,6 +46,7 @@ namespace Acacia
         public const string REG_VAL_CURRENT_SIGNATURE = "KOE Signature Digest";
 
         public const string REG_VAL_NEXT_ACCOUNT_ID = "NextAccountID";
+        public const string REG_VAL_KOE_SHARE_FOR = "KOE Share For";
 
         #endregion
 

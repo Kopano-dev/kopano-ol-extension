@@ -94,7 +94,7 @@ namespace Acacia.ZPush
                 // Only EAS accounts can be zpush accounts
                 if (account.AccountType == AccountType.EAS)
                 {
-                    ZPushAccount zpush = new ZPushAccount(account);
+                    ZPushAccount zpush = new ZPushAccount(this, account);
                     _accountsByStoreId.Add(account.StoreID, zpush);
                     _accountsBySmtp.Add(account.SmtpAddress, zpush);
                     Logger.Instance.Trace(this, "ZPush account: {0}", zpush);

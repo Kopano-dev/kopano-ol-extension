@@ -36,10 +36,12 @@ namespace Acacia.ZPush
     {
         #region Miscellaneous
 
+        private readonly ZPushAccounts _zPushAccounts;
         private readonly IAccount _account;
 
-        internal ZPushAccount(IAccount account)
+        internal ZPushAccount(ZPushAccounts zPushAccounts, IAccount account)
         {
+            this._zPushAccounts = zPushAccounts;
             this._account = account;
         }
 
@@ -202,6 +204,63 @@ namespace Acacia.ZPush
             else
             {
                 _featureData[FeatureKey(feature, key)] = data;
+            }
+        }
+
+        #endregion
+
+        #region Account sharing
+
+        public string ShareFor
+        {
+            get { return Account.ShareFor; }
+        }
+
+        public string ShareUserName
+        {
+            get
+            {
+                if (ShareFor == null)
+                    return null;
+                int index = Account.UserName.IndexOf("+share+");
+                if (index < 0)
+                    return null;
+
+                return Account.UserName.Substring(index + 7);
+            }
+        }
+
+        [Browsable(false)]
+        public ZPushAccount ShareForAccount
+        {
+            get
+            {
+                if (Account.ShareFor == null)
+                    return null;
+
+                return _zPushAccounts.GetAccount(Account.ShareFor);
+            }
+        }
+
+        [Browsable(false)]
+        public ZPushAccount[] SharedAccounts
+        {
+            get
+            {
+                if (ShareFor != null)
+                    return new ZPushAccount[0];
+
+                List<ZPushAccount> shares = new List<ZPushAccount>();
+                foreach (ZPushAccount account in _zPushAccounts.GetAccounts())
+                {
+                    if (account == this)
+                        continue;
+
+                    if (account.ShareFor != null && account.ShareFor == this.Account.SmtpAddress)
+                        shares.Add(account);
+                }
+
+                return shares.ToArray();
             }
         }
 

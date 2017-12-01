@@ -72,5 +72,7 @@ namespace Acacia.Stubs
             get;
             set;
         }
+
+        string ShareFor {get;}
     }
 }

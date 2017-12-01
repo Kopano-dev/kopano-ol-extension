@@ -49,6 +49,7 @@
             this.checkReminders = new System.Windows.Forms.CheckBox();
             this._labelPermissions = new System.Windows.Forms.Label();
             this.dialogButtons = new Acacia.Controls.KDialogButtons();
+            this._labelRestartRequired = new System.Windows.Forms.Label();
             this._layout.SuspendLayout();
             this._mainBusyHider.SuspendLayout();
             this._layoutMain.SuspendLayout();
@@ -136,7 +137,7 @@
             resources.ApplyResources(this._layoutOptions, "_layoutOptions");
             this._layoutOptions.Controls.Add(this._labelWholeStore, 0, 0);
             this._layoutOptions.Controls.Add(this.checkWholeStore, 1, 0);
-            this._layoutOptions.Controls.Add(this.labelPermissionsValue, 0, 4);
+            this._layoutOptions.Controls.Add(this.labelPermissionsValue, 1, 4);
             this._layoutOptions.Controls.Add(this._labelName, 0, 1);
             this._layoutOptions.Controls.Add(this.textName, 1, 1);
             this._layoutOptions.Controls.Add(this._labelSendAs, 0, 2);
@@ -144,6 +145,7 @@
             this._layoutOptions.Controls.Add(this._labelReminders, 0, 3);
             this._layoutOptions.Controls.Add(this.checkReminders, 1, 3);
             this._layoutOptions.Controls.Add(this._labelPermissions, 0, 4);
+            this._layoutOptions.Controls.Add(this._labelRestartRequired, 2, 0);
             this._layoutOptions.Name = "_layoutOptions";
             // 
             // _labelWholeStore
@@ -154,6 +156,7 @@
             // checkWholeStore
             // 
             resources.ApplyResources(this.checkWholeStore, "checkWholeStore");
+            this.checkWholeStore.ForeColor = System.Drawing.SystemColors.ControlText;
             this.checkWholeStore.Name = "checkWholeStore";
             this.checkWholeStore.UseVisualStyleBackColor = true;
             this.checkWholeStore.CheckedChanged += new System.EventHandler(this.checkWholeStore_CheckedChanged);
@@ -161,6 +164,7 @@
             // labelPermissionsValue
             // 
             resources.ApplyResources(this.labelPermissionsValue, "labelPermissionsValue");
+            this._layoutOptions.SetColumnSpan(this.labelPermissionsValue, 2);
             this.labelPermissionsValue.Name = "labelPermissionsValue";
             // 
             // _labelName
@@ -170,6 +174,7 @@
             // 
             // textName
             // 
+            this._layoutOptions.SetColumnSpan(this.textName, 2);
             resources.ApplyResources(this.textName, "textName");
             this.textName.Name = "textName";
             this.textName.TextChanged += new System.EventHandler(this.textName_TextChanged);
@@ -213,6 +218,11 @@
             this.dialogButtons.IsDirty = false;
             this.dialogButtons.Name = "dialogButtons";
             this.dialogButtons.Apply += new System.EventHandler(this.dialogButtons_Apply);
+            // 
+            // _labelRestartRequired
+            // 
+            resources.ApplyResources(this._labelRestartRequired, "_labelRestartRequired");
+            this._labelRestartRequired.Name = "_labelRestartRequired";
             // 
             // SharedFoldersDialog
             // 
@@ -259,5 +269,6 @@
         private System.Windows.Forms.CheckBox checkReminders;
         private System.Windows.Forms.CheckBox checkWholeStore;
         private System.Windows.Forms.Label labelPermissionsValue;
+        private System.Windows.Forms.Label _labelRestartRequired;
     }
 }
