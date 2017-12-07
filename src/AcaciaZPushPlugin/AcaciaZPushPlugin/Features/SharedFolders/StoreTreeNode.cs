@@ -47,7 +47,19 @@ namespace Acacia.Features.SharedFolders
         private readonly GABUser _user;
 
         public readonly bool IsReadOnly;
-        public readonly bool IsShared;
+
+        private bool _isShared;
+        public bool IsShared
+        {
+            get { return _isShared; }
+            set
+            {
+                if (value != _isShared)
+                {
+                    _isShared = value;
+                }
+            }
+        }
 
         public StoreTreeNode(SharedFoldersManager folders, GABHandler gab, GABUser user, string text, 
                              Dictionary<BackendId, SharedFolder> currentFolders, bool isShared)
@@ -59,7 +71,7 @@ namespace Acacia.Features.SharedFolders
             this._gab = gab;
             this._user = user;
             this.IsReadOnly = false;
-            this.IsShared = isShared;
+            this._isShared = isShared;
 
             // Create an empty current state. When loading the nodes, the shares will be added. This has the benefit of
             // cleaning up automatically any obsolote shares.

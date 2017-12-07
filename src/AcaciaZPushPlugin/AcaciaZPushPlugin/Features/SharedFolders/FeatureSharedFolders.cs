@@ -449,9 +449,41 @@ namespace Acacia.Features.SharedFolders
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning
                         );
-            //folder.Delete();
+            // TODO: is this used?
         }
 
         #endregion
+
+        public void RemoveSharedStore(ZPushAccount account, GABUser shareUser)
+        {
+            // Find the store
+            Logger.Instance.Trace(this, "Request to remove shared store: {0} - {1}", account, shareUser.UserName);
+            ZPushAccount share = account.FindSharedAccount(shareUser.UserName);
+            if (share == null)
+            {
+                Logger.Instance.Warning(this, "Shared store not found: {0} - {1}", account, shareUser.UserName);
+                return;
+            }
+
+            Logger.Instance.Trace(this, "Removing shared store: {0} - {1}", account, share);
+            try
+            {
+                string path = share.Account.BackingFilePath;
+                ThisAddIn.Instance.Stores.RemoveStore(share.Account.Store);
+
+                // Clean up the .ost
+                // TODO: this always fails
+                /*if (path != null && path.EndsWith(".ost"))
+                {
+                    Logger.Instance.Trace(this, "Removing .ost: {0}", path);
+                    
+                    System.IO.File.Delete(path);
+                }*/
+            }
+            catch(Exception e)
+            {
+                Logger.Instance.Error(this, "Error removing shared store: {0}: {1}", share, e);
+            }
+        }
     }
 }

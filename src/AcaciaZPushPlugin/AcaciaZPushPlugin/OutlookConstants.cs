@@ -96,6 +96,8 @@ namespace Acacia
 
         #endregion
 
+        public const string PR_PROFILE_OFFLINE_STORE_PATH_W = PROP + "6610" + PT_UNICODE;
+
         #region Email specific
 
         public const string PR_LAST_VERB_EXECUTED = PROP + "1081" + PT_LONG;

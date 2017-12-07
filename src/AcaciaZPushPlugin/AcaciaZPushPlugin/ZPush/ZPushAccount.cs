@@ -264,6 +264,25 @@ namespace Acacia.ZPush
             }
         }
 
+        public ZPushAccount FindSharedAccount(string username)
+        {
+            if (ShareFor != null)
+                return null;
+
+            List<ZPushAccount> shares = new List<ZPushAccount>();
+            foreach (ZPushAccount account in _zPushAccounts.GetAccounts())
+            {
+                if (account == this)
+                    continue;
+
+                if (account.ShareFor != null && account.ShareFor == this.Account.SmtpAddress &&
+                    account.ShareUserName == username)
+                    return account;
+            }
+
+            return null;
+        }
+
         #endregion
     }
 }

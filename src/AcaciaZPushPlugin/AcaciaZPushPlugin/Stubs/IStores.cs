@@ -44,5 +44,10 @@ namespace Acacia.Stubs
         /// <param name="path">The path.</param>
         /// <returns>The store. The caller is responsible for disposing.</returns>
         IStore AddFileStore(string path);
+
+        /// <summary>
+        /// Removes the store
+        /// </summary>
+        void RemoveStore(IStore account);
     }
 }

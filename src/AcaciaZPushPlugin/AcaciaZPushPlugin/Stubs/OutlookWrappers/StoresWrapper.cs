@@ -231,6 +231,17 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
+        public void RemoveStore(IStore store)
+        {
+            using (store)
+            using (ComRelease com = new ComRelease())
+            {
+                NSOutlook.NameSpace session = com.Add(_item.Session);
+                NSOutlook.MAPIFolder rootFolder = com.Add(((FolderWrapper)store.GetRootFolder()).RawItem);
+                session.RemoveStore(rootFolder);
+            }
+        }
+
         public IEnumerator<IStore> GetEnumerator()
         {
             foreach (NSOutlook.Store store in IteratorStoresSafe())

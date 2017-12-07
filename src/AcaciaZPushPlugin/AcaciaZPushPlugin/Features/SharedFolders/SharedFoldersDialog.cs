@@ -288,15 +288,7 @@ namespace Acacia.Features.SharedFolders
 
                 ctx.AddBusy(-state.folders);
 
-                if (state.folders != 0)
-                {
-                    // Sync account
-                    _account.Account.SendReceive();
-
-                    // Show success
-                    ShowCompletion(Properties.Resources.SharedFolders_Applying_Success);
-                }
-
+                // Handle stores
                 if (state.stores.Count > 0)
                 {
                     List<StoreTreeNode> add = new List<StoreTreeNode>();
@@ -312,7 +304,9 @@ namespace Acacia.Features.SharedFolders
                         else
                         {
                             // Remove it
-                            _feature.RemoveSharedStore(store.User);
+                            _feature.RemoveSharedStore(_account, store.User);
+                            store.IsShared = false;
+                            WholeStoreShareChanged(store);
                         }
 
                     }
@@ -321,8 +315,8 @@ namespace Acacia.Features.SharedFolders
                     if (add.Count > 0)
                     {
                         bool restart = MessageBox.Show(ThisAddIn.Instance.Window,
-                                            "Outlook will be restarted to open the new stores",
-                                            "Open stores",
+                                            Properties.Resources.SharedFolders_WholeStoreRestart_Body,
+                                            Properties.Resources.SharedFolders_WholeStoreRestart_Title,
                                             MessageBoxButtons.OKCancel,
                                             MessageBoxIcon.Information
                                         ) == DialogResult.OK;
@@ -341,6 +335,21 @@ namespace Acacia.Features.SharedFolders
                             restarter.OpenShare(_account, node.User);
                         restarter.Restart();
                     }
+
+                    // Update UI state
+                    foreach (StoreTreeNode storeNode in _userFolders.Values)
+                        storeNode.ChangesApplied();
+                    CheckDirty();
+
+                    if (state.folders != 0)
+                    {
+                        // Sync account
+                        _account.Account.SendReceive();
+
+                        // Show success
+                        ShowCompletion(Properties.Resources.SharedFolders_Applying_Success);
+                    }
+
                 }
             }, true)
             .OnError((x) =>
@@ -656,9 +665,11 @@ namespace Acacia.Features.SharedFolders
                     if (_optionWholeStoreNodes.Count > 0)
                     {
                         bool isShared = _optionWholeStoreNodes.First().WantShare;
+                        bool wasShared = _optionWholeStoreNodes.First().IsShared;
                         if (_optionWholeStoreNodes.All(x => x.WantShare == isShared))
                         {
                             OptionWholeStore = isShared ? CheckState.Checked : CheckState.Unchecked;
+
                             checkWholeStore.ThreeState = false;
                         }
                         else
@@ -666,6 +677,8 @@ namespace Acacia.Features.SharedFolders
                             OptionWholeStore = CheckState.Indeterminate;
                             checkWholeStore.ThreeState = true;
                         }
+
+                        _labelRestartRequired.Visible = isShared && !wasShared;
                     }
 
                 }

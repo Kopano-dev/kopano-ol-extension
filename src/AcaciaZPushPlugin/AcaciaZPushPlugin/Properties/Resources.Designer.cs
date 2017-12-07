@@ -1176,6 +1176,24 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Outlook will be restarted to open the new stores.
+        /// </summary>
+        internal static string SharedFolders_WholeStoreRestart_Body {
+            get {
+                return ResourceManager.GetString("SharedFolders_WholeStoreRestart_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open stores.
+        /// </summary>
+        internal static string SharedFolders_WholeStoreRestart_Title {
+            get {
+                return ResourceManager.GetString("SharedFolders_WholeStoreRestart_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The signatures are being synchronised..
         /// </summary>
         internal static string SignaturesSync_Label {

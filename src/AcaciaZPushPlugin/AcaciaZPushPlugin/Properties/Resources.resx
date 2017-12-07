@@ -524,4 +524,10 @@
     <value>The folder has been configured by your system administrator and cannot be modified. 
 Please contact your system administrator for any required changes.</value>
   </data>
+  <data name="SharedFolders_WholeStoreRestart_Body" xml:space="preserve">
+    <value>Outlook will be restarted to open the new stores</value>
+  </data>
+  <data name="SharedFolders_WholeStoreRestart_Title" xml:space="preserve">
+    <value>Open stores</value>
+  </data>
 </root>
