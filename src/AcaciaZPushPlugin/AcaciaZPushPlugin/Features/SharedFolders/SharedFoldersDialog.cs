@@ -90,6 +90,7 @@ namespace Acacia.Features.SharedFolders
             }
         }
 
+        private readonly FeatureSharedFolders _feature;
         private readonly ZPushAccount _account;
         private readonly SharedFoldersManager _folders;
         private readonly SyncId _initialSyncId;
@@ -105,6 +106,7 @@ namespace Acacia.Features.SharedFolders
                 account = account.ShareForAccount;
             }
             this._account = account;
+            this._feature = feature;
             this._folders = feature.Manage(account);
             this._initialSyncId = initial;
 
@@ -307,7 +309,11 @@ namespace Acacia.Features.SharedFolders
                             add.Add(store);
                             continue;
                         }
-
+                        else
+                        {
+                            // Remove it
+                            _feature.RemoveSharedStore(store.User);
+                        }
 
                     }
 
@@ -399,7 +405,6 @@ namespace Acacia.Features.SharedFolders
                 node = new StoreTreeNode(_folders, gabLookup.GAB,
                                          user, user.DisplayName, currentShares ?? new Dictionary<BackendId, SharedFolder>(),
                                          wholeStore);
-                if (wholeStore)
                 node.DirtyChanged += UserSharesChanged;
                 node.CheckStateChanged += WholeStoreShareChanged;
                 _userFolders.Add(user, node);
