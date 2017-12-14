@@ -5,8 +5,7 @@ msgstr ""
 "POT-Creation-Date: 2016-12-12 14:56+0000\n"
 "PO-Revision-Date: 2017-12-01 12:10+0000\n"
 "Last-Translator: Sebastian <s.kummer@kopano.com>\n"
-"Language-Team: Portuguese (Brazil) "
-"<http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt_BR/>\n"
 "Language: pt_br\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1162,3 +1161,16 @@ msgstr "Abrir outra conta"
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelRestartRequired.Text"
 msgid "(Requires restart)"
 msgstr "(Requer reiniciar Outlook)"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_WholeStoreRestart_Body
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Body"
+msgid "Outlook will be restarted to open the new stores"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_WholeStoreRestart_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Title"
+msgid "Open stores"
+msgstr ""
+

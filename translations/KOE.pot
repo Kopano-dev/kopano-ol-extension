@@ -1077,6 +1077,18 @@ msgid ""
 "Please contact your system administrator for any required changes."
 msgstr ""
 
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_WholeStoreRestart_Body
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Body"
+msgid "Outlook will be restarted to open the new stores"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_WholeStoreRestart_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Title"
+msgid "Open stores"
+msgstr ""
+
 #: AcaciaZPushPlugin\UI\ProgressDialog\labelMessage.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\ProgressDialog\\labelMessage.Text"

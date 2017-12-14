@@ -1158,3 +1158,15 @@ msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_label
 msgid "(Requires restart)"
 msgstr ""
 
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_WholeStoreRestart_Body
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Body"
+msgid "Outlook will be restarted to open the new stores"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_WholeStoreRestart_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Title"
+msgid "Open stores"
+msgstr ""
+
