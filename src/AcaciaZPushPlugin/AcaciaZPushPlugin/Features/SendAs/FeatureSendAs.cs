@@ -93,7 +93,6 @@ namespace Acacia.Features.SendAs
                             // It's a shared folder, use the owner as the sender if possible
                             using (IRecipient recip = FindSendAsSender(zpush, shared.Store))
                             {
-                                Logger.Instance.Trace(this, "Checking, Shared folder owner recipient: {0}", recip.Name);
                                 if (recip != null && recip.IsResolved)
                                 {
                                     Logger.Instance.Trace(this, "Sending as: {0}", recip.Address);
@@ -130,9 +129,15 @@ namespace Acacia.Features.SendAs
             {
                 // If it's resolved, we're good. Otherwise dispose and continue
                 if (recip.IsResolved)
+                {
+                    Logger.Instance.Trace(this, "Resolved send-as: {0}", recip.Name);
                     return recip;
+                }
                 else
+                {
+                    Logger.Instance.Trace(this, "Unresolved send-as: {0}", user.UserName);
                     recip.Dispose();
+                }
             }
 
             // Search through GAB to find the user
@@ -147,17 +152,29 @@ namespace Acacia.Features.SendAs
                         search.AddField("urn:schemas:contacts:customerid").SetOperation(SearchOperation.Equal, user.UserName);
                         using (IContactItem result = search.SearchOne())
                         {
+                            Logger.Instance.Trace(this, "GAB Search for send-as {0}: {1}", zpush, result);
                             if (result != null)
                             {
                                 // Try resolving by email
+                                Logger.Instance.Trace(this, "Resolving send-as by email address {0}: {1}", user.UserName, result.Email1Address);
                                 return ThisAddIn.Instance.ResolveRecipient(result.Email1Address);
                             }
                         }
                     }
                 }
-            }
+                else
+                {
+                    Logger.Instance.Trace(this, "GAB handler not found for account: {0}", zpush);
+                }
 
-            return null;
+                Logger.Instance.Warning(this, "Unable to resolve send-as: {0}", user.UserName);
+                return null;
+            }
+            else
+            {
+                Logger.Instance.Warning(this, "Unable to resolve send-as and GABLookup disabled: {0}", user.UserName);
+                return null;
+            }
         }
 
         private void MailEvents_ItemSend(IMailItem item, ref bool cancel)
