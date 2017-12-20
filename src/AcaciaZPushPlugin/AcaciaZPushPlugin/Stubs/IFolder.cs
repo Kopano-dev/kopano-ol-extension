@@ -102,6 +102,7 @@ namespace Acacia.Stubs
 
         ItemType ItemType { get; }
 
+        BackendId BackendId { get; }
         SyncId SyncId { get; }
 
         /// <summary>

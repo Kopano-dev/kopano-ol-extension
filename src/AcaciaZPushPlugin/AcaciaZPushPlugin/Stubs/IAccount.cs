@@ -74,5 +74,11 @@ namespace Acacia.Stubs
         }
 
         string ShareFor {get;}
+
+        string this[string index]
+        {
+            get;
+            set;
+        }
     }
 }

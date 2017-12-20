@@ -163,7 +163,14 @@ namespace Acacia.ZPush.API.SharedFolders
         {
             SoapData newData = _data;
             newData.flags = flags;
-            return new SharedFolder(newData);
+            SharedFolder clone = new SharedFolder(newData);
+            clone.SendAsAddress = SendAsAddress;
+            return clone;
+        }
+
+        public bool CanSendAs
+        {
+            get { return SyncType.IsMail(); }
         }
 
         public bool FlagSendAsOwner { get { return Flags.HasFlag(ShareFlags.SendAsOwner); } }
@@ -196,6 +203,23 @@ namespace Acacia.ZPush.API.SharedFolders
 
         #endregion
 
+        #region Send as
+
+        public string SendAsAddress
+        {
+            get;
+            set;
+        }
+
+        public SharedFolder WithSendAsAddress(string sendAs)
+        {
+            SharedFolder clone = new SharedFolder(_data);
+            clone.SendAsAddress = sendAs;
+            return clone;
+        }
+
+        #endregion
+
         #region Standard overrides
 
         public override int GetHashCode()
@@ -205,7 +229,17 @@ namespace Acacia.ZPush.API.SharedFolders
 
         override public bool Equals(object o)
         {
-            return o is SharedFolder && _data.Equals(((SharedFolder)o)._data);
+            SharedFolder rhs = o as SharedFolder;
+            if (rhs == null)
+                return false;
+
+            if (!_data.Equals(rhs._data))
+                return false;
+
+            if (!FlagSendAsOwner)
+                return true;
+
+            return Object.Equals(SendAsAddress, rhs.SendAsAddress);
         }
 
         public override string ToString()

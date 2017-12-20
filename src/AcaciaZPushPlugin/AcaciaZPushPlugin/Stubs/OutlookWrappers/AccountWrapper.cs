@@ -158,7 +158,10 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             get
             {
-                return RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_EAS_DEVICEID, null);
+                string devId = RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_EAS_DEVICEID, null);
+                if (devId == null)
+                    devId = RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_EAS_DEVICEID, null);
+                return devId;
             }
         }
 
@@ -289,6 +292,22 @@ namespace Acacia.Stubs.OutlookWrappers
             get
             {
                 return RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_KOE_SHARE_FOR, null);
+            }
+        }
+
+        public string this[string index]
+        {
+            get
+            {
+                return RegistryUtil.GetValueString(_regPath, index, null);
+            }
+
+            set
+            {
+                if (value == null)
+                    RegistryUtil.RemoveValue(_regPath, index);
+                else
+                    RegistryUtil.SetValueString(_regPath, index, value);
             }
         }
 

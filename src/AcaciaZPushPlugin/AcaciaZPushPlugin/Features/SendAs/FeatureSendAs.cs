@@ -48,6 +48,15 @@ namespace Acacia.Features.SendAs
         }
         private static readonly BoolOption OPTION_SEND_AS_OWNER = new BoolOption("SendAsOwner", true);
 
+        [AcaciaOption("Disables GAB look ups for senders. GAB lookups are required if a username exists on different accounts, " +
+                      "as in that case Outlook fails to determine the email address of the sender.")]
+        public bool GABLookup
+        {
+            get { return GetOption(OPTION_GAB_LOOKUP); }
+            set { SetOption(OPTION_GAB_LOOKUP, value); }
+        }
+        private static readonly BoolOption OPTION_GAB_LOOKUP = new BoolOption("GABLookup", true);
+
         public override void Startup()
         {
             if (MailEvents != null)
@@ -76,53 +85,75 @@ namespace Acacia.Features.SendAs
             {
                 ZPushAccount zpush = Watcher.Accounts.GetAccount(store);
                 Logger.Instance.Trace(this, "Checking ZPush: {0}", zpush);
-                if (zpush != null)
+                if (zpush == null)
+                    return;
+
+                // Check if the containing folder is a shared folder
+                using (IFolder parent = mail.Parent)
+                using (IRecipient recip = FindSendAsSender(zpush, parent))
                 {
-                    // Check if the containing folder is a shared folder
-                    using (IFolder parent = mail.Parent)
+                    if (recip == null || !recip.IsResolved)
+                        return;
+
+                    // Set the sender
+                    Logger.Instance.Trace(this, "Sending as: {0}", recip.Address);
+                    using (IAddressEntry address = recip.GetAddressEntry())
                     {
-                        Logger.Instance.Trace(this, "Checking, Parent folder: {0}", parent.Name);
-                        SharedFolder shared = _sharedFolders.GetSharedFolder(parent);
-                        if (shared != null)
-                            Logger.Instance.Trace(this, "Checking, Shared folder: {0}, flags={1}", shared, shared?.Flags);
-                        else
-                            Logger.Instance.Trace(this, "Not a shared folder");
-                        if (shared != null && shared.FlagSendAsOwner)
-                        {
-                            Logger.Instance.Trace(this, "Checking, Shared folder owner: {0}", shared.Store.UserName);
-                            // It's a shared folder, use the owner as the sender if possible
-                            using (IRecipient recip = FindSendAsSender(zpush, shared.Store))
-                            {
-                                if (recip != null && recip.IsResolved)
-                                {
-                                    Logger.Instance.Trace(this, "Sending as: {0}", recip.Address);
-                                    using (IAddressEntry address = recip.GetAddressEntry())
-                                    {
-                                        response.SetSender(address);
-                                    }
-                                }
-                                else
-                                {
-                                    Logger.Instance.Error(this, "Unable to resolve sender: {0}", shared.Store.UserName);
-                                }
-                            }
-                        }
+                        response.SetSender(address);
                     }
                 }
             }
         }
 
-        [AcaciaOption("Disables GAB look ups for senders. GAB lookups are required if a username exists on different accounts, " +
-                      "as in that case Outlook fails to determine the email address of the sender.")]
-        public bool GABLookup
+        /// <summary>
+        /// Finds the sender to use for an email sent from the specified folder.
+        /// </summary>
+        /// <returns>The sender, or null if the default sender should be used</returns>
+        private IRecipient FindSendAsSender(ZPushAccount zpush, IFolder folder)
         {
-            get { return GetOption(OPTION_GAB_LOOKUP); }
-            set { SetOption(OPTION_GAB_LOOKUP, value); }
-        }
-        private static readonly BoolOption OPTION_GAB_LOOKUP = new BoolOption("GABLookup", true);
+            // First check if the folder is shared
+            if (folder.SyncId.Kind != SyncKind.Shared)
+                return null;
 
-        internal IRecipient FindSendAsSender(ZPushAccount zpush, GABUser user)
+            return FindSendAsSender(zpush, folder, folder.BackendId, null);
+        }
+
+        public IRecipient FindSendAsSender(ZPushAccount zpush, IFolder folder, BackendId id, GABUser user)
         {
+            // Check for a locally stored address
+            if (id != null)
+            {
+                string address = zpush.GetSendAsAddress(id);
+                if (address != null)
+                {
+                    IRecipient resolved = ThisAddIn.Instance.ResolveRecipient(address);
+                    if (resolved != null)
+                        return resolved;
+                }
+            }
+
+            return null;
+
+            // If we don't have a user, see if we can fetch it from the shared folder state
+            if (user == null && folder != null)
+            {
+                Logger.Instance.Trace(this, "Checking, Parent folder: {0}", folder.Name);
+                SharedFolder shared = _sharedFolders.GetSharedFolder(folder);
+                if (shared != null)
+                    Logger.Instance.Trace(this, "Checking, Shared folder: {0}, flags={1}", shared, shared?.Flags);
+                else
+                    Logger.Instance.Trace(this, "Not a shared folder");
+
+                if (shared != null && shared.FlagSendAsOwner)
+                {
+                    user = shared.Store;
+                }
+            }
+
+            // If we don't have a user, there's nothing to resolve
+            if (user == null)
+                return null;
+
             // First try a simple resolve, this will work if the username is unique
             IRecipient recip = ThisAddIn.Instance.ResolveRecipient(user.UserName);
             if (recip != null)

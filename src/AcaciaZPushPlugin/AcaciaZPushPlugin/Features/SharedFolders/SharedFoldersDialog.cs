@@ -16,6 +16,7 @@
 
 using Acacia.Controls;
 using Acacia.Features.GAB;
+using Acacia.Features.SendAs;
 using Acacia.Stubs;
 using Acacia.UI;
 using Acacia.UI.Outlook;
@@ -412,7 +413,8 @@ namespace Acacia.Features.SharedFolders
 
                 // Add the node
                 node = new StoreTreeNode(_folders, gabLookup.GAB,
-                                         user, user.DisplayName, currentShares ?? new Dictionary<BackendId, SharedFolder>(),
+                                         user, _feature.FindSendAsAddress(_account, user, null),
+                                         user.DisplayName, currentShares ?? new Dictionary<BackendId, SharedFolder>(),
                                          wholeStore);
                 node.DirtyChanged += UserSharesChanged;
                 node.CheckStateChanged += WholeStoreShareChanged;
@@ -499,6 +501,7 @@ namespace Acacia.Features.SharedFolders
             set
             {
                 _labelSendAs.Visible = checkSendAs.Visible = value != null;
+                _labelSendAsAddress.Visible = textSendAsAddress.Visible = _labelSendAs.Visible;
                 if (value != null)
                     checkSendAs.CheckState = value.Value;
             }
@@ -719,6 +722,9 @@ namespace Acacia.Features.SharedFolders
                             OptionSendAs = CheckState.Indeterminate;
                             checkSendAs.ThreeState = true;
                         }
+
+                        TryInitSendAsAddress();
+                        EnableSendAsAddress();
                     }
                     // Reminders shown if any node supports it
                     if (_optionRemindersNodes.Count > 0)
@@ -791,6 +797,9 @@ namespace Acacia.Features.SharedFolders
 
         private void checkSendAs_CheckedChanged(object sender, EventArgs e)
         {
+            // Hide the address unless it makes sense
+            EnableSendAsAddress();
+
             for (int i = 0; i < _optionSendAsNodes.Count; ++i)
             {
                 FolderTreeNode node = _optionSendAsNodes[i];
@@ -805,12 +814,66 @@ namespace Acacia.Features.SharedFolders
                 if (node.SharedFolder.FlagSendAsOwner != sendAs)
                 {
                     node.SharedFolder = node.SharedFolder.WithFlagSendAsOwner(sendAs);
+                    if (sendAs)
+                    {
+                        TryInitSendAsAddress();
+                    }
 
                     // Send-as is applied recursively
                     foreach (FolderTreeNode desc in node.Descendants())
                     {
-                        desc.SharedFolder = desc.SharedFolder.WithFlagSendAsOwner(sendAs);
+                        if (desc.SharedFolder != null)
+                        {
+                            desc.SharedFolder = desc.SharedFolder.WithFlagSendAsOwner(sendAs);
+                        }
                     }
+                }
+            }
+        }
+
+        private void TryInitSendAsAddress()
+        {
+            string email = _feature.FindSendAsAddress(_account, _optionSendAsNodes[0].AvailableFolder, null);
+
+            if (email != null)
+            {
+                textSendAsAddress.Text = email;
+                if (!string.IsNullOrEmpty(email) && _optionSendAsNodes[0].IsShared)
+                {
+                    _optionSendAsNodes[0].SharedFolder.SendAsAddress = email;
+                }
+            }
+            else if (checkSendAs.Checked)
+            {
+                MessageBox.Show("Unable to determine the email address for the folder. " +
+                    "Send-as will only work if you specify the email address manually.",
+                    "Shared Folders", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void EnableSendAsAddress()
+        {
+            // Hide unless there's only one selected, and send as is enabled
+            if (_optionSendAsNodes.Count == 1)
+            {
+                _labelSendAsAddress.Visible = textSendAsAddress.Visible = true;
+                _labelSendAsAddress.Enabled = textSendAsAddress.Enabled = OptionSendAs == CheckState.Checked;
+            }
+            else
+            {
+                _labelSendAsAddress.Visible = textSendAsAddress.Visible = false;
+            }
+        }
+
+        private void textSendAsAddress_TextChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < _optionSendAsNodes.Count; ++i)
+            {
+                FolderTreeNode node = _optionSendAsNodes[i];
+
+                if (node.SharedFolder.SendAsAddress != textSendAsAddress.Text)
+                {
+                    node.SharedFolder = node.SharedFolder.WithSendAsAddress(textSendAsAddress.Text);
                 }
             }
         }
