@@ -119,17 +119,8 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             get
             {
-                string syncId = (string)GetProperty(OutlookConstants.PR_ZPUSH_SYNC_ID);
-                return syncId == null ? null : new SyncId(syncId);
-            }
-        }
-
-        public BackendId BackendId
-        {
-            get
-            {
-                string backendId = (string)GetProperty(OutlookConstants.PR_ZPUSH_BACKEND_ID);
-                return backendId == null ? null : new BackendId(backendId);
+                string folderId = (string)GetProperty(OutlookConstants.PR_ZPUSH_FOLDER_ID);
+                return folderId == null ? null : new SyncId(folderId);
             }
         }
 

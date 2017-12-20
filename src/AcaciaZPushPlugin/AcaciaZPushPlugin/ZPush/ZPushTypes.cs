@@ -118,23 +118,7 @@ namespace Acacia.ZPush
     {
         public static readonly BackendId NONE = new BackendId("0");
 
-        public BackendId(string id) 
-        : 
-        base(StripSuffix(id))
-        {
-        }
-
-        private static string StripSuffix(string id)
-        {
-            // The backend id is of the format {id}num?. Strip off num if present
-            int index = id.IndexOf('}');
-            if (index >= 0 && index < id.Length)
-            {
-                id = id.Substring(0, index + 1);
-            }
-            return id;
-        }
-
+        public BackendId(string id) : base(id) { }
         public BackendId(int id) : base(id) { }
         public BackendId(long id) : base(id.ToString()) { }
 

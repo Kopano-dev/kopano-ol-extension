@@ -139,8 +139,8 @@ namespace Acacia
 
         #region EAS / ZPush
 
-        public const string PR_ZPUSH_BACKEND_ID = PROP + "6A18" + PT_STRING8;
-        public const string PR_ZPUSH_SYNC_ID = PROP + "6A19" + PT_STRING8;
+        public const string PR_ZPUSH_SYNC_ID = PROP + "6A18" + PT_STRING8;
+        public const string PR_ZPUSH_FOLDER_ID = PROP + "6A19" + PT_STRING8;
         public const string PR_ZPUSH_MESSAGE_ID = PROP + "6B20" + PT_STRING8;
         public const string PR_ZPUSH_NAME = PROP + "6915" + PT_UNICODE;
 

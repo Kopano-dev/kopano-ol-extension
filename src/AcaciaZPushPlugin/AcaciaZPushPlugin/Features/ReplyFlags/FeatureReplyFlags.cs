@@ -180,7 +180,7 @@ namespace Acacia.Features.ReplyFlags
             string id = (string)mail.GetProperty(OutlookConstants.PR_ZPUSH_MESSAGE_ID);
             using (IFolder folder = mail.Parent)
             {
-                string folderId = (string)folder.GetProperty(OutlookConstants.PR_ZPUSH_SYNC_ID);
+                string folderId = (string)folder.GetProperty(OutlookConstants.PR_ZPUSH_FOLDER_ID);
                 string value = ReplyFlags.VerbToExchange(verb) + "/" + id + "/" + folderId;
                 Logger.Instance.Trace(this, "Reply header: {0}", value);
                 response.SetProperty(Constants.ZPUSH_REPLY_HEADER, value);

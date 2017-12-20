@@ -501,7 +501,7 @@ namespace Acacia.Features.SyncState
             // Check the inbox folder
             using (IFolder inbox = account.Account.Store.GetDefaultFolder(DefaultFolder.Inbox))
             {
-                string syncId = (string)inbox.GetProperty(OutlookConstants.PR_ZPUSH_BACKEND_ID);
+                string syncId = (string)inbox.GetProperty(OutlookConstants.PR_ZPUSH_SYNC_ID);
 
                 // If it's syncing, it's not stalled
                 if (syncId != null && syncId != "0")
@@ -515,7 +515,7 @@ namespace Acacia.Features.SyncState
                 _syncStallLastSyncTime = sync.LastSyncTime;
 
                 // Get the sync state
-                string folderId = (string)inbox.GetProperty(OutlookConstants.PR_ZPUSH_SYNC_ID);
+                string folderId = (string)inbox.GetProperty(OutlookConstants.PR_ZPUSH_FOLDER_ID);
                 if (folderId != null)
                 {
 

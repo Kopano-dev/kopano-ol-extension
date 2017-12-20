@@ -1,6 +1,5 @@
 ﻿
 using Acacia.Features.SecondaryContacts;
-using Acacia.Features.SendAs;
 /// Copyright 2016 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
@@ -192,7 +191,7 @@ namespace Acacia.Features.SharedFolders
 
         public static bool IsSharedFolder(IFolder folder)
         {
-            string id = (string)folder.GetProperty(OutlookConstants.PR_ZPUSH_SYNC_ID);
+            string id = (string)folder.GetProperty(OutlookConstants.PR_ZPUSH_FOLDER_ID);
             return id?.StartsWith("S") == true;
         }
 
@@ -486,45 +485,5 @@ namespace Acacia.Features.SharedFolders
                 Logger.Instance.Error(this, "Error removing shared store: {0}: {1}", share, e);
             }
         }
-
-        #region Send-As helpers
-
-        public string FindSendAsAddress(ZPushAccount account, AvailableFolder folder, string suggestion)
-        {
-            // Only mail folders have send-as
-            if (!folder.Type.IsMail())
-                return null;
-
-            // Check if we have send-as at all
-            FeatureSendAs sendAs = ThisAddIn.Instance.GetFeature<FeatureSendAs>();
-            if (sendAs == null)
-                return null;
-
-            using (IRecipient sender = sendAs.FindSendAsSender(account, null, folder.BackendId, folder.Store))
-            {
-                if (sender != null && sender.IsResolved)
-                    return sender.Address;
-            }
-
-            return suggestion;
-        }
-
-        public string FindSendAsAddress(ZPushAccount account, GABUser store, string suggestion)
-        {
-            // Check if we have send-as at all
-            FeatureSendAs sendAs = ThisAddIn.Instance.GetFeature<FeatureSendAs>();
-            if (sendAs == null)
-                return null;
-
-            using (IRecipient sender = sendAs.FindSendAsSender(account, null, null, store))
-            {
-                if (sender != null && sender.IsResolved)
-                    return sender.Address;
-            }
-
-            return suggestion;
-        }
-
-        #endregion
     }
 }

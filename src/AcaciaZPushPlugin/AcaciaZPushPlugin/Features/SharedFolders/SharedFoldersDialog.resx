@@ -283,7 +283,7 @@
     <value>3, 38</value>
   </data>
   <data name="kTreeFolders.Size" type="System.Drawing.Size, System.Drawing">
-    <value>442, 224</value>
+    <value>442, 250</value>
   </data>
   <data name="kTreeFolders.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -394,7 +394,7 @@
     <value>NoControl</value>
   </data>
   <data name="labelPermissionsValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>99, 133</value>
+    <value>99, 107</value>
   </data>
   <data name="labelPermissionsValue.Size" type="System.Drawing.Size, System.Drawing">
     <value>346, 20</value>
@@ -543,69 +543,6 @@
   <data name="&gt;&gt;checkSendAs.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="_labelSendAsAddress.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="_labelSendAsAddress.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="_labelSendAsAddress.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="_labelSendAsAddress.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 80</value>
-  </data>
-  <data name="_labelSendAsAddress.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 26</value>
-  </data>
-  <data name="_labelSendAsAddress.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="_labelSendAsAddress.Text" xml:space="preserve">
-    <value>Send-as address</value>
-  </data>
-  <data name="_labelSendAsAddress.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;_labelSendAsAddress.Name" xml:space="preserve">
-    <value>_labelSendAsAddress</value>
-  </data>
-  <data name="&gt;&gt;_labelSendAsAddress.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;_labelSendAsAddress.Parent" xml:space="preserve">
-    <value>_layoutOptions</value>
-  </data>
-  <data name="&gt;&gt;_labelSendAsAddress.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="textSendAsAddress.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="textSendAsAddress.Location" type="System.Drawing.Point, System.Drawing">
-    <value>102, 83</value>
-  </data>
-  <data name="textSendAsAddress.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 3, 3, 3</value>
-  </data>
-  <data name="textSendAsAddress.Size" type="System.Drawing.Size, System.Drawing">
-    <value>343, 20</value>
-  </data>
-  <data name="textSendAsAddress.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="&gt;&gt;textSendAsAddress.Name" xml:space="preserve">
-    <value>textSendAsAddress</value>
-  </data>
-  <data name="&gt;&gt;textSendAsAddress.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;textSendAsAddress.Parent" xml:space="preserve">
-    <value>_layoutOptions</value>
-  </data>
-  <data name="&gt;&gt;textSendAsAddress.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
   <data name="_labelReminders.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -613,7 +550,7 @@
     <value>Fill</value>
   </data>
   <data name="_labelReminders.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 106</value>
+    <value>3, 80</value>
   </data>
   <data name="_labelReminders.Size" type="System.Drawing.Size, System.Drawing">
     <value>90, 27</value>
@@ -637,7 +574,7 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;_labelReminders.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>7</value>
   </data>
   <data name="checkReminders.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -646,7 +583,7 @@
     <value>Left</value>
   </data>
   <data name="checkReminders.Location" type="System.Drawing.Point, System.Drawing">
-    <value>102, 110</value>
+    <value>102, 84</value>
   </data>
   <data name="checkReminders.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 4, 3, 3</value>
@@ -670,7 +607,7 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;checkReminders.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>8</value>
   </data>
   <data name="_labelPermissions.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -679,7 +616,7 @@
     <value>Fill</value>
   </data>
   <data name="_labelPermissions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 133</value>
+    <value>3, 107</value>
   </data>
   <data name="_labelPermissions.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 4, 0, 3</value>
@@ -706,7 +643,7 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;_labelPermissions.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>9</value>
   </data>
   <data name="_labelRestartRequired.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -739,22 +676,22 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;_labelRestartRequired.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>10</value>
   </data>
   <data name="_layoutOptions.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="_layoutOptions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 265</value>
+    <value>0, 291</value>
   </data>
   <data name="_layoutOptions.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="_layoutOptions.RowCount" type="System.Int32, mscorlib">
-    <value>6</value>
+    <value>5</value>
   </data>
   <data name="_layoutOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>448, 153</value>
+    <value>448, 127</value>
   </data>
   <data name="_layoutOptions.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -772,7 +709,7 @@
     <value>2</value>
   </data>
   <data name="_layoutOptions.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="_labelWholeStore" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkWholeStore" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelPermissionsValue" Row="5" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="_labelName" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textName" Row="1" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="_labelSendAs" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkSendAs" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="_labelSendAsAddress" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textSendAsAddress" Row="3" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="_labelReminders" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkReminders" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="_labelPermissions" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="_labelRestartRequired" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,AutoSize,0,Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="_labelWholeStore" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkWholeStore" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelPermissionsValue" Row="4" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="_labelName" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textName" Row="1" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="_labelSendAs" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkSendAs" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="_labelReminders" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkReminders" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="_labelPermissions" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="_labelRestartRequired" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,AutoSize,0,Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="_layoutMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
