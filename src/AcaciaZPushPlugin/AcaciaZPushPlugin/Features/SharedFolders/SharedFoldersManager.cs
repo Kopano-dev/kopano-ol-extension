@@ -43,7 +43,7 @@ namespace Acacia.Features.SharedFolders
 
         public bool SupportsWholeStore
         {
-            get { return _feature.AllowImpersonate; } // TODO: use capability
+            get { return _feature.AllowImpersonate && _account.Capabilities?.Has(Constants.ZPUSH_CAPABILITY_IMPERSONATE) == true; }
         }
 
         public FeatureSharedFolders Feature { get { return _feature; } }
