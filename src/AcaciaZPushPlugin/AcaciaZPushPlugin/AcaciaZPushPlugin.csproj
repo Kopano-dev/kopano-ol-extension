@@ -718,7 +718,7 @@
     <ManifestKeyFile>AcaciaZPushPlugin_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>285BF489C8A03978A93DCEFE97F5D69C5615598B</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>91DA5A4637DF29EDFBF913FB2B93606C114DE41E</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
