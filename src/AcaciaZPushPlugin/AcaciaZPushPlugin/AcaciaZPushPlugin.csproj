@@ -29,6 +29,7 @@
     <AssemblyName>Kopano</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
+    <IsWebBootstrapper>False</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <PublishUrl>publish\</PublishUrl>
     <InstallUrl />
@@ -38,7 +39,6 @@
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>days</UpdateIntervalUnits>
-    <IsWebBootstrapper>False</IsWebBootstrapper>
     <ProductName>Kopano OL Extension</ProductName>
     <PublisherName>Kopano</PublisherName>
     <SupportUrl />
@@ -675,36 +675,33 @@
     <None Include="Resources\Icons\Ribbon_About_Small.png" />
     <None Include="Resources\Icons\Progress0.png" />
     <None Include="Resources\Icons\Progress1.png" />
-    <None Include="Resources\Icons\Progress2.png" />
-    <None Include="Resources\Icons\Progress3.png" />
-    <None Include="Resources\Icons\Progress4.png" />
-    <Content Include="Resources\Icons\Ribbon_AddSharedFolder.png" />
-    <Content Include="Resources\Icons\Ribbon_AddSharedFolder_Small.png" />
-    <Content Include="Resources\Icons\Ribbon_Debug.png" />
-    <Content Include="Resources\Icons\Ribbon_Debug_Small.png" />
-    <Content Include="Resources\Icons\Ribbon_Logfile.png" />
-    <Content Include="Resources\Icons\Ribbon_Logfile_Small.png" />
-    <Content Include="Resources\Icons\Ribbon_ManageSharedFolders.png" />
+    <None Include="Resources\Icons\Ribbon_AddSharedFolder.png" />
+    <None Include="Resources\Icons\Ribbon_AddSharedFolder_Small.png" />
+    <None Include="Resources\Icons\Ribbon_Debug.png" />
+    <None Include="Resources\Icons\Ribbon_Debug_Small.png" />
+    <None Include="Resources\Icons\Ribbon_Logfile.png" />
+    <None Include="Resources\Icons\Ribbon_Logfile_Small.png" />
+    <None Include="Resources\Icons\Ribbon_ManageSharedFolders.png" />
     <None Include="Resources\Icons\Ribbon_ManageSharedFolders1.png" />
-    <Content Include="Resources\Icons\Ribbon_ManageSharedFolders_Small.png" />
+    <None Include="Resources\Icons\Ribbon_ManageSharedFolders_Small.png" />
     <None Include="Resources\Icons\Ribbon_ManageSharedFolders_Small1.png" />
     <None Include="Resources\Icons\Ribbon_ManageSharedFolders_Small11.png" />
-    <Content Include="Resources\Icons\Ribbon_MDM.png" />
-    <Content Include="Resources\Icons\Ribbon_MDM_Small.png" />
-    <Content Include="Resources\Icons\Ribbon_OOF.png" />
-    <Content Include="Resources\Icons\Ribbon_OOF_Small.png" />
-    <Content Include="Resources\Icons\Ribbon_Restore.png" />
-    <Content Include="Resources\Icons\Ribbon_Restore_Small.png" />
-    <Content Include="Resources\Icons\Ribbon_Rules.png" />
-    <Content Include="Resources\Icons\Ribbon_Rules_Small.png" />
-    <Content Include="Resources\Icons\Ribbon_Settings.png" />
-    <Content Include="Resources\Icons\Ribbon_Settings_Small.png" />
-    <Content Include="Resources\Icons\Ribbon_SyncGAB.png" />
-    <Content Include="Resources\Icons\Ribbon_SyncGAB_Small.png" />
-    <Content Include="Resources\Icons\Ribbon_WebApp.png" />
-    <Content Include="Resources\Icons\Ribbon_WebApp_Small.png" />
-    <Content Include="Resources\Icons\Ribbon_WebMeetings.png" />
-    <Content Include="Resources\Icons\Ribbon_WebMeetings_Small.png" />
+    <None Include="Resources\Icons\Ribbon_MDM.png" />
+    <None Include="Resources\Icons\Ribbon_MDM_Small.png" />
+    <None Include="Resources\Icons\Ribbon_OOF.png" />
+    <None Include="Resources\Icons\Ribbon_OOF_Small.png" />
+    <None Include="Resources\Icons\Ribbon_Restore.png" />
+    <None Include="Resources\Icons\Ribbon_Restore_Small.png" />
+    <None Include="Resources\Icons\Ribbon_Rules.png" />
+    <None Include="Resources\Icons\Ribbon_Rules_Small.png" />
+    <None Include="Resources\Icons\Ribbon_Settings.png" />
+    <None Include="Resources\Icons\Ribbon_Settings_Small.png" />
+    <None Include="Resources\Icons\Ribbon_SyncGAB.png" />
+    <None Include="Resources\Icons\Ribbon_SyncGAB_Small.png" />
+    <None Include="Resources\Icons\Ribbon_WebApp.png" />
+    <None Include="Resources\Icons\Ribbon_WebApp_Small.png" />
+    <None Include="Resources\Icons\Ribbon_WebMeetings.png" />
+    <None Include="Resources\Icons\Ribbon_WebMeetings_Small.png" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
