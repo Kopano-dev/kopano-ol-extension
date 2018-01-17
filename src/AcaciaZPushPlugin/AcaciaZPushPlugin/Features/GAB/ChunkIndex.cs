@@ -48,5 +48,10 @@ namespace Acacia.Features.GAB
                 return null;
             }
         }
+
+        override public string ToString()
+        {
+            return string.Format("{0}/{1}", chunk, numberOfChunks);
+        }
     }
 }

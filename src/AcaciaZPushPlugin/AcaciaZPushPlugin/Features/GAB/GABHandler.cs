@@ -465,6 +465,8 @@ namespace Acacia.Features.GAB
 
         private void ProcessChunkBody(CompletionTracker completion, IZPushItem item, ChunkIndex index)
         {
+            Logger.Instance.Trace(this, "Parsing chunck: {0}: {1}", index, item.Body);
+
             // Process the body
             foreach (var entry in JSONUtils.Deserialise(item.Body))
             {
@@ -732,16 +734,24 @@ namespace Acacia.Features.GAB
             if (Get<ArrayList>(value, "memberOf") != null)
             {
                 ArrayList members = Get<ArrayList>(value, "memberOf");
-                foreach (string memberOf in members)
+                foreach (object memberOfObject in members)
                 {
-                    using (IItem groupItem = FindItemById(memberOf))
+                    string memberOf = memberOfObject as string;
+                    if (memberOf != null)
                     {
-                        Logger.Instance.Debug(this, "Finding group {0} for {1}: {2}", memberOf, id, groupItem?.EntryID);
-                        if (groupItem is IDistributionList)
+                        using (IItem groupItem = FindItemById(memberOf))
                         {
-                            AddGroupMember((IDistributionList)groupItem, item);
-                            groupItem.Save();
+                            Logger.Instance.Debug(this, "Finding group {0} for {1}: {2}", memberOf, id, groupItem?.EntryID);
+                            if (groupItem is IDistributionList)
+                            {
+                                AddGroupMember((IDistributionList)groupItem, item);
+                                groupItem.Save();
+                            }
                         }
+                    }
+                    else
+                    {
+                        Logger.Instance.Warning(this, "Invalid group: {0}", memberOfObject);
                     }
                 }
             }
