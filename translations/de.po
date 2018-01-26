@@ -1,10 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: KC-8\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-01-09 14:10+0000\n"
-"Last-Translator: Felix <f.bartels@kopano.com>\n"
-"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-extension/de/>\n"
+"PO-Revision-Date: 2018-01-26 15:49+0100\n"
+"Last-Translator: Jan Engelhardt <jengelh@inai.de>\n"
+"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-"
+"core/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -306,7 +307,7 @@ msgid "Modifications to the Global Address Book are not allowed. Please contact 
 msgstr "Änderung am Globalen Adressbuch sind nicht erlaubt. Bitte kontaktieren Sie Ihren Administrator falls Änderungen notwendig sind."
 
 #: AcaciaZPushPlugin\Properties\Resources\GABEvent_Title
-#, csharp-format
+#, csharp-format, fuzzy
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABEvent_Title"
 msgid "Global Address Book"
 msgstr "Globales Adressbuch"
@@ -342,7 +343,7 @@ msgid "Global Address Book"
 msgstr "Globales Adressbuch"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_Notes
-#, csharp-format
+#, csharp-format, fuzzy
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_Notes"
 msgid "Notes"
 msgstr "Notizen"
@@ -1314,7 +1315,7 @@ msgid "Item events"
 msgstr "Elementereignis"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnSubject.Text
-#, csharp-format
+#, csharp-format, fuzzy
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnSubject.Text"
 msgid "Subject"
 msgstr "Betreff"
@@ -1418,4 +1419,3 @@ msgstr "Outlook wird neugestartet um die neuen Postfächer zu öffnen"
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Title"
 msgid "Open stores"
 msgstr "Postfächer öffnen"
-
