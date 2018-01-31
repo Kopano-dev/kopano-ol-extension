@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-12 16:12+0000\n"
-"PO-Revision-Date: 2017-11-04 14:12+0000\n"
-"Last-Translator: Klaus <klaus@linuxavdelingen.no>\n"
-"Language-Team: Norwegian Bokmål <http://translate.kopano.io/projects/kopano/kopano-ol-extension/nb/>\n"
+"PO-Revision-Date: 2018-01-31 13:18+0000\n"
+"Last-Translator: Jan <jengelh@inai.de>\n"
+"Language-Team: Norwegian Bokmål <http://translate.kopano.io/projects/kopano"
+"/kopano-ol-extension/nb/>\n"
 "Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -251,7 +252,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFGet_Title"
 msgid "Out of Office Assistant"
-msgstr ""
+msgstr "Fraværsassistent"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_DifferentState
 #, csharp-format
@@ -265,13 +266,13 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_Disabled"
 msgid "Out of Office has been disabled."
-msgstr ""
+msgstr "Fraværsmelding bli deaktivert."
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_DisableFailed
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_DisableFailed"
 msgid "Unable to disable Out of Office."
-msgstr ""
+msgstr "Klarte ikke å deaktivere fraværsmelding."
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_Enabled
 #, csharp-format
@@ -295,19 +296,19 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_Failed"
 msgid "Unable to apply Out of Office settings"
-msgstr ""
+msgstr "Klarte ikke å sette instillinger for fraværsmelding"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_Label"
 msgid "Applying Out of Office settings"
-msgstr ""
+msgstr "Oppdaterer instillinger for fraværsmelding"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_Title"
 msgid "Out of Office Assistant"
-msgstr ""
+msgstr "Fraværsassistent"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_Debug_Label
 #, csharp-format
@@ -380,7 +381,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFStartup_Title"
 msgid "Out of Office Assistant"
-msgstr ""
+msgstr "Fraværsassistent"
 
 #: AcaciaZPushPlugin\Properties\Resources\GABEvent_Body
 #, csharp-format
@@ -1169,4 +1170,3 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Title"
 msgid "Open stores"
 msgstr ""
-
