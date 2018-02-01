@@ -113,7 +113,8 @@ namespace Acacia
 
                 // Create the watcher
                 Watcher = new ZPushWatcher(Instance);
-                OutlookUI.Watcher = Watcher;
+                if (OutlookUI != null)
+                    OutlookUI.Watcher = Watcher;
 
                 // Allow to features to register whatever they need
                 Features = new List<Feature>();
@@ -155,9 +156,6 @@ namespace Acacia
                 Acacia.Features.DebugSupport.Statistics.StartupTime.Stop();
                 foreach (Feature feature in Features)
                     feature.AfterStartup();
-
-                // [KOE-148] Initial send receive
-                Instance.SendReceive();
             }
             catch (System.Exception e)
             {
