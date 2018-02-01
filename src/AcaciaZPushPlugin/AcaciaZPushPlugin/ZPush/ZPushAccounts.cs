@@ -77,6 +77,9 @@ namespace Acacia.ZPush
                 Tasks.Task(null, null, "AccountCheckDone", () =>
                 {
                     _watcher.OnAccountsScanned();
+
+                    // [KOE-148] Initial send receive
+                    ThisAddIn.Instance.SendReceive();
                 });
 
                 // Register for account changes
