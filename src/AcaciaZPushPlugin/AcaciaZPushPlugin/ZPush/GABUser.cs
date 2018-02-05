@@ -91,13 +91,23 @@ namespace Acacia.ZPush
         public override bool Equals(object obj)
         {
             if (obj is GABUser)
-                return UserName.Equals(((GABUser)obj).UserName);
+                return IdentityString.Equals(((GABUser)obj).IdentityString);
             return false;
+        }
+
+        private string IdentityString
+        {
+            get
+            {
+                return (UserName ?? EmailAddress ?? FullName);
+            }
         }
 
         public override int GetHashCode()
         {
-            return UserName.GetHashCode();
+            if (IdentityString == null)
+                return 0;
+            return IdentityString.GetHashCode();
         }
 
         public override string ToString()

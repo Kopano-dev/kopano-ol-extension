@@ -222,11 +222,11 @@ namespace Acacia.ZPush
             {
                 if (ShareFor == null)
                     return null;
-                int index = Account.UserName.IndexOf("+share+");
+                int index = Account.UserName.IndexOf("#");
                 if (index < 0)
                     return null;
 
-                return Account.UserName.Substring(index + 7);
+                return Account.UserName.Substring(index + 1);
             }
         }
 
