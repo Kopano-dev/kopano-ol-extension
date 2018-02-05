@@ -518,7 +518,6 @@ namespace Acacia.Features.GAB
 
                 // Create the contact data
                 if (Get<string>(value, "givenName") != null) contact.FirstName = Get<string>(value, "givenName");
-                if (Get<string>(value, "initials") != null) contact.Initials = Get<string>(value, "initials");
                 if (Get<string>(value, "surname") != null) contact.LastName = Get<string>(value, "surname");
                 if (Get<string>(value, "title") != null) contact.JobTitle = Get<string>(value, "title");
                 if (Get<string>(value, "displayName") != null)
@@ -526,6 +525,8 @@ namespace Acacia.Features.GAB
                     contact.FileAs = Get<string>(value, "displayName");
                     contact.FullName = Get<string>(value, "displayName");
                 }
+
+                contact.Initials = Get<string>(value, "initials") ?? "";
 
                 if (Get<string>(value, "smtpAddress") != null)
                 {
