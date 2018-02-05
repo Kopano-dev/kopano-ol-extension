@@ -79,7 +79,7 @@ namespace Acacia.Features.SharedFolders
 
             ChildLoader = new UserFolderLoader(this, folders, user);
             ChildLoader.ReloadOnCloseOpen = true;
-            HasCheckBox = !string.IsNullOrEmpty(user.EmailAddress) && folders.SupportsWholeStore;
+            HasCheckBox = folders.SupportsWholeStore;
             ApplyReadOnly(this, IsReadOnly);
 
             // TODO: better icons, better way of handling this
