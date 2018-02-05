@@ -52,8 +52,12 @@ namespace Acacia.UI
                 _users = new List<GABUser>();
                 foreach (IItem item in _gab.Contacts.Items.Sort("FullName", false))
                 {
-                    if (item is IContactItem)
-                        _users.Add(new GABUser((IContactItem)item));
+                    IContactItem contact = item as IContactItem;
+                    // The check for customer id is to avoid groups created as contacts
+                    if (contact != null && contact.CustomerID != null)
+                    {
+                        _users.Add(new GABUser(contact));
+                    }
                 }
             }
 
