@@ -541,7 +541,8 @@ int __cdecl wmain(int argc, wchar_t  **argv)
 		account.profileName = argv[1];
 		account.outlookVersion = argv[2];
 		account.LoadFromAccountId(argv[3]);
-		account.username = account.username + L"+share+" + argv[4];
+		wprintf(L"ADDING SHARE: %s#%s\n", account.username.data(), argv[4]);
+		account.username = account.username + L"#" + argv[4];
 		account.emailOriginal = account.email;
 		account.email = argv[5];
 		account.accountName = account.email;
