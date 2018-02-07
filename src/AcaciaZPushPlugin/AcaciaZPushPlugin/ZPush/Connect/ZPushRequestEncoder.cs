@@ -28,6 +28,6 @@ namespace Acacia.ZPush.Connect
     {
         public abstract HttpContent GetContent();
 
-        public abstract object ParseResponse(Stream result);
+        public abstract object ParseResponse(string url, Stream result);
     }
 }

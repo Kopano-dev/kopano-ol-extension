@@ -49,7 +49,7 @@ namespace Acacia.ZPush.Connect
             string url = string.Format(ACTIVESYNC_URL, _connection.Account.Account.ServerURL, "webservice",
                     ServiceName,
                     // TODO: this username is a bit of a quick hack. 
-                    request.UserName ?? _connection.Account.Account.UserName,
+                    Uri.EscapeDataString(request.UserName ?? _connection.Account.Account.UserName),
                     "webservice");
 
             // Set up the encoding

@@ -136,7 +136,7 @@ namespace Acacia.ZPush.Connect
                     using (HttpContent responseContent = response.Content)
                     {
                         Logger.Instance.Trace(this, "Response: {0}", responseContent.ReadAsStringAsync().Result);
-                        return request.ParseResponse(responseContent.ReadAsStreamAsync().Result);
+                        return request.ParseResponse(url, responseContent.ReadAsStreamAsync().Result);
                     }
                 }
             }
@@ -288,8 +288,12 @@ namespace Acacia.ZPush.Connect
 
             public Response Execute(ActiveSync.RequestBase request)
             {
-                string url = string.Format(ACTIVESYNC_URL, _account.Account.ServerURL, _account.Account.DeviceId,
-                    request.Command, _account.Account.UserName, "WindowsOutlook");
+                string url = string.Format(ACTIVESYNC_URL, 
+                    _account.Account.ServerURL,
+                    Uri.EscapeDataString(_account.Account.DeviceId),
+                    request.Command,
+                    Uri.EscapeDataString(_account.Account.UserName), 
+                    "WindowsOutlook");
 
                 // Construct the body
                 WBXMLDocument doc = new WBXMLDocument();

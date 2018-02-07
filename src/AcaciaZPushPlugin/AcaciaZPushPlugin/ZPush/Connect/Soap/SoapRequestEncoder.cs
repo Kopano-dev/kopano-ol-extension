@@ -84,11 +84,23 @@ namespace Acacia.ZPush.Connect.Soap
 
         #region Decoding
 
-        public override object ParseResponse(Stream result)
+        public override object ParseResponse(string url, Stream result)
         {
             // Parse xml
             XmlDocument xml = new XmlDocument();
-            xml.Load(result);
+            using (StreamReader reader = new StreamReader(result))
+            {
+                string text = reader.ReadToEnd();
+                try
+                {
+                    xml.LoadXml(text);
+                }
+                catch (Exception e)
+                {
+                    Logger.Instance.Error(this, "Error in SOAP response:\nurl={0}\nresponse={1}", url, text);
+                    throw e;
+                }
+            }
 
             // Check if it's an error message
             CheckFaultResponse(xml);
