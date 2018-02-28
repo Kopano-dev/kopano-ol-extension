@@ -1,4 +1,5 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿
+/// Copyright 2018 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -13,7 +14,6 @@
 /// along with this program.If not, see<http://www.gnu.org/licenses/>.
 /// 
 /// Consult LICENSE file for details
-
 using Acacia.Stubs;
 using Acacia.Stubs.OutlookWrappers;
 using Acacia.Utils;
@@ -28,6 +28,9 @@ using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Acacia.Native;
+using Acacia.Native.MAPI;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.ZPush
 {
@@ -213,7 +216,10 @@ namespace Acacia.ZPush
 
         public string ShareFor
         {
-            get { return Account.ShareFor; }
+            get
+            {
+                return RegistryUtil.GetValueString(Account.RegistryBaseKey, OutlookConstants.REG_VAL_KOE_SHARE_FOR, null);
+            }
         }
 
         public string ShareUserName
@@ -235,10 +241,10 @@ namespace Acacia.ZPush
         {
             get
             {
-                if (Account.ShareFor == null)
+                if (ShareFor == null)
                     return null;
 
-                return _zPushAccounts.GetAccount(Account.ShareFor);
+                return _zPushAccounts.GetAccount(ShareFor);
             }
         }
 
@@ -281,6 +287,103 @@ namespace Acacia.ZPush
             }
 
             return null;
+        }
+
+        #endregion
+
+        #region Signatures
+
+        public string LocalSignaturesHash
+        {
+            get
+            {
+                return RegistryUtil.GetValueString(Account.RegistryBaseKey, OutlookConstants.REG_VAL_CURRENT_SIGNATURE, null);
+            }
+            set
+            {
+                RegistryUtil.SetValueString(Account.RegistryBaseKey, OutlookConstants.REG_VAL_CURRENT_SIGNATURE, value);
+            }
+        }
+
+        public string SignatureNewMessage
+        {
+            get
+            {
+                return RegistryUtil.GetValueString(Account.RegistryBaseKey, OutlookConstants.REG_VAL_NEW_SIGNATURE, null);
+            }
+            set
+            {
+                Account.SetAccountProp(OutlookConstants.PROP_NEW_MESSAGE_SIGNATURE, value);
+            }
+        }
+
+        public string SignatureReplyForwardMessage
+        {
+            get
+            {
+                return RegistryUtil.GetValueString(Account.RegistryBaseKey, OutlookConstants.REG_VAL_REPLY_FORWARD_SIGNATURE, null);
+            }
+            set
+            {
+                Account.SetAccountProp(OutlookConstants.PROP_REPLY_SIGNATURE, value);
+            }
+        }
+
+        #endregion
+
+        #region Sync time frame
+
+        public SyncTimeFrame SyncTimeFrame
+        {
+            get
+            {
+                int val = RegistryUtil.GetValueDword(Account.RegistryBaseKey, OutlookConstants.REG_VAL_SYNC_TIMEFRAME, -1);
+                // Check for default (Outlook) values
+                if (val < 0)
+                {
+                    if (EASSyncOneMonth)
+                        return SyncTimeFrame.MONTH_1;
+                    return SyncTimeFrame.ALL;
+                }
+
+                SyncTimeFrame frame = (SyncTimeFrame)val;
+                // If the timeframe exceeds one month, but Outlook is set to one month, only one month will be synced.
+                if (!IsSyncOneMonthOrLess(frame) && EASSyncOneMonth)
+                    return SyncTimeFrame.MONTH_1;
+                return frame;
+            }
+
+            set
+            {
+                if (value != SyncTimeFrame)
+                {
+                    // Set the outlook property
+                    EASSyncOneMonth = IsSyncOneMonthOrLess(value);
+                    // And the registry value
+                    RegistryUtil.SetValueDword(Account.RegistryBaseKey, OutlookConstants.REG_VAL_SYNC_TIMEFRAME, (int)value);
+                }
+            }
+        }
+
+        private bool EASSyncOneMonth
+        {
+            get
+            {
+                return RegistryUtil.GetValueDword(Account.RegistryBaseKey, OutlookConstants.REG_VAL_SYNC_SLIDER, -1) == 1;
+            }
+
+            set
+            {
+                if (value != EASSyncOneMonth)
+                {
+                    Account.SetAccountProp(OutlookConstants.PROP_SYNC_1_MONTH, value ? (uint)1 : (uint)0);
+                }
+            }
+        }
+
+        private bool IsSyncOneMonthOrLess(SyncTimeFrame sync)
+        {
+            return sync <= SyncTimeFrame.MONTH_1 && sync != SyncTimeFrame.ALL;
         }
 
         #endregion

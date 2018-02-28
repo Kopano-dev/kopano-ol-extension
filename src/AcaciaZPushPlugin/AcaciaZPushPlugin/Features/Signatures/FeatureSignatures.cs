@@ -134,7 +134,7 @@ namespace Acacia.Features.Signatures
             if (serverSignatureHash != null)
             {
                 Logger.Instance.Trace(this, "Checking signature hash for account {0}: {1}", account, serverSignatureHash);
-                if (serverSignatureHash == account.Account.LocalSignaturesHash)
+                if (serverSignatureHash == account.LocalSignaturesHash)
                     return;
             }
 
@@ -145,7 +145,7 @@ namespace Acacia.Features.Signatures
                 string hash = FetchSignatures(account);
 
                 // Store updated hash
-                account.Account.LocalSignaturesHash = hash;
+                account.LocalSignaturesHash = hash;
                 Logger.Instance.Debug(this, "Updated signatures: {0}: {1}", account, hash);
             }
             catch (Exception e)
@@ -206,13 +206,13 @@ namespace Acacia.Features.Signatures
                 }
 
                 // Set default signatures if available and none are set
-                if (!string.IsNullOrEmpty(result.new_message) && ShouldSetSignature(account.Account.SignatureNewMessage))
+                if (!string.IsNullOrEmpty(result.new_message) && ShouldSetSignature(account.SignatureNewMessage))
                 {
-                    account.Account.SignatureNewMessage = fullNames[result.new_message];
+                    account.SignatureNewMessage = fullNames[result.new_message];
                 }
-                if (!string.IsNullOrEmpty(result.replyforward_message) && ShouldSetSignature(account.Account.SignatureReplyForwardMessage))
+                if (!string.IsNullOrEmpty(result.replyforward_message) && ShouldSetSignature(account.SignatureReplyForwardMessage))
                 {
-                    account.Account.SignatureReplyForwardMessage = fullNames[result.replyforward_message];
+                    account.SignatureReplyForwardMessage = fullNames[result.replyforward_message];
                 }
 
                 return result.hash;
@@ -291,7 +291,7 @@ namespace Acacia.Features.Signatures
 
         private void GAB_SyncFinished(GABHandler gab)
         {
-            ReplacePlaceholders(gab, gab.ActiveAccount.Account.SignatureNewMessage, gab.ActiveAccount.Account.SignatureNewMessage);
+            ReplacePlaceholders(gab, gab.ActiveAccount.SignatureNewMessage, gab.ActiveAccount.SignatureNewMessage);
         }
 
         private void ReplacePlaceholders(GABHandler gab, params string[] signatures)

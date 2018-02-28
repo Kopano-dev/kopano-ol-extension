@@ -70,6 +70,7 @@ namespace Acacia.Controls
         #endregion
 
         #region KUITaskProgress
+
         // TODO: if BusyHider is not set, pop up dialogs
         public string BusyText
         {

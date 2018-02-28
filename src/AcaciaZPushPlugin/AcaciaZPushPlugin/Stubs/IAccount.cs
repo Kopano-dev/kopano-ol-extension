@@ -1,4 +1,6 @@
-﻿/// Copyright 2017 Kopano b.v.
+﻿
+using Acacia.Native.MAPI;
+/// Copyright 2017 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -13,7 +15,6 @@
 /// along with this program.If not, see<http://www.gnu.org/licenses/>.
 /// 
 /// Consult LICENSE file for details
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,25 +55,8 @@ namespace Acacia.Stubs
 
         string BackingFilePath { get; }
 
-        // TODO: this is really a Z-Push thing, but it's here to store it in the registry
-        string LocalSignaturesHash
-        {
-            get;
-            set;
-        }
+        string RegistryBaseKey { get; }
 
-        string SignatureNewMessage
-        {
-            get;
-            set;
-        }
-
-        string SignatureReplyForwardMessage
-        {
-            get;
-            set;
-        }
-
-        string ShareFor {get;}
+        void SetAccountProp(PropTag prop, object value);
     }
 }

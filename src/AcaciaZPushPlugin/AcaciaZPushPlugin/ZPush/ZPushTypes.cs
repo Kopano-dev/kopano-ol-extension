@@ -132,4 +132,17 @@ namespace Acacia.ZPush
 
         #endregion
     }
+
+    public enum SyncTimeFrame
+    {
+        // The order of this is to match the Z-Push settings
+        ALL,
+        DAY_1,
+        DAY_3,
+        WEEK_1,
+        WEEK_2,
+        MONTH_1,
+        MONTH_3,
+        MONTH_6
+    }
 }

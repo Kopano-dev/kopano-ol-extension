@@ -38,6 +38,11 @@
             this._labelProgress = new System.Windows.Forms.Label();
             this.progress = new Acacia.Controls.KProgressBar();
             this.textRemaining = new System.Windows.Forms.Label();
+            this._labelTimeFrame = new System.Windows.Forms.Label();
+            this._layoutTimeFrameButtons = new System.Windows.Forms.TableLayoutPanel();
+            this.comboTimeFrame = new System.Windows.Forms.ComboBox();
+            this.buttonApplyTimeFrame = new System.Windows.Forms.Button();
+            this.buttonResetTimeFrame = new System.Windows.Forms.Button();
             this._labelResync = new System.Windows.Forms.Label();
             this.buttonGAB = new Acacia.Controls.KHintButton();
             this.buttonSignatures = new Acacia.Controls.KHintButton();
@@ -46,6 +51,7 @@
             this._labelResyncOption = new System.Windows.Forms.Label();
             this._layout.SuspendLayout();
             this._layoutMain.SuspendLayout();
+            this._layoutTimeFrameButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // _layout
@@ -73,12 +79,14 @@
             this._layoutMain.Controls.Add(this._labelProgress, 0, 1);
             this._layoutMain.Controls.Add(this.progress, 1, 1);
             this._layoutMain.Controls.Add(this.textRemaining, 1, 2);
-            this._layoutMain.Controls.Add(this._labelResync, 0, 3);
-            this._layoutMain.Controls.Add(this.buttonGAB, 1, 3);
-            this._layoutMain.Controls.Add(this.buttonSignatures, 1, 4);
-            this._layoutMain.Controls.Add(this.buttonServerData, 1, 5);
-            this._layoutMain.Controls.Add(this.buttonFullResync, 1, 6);
-            this._layoutMain.Controls.Add(this._labelResyncOption, 1, 7);
+            this._layoutMain.Controls.Add(this._labelTimeFrame, 0, 3);
+            this._layoutMain.Controls.Add(this._layoutTimeFrameButtons, 1, 3);
+            this._layoutMain.Controls.Add(this._labelResync, 0, 6);
+            this._layoutMain.Controls.Add(this.buttonGAB, 1, 6);
+            this._layoutMain.Controls.Add(this.buttonSignatures, 1, 7);
+            this._layoutMain.Controls.Add(this.buttonServerData, 1, 8);
+            this._layoutMain.Controls.Add(this.buttonFullResync, 1, 9);
+            this._layoutMain.Controls.Add(this._labelResyncOption, 1, 10);
             this._layoutMain.Name = "_layoutMain";
             // 
             // _labelRemaining
@@ -120,6 +128,50 @@
             resources.ApplyResources(this.textRemaining, "textRemaining");
             this.textRemaining.BackColor = System.Drawing.SystemColors.Window;
             this.textRemaining.Name = "textRemaining";
+            // 
+            // _labelTimeFrame
+            // 
+            resources.ApplyResources(this._labelTimeFrame, "_labelTimeFrame");
+            this._labelTimeFrame.Name = "_labelTimeFrame";
+            // 
+            // _layoutTimeFrameButtons
+            // 
+            resources.ApplyResources(this._layoutTimeFrameButtons, "_layoutTimeFrameButtons");
+            this._layoutTimeFrameButtons.Controls.Add(this.comboTimeFrame, 0, 0);
+            this._layoutTimeFrameButtons.Controls.Add(this.buttonApplyTimeFrame, 2, 0);
+            this._layoutTimeFrameButtons.Controls.Add(this.buttonResetTimeFrame, 1, 0);
+            this._layoutTimeFrameButtons.Name = "_layoutTimeFrameButtons";
+            // 
+            // comboTimeFrame
+            // 
+            resources.ApplyResources(this.comboTimeFrame, "comboTimeFrame");
+            this.comboTimeFrame.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboTimeFrame.FormattingEnabled = true;
+            this.comboTimeFrame.Items.AddRange(new object[] {
+            resources.GetString("comboTimeFrame.Items"),
+            resources.GetString("comboTimeFrame.Items1"),
+            resources.GetString("comboTimeFrame.Items2"),
+            resources.GetString("comboTimeFrame.Items3"),
+            resources.GetString("comboTimeFrame.Items4"),
+            resources.GetString("comboTimeFrame.Items5"),
+            resources.GetString("comboTimeFrame.Items6"),
+            resources.GetString("comboTimeFrame.Items7")});
+            this.comboTimeFrame.Name = "comboTimeFrame";
+            this.comboTimeFrame.SelectedIndexChanged += new System.EventHandler(this.comboTimeFrame_SelectedIndexChanged);
+            // 
+            // buttonApplyTimeFrame
+            // 
+            resources.ApplyResources(this.buttonApplyTimeFrame, "buttonApplyTimeFrame");
+            this.buttonApplyTimeFrame.Name = "buttonApplyTimeFrame";
+            this.buttonApplyTimeFrame.UseVisualStyleBackColor = true;
+            this.buttonApplyTimeFrame.Click += new System.EventHandler(this.buttonApplyTimeFrame_Click);
+            // 
+            // buttonResetTimeFrame
+            // 
+            resources.ApplyResources(this.buttonResetTimeFrame, "buttonResetTimeFrame");
+            this.buttonResetTimeFrame.Name = "buttonResetTimeFrame";
+            this.buttonResetTimeFrame.UseVisualStyleBackColor = true;
+            this.buttonResetTimeFrame.Click += new System.EventHandler(this.buttonResetTimeFrame_Click);
             // 
             // _labelResync
             // 
@@ -179,6 +231,7 @@
             this._layout.PerformLayout();
             this._layoutMain.ResumeLayout(false);
             this._layoutMain.PerformLayout();
+            this._layoutTimeFrameButtons.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -201,5 +254,10 @@
         private System.Windows.Forms.Label _labelResyncOption;
         private System.Windows.Forms.Label _labelResync;
         private Controls.KHintButton buttonGAB;
+        private System.Windows.Forms.Label _labelTimeFrame;
+        private System.Windows.Forms.ComboBox comboTimeFrame;
+        private System.Windows.Forms.TableLayoutPanel _layoutTimeFrameButtons;
+        private System.Windows.Forms.Button buttonApplyTimeFrame;
+        private System.Windows.Forms.Button buttonResetTimeFrame;
     }
 }

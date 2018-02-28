@@ -1,4 +1,6 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿
+using Acacia.Native.MAPI;
+/// Copyright 2016 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -13,7 +15,6 @@
 /// along with this program.If not, see<http://www.gnu.org/licenses/>.
 /// 
 /// Consult LICENSE file for details
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,8 +46,14 @@ namespace Acacia
         public const string REG_VAL_REPLY_FORWARD_SIGNATURE = "Reply-Forward Signature";
         public const string REG_VAL_CURRENT_SIGNATURE = "KOE Signature Digest";
 
+        public const string REG_VAL_SYNC_TIMEFRAME = "KOE SyncTimeFrame";
+        public const string REG_VAL_SYNC_SLIDER = "EAS SyncSlider";
         public const string REG_VAL_NEXT_ACCOUNT_ID = "NextAccountID";
         public const string REG_VAL_KOE_SHARE_FOR = "KOE Share For";
+
+        public static readonly PropTag PROP_NEW_MESSAGE_SIGNATURE = PropTag.FromValue(0x0016, PropType.UNICODE);
+        public static readonly PropTag PROP_REPLY_SIGNATURE = PropTag.FromValue(0x0017, PropType.UNICODE);
+        public static readonly PropTag PROP_SYNC_1_MONTH = PropTag.FromValue(0x2103, PropType.LONG);
 
         #endregion
 

@@ -1,4 +1,4 @@
-﻿/// Copyright 2017 Kopano b.v.
+﻿/// Copyright 2018 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -576,10 +576,13 @@ namespace Acacia.Features.SyncState
             if (_dialog != null)
                 return;
 
+            // Get the current account. If no Z-Push account is selected, the dialog will open for all accounts.
+            ZPushAccount account = Watcher.CurrentZPushAccount();
+
             // Ramp up the checking schedule while the dialog is open
             // The other check sets per-account schedules, we use the global one, so they should't interfere.
             TimeSpan? old = Watcher.Sync.SetTaskSchedule(_task, null, CheckPeriodDialogEffective, true);
-            SyncStateDialog dlg = new SyncStateDialog(this);
+            SyncStateDialog dlg = new SyncStateDialog(this, account);
             dlg.FormClosed += (s, e) =>
             {
                 // Restore the schedule
@@ -732,6 +735,44 @@ namespace Acacia.Features.SyncState
         public SyncState GetSyncState(ZPushAccount account)
         {
             return new SyncStateImpl(this, account == null ? Watcher.Accounts.GetAccounts().ToArray() : new ZPushAccount[] { account });
+        }
+
+
+        private class SetDeviceOptionsRequest : SoapRequest<bool>
+        {
+            public SetDeviceOptionsRequest(SyncTimeFrame timeFrame)
+            {
+                Parameters.Add("filtertype", (int)timeFrame);
+            }
+        }
+
+        public void SetDeviceOptions(ZPushAccount account, SyncTimeFrame timeFrame)
+        {
+
+            try
+            {
+                Logger.Instance.Debug(this, "Setting sync time frame for {0} to {1}", account, timeFrame);
+
+                // First set the server value.
+                using (ZPushConnection connection = account.Connect())
+                using (ZPushWebServiceDevice deviceService = connection.DeviceService)
+                {
+                    deviceService.Execute(new SetDeviceOptionsRequest(timeFrame));
+                }
+
+                // And the local value
+                account.SyncTimeFrame = timeFrame;
+                Logger.Instance.Debug(this, "Set sync time frame for {0} to {1}", account, timeFrame);
+
+                // Sync
+                ThisAddIn.Instance.SendReceive(account.Account);
+            }
+            catch (Exception x)
+            {
+                Logger.Instance.Warning(this, "Exception setting sync time frame for {0} to {1}: {2}", account, timeFrame, x);
+            }
+
+
         }
     }
 }

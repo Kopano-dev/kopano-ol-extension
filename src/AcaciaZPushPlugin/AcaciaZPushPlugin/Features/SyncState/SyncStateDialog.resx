@@ -139,13 +139,13 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="_buttons.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 711</value>
+    <value>2, 344</value>
   </data>
   <data name="_buttons.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 5, 5, 5</value>
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="_buttons.Size" type="System.Drawing.Size, System.Drawing">
-    <value>889, 54</value>
+    <value>333, 35</value>
   </data>
   <data name="_buttons.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -181,13 +181,10 @@
     <value>NoControl</value>
   </data>
   <data name="_labelRemaining.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 129</value>
-  </data>
-  <data name="_labelRemaining.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 0, 8, 0</value>
+    <value>3, 59</value>
   </data>
   <data name="_labelRemaining.Size" type="System.Drawing.Size, System.Drawing">
-    <value>203, 60</value>
+    <value>77, 25</value>
   </data>
   <data name="_labelRemaining.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -217,13 +214,10 @@
     <value>Fill</value>
   </data>
   <data name="_labelAccount.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 0</value>
-  </data>
-  <data name="_labelAccount.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 0, 8, 0</value>
+    <value>3, 0</value>
   </data>
   <data name="_labelAccount.Size" type="System.Drawing.Size, System.Drawing">
-    <value>203, 53</value>
+    <value>77, 27</value>
   </data>
   <data name="_labelAccount.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -256,16 +250,13 @@
     <value>All Z-Push accounts</value>
   </data>
   <data name="comboAccounts.Location" type="System.Drawing.Point, System.Drawing">
-    <value>227, 7</value>
-  </data>
-  <data name="comboAccounts.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 7, 8, 7</value>
+    <value>86, 3</value>
   </data>
   <data name="comboAccounts.Size" type="System.Drawing.Size, System.Drawing">
-    <value>648, 39</value>
+    <value>242, 21</value>
   </data>
   <data name="comboAccounts.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;comboAccounts.Name" xml:space="preserve">
     <value>comboAccounts</value>
@@ -286,13 +277,10 @@
     <value>Fill</value>
   </data>
   <data name="_labelProgress.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 53</value>
-  </data>
-  <data name="_labelProgress.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 0, 8, 0</value>
+    <value>3, 27</value>
   </data>
   <data name="_labelProgress.Size" type="System.Drawing.Size, System.Drawing">
-    <value>203, 76</value>
+    <value>77, 32</value>
   </data>
   <data name="_labelProgress.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -319,16 +307,13 @@
     <value>Fill</value>
   </data>
   <data name="progress.Location" type="System.Drawing.Point, System.Drawing">
-    <value>227, 60</value>
-  </data>
-  <data name="progress.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 7, 8, 7</value>
+    <value>86, 30</value>
   </data>
   <data name="progress.Size" type="System.Drawing.Size, System.Drawing">
-    <value>648, 62</value>
+    <value>242, 26</value>
   </data>
   <data name="progress.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;progress.Name" xml:space="preserve">
     <value>progress</value>
@@ -349,19 +334,19 @@
     <value>Fill</value>
   </data>
   <data name="textRemaining.Location" type="System.Drawing.Point, System.Drawing">
-    <value>227, 136</value>
+    <value>86, 62</value>
   </data>
   <data name="textRemaining.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 7, 8, 7</value>
+    <value>3, 3, 3, 3</value>
   </data>
   <data name="textRemaining.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 7, 8, 7</value>
+    <value>3, 3, 3, 3</value>
   </data>
   <data name="textRemaining.Size" type="System.Drawing.Size, System.Drawing">
-    <value>648, 46</value>
+    <value>242, 19</value>
   </data>
   <data name="textRemaining.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;textRemaining.Name" xml:space="preserve">
     <value>textRemaining</value>
@@ -375,6 +360,183 @@
   <data name="&gt;&gt;textRemaining.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
+  <data name="_labelTimeFrame.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="_labelTimeFrame.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="_labelTimeFrame.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 84</value>
+  </data>
+  <data name="_labelTimeFrame.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 28</value>
+  </data>
+  <data name="_labelTimeFrame.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="_labelTimeFrame.Text" xml:space="preserve">
+    <value>Synchronise</value>
+  </data>
+  <data name="_labelTimeFrame.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;_labelTimeFrame.Name" xml:space="preserve">
+    <value>_labelTimeFrame</value>
+  </data>
+  <data name="&gt;&gt;_labelTimeFrame.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_labelTimeFrame.Parent" xml:space="preserve">
+    <value>_layoutMain</value>
+  </data>
+  <data name="&gt;&gt;_labelTimeFrame.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="_layoutTimeFrameButtons.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="_layoutTimeFrameButtons.ColumnCount" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="comboTimeFrame.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="comboTimeFrame.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Popup</value>
+  </data>
+  <data name="comboTimeFrame.Items" xml:space="preserve">
+    <value>all</value>
+  </data>
+  <data name="comboTimeFrame.Items1" xml:space="preserve">
+    <value>1 day</value>
+  </data>
+  <data name="comboTimeFrame.Items2" xml:space="preserve">
+    <value>3 days</value>
+  </data>
+  <data name="comboTimeFrame.Items3" xml:space="preserve">
+    <value>1 week</value>
+  </data>
+  <data name="comboTimeFrame.Items4" xml:space="preserve">
+    <value>2 weeks</value>
+  </data>
+  <data name="comboTimeFrame.Items5" xml:space="preserve">
+    <value>1 month</value>
+  </data>
+  <data name="comboTimeFrame.Items6" xml:space="preserve">
+    <value>3 months</value>
+  </data>
+  <data name="comboTimeFrame.Items7" xml:space="preserve">
+    <value>6 months</value>
+  </data>
+  <data name="comboTimeFrame.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="comboTimeFrame.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 21</value>
+  </data>
+  <data name="comboTimeFrame.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;comboTimeFrame.Name" xml:space="preserve">
+    <value>comboTimeFrame</value>
+  </data>
+  <data name="&gt;&gt;comboTimeFrame.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboTimeFrame.Parent" xml:space="preserve">
+    <value>_layoutTimeFrameButtons</value>
+  </data>
+  <data name="&gt;&gt;comboTimeFrame.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="buttonApplyTimeFrame.Location" type="System.Drawing.Point, System.Drawing">
+    <value>181, 2</value>
+  </data>
+  <data name="buttonApplyTimeFrame.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 3</value>
+  </data>
+  <data name="buttonApplyTimeFrame.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 23</value>
+  </data>
+  <data name="buttonApplyTimeFrame.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="buttonApplyTimeFrame.Text" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="&gt;&gt;buttonApplyTimeFrame.Name" xml:space="preserve">
+    <value>buttonApplyTimeFrame</value>
+  </data>
+  <data name="&gt;&gt;buttonApplyTimeFrame.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonApplyTimeFrame.Parent" xml:space="preserve">
+    <value>_layoutTimeFrameButtons</value>
+  </data>
+  <data name="&gt;&gt;buttonApplyTimeFrame.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="buttonResetTimeFrame.Location" type="System.Drawing.Point, System.Drawing">
+    <value>111, 2</value>
+  </data>
+  <data name="buttonResetTimeFrame.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 3</value>
+  </data>
+  <data name="buttonResetTimeFrame.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 23</value>
+  </data>
+  <data name="buttonResetTimeFrame.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="buttonResetTimeFrame.Text" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="&gt;&gt;buttonResetTimeFrame.Name" xml:space="preserve">
+    <value>buttonResetTimeFrame</value>
+  </data>
+  <data name="&gt;&gt;buttonResetTimeFrame.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonResetTimeFrame.Parent" xml:space="preserve">
+    <value>_layoutTimeFrameButtons</value>
+  </data>
+  <data name="&gt;&gt;buttonResetTimeFrame.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="_layoutTimeFrameButtons.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="_layoutTimeFrameButtons.Location" type="System.Drawing.Point, System.Drawing">
+    <value>83, 84</value>
+  </data>
+  <data name="_layoutTimeFrameButtons.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="_layoutTimeFrameButtons.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="_layoutTimeFrameButtons.Size" type="System.Drawing.Size, System.Drawing">
+    <value>248, 28</value>
+  </data>
+  <data name="_layoutTimeFrameButtons.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;_layoutTimeFrameButtons.Name" xml:space="preserve">
+    <value>_layoutTimeFrameButtons</value>
+  </data>
+  <data name="&gt;&gt;_layoutTimeFrameButtons.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_layoutTimeFrameButtons.Parent" xml:space="preserve">
+    <value>_layoutMain</value>
+  </data>
+  <data name="&gt;&gt;_layoutTimeFrameButtons.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="_layoutTimeFrameButtons.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="comboTimeFrame" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonApplyTimeFrame" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="buttonResetTimeFrame" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,AutoSize,0,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
   <data name="_labelResync.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -382,13 +544,10 @@
     <value>Fill</value>
   </data>
   <data name="_labelResync.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 189</value>
-  </data>
-  <data name="_labelResync.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 0, 8, 0</value>
+    <value>3, 132</value>
   </data>
   <data name="_labelResync.Size" type="System.Drawing.Size, System.Drawing">
-    <value>203, 70</value>
+    <value>77, 35</value>
   </data>
   <data name="_labelResync.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -409,7 +568,7 @@
     <value>_layoutMain</value>
   </data>
   <data name="&gt;&gt;_labelResync.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="buttonGAB.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -427,19 +586,16 @@
     <value>NoControl</value>
   </data>
   <data name="buttonGAB.Location" type="System.Drawing.Point, System.Drawing">
-    <value>227, 196</value>
-  </data>
-  <data name="buttonGAB.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 7, 8, 7</value>
+    <value>86, 135</value>
   </data>
   <data name="buttonGAB.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 7, 8, 7</value>
+    <value>3, 3, 3, 3</value>
   </data>
   <data name="buttonGAB.Size" type="System.Drawing.Size, System.Drawing">
-    <value>648, 56</value>
+    <value>242, 29</value>
   </data>
   <data name="buttonGAB.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>4</value>
   </data>
   <data name="buttonGAB.Text" xml:space="preserve">
     <value>Global Address Book</value>
@@ -454,7 +610,7 @@
     <value>_layoutMain</value>
   </data>
   <data name="&gt;&gt;buttonGAB.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="buttonSignatures.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -472,19 +628,16 @@
     <value>NoControl</value>
   </data>
   <data name="buttonSignatures.Location" type="System.Drawing.Point, System.Drawing">
-    <value>227, 266</value>
-  </data>
-  <data name="buttonSignatures.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 7, 8, 7</value>
+    <value>86, 170</value>
   </data>
   <data name="buttonSignatures.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 7, 8, 7</value>
+    <value>3, 3, 3, 3</value>
   </data>
   <data name="buttonSignatures.Size" type="System.Drawing.Size, System.Drawing">
-    <value>648, 56</value>
+    <value>242, 29</value>
   </data>
   <data name="buttonSignatures.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>5</value>
   </data>
   <data name="buttonSignatures.Text" xml:space="preserve">
     <value>Signatures</value>
@@ -499,7 +652,7 @@
     <value>_layoutMain</value>
   </data>
   <data name="&gt;&gt;buttonSignatures.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="buttonServerData.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -517,19 +670,16 @@
     <value>NoControl</value>
   </data>
   <data name="buttonServerData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>227, 336</value>
-  </data>
-  <data name="buttonServerData.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 7, 8, 7</value>
+    <value>86, 205</value>
   </data>
   <data name="buttonServerData.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 7, 8, 7</value>
+    <value>3, 3, 3, 3</value>
   </data>
   <data name="buttonServerData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>648, 56</value>
+    <value>242, 29</value>
   </data>
   <data name="buttonServerData.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>6</value>
   </data>
   <data name="buttonServerData.Text" xml:space="preserve">
     <value>Server Data</value>
@@ -544,7 +694,7 @@
     <value>_layoutMain</value>
   </data>
   <data name="&gt;&gt;buttonServerData.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="buttonFullResync.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -562,19 +712,16 @@
     <value>NoControl</value>
   </data>
   <data name="buttonFullResync.Location" type="System.Drawing.Point, System.Drawing">
-    <value>227, 406</value>
-  </data>
-  <data name="buttonFullResync.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 7, 8, 7</value>
+    <value>86, 240</value>
   </data>
   <data name="buttonFullResync.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 7, 8, 7</value>
+    <value>3, 3, 3, 3</value>
   </data>
   <data name="buttonFullResync.Size" type="System.Drawing.Size, System.Drawing">
-    <value>648, 56</value>
+    <value>242, 29</value>
   </data>
   <data name="buttonFullResync.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="buttonFullResync.Text" xml:space="preserve">
     <value>Full Resynchronisation</value>
@@ -589,22 +736,19 @@
     <value>_layoutMain</value>
   </data>
   <data name="&gt;&gt;buttonFullResync.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="_labelResyncOption.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="_labelResyncOption.Location" type="System.Drawing.Point, System.Drawing">
-    <value>227, 469</value>
-  </data>
-  <data name="_labelResyncOption.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 0, 8, 0</value>
+    <value>86, 272</value>
   </data>
   <data name="_labelResyncOption.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 14, 0, 0</value>
+    <value>0, 6, 0, 0</value>
   </data>
   <data name="_labelResyncOption.Size" type="System.Drawing.Size, System.Drawing">
-    <value>648, 223</value>
+    <value>242, 64</value>
   </data>
   <data name="_labelResyncOption.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -619,22 +763,19 @@
     <value>_layoutMain</value>
   </data>
   <data name="&gt;&gt;_labelResyncOption.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
   </data>
   <data name="_layoutMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="_layoutMain.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 7</value>
-  </data>
-  <data name="_layoutMain.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 7, 8, 7</value>
+    <value>3, 3</value>
   </data>
   <data name="_layoutMain.RowCount" type="System.Int32, mscorlib">
-    <value>8</value>
+    <value>11</value>
   </data>
   <data name="_layoutMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>883, 692</value>
+    <value>331, 336</value>
   </data>
   <data name="_layoutMain.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -652,7 +793,7 @@
     <value>1</value>
   </data>
   <data name="_layoutMain.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="_labelRemaining" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="_labelAccount" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="comboAccounts" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="_labelProgress" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="progress" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textRemaining" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="_labelResync" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonGAB" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonSignatures" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonServerData" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonFullResync" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="_labelResyncOption" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="_labelRemaining" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="_labelAccount" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="comboAccounts" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="_labelProgress" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="progress" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textRemaining" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="_labelTimeFrame" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="_layoutTimeFrameButtons" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="_labelResync" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonGAB" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonSignatures" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonServerData" Row="8" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonFullResync" Row="9" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="_labelResyncOption" Row="10" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Absolute,20,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="_layout.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -660,14 +801,11 @@
   <data name="_layout.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="_layout.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 7, 8, 7</value>
-  </data>
   <data name="_layout.RowCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="_layout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>899, 770</value>
+    <value>337, 381</value>
   </data>
   <data name="_layout.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -691,16 +829,13 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>16, 31</value>
+    <value>6, 13</value>
   </data>
   <data name="$this.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>899, 770</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 7, 8, 7</value>
+    <value>337, 381</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>

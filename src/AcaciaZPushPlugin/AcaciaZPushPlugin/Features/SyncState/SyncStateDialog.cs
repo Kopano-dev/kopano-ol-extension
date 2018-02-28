@@ -1,4 +1,4 @@
-﻿/// Copyright 2017 Kopano b.v.
+﻿/// Copyright 2018 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -25,6 +25,7 @@ using System.Windows.Forms;
 using Acacia.UI;
 using Acacia.Controls;
 using Acacia.ZPush;
+using Acacia.ZPush.Connect;
 
 namespace Acacia.Features.SyncState
 {
@@ -35,7 +36,15 @@ namespace Acacia.Features.SyncState
 
         private readonly Button[] _syncButtons;
 
-        public SyncStateDialog(FeatureSyncState feature)
+        private ZPushAccount SelectedAccount
+        {
+            get
+            {
+                return comboAccounts.SelectedItem as ZPushAccount;
+            }
+        }
+
+        public SyncStateDialog(FeatureSyncState feature, ZPushAccount currentAccount)
         {
             InitializeComponent();
 
@@ -50,6 +59,8 @@ namespace Acacia.Features.SyncState
             // Add the accounts
             foreach (ZPushAccount account in ThisAddIn.Instance.Watcher.Accounts.GetAccounts())
                 comboAccounts.Items.Add(account);
+            if (currentAccount != null)
+                comboAccounts.SelectedItem = currentAccount;
         }
 
         private void ShowHint(object sender, KHintButton.HintEventArgs e)
@@ -57,11 +68,59 @@ namespace Acacia.Features.SyncState
             _labelResyncOption.Text = e.Hint ?? string.Empty;
         }
 
+        #region Sync time frame
+
         private void comboAccounts_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _syncState = _feature.GetSyncState(comboAccounts.SelectedItem as ZPushAccount);
+            _syncState = _feature.GetSyncState(SelectedAccount);
+            _labelTimeFrame.Enabled = comboTimeFrame.Enabled = SelectedAccount != null;
+
+            if (SelectedAccount == null)
+                comboTimeFrame.SelectedIndex = 0;
+            else
+                comboTimeFrame.SelectedIndex = (int)SelectedAccount.SyncTimeFrame;
+
             UpdateUI();
         }
+
+        private void comboTimeFrame_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CheckTimeFrameDirty();
+        }
+
+        private void CheckTimeFrameDirty()
+        { 
+            if (SelectedAccount != null)
+            {
+                SyncTimeFrame timeFrame = (SyncTimeFrame)comboTimeFrame.SelectedIndex;
+                bool isDirty = timeFrame != SelectedAccount.SyncTimeFrame;
+                buttonApplyTimeFrame.Enabled = buttonResetTimeFrame.Enabled = isDirty;
+            }
+            else
+            {
+                buttonApplyTimeFrame.Enabled = buttonResetTimeFrame.Enabled = false;
+            }
+        }
+
+        private void buttonResetTimeFrame_Click(object sender, EventArgs e)
+        {
+            if (SelectedAccount != null)
+                comboTimeFrame.SelectedIndex = (int)SelectedAccount.SyncTimeFrame;
+        }
+
+        private void buttonApplyTimeFrame_Click(object sender, EventArgs e)
+        {
+            if (SelectedAccount != null)
+            {
+                Busy = true;
+
+                // TODO: do this in the background
+                _feature.SetDeviceOptions(SelectedAccount, (SyncTimeFrame)comboTimeFrame.SelectedIndex);
+                CheckTimeFrameDirty();
+            }
+        }
+
+        #endregion
 
         private static readonly string[] OPTION_TEXT =
         {
@@ -150,5 +209,6 @@ namespace Acacia.Features.SyncState
                 progress.Value = 100;
             }
         }
+
     }
 }

@@ -45,6 +45,17 @@ namespace Acacia.Utils
             Registry.SetValue(keyPath, valueName, value);
         }
 
+        public static int GetValueDword(string keyPath, string valueName, int defaultValue)
+        {
+            object o = Registry.GetValue(keyPath, valueName, defaultValue);
+            return (int)o;
+        }
+
+        public static void SetValueDword(string keyPath, string valueName, int value)
+        {
+            Registry.SetValue(keyPath, valueName, value);
+        }
+
         public static string RegToString(object o)
         {
             if (o is byte[])

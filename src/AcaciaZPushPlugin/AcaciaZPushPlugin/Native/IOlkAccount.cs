@@ -8,12 +8,17 @@ using System.Threading.Tasks;
 
 namespace Acacia.Native
 {
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Explicit)]
     unsafe public struct ACCT_VARIANT
     {
+        [FieldOffset(0), MarshalAs(UnmanagedType.U4)]
         public uint dwType;
 
+        [FieldOffset(8)]
         public char* lpszW;
+
+        [FieldOffset(8), MarshalAs(UnmanagedType.U4)]
+        public uint dw;
     }
 
     [ComImport]

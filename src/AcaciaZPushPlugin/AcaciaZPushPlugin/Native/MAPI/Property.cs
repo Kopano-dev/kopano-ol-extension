@@ -55,6 +55,15 @@ namespace Acacia.Native.MAPI
             return new SearchQuery.PropertyIdentifier(this);
         }
 
+        public static PropTag FromValue(ushort prop, PropType type)
+        {
+            return new PropTag()
+            {
+                prop = prop,
+                type = type
+            };
+        }
+
         public static PropTag FromInt(int v)
         {
             return new PropTag()

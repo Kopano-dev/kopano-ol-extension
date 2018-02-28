@@ -1,7 +1,5 @@
 ﻿
-using Acacia.Native;
-using Acacia.Native.MAPI;
-/// Copyright 2017 Kopano b.v.
+/// Copyright 2018 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -17,6 +15,8 @@ using Acacia.Native.MAPI;
 /// 
 /// Consult LICENSE file for details
 using Acacia.Utils;
+using Acacia.Native;
+using Acacia.Native.MAPI;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -207,55 +207,6 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public string LocalSignaturesHash
-        {
-            get
-            {
-                return RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_CURRENT_SIGNATURE, null);
-            }
-            set
-            {
-                RegistryUtil.SetValueString(_regPath, OutlookConstants.REG_VAL_CURRENT_SIGNATURE, value);
-            }
-        }
-        public string SignatureNewMessage
-        {
-            get
-            {
-                return RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_NEW_SIGNATURE, null);
-            }
-            set
-            {
-                // TODO: constant for account
-                SetAccountProp(PropTag.FromInt(0x0016001F), value);
-            }
-        }
-
-        unsafe private void SetAccountProp(PropTag propTag, string value)
-        {
-            // Use IOlkAccount to notify while we're running
-            // IOlkAccount can only be accessed on main thread
-            ThisAddIn.Instance.InUI(() =>
-            {
-                using (ComRelease com = new ComRelease())
-                {
-                    NSOutlook.Account account = com.Add(FindAccountObject());
-                    IOlkAccount olk = com.Add(account.IOlkAccount);
-
-                    fixed (char* ptr = value.ToCharArray())
-                    {
-                        ACCT_VARIANT val = new ACCT_VARIANT()
-                        {
-                            dwType = (uint)PropType.UNICODE,
-                            lpszW = ptr
-                        };
-                        olk.SetProp(propTag, &val);
-                        olk.SaveChanges(0);
-                    }
-                }
-            });
-        }
-
         private NSOutlook.Account FindAccountObject()
         {
             using (ComRelease com = new ComRelease())
@@ -272,26 +223,50 @@ namespace Acacia.Stubs.OutlookWrappers
             return null;
         }
 
-        public string SignatureReplyForwardMessage
-        {
-            get
-            {
-                return RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_REPLY_FORWARD_SIGNATURE, null);
-            }
-            set
-            {
-                SetAccountProp(PropTag.FromInt(0x0017001F), value);
-            }
-        }
 
-        public string ShareFor
+        unsafe public void SetAccountProp(PropTag propTag, object value)
         {
-            get
+            // Use IOlkAccount to notify while we're running
+            // IOlkAccount can only be accessed on main thread
+            ThisAddIn.Instance.InUI(() =>
             {
-                return RegistryUtil.GetValueString(_regPath, OutlookConstants.REG_VAL_KOE_SHARE_FOR, null);
-            }
+                using (ComRelease com = new ComRelease())
+                {
+                    NSOutlook.Account account = com.Add(FindAccountObject());
+                    IOlkAccount olk = com.Add(account.IOlkAccount);
+
+                    switch(propTag.type)
+                    {
+                        case PropType.UNICODE:
+                            fixed (char* ptr = ((string)value).ToCharArray())
+                            {
+                                ACCT_VARIANT val = new ACCT_VARIANT()
+                                {
+                                    dwType = (uint)PropType.UNICODE,
+                                    lpszW = ptr
+                                };
+                                olk.SetProp(propTag, &val);
+                                olk.SaveChanges(0);
+                            }
+                            break;
+                        case PropType.LONG:
+                            {
+                                ACCT_VARIANT val = new ACCT_VARIANT()
+                                {
+                                    dwType = (uint)PropType.LONG,
+                                    dw = (uint)value
+                                };
+                                olk.SetProp(propTag, &val);
+                                olk.SaveChanges(0);
+                                break;
+                            }
+                    }
+                }
+            });
         }
 
         #endregion
+
+        public string RegistryBaseKey { get { return _regPath; } }
     }
 }
