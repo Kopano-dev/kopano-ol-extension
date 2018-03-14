@@ -7,6 +7,7 @@ static const wstring R_USERNAME = L"EAS User";
 static const wstring R_EMAIL = L"Email";
 static const wstring R_EMAIL_ORIGINAL = L"KOE Share For";
 static const wstring R_PASSWORD = L"EAS Password";
+static const wstring R_ONE_MONTH = L"EAS SyncSlider";
 
 struct Account
 {
@@ -22,6 +23,7 @@ public:
 	wstring password;
 	vector<byte> encryptedPassword;
 	wstring dataFolder;
+	bool syncOneMonth;
 private:
 	wstring path;
 	int initializedMAPI = 0;
@@ -389,6 +391,9 @@ private:
 		if (!emailOriginal.empty())
 			WriteAccountKey(R_EMAIL_ORIGINAL, emailOriginal);
 
+		if (syncOneMonth)
+			WriteAccountKey(R_ONE_MONTH, (DWORD)1);
+
 		WriteAccountKey(L"clsid", L"{ED475415-B0D6-11D2-8C3B-00104B2A6676}");
 
 		WriteAccountKey(R_PASSWORD, &encryptedPassword[0], encryptedPassword.size());
@@ -532,9 +537,9 @@ int __cdecl wmain(int argc, wchar_t  **argv)
 	// Main
 	try
 	{
-		if (argc != 7)
+		if (argc < 7 || argc > 8)
 		{
-			fwprintf(stderr, L"EASAccount: <profile> <outlook version> <accountid> <username> <email> <display>\n");
+			fwprintf(stderr, L"EASAccount: <profile> <outlook version> <accountid> <username> <email> <display> [1 month]\n");
 			exit(3);
 		}
 
@@ -547,6 +552,9 @@ int __cdecl wmain(int argc, wchar_t  **argv)
 		account.email = argv[5];
 		account.accountName = account.email;
 		account.displayName = argv[6];
+		account.syncOneMonth = true;
+		if (argc > 7)
+			account.syncOneMonth = !wcscmp(argv[7], L"1");
 
 		// Create the account
 		account.Create();
