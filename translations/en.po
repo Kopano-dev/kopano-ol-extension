@@ -412,6 +412,72 @@ msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelProgress
 msgid "Progress"
 msgstr "Progress"
 
+#: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelTimeFrame.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelTimeFrame.Text"
+msgid "Synchronise"
+msgstr "Synchronise"
+
+#: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items"
+msgid "all"
+msgstr "all"
+
+#: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items1
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items1"
+msgid "1 day"
+msgstr "1 day"
+
+#: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items2
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items2"
+msgid "3 days"
+msgstr "3 days"
+
+#: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items3
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items3"
+msgid "1 week"
+msgstr "1 week"
+
+#: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items4
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items4"
+msgid "2 weeks"
+msgstr "2 weeks"
+
+#: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items5
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items5"
+msgid "1 month"
+msgstr "1 month"
+
+#: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items6
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items6"
+msgid "3 months"
+msgstr "3 months"
+
+#: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items7
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items7"
+msgid "6 months"
+msgstr "6 months"
+
+#: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonApplyTimeFrame.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonApplyTimeFrame.Text"
+msgid "Apply"
+msgstr "Apply"
+
+#: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonResetTimeFrame.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonResetTimeFrame.Text"
+msgid "Reset"
+msgstr "Reset"
+
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelResync.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelResync.Text"
