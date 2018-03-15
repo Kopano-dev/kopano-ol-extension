@@ -77,6 +77,8 @@ namespace Acacia.Stubs.OutlookWrappers
             {
                 foreach (KeyValuePair<ZPushAccount, GABUser> share in _shares)
                 {
+                    Logger.Instance.Debug(this, "Adding KOE share: profile={0}, version={1}, accountid={2}, user={3}, email={4}",
+                            _addIn.ProfileName, _addIn.VersionMajor, share.Key.Account.AccountId, share.Value.UserName, share.Value.EmailAddress);
                     // TODO: escaping
                     commandLine += " /sharekoe " + Util.QuoteCommandLine(_addIn.ProfileName + ":" + 
                             _addIn.VersionMajor + ":" +
@@ -87,12 +89,11 @@ namespace Acacia.Stubs.OutlookWrappers
             }
 
             string arch = Environment.Is64BitProcess ? "x64" : "x86";
+            string fullCommandLine = Process.GetCurrentProcess().Id + " " + arch + " " + commandLine;
+            Logger.Instance.Debug(this, "Restarting KOE: {0}", fullCommandLine);
             // Run that
             Process process = new Process();
-            process.StartInfo = new ProcessStartInfo(RestarterPath, 
-                    Process.GetCurrentProcess().Id + " " + 
-                    arch + " " +
-                    commandLine);
+            process.StartInfo = new ProcessStartInfo(RestarterPath, fullCommandLine);
             process.Start();
 
             // And close us and any other windows

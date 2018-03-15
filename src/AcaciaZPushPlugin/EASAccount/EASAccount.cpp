@@ -1,5 +1,51 @@
 #include "EASAccount.h"
 
+static bool verbose = true;
+
+inline static void LOG(const wchar_t *format, ...)
+{
+	va_list args;
+	va_start(args, format);
+	wchar_t buffer[8192] = L"EAS: ";
+	vswprintf_s(buffer + wcslen(buffer), ARRAYSIZE(buffer) - wcslen(buffer), format, args);
+	_RPTW0(_CRT_WARN, buffer);
+	fputws(buffer, stderr);
+	va_end(args);
+}
+inline static void VERBOSE(const wchar_t *format, ...)
+{
+	if (!verbose)
+		return;
+	va_list args;
+	va_start(args, format);
+	wchar_t buffer[8192] = L"EAS: ";
+	vswprintf_s(buffer + wcslen(buffer), ARRAYSIZE(buffer) - wcslen(buffer), format, args);
+	_RPTW0(_CRT_WARN, buffer);
+	fputws(buffer, stderr);
+	va_end(args);
+}
+
+inline static wstring ToHex(const void *data, size_t size)
+{
+	wstring s;
+	for (const byte *ptr = (byte*)data; ptr < ((byte*)data) + size; ++ptr)
+	{
+		char buffer[4];
+		sprintf_s(buffer, sizeof(buffer), "%.2X", *ptr);
+		s += (wchar_t)buffer[0];
+		s += (wchar_t)buffer[1];
+	}
+	return s;
+}
+
+template<class Type> 
+inline static wstring ToHex(const vector<Type> &v)
+{
+	if (v.size() == 0)
+		return L"";
+	return ToHex(&v[0], v.size());
+}
+
 static const wstring R_ACCOUNT_NAME = L"Account Name";
 static const wstring R_DISPLAY_NAME = L"Display Name";
 static const wstring R_SERVER_URL = L"EAS Server URL";
@@ -37,9 +83,14 @@ private:
 	HKEY hKeyAccounts = nullptr;
 	HKEY hKeyNewAccount = nullptr;
 
+
 public:
 	Account()
+	:
+	accountId(0)
 	{
+		memset(&service, 0, sizeof(service));
+
 		// Initialize the mapi session
 		MAPIINIT_0	MAPIINIT = { 0, 0 };
 		CHECK_H(MAPIInitialize(&MAPIINIT), "MAPIInitialize");
@@ -65,6 +116,49 @@ public:
 		}
 	}
 
+	void LOG_VERBOSE(const wchar_t *prefix) const
+	{
+		if (!verbose)
+			return;
+
+		VERBOSE
+		(
+			L"%ls\n"
+			L"\tprofileName=%ls\n"
+			L"\toutlookVersion=%ls\n"
+			L"\taccountName=%ls\n"
+			L"\tdisplayName=%ls\n"
+			L"\temail=%ls\n"
+			L"\temailOriginal=%ls\n"
+			L"\tserver=%ls\n"
+			L"\tusername=%ls\n"
+			L"\tpassword=%u\n"
+			L"\tencryptedPassword=%u\n"
+			L"\tdataFolder=%ls\n"
+			L"\tsyncOneMonth=%u\n"
+			L"\tpath=%ls\n"
+			L"\tservice=%ls\n"
+			L"\tentryId=%ls\n"
+			L"\taccountId=%.8X\n",
+			prefix,
+			profileName.c_str(),
+			outlookVersion.c_str(),
+			accountName.c_str(),
+			displayName.c_str(),
+			email.c_str(),
+			emailOriginal.c_str(),
+			server.c_str(),
+			username.c_str(),
+			password.empty() ? 0 : 1,
+			encryptedPassword.size(),
+			dataFolder.c_str(),
+			syncOneMonth,
+			path.c_str(),
+			ToHex(&service, sizeof(service)).c_str(),
+			ToHex(entryId).c_str(),
+			accountId
+		);
+	}
 	void Create()
 	{
 		CheckInit();
@@ -118,9 +212,11 @@ private:
 			wchar_t szPath[MAX_PATH];
 			CHECK_H(SHGetFolderPath(nullptr, CSIDL_LOCAL_APPDATA, nullptr, 0, szPath), "GetAppData");
 			dataFolder = wstring(szPath) + L"\\Microsoft\\Outlook\\";
+			VERBOSE(L"DeterminePath: dataFolder=%ls\n", dataFolder.c_str());
 		}
 		// Somehow it only works if there's a number in between parentheses
 		path = dataFolder + email + L" - " + profileName + L"(1).ost";
+		VERBOSE(L"DeterminePath: path=%ls\n", path.c_str());
 	}
 
 	void EncryptPassword()
@@ -169,19 +265,24 @@ private:
 	{
 		if (!lpServiceAdmin2)
 		{
+			VERBOSE(L"OpenProfileAdmin: 1\n");
 			// Get the profile admin 
 			CHECK_H(MAPIAdminProfiles(0, &lpProfAdmin), "MAPIAdminProfiles");
 			CHECK_H(lpProfAdmin->AdminServices((LPTSTR)WideToString(profileName).c_str(), nullptr, NULL, 0, &lpServiceAdmin), "AdminServices");
 			CHECK_H(lpServiceAdmin->QueryInterface(IID_IMsgServiceAdmin2, (LPVOID*)&lpServiceAdmin2), "AdminServices2");
+			VERBOSE(L"OpenProfileAdmin: 2\n");
 		}
 	}
 
 	void CreateMessageService()
 	{
+	VERBOSE(L"CreateMessageService: 1\n");
 		CHECK_H(lpServiceAdmin2->CreateMsgServiceEx((LPTSTR)"EAS", (LPTSTR)displayName.c_str(), 0, 0, &service), "CreateMsgServiceEx");
 
 		// Delete any existing ost
+	VERBOSE(L"CreateMessageService: Deleting existing OST\n");
 		DeleteFile(path.c_str());
+	VERBOSE(L"CreateMessageService: Deleted existing OST: %.8X\n", GetLastError());
 
 		// Configure the service
 		SPropValue msprops[6];
@@ -204,7 +305,9 @@ private:
 		msprops[5].ulPropTag = 0x67060003;
 		msprops[5].Value.l = 4;
 
+	VERBOSE(L"CreateMessageService: 2\n");
 		CHECK_H(lpServiceAdmin2->ConfigureMsgService(&service, 0, SERVICE_UI_ALLOWED, 6, msprops), "ConfigureMSGService");
+	VERBOSE(L"CreateMessageService: 3\n");
 	}
 
 	void GetEntryId()
@@ -213,9 +316,11 @@ private:
 		LPSPropValue vals = nullptr;
 		try
 		{
+		VERBOSE(L"GetEntryId: 1\n");
 			// Open the profile section
 			CHECK_H(lpServiceAdmin2->OpenProfileSection(const_cast<LPMAPIUID>(&service), NULL, MAPI_FORCE_ACCESS, &profSect), "ProfSect");
 
+		VERBOSE(L"GetEntryId: 2\n");
 			// Get the entry id
 			SizedSPropTagArray(1, props);
 			props.cValues = 1;
@@ -223,6 +328,7 @@ private:
 
 			ULONG count = 0;
 			CHECK_H(profSect->GetProps((LPSPropTagArray)&props, 0, &count, &vals), "GetProps");
+		VERBOSE(L"GetEntryId: 3\n");
 
 			entryId.resize(vals[0].Value.bin.cb);
 			entryId.assign(vals[0].Value.bin.lpb, vals[0].Value.bin.lpb + entryId.size());
@@ -230,6 +336,7 @@ private:
 			// Clean up
 			profSect->Release();
 			MAPIFreeBuffer(vals);
+		VERBOSE(L"GetEntryId: 4, size=%d, value=%s\n", entryId.size(), ToHex(entryId).c_str());
 		}
 		catch (...)
 		{
@@ -366,6 +473,7 @@ private:
 
 		virtual STDMETHODIMP GetMapiSession(LPUNKNOWN * ppmsess) override
 		{
+		VERBOSE(L"GetMapiSession: 1\n");
 			CHECK_H(unkSession->QueryInterface(IID_IMAPISession, (LPVOID*)ppmsess), "GetMapiSession");
 			return S_OK;
 		}
@@ -379,9 +487,11 @@ private:
 
 	void CreateAccount()
 	{
+	VERBOSE(L"CreateAccount\n");
 		AllocateAccountKey();
 
 		// Write the values
+	VERBOSE(L"CreateAccount: Setting registry keys\n");
 		WriteAccountKey(R_ACCOUNT_NAME, accountName);
 		WriteAccountKey(R_DISPLAY_NAME, displayName);
 		WriteAccountKey(R_SERVER_URL, server);
@@ -429,6 +539,8 @@ private:
 		DWORD nextAccountId = accountId + 1;
 		CHECK_L(RegSetValueEx(hKeyAccounts, VALUE_NEXT_ACCOUNT_ID, 0, REG_DWORD, (LPBYTE)&nextAccountId, sizeof(nextAccountId)), "CommitAccountKey");
 
+	VERBOSE(L"CommitAccountKey: %d\n", accountId);
+
 		// Add the account to the mail, store and addressbook entries
 		AppendAccountId(KEY_OLKMAIL);
 		AppendAccountId(KEY_OLKADDRESSBOOK);
@@ -467,8 +579,10 @@ private:
 
 		try
 		{
+		VERBOSE(L"PatchMessageStore: Deleting existing OST 1\n");
 			// Delete existing store
 			DeleteFile(path.c_str());
+		VERBOSE(L"PatchMessageStore: Deleted existing OST 1: %.8X\n", GetLastError());
 
 			// Logon
 			CHECK_H(MAPILogonEx(0, (LPTSTR)WideToString(profileName).c_str(), NULL, 0, &session), "MAPILogonEx");
@@ -496,11 +610,14 @@ private:
 #endif
 
 			// Delete existing store
+		VERBOSE(L"PatchMessageStore: Deleting existing OST 2\n");
 			DeleteFile(path.c_str());
+		VERBOSE(L"PatchMessageStore: Deleted existing OST 2: %.8X\n", GetLastError());
 
 			if (entryId.size() == 0)
 				throw exception("entryId not initialised");
 
+		VERBOSE(L"PatchMessageStore: OpenMsgStore\n");
 			// Open the msg store to finalise creation
 			CHECK_H(session->OpenMsgStore(0, (ULONG)entryId.size(), (LPENTRYID)&entryId[0], nullptr,
 				MDB_NO_DIALOG | MDB_WRITE | MAPI_DEFERRED_ERRORS, &msgStore), "OpenMsgStore");
@@ -546,7 +663,7 @@ int __cdecl wmain(int argc, wchar_t  **argv)
 		account.profileName = argv[1];
 		account.outlookVersion = argv[2];
 		account.LoadFromAccountId(argv[3]);
-		wprintf(L"ADDING SHARE: %s#%s\n", account.username.data(), argv[4]);
+		LOG(L"ADDING SHARE: %ls#%ls\n", account.username.c_str(), argv[4]);
 		account.username = account.username + L"#" + argv[4];
 		account.emailOriginal = account.email;
 		account.email = argv[5];
@@ -556,27 +673,34 @@ int __cdecl wmain(int argc, wchar_t  **argv)
 		if (argc > 7)
 			account.syncOneMonth = !wcscmp(argv[7], L"1");
 
-		// Create the account
-		account.Create();
+		try
+		{
+			account.LOG_VERBOSE(L"Creating account");
+			// Create the account
+			account.Create();
+			account.LOG_VERBOSE(L"Created account");
+		}
+		catch (...)
+		{
+			account.LOG_VERBOSE(L"Handling exception");
+			throw;
+		}
 	}
 	catch (const CustomException &e)
 	{
 		if (!strcmp(e.what(), "AdminServices") && e.status == 0x80040111)
 		{
-			_RPTW1(_CRT_WARN, L"Profile does not exist: %ls\n", account.profileName.c_str());
-			fwprintf(stderr, L"Profile does not exist: %s\n", account.profileName.c_str());
+			LOG(L"Profile does not exist: %ls\n", account.profileName.c_str());
 		}
 		else
 		{
-			_RPTW1(_CRT_WARN, L"Exception: %ls\n", e.message.c_str());
-			fwprintf(stderr, L"Exception: %s\n", e.message.c_str());
+			LOG(L"Exception: %s\n", e.message.c_str());
 		}
 		return 1;
 	}
 	catch(const exception &e)
 	{
-		_RPT1(_CRT_WARN, "Exception: %s\n", e.what());
-		fprintf(stderr, "Exception: %s\n", e.what());
+		LOG(L"Exception: %s\n", e.what());
 		return 2;
 	}
 
