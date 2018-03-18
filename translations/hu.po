@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-06 11:27+0000\n"
-"PO-Revision-Date: 2017-07-17 16:56+0000\n"
+"PO-Revision-Date: 2018-03-18 22:01+0000\n"
 "Last-Translator: Zoltan Kiss <zoltan.kiss@serverside.hu>\n"
-"Language-Team: Hungarian <http://translate.kopano.io/projects/kopano/kopano-ol-extension/hu/>\n"
+"Language-Team: Hungarian <http://translate.kopano.io/projects/kopano/kopano-"
+"ol-extension/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1228,7 +1229,7 @@ msgstr "Kereséshez kezdjen gépelni egy nevet"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnMethod.Text"
 msgid "Method"
-msgstr ""
+msgstr "Eljárás"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnFile.Text
 #, csharp-format
@@ -1270,7 +1271,7 @@ msgstr "Típus"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader2.Text"
 msgid "Count"
-msgstr ""
+msgstr "Számítás"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader3.Text
 #, csharp-format
@@ -1282,7 +1283,7 @@ msgstr "Típus"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader4.Text"
 msgid "Count"
-msgstr ""
+msgstr "Számítás"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnEvent.Text
 #, csharp-format
@@ -1294,7 +1295,7 @@ msgstr "Esemény"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnCount.Text"
 msgid "Count"
-msgstr ""
+msgstr "Számítás"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnId.Text
 #, csharp-format
@@ -1312,31 +1313,31 @@ msgstr "Események"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabItemEvents.Text"
 msgid "Item events"
-msgstr ""
+msgstr "Elem események"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnSubject.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnSubject.Text"
 msgid "Subject"
-msgstr ""
+msgstr "Tárgy"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader5.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader5.Text"
 msgid "Id"
-msgstr ""
+msgstr "ID"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader6.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader6.Text"
 msgid "Type"
-msgstr ""
+msgstr "Típus"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader7.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader7.Text"
 msgid "Subject"
-msgstr ""
+msgstr "Tárgy"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabWrappers.Text
 #, csharp-format
@@ -1348,19 +1349,19 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnProperties.Text"
 msgid "Properties"
-msgstr ""
+msgstr "Tulajdonságok"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnItemId.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnItemId.Text"
 msgid "ItemId"
-msgstr ""
+msgstr "ItemID"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonCleanGC.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonCleanGC.Text"
 msgid "Remove GC"
-msgstr ""
+msgstr "GC eltávolítása"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonCopyFilter.Text
 #, csharp-format
@@ -1378,7 +1379,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_LocalFolder_Title"
 msgid "Shared folders"
-msgstr ""
+msgstr "Megosztott mappák"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Node_Readonly_ToolTip
 #, csharp-format
@@ -1387,6 +1388,8 @@ msgid ""
 "The folder has been configured by your system administrator and cannot be modified. \n"
 "Please contact your system administrator for any required changes."
 msgstr ""
+"A mappa a rendszergazda által került beállításra, ezért nem változtatható.\n"
+"Vegye fel a kapcsolatot a rendszergazdával, ha módosításra van szüksége."
 
 #: AcaciaZPushPlugin\Features\GAB\GABSettings\checkSMTPGroupsAsContacts.Text
 #, csharp-format
@@ -1398,89 +1401,88 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelWholeStore.Text"
 msgid "Open whole store"
-msgstr ""
+msgstr "Teljes tároló megnyitása"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelRestartRequired.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelRestartRequired.Text"
 msgid "(Requires restart)"
-msgstr ""
+msgstr "(újraindítás szükséges)"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_WholeStoreRestart_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Body"
 msgid "Outlook will be restarted to open the new stores"
-msgstr ""
+msgstr "Az Outlook újraindul, hogy megnyissa az új tárolókat"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_WholeStoreRestart_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Title"
 msgid "Open stores"
-msgstr ""
+msgstr "Tárolók megnyitása"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelTimeFrame.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelTimeFrame.Text"
 msgid "Synchronise"
-msgstr ""
+msgstr "Szinkronizálás"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items"
 msgid "all"
-msgstr ""
+msgstr "minden"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items1
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items1"
 msgid "1 day"
-msgstr ""
+msgstr "1 nap"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items2
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items2"
 msgid "3 days"
-msgstr ""
+msgstr "3 nap"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items3
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items3"
 msgid "1 week"
-msgstr ""
+msgstr "1 hét"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items4
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items4"
 msgid "2 weeks"
-msgstr ""
+msgstr "2 hét"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items5
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items5"
 msgid "1 month"
-msgstr ""
+msgstr "1 hónap"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items6
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items6"
 msgid "3 months"
-msgstr ""
+msgstr "3 hónap"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items7
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items7"
 msgid "6 months"
-msgstr ""
+msgstr "6 hónap"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonApplyTimeFrame.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonApplyTimeFrame.Text"
 msgid "Apply"
-msgstr ""
+msgstr "Alkalmaz"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonResetTimeFrame.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonResetTimeFrame.Text"
 msgid "Reset"
-msgstr ""
-
+msgstr "Visszaállít"
