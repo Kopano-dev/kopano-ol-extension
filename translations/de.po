@@ -2,9 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KC-8\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-01-31 13:12+0000\n"
-"Last-Translator: Jan <jengelh@inai.de>\n"
-"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-extension/de/>\n"
+"PO-Revision-Date: 2018-03-19 11:40+0000\n"
+"Last-Translator: Hans-Peter <h.stradinger@kopano.com>\n"
+"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-"
+"extension/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1423,65 +1424,64 @@ msgstr "Postfächer öffnen"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelTimeFrame.Text"
 msgid "Synchronise"
-msgstr ""
+msgstr "Synchronisieren"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items"
 msgid "all"
-msgstr ""
+msgstr "alles"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items1
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items1"
 msgid "1 day"
-msgstr ""
+msgstr "1 Tag"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items2
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items2"
 msgid "3 days"
-msgstr ""
+msgstr "3 Tage"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items3
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items3"
 msgid "1 week"
-msgstr ""
+msgstr "1 Woche"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items4
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items4"
 msgid "2 weeks"
-msgstr ""
+msgstr "2 Wochen"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items5
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items5"
 msgid "1 month"
-msgstr ""
+msgstr "1 Monat"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items6
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items6"
 msgid "3 months"
-msgstr ""
+msgstr "3 Monate"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items7
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items7"
 msgid "6 months"
-msgstr ""
+msgstr "6 Monate"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonApplyTimeFrame.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonApplyTimeFrame.Text"
 msgid "Apply"
-msgstr ""
+msgstr "Übernehmen"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonResetTimeFrame.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonResetTimeFrame.Text"
 msgid "Reset"
-msgstr ""
-
+msgstr "Zurücksetzen"
