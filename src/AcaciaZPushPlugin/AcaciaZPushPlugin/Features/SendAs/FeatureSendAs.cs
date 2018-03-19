@@ -121,22 +121,34 @@ namespace Acacia.Features.SendAs
         }
         private static readonly BoolOption OPTION_GAB_LOOKUP = new BoolOption("GABLookup", true);
 
+        [AcaciaOption("Enables local resolving look ups for senders. This is disabled by default, as it seems " +
+                      "local contacts may lead to wrong senders.")]
+        public bool ResolveLocal
+        {
+            get { return GetOption(OPTION_RESOLVE_LOCAL); }
+            set { SetOption(OPTION_RESOLVE_LOCAL, value); }
+        }
+        private static readonly BoolOption OPTION_RESOLVE_LOCAL = new BoolOption("ResolveLocal", false);
+
         internal IRecipient FindSendAsSender(ZPushAccount zpush, GABUser user)
         {
             // First try a simple resolve, this will work if the username is unique
-            IRecipient recip = ThisAddIn.Instance.ResolveRecipient(user.UserName);
-            if (recip != null)
+            if (ResolveLocal)
             {
-                // If it's resolved, we're good. Otherwise dispose and continue
-                if (recip.IsResolved)
+                IRecipient recip = ThisAddIn.Instance.ResolveRecipient(user.UserName);
+                if (recip != null)
                 {
-                    Logger.Instance.Trace(this, "Resolved send-as: {0}", recip.Name);
-                    return recip;
-                }
-                else
-                {
-                    Logger.Instance.Trace(this, "Unresolved send-as: {0}", user.UserName);
-                    recip.Dispose();
+                    // If it's resolved, we're good. Otherwise dispose and continue
+                    if (recip.IsResolved)
+                    {
+                        Logger.Instance.Trace(this, "Resolved send-as: {0}", recip.Name);
+                        return recip;
+                    }
+                    else
+                    {
+                        Logger.Instance.Trace(this, "Unresolved send-as: {0}", user.UserName);
+                        recip.Dispose();
+                    }
                 }
             }
 
