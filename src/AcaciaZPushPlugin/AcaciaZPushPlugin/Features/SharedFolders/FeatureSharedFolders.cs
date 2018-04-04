@@ -1,5 +1,6 @@
 ﻿
 using Acacia.Features.SecondaryContacts;
+using Acacia.Features.SendAs;
 /// Copyright 2016 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
@@ -154,6 +155,11 @@ namespace Acacia.Features.SharedFolders
                 Dictionary<SyncId, SharedFolder> dict = shares.ToDictionary(x => x.SyncId);
                 Logger.Instance.Trace(this, "AdditionalFolders_Sync2: {0}", shares.Count);
 
+                // Store any send-as properties
+                FeatureSendAs sendAs = ThisAddIn.Instance.GetFeature<FeatureSendAs>();
+                // TODO
+                //sendAs?.UpdateSendAsAddresses(connection.Account, shares);
+
                 // Store with the account
                 connection.Account.SetFeatureData(this, KEY_SHARES, dict);
             }
@@ -191,7 +197,7 @@ namespace Acacia.Features.SharedFolders
 
         public static bool IsSharedFolder(IFolder folder)
         {
-            string id = (string)folder.GetProperty(OutlookConstants.PR_ZPUSH_FOLDER_ID);
+            string id = (string)folder.GetProperty(OutlookConstants.PR_ZPUSH_SYNC_ID);
             return id?.StartsWith("S") == true;
         }
 
@@ -454,6 +460,8 @@ namespace Acacia.Features.SharedFolders
 
         #endregion
 
+        #region Shared stores
+
         public void RemoveSharedStore(ZPushAccount account, GABUser shareUser)
         {
             // Find the store
@@ -485,5 +493,8 @@ namespace Acacia.Features.SharedFolders
                 Logger.Instance.Error(this, "Error removing shared store: {0}: {1}", share, e);
             }
         }
+
+        #endregion
+
     }
 }

@@ -387,5 +387,31 @@ namespace Acacia.ZPush
         }
 
         #endregion
+
+        #region Send as
+
+        private const string PREFIX_SEND_AS = "KOE SendAs ";
+
+        public void SetSendAsAddress(BackendId id, string sendAsAddress)
+        {
+            RegistryUtil.SetValueString(Account.RegistryBaseKey, PREFIX_SEND_AS + id.ToString(), sendAsAddress);
+        }
+
+        public string GetSendAsAddress(BackendId id)
+        {
+            return RegistryUtil.GetValueString(Account.RegistryBaseKey, PREFIX_SEND_AS + id.ToString(), null);
+        }
+
+        public void SetSendAsAddress(SyncId id, string sendAsAddress)
+        {
+            RegistryUtil.SetValueString(Account.RegistryBaseKey, PREFIX_SEND_AS + id.ToString(), sendAsAddress);
+        }
+
+        public string GetSendAsAddress(SyncId id)
+        {
+            return RegistryUtil.GetValueString(Account.RegistryBaseKey, PREFIX_SEND_AS + id.ToString(), null);
+        }
+
+        #endregion
     }
 }

@@ -45,11 +45,13 @@
             this.textName = new System.Windows.Forms.TextBox();
             this._labelSendAs = new System.Windows.Forms.Label();
             this.checkSendAs = new System.Windows.Forms.CheckBox();
+            this._labelSendAsAddress = new System.Windows.Forms.Label();
+            this.textSendAsAddress = new System.Windows.Forms.TextBox();
             this._labelReminders = new System.Windows.Forms.Label();
             this.checkReminders = new System.Windows.Forms.CheckBox();
             this._labelPermissions = new System.Windows.Forms.Label();
-            this.dialogButtons = new Acacia.Controls.KDialogButtons();
             this._labelRestartRequired = new System.Windows.Forms.Label();
+            this.dialogButtons = new Acacia.Controls.KDialogButtons();
             this._layout.SuspendLayout();
             this._mainBusyHider.SuspendLayout();
             this._layoutMain.SuspendLayout();
@@ -137,14 +139,16 @@
             resources.ApplyResources(this._layoutOptions, "_layoutOptions");
             this._layoutOptions.Controls.Add(this._labelWholeStore, 0, 0);
             this._layoutOptions.Controls.Add(this.checkWholeStore, 1, 0);
-            this._layoutOptions.Controls.Add(this.labelPermissionsValue, 1, 4);
+            this._layoutOptions.Controls.Add(this.labelPermissionsValue, 1, 5);
             this._layoutOptions.Controls.Add(this._labelName, 0, 1);
             this._layoutOptions.Controls.Add(this.textName, 1, 1);
             this._layoutOptions.Controls.Add(this._labelSendAs, 0, 2);
             this._layoutOptions.Controls.Add(this.checkSendAs, 1, 2);
-            this._layoutOptions.Controls.Add(this._labelReminders, 0, 3);
-            this._layoutOptions.Controls.Add(this.checkReminders, 1, 3);
-            this._layoutOptions.Controls.Add(this._labelPermissions, 0, 4);
+            this._layoutOptions.Controls.Add(this._labelSendAsAddress, 0, 3);
+            this._layoutOptions.Controls.Add(this.textSendAsAddress, 1, 3);
+            this._layoutOptions.Controls.Add(this._labelReminders, 0, 4);
+            this._layoutOptions.Controls.Add(this.checkReminders, 1, 4);
+            this._layoutOptions.Controls.Add(this._labelPermissions, 0, 5);
             this._layoutOptions.Controls.Add(this._labelRestartRequired, 2, 0);
             this._layoutOptions.Name = "_layoutOptions";
             // 
@@ -192,6 +196,18 @@
             this.checkSendAs.UseVisualStyleBackColor = true;
             this.checkSendAs.CheckedChanged += new System.EventHandler(this.checkSendAs_CheckedChanged);
             // 
+            // _labelSendAsAddress
+            // 
+            resources.ApplyResources(this._labelSendAsAddress, "_labelSendAsAddress");
+            this._labelSendAsAddress.Name = "_labelSendAsAddress";
+            // 
+            // textSendAsAddress
+            // 
+            this._layoutOptions.SetColumnSpan(this.textSendAsAddress, 2);
+            resources.ApplyResources(this.textSendAsAddress, "textSendAsAddress");
+            this.textSendAsAddress.Name = "textSendAsAddress";
+            this.textSendAsAddress.TextChanged += new System.EventHandler(this.textSendAsAddress_TextChanged);
+            // 
             // _labelReminders
             // 
             resources.ApplyResources(this._labelReminders, "_labelReminders");
@@ -209,6 +225,11 @@
             resources.ApplyResources(this._labelPermissions, "_labelPermissions");
             this._labelPermissions.Name = "_labelPermissions";
             // 
+            // _labelRestartRequired
+            // 
+            resources.ApplyResources(this._labelRestartRequired, "_labelRestartRequired");
+            this._labelRestartRequired.Name = "_labelRestartRequired";
+            // 
             // dialogButtons
             // 
             resources.ApplyResources(this.dialogButtons, "dialogButtons");
@@ -218,11 +239,6 @@
             this.dialogButtons.IsDirty = false;
             this.dialogButtons.Name = "dialogButtons";
             this.dialogButtons.Apply += new System.EventHandler(this.dialogButtons_Apply);
-            // 
-            // _labelRestartRequired
-            // 
-            resources.ApplyResources(this._labelRestartRequired, "_labelRestartRequired");
-            this._labelRestartRequired.Name = "_labelRestartRequired";
             // 
             // SharedFoldersDialog
             // 
@@ -270,5 +286,7 @@
         private System.Windows.Forms.CheckBox checkWholeStore;
         private System.Windows.Forms.Label labelPermissionsValue;
         private System.Windows.Forms.Label _labelRestartRequired;
+        private System.Windows.Forms.Label _labelSendAsAddress;
+        private System.Windows.Forms.TextBox textSendAsAddress;
     }
 }

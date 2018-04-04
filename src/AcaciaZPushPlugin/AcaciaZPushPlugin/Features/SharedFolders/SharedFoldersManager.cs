@@ -47,6 +47,7 @@ namespace Acacia.Features.SharedFolders
         }
 
         public FeatureSharedFolders Feature { get { return _feature; } }
+        public ZPushAccount Account { get { return _account; } }
 
         #region API
 
@@ -57,6 +58,17 @@ namespace Acacia.Features.SharedFolders
         {
             // Make sure reminders are updated as soon as possible
             UpdateReminders(shares);
+
+            // Store the send-as addresses
+            foreach (SharedFolder share in shares)
+            {
+                if (share.CanSendAs)
+                {
+                    _account.SetSendAsAddress(share.BackendId, share.FlagSendAsOwner ? share.SendAsAddress : null);
+                }
+            }
+
+            // Update the shares
             _api.SetCurrentShares(store, shares, cancel);
 
             // Commit changes

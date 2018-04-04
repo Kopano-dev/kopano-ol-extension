@@ -27,6 +27,8 @@ using Acacia.ZPush.API.SharedFolders;
 using Acacia.ZPush.Connect;
 using Acacia.Native;
 using Acacia.Features.GAB;
+using Acacia.Features.SendAs;
+using Acacia.Stubs;
 
 namespace Acacia.Features.SharedFolders
 {
@@ -43,8 +45,11 @@ namespace Acacia.Features.SharedFolders
         private readonly Dictionary<BackendId, SharedFolder> _currentShares;
 
         private readonly FeatureSharedFolders _feature;
+        private readonly FeatureSendAs _featureSendAs;
+        private readonly ZPushAccount _account;
         private readonly GABHandler _gab;
         private readonly GABUser _user;
+        private readonly string _sendAsAddress;
 
         public readonly bool IsReadOnly;
 
@@ -61,15 +66,22 @@ namespace Acacia.Features.SharedFolders
             }
         }
 
-        public StoreTreeNode(SharedFoldersManager folders, GABHandler gab, GABUser user, string text, 
+        public StoreTreeNode(SharedFoldersManager folders, GABHandler gab, GABUser user, string sendAsAddress, string text, 
                              Dictionary<BackendId, SharedFolder> currentFolders, bool isShared)
         :
         base(text)
         {
             this._initialShares = currentFolders;
+            // Patch in send as address
+            foreach (SharedFolder share in _initialShares.Values)
+                if (share.SendAsAddress == null)
+                    share.SendAsAddress = sendAsAddress;
             this._feature = folders.Feature;
+            this._featureSendAs = ThisAddIn.Instance.GetFeature<FeatureSendAs>();
+            this._account = folders.Account;
             this._gab = gab;
             this._user = user;
+            this._sendAsAddress = sendAsAddress;
             this.IsReadOnly = false;
             this._isShared = isShared;
 
@@ -155,11 +167,19 @@ namespace Acacia.Features.SharedFolders
         private SharedFolder CreateDefaultShare(AvailableFolder folder)
         {
             SharedFolder share = new SharedFolder(folder, DefaultNameForFolder(folder));
-            
-            // Default send as for mail folders
-            if (folder.Type.IsMail())
-                share = share.WithFlagSendAsOwner(true);
 
+            // Default send as for mail folders if the address can be determined
+            /*using (IRecipient sendAs = _featureSendAs?.FindSendAsSender(_account, null, folder.BackendId, null, _sendAsAddress))
+            {
+                if (sendAs != null)
+                {
+                    share = share.WithFlagSendAsOwner(true).WithSendAsAddress(sendAs.Address);
+                }
+                else
+                {
+                    share = share.WithFlagSendAsOwner(false).WithSendAsAddress(null);
+                }
+            }*/
             return share;
         }
 
@@ -218,6 +238,8 @@ namespace Acacia.Features.SharedFolders
                     if (state.FlagUpdateShareName)
                         state = state.WithName(DefaultNameForFolder(folder));
                 }
+
+                state = state.WithSendAsAddress(_sendAsAddress);
                 return state;
             }
             return null;

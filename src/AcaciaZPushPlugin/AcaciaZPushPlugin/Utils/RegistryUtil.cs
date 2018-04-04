@@ -56,6 +56,29 @@ namespace Acacia.Utils
             Registry.SetValue(keyPath, valueName, value);
         }
 
+        public static void RemoveValue(string keyPath, string valueName)
+        {
+            using (RegistryKey key = KeyFromPath(keyPath, true))
+            {
+                if (key != null)
+                {
+                    key.DeleteValue(valueName, false);
+                }
+            }
+        }
+
+        private static RegistryKey KeyFromPath(string keyPath, bool writeable)
+        {
+            foreach (RegistryKey baseKey in new RegistryKey[] {Registry.CurrentUser, Registry.LocalMachine })
+            {
+                if (keyPath.StartsWith(baseKey.Name))
+                {
+                    return baseKey.OpenSubKey(keyPath.Substring(baseKey.Name.Length + 1), writeable);
+                }
+            }
+            return null;
+        }
+
         public static string RegToString(object o)
         {
             if (o is byte[])
