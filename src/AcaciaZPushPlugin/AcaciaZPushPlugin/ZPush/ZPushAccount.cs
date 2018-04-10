@@ -390,26 +390,27 @@ namespace Acacia.ZPush
 
         #region Send as
 
-        private const string PREFIX_SEND_AS = "KOE SendAs ";
+        private const string PREFIX_SEND_AS_SYNC = "KOE SendAs Sync ";
+        private const string PREFIX_SEND_AS_BACKEND = "KOE SendAs Backend ";
 
         public void SetSendAsAddress(BackendId id, string sendAsAddress)
         {
-            RegistryUtil.SetValueString(Account.RegistryBaseKey, PREFIX_SEND_AS + id.ToString(), sendAsAddress);
+            _account[PREFIX_SEND_AS_BACKEND + id] = sendAsAddress;
         }
 
         public string GetSendAsAddress(BackendId id)
         {
-            return RegistryUtil.GetValueString(Account.RegistryBaseKey, PREFIX_SEND_AS + id.ToString(), null);
+            return _account[PREFIX_SEND_AS_BACKEND + id];
         }
 
         public void SetSendAsAddress(SyncId id, string sendAsAddress)
         {
-            RegistryUtil.SetValueString(Account.RegistryBaseKey, PREFIX_SEND_AS + id.ToString(), sendAsAddress);
+            _account[PREFIX_SEND_AS_SYNC + id] = sendAsAddress;
         }
 
         public string GetSendAsAddress(SyncId id)
         {
-            return RegistryUtil.GetValueString(Account.RegistryBaseKey, PREFIX_SEND_AS + id.ToString(), null);
+            return _account[PREFIX_SEND_AS_SYNC + id];
         }
 
         #endregion

@@ -1167,6 +1167,24 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to determine the email address for the folder. Send-as will only work if you specify the email address manually..
+        /// </summary>
+        internal static string SharedFolders_SendAsFailed_Label {
+            get {
+                return ResourceManager.GetString("SharedFolders_SendAsFailed_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shared Folders.
+        /// </summary>
+        internal static string SharedFolders_SendAsFailed_Title {
+            get {
+                return ResourceManager.GetString("SharedFolders_SendAsFailed_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are unsaved changes. Do you really want to to discard these?.
         /// </summary>
         internal static string SharedFolders_Unsaved_Changes {

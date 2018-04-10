@@ -74,7 +74,7 @@ namespace Acacia.Features.SharedFolders
             this._initialShares = currentFolders;
             // Patch in send as address
             foreach (SharedFolder share in _initialShares.Values)
-                if (share.SendAsAddress == null)
+                if (string.IsNullOrWhiteSpace(share.SendAsAddress))
                     share.SendAsAddress = sendAsAddress;
             this._feature = folders.Feature;
             this._featureSendAs = ThisAddIn.Instance.GetFeature<FeatureSendAs>();
@@ -191,6 +191,20 @@ namespace Acacia.Features.SharedFolders
             }
         }
 
+        internal ICollection<SharedFolder> RemovedShares
+        {
+            get
+            {
+                List<SharedFolder> removed = new List<SharedFolder>();
+                foreach(SharedFolder folder in _initialShares.Values)
+                {
+                    if (!_currentShares.ContainsKey(folder.BackendId))
+                        removed.Add(folder);
+                }
+                return removed;
+            }
+        }
+
         internal string DefaultNameForFolder(AvailableFolder folder)
         {
             // Default include the store name in root folders
@@ -239,7 +253,8 @@ namespace Acacia.Features.SharedFolders
                         state = state.WithName(DefaultNameForFolder(folder));
                 }
 
-                state = state.WithSendAsAddress(_sendAsAddress);
+                if (string.IsNullOrWhiteSpace(state.SendAsAddress))
+                    state = state.WithSendAsAddress(_sendAsAddress);
                 return state;
             }
             return null;

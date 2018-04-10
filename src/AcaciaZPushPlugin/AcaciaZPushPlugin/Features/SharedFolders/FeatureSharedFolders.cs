@@ -1,7 +1,4 @@
-﻿
-using Acacia.Features.SecondaryContacts;
-using Acacia.Features.SendAs;
-/// Copyright 2016 Kopano b.v.
+﻿/// Copyright 2018 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -16,6 +13,9 @@ using Acacia.Features.SendAs;
 /// along with this program.If not, see<http://www.gnu.org/licenses/>.
 /// 
 /// Consult LICENSE file for details
+
+using Acacia.Features.SecondaryContacts;
+using Acacia.Features.SendAs;
 using Acacia.Stubs;
 using Acacia.UI;
 using Acacia.UI.Outlook;
@@ -143,9 +143,20 @@ namespace Acacia.Features.SharedFolders
 
         private void AdditionalFolders_Sync(ZPushConnection connection)
         {
-            using (SharedFoldersManager manager = Manage(connection.Account))
+            SyncShares(connection.Account);
+        }
+
+        public void Sync(ZPushAccount account)
+        {
+            Watcher.Sync.Resync();
+            account.Account.SendReceive();
+        }
+
+        private void SyncShares(ZPushAccount account)
+        { 
+            using (SharedFoldersManager manager = Manage(account))
             {
-                Logger.Instance.Debug(this, "Starting sync for account {0}", connection.Account);
+                Logger.Instance.Debug(this, "Starting sync for account {0}", account);
 
                 // Fetch the current shares
                 ICollection<SharedFolder> shares = manager.GetCurrentShares(null);
@@ -157,11 +168,10 @@ namespace Acacia.Features.SharedFolders
 
                 // Store any send-as properties
                 FeatureSendAs sendAs = ThisAddIn.Instance.GetFeature<FeatureSendAs>();
-                // TODO
-                //sendAs?.UpdateSendAsAddresses(connection.Account, shares);
+                sendAs?.UpdateSendAsAddresses(account, shares);
 
                 // Store with the account
-                connection.Account.SetFeatureData(this, KEY_SHARES, dict);
+                account.SetFeatureData(this, KEY_SHARES, dict);
             }
         }
 

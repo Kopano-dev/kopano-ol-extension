@@ -58,5 +58,11 @@ namespace Acacia.Stubs
         string RegistryBaseKey { get; }
 
         void SetAccountProp(PropTag prop, object value);
+
+        string this[string name]
+        {
+            get;
+            set;
+        }
     }
 }

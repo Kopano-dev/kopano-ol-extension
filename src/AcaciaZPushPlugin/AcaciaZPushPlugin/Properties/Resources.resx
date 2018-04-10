@@ -530,4 +530,10 @@ Please contact your system administrator for any required changes.</value>
   <data name="SharedFolders_WholeStoreRestart_Title" xml:space="preserve">
     <value>Open stores</value>
   </data>
+  <data name="SharedFolders_SendAsFailed_Label" xml:space="preserve">
+    <value>Unable to determine the email address for the folder. Send-as will only work if you specify the email address manually.</value>
+  </data>
+  <data name="SharedFolders_SendAsFailed_Title" xml:space="preserve">
+    <value>Shared Folders</value>
+  </data>
 </root>

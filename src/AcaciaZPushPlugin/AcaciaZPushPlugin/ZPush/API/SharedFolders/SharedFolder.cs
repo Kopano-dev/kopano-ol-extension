@@ -147,7 +147,7 @@ namespace Acacia.ZPush.API.SharedFolders
         {
             SoapData newData = _data;
             newData.name = name;
-            return new SharedFolder(newData);
+            return DoClone(newData);
         }
 
         #endregion
@@ -163,6 +163,11 @@ namespace Acacia.ZPush.API.SharedFolders
         {
             SoapData newData = _data;
             newData.flags = flags;
+            return DoClone(newData);
+        }
+
+        private SharedFolder DoClone(SoapData newData)
+        {
             SharedFolder clone = new SharedFolder(newData);
             clone.SendAsAddress = SendAsAddress;
             return clone;

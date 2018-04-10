@@ -282,6 +282,11 @@ namespace Acacia.ZPush
             _started = true;
         }
 
+        public void Resync()
+        {
+            LastSyncTime = new DateTime();
+        }
+
         /// <summary>
         /// Delegate for an account-specific task.
         /// </summary>

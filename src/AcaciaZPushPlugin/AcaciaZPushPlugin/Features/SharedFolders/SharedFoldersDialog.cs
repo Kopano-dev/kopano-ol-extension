@@ -256,6 +256,35 @@ namespace Acacia.Features.SharedFolders
 
         private void dialogButtons_Apply(object sender, EventArgs e)
         {
+            // Check if all fields are properly set
+            foreach (StoreTreeNode storeNode in _userFolders.Values)
+            {
+                // Check modified folders
+                if (storeNode.IsDirty)
+                {
+                    foreach(SharedFolder folder in storeNode.CurrentShares)
+                    {
+                        // Check if the send-as address has been resolved (or entered) correctly
+                        if (folder.FlagSendAsOwner && string.IsNullOrWhiteSpace(folder.SendAsAddress))
+                        {
+                            // Select the node if we can
+                            KTreeNode folderNode = storeNode.FindNode(folder);
+                            if (folderNode != null)
+                            {
+                                // If the node is already selected, explicitly warn about the send-as address
+                                // Otherwise, selecting it will pop up the warning
+                                if (folderNode.IsSelected)
+                                    TryInitSendAsAddress();
+                                else
+                                    FocusNode(folderNode, false);
+                            }
+                            return;
+                        }
+                    }
+                }
+            }
+
+
             BusyText = Properties.Resources.SharedFolders_Applying_Label;
             KUITask.New((ctx) =>
             {
@@ -270,6 +299,10 @@ namespace Acacia.Features.SharedFolders
                         ctx.AddBusy(1);
                         ++state.folders;
 
+                        // Check removed shares
+                        _folders.RemoveSharesForStore(storeNode.User, storeNode.RemovedShares);
+
+                        // Set shares
                         _folders.SetSharesForStore(storeNode.User, storeNode.CurrentShares, ctx.CancellationToken);
                     }
 
@@ -343,17 +376,17 @@ namespace Acacia.Features.SharedFolders
                     foreach (StoreTreeNode storeNode in _userFolders.Values)
                         storeNode.ChangesApplied();
                     CheckDirty();
-
-                    if (state.folders != 0)
-                    {
-                        // Sync account
-                        _account.Account.SendReceive();
-
-                        // Show success
-                        ShowCompletion(Properties.Resources.SharedFolders_Applying_Success);
-                    }
-
                 }
+
+                if (state.folders != 0)
+                {
+                    // Sync account
+                    _feature.Sync(_account);
+
+                    // Show success
+                    ShowCompletion(Properties.Resources.SharedFolders_Applying_Success);
+                }
+
             }, true)
             .OnError((x) =>
             {
@@ -438,7 +471,8 @@ namespace Acacia.Features.SharedFolders
             kTreeFolders.SelectNode(node, KTree.ScrollMode.Top);
 
             // Start loading folders if requested
-            node.IsExpanded = expand;
+            if (expand)
+                node.IsExpanded = true;
 
             // Clear any selected user
             gabLookup.SelectedUser = null;
@@ -837,25 +871,21 @@ namespace Acacia.Features.SharedFolders
 
         private void TryInitSendAsAddress()
         {
-            string email = null;
-                /*_featureSendAs?.FindSendAsAddress(_account, null, 
-                    _optionSendAsNodes[0].AvailableFolder.BackendId,
-                    _optionSendAsNodes[0].AvailableFolder.Store;)*/
+            // Initialise to the send-as address specified for an existing share, or a simple GAB lookup otherwise
+            string email =
+                _optionSendAsNodes[0].SharedFolder?.SendAsAddress ??
+                _featureSendAs?.FindSendAsAddress(_account, _optionSendAsNodes[0].AvailableFolder.Store);
 
-            if (email != null)
+            if (!string.IsNullOrEmpty(email))
             {
                 textSendAsAddress.Text = email;
-                if (!string.IsNullOrEmpty(email) && _optionSendAsNodes[0].IsShared)
-                {
-                    _optionSendAsNodes[0].SharedFolder.SendAsAddress = email;
-                }
+                _optionSendAsNodes[0].SharedFolder.SendAsAddress = email;
             }
             else if (checkSendAs.Checked)
             {
-                // TODO: resource string
-                MessageBox.Show("Unable to determine the email address for the folder. " +
-                    "Send-as will only work if you specify the email address manually.",
-                    "Shared Folders", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Properties.Resources.SharedFolders_SendAsFailed_Label,
+                    Properties.Resources.SharedFolders_SendAsFailed_Title, 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

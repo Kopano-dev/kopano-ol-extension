@@ -26,6 +26,7 @@ using Acacia.Features.SharedFolders;
 using Acacia.ZPush.API.SharedFolders;
 using static Acacia.DebugOptions;
 using Acacia.Features.GAB;
+using Acacia.Features.SyncState;
 
 namespace Acacia.Features.SendAs
 {
@@ -157,6 +158,42 @@ namespace Acacia.Features.SendAs
         #endregion
 
         #region Address resolving
+
+        public string FindSendAsAddress(ZPushAccount zpush, SharedFolder folder)
+        {
+            string address = folder.SendAsAddress;
+            if (!string.IsNullOrWhiteSpace(address))
+                return address;
+
+            // Check the registry
+            string addressSync = zpush.GetSendAsAddress(folder.SyncId);
+            string addressBackend = zpush.GetSendAsAddress(folder.BackendId);
+            // If we have no address on sync id, or it differs from the one on backend id, backend id wins, as that's the one set by the dialog
+            if (string.IsNullOrWhiteSpace(addressSync) || !addressSync.Equals(addressBackend))
+            {
+                address = addressBackend;
+                // Resolved now, store on sync id
+                if (folder.SyncId.IsCustom)
+                    zpush.SetSendAsAddress(folder.SyncId, address);
+            }
+            else address = addressSync;
+
+            return address;
+        }
+
+        internal void UpdateSendAsAddresses(ZPushAccount zpush, ICollection<SharedFolder> shares)
+        {
+            SyncState.SyncState state = ThisAddIn.Instance.GetFeature<FeatureSyncState>()?.GetSyncState(zpush);
+
+            foreach (SharedFolder folder in shares)
+            {
+                if (!folder.FlagSendAsOwner)
+                    continue;
+
+                // Resolve it
+                FindSendAsAddress(zpush, folder);
+            }
+        }
 
         public string FindSendAsAddress(ZPushAccount zpush, GABUser user)
         {

@@ -8,6 +8,7 @@ using Acacia.ZPush;
 using Acacia.ZPush.API.SharedFolders;
 using System.Threading;
 using Acacia.Native.MAPI;
+using Acacia.Features.SendAs;
 
 namespace Acacia.Features.SharedFolders
 {
@@ -51,6 +52,16 @@ namespace Acacia.Features.SharedFolders
 
         #region API
 
+        public void RemoveSharesForStore(GABUser store, ICollection<SharedFolder> removed)
+        {
+            foreach(SharedFolder folder in removed)
+            {
+                if (folder.SyncId != null)
+                    _account.SetSendAsAddress(folder.SyncId, null);
+                _account.SetSendAsAddress(folder.BackendId, null);
+            }
+        }
+
         /// <summary>
         /// Sets all shares for the specified store.
         /// </summary>
@@ -92,6 +103,15 @@ namespace Acacia.Features.SharedFolders
                         .Where(x => x.IsSynced && x.SyncType.IsAppointment() && x.FlagCalendarReminders)
                         .Select(x => x.SyncId)
                     );
+            }
+
+            // Patch in the send-as addresses
+            foreach (SharedFolder folder in shares)
+            {
+                if (folder.FlagSendAsOwner && string.IsNullOrWhiteSpace(folder.SendAsAddress))
+                {
+                    folder.SendAsAddress = ThisAddIn.Instance.GetFeature<FeatureSendAs>()?.FindSendAsAddress(_account, folder);
+                }
             }
 
             // Commit changes
