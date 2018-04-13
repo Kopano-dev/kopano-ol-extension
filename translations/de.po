@@ -2,9 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KC-8\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-03-19 11:40+0000\n"
-"Last-Translator: Hans-Peter <h.stradinger@kopano.com>\n"
-"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-extension/de/>\n"
+"PO-Revision-Date: 2018-04-13 13:52+0000\n"
+"Last-Translator: Felix <f.bartels@kopano.com>\n"
+"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-"
+"extension/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1489,7 +1490,7 @@ msgstr "Zurücksetzen"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelSendAsAddress.Text"
 msgid "Send-as address"
-msgstr ""
+msgstr "Senden als Adresse"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsFailed_Label
 #, csharp-format
@@ -1508,4 +1509,3 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsUpdateFailed_Label"
 msgid "Unable to determine the send-as email address for the existing shared folder {0}. Send-as will only work if you specify the email address manually. Would you like to open the Shared Folders dialog?"
 msgstr ""
-
