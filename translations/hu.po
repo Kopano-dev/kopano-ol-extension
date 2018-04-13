@@ -5,8 +5,7 @@ msgstr ""
 "POT-Creation-Date: 2016-06-06 11:27+0000\n"
 "PO-Revision-Date: 2018-03-18 22:01+0000\n"
 "Last-Translator: Zoltan Kiss <zoltan.kiss@serverside.hu>\n"
-"Language-Team: Hungarian <http://translate.kopano.io/projects/kopano/kopano-"
-"ol-extension/hu/>\n"
+"Language-Team: Hungarian <http://translate.kopano.io/projects/kopano/kopano-ol-extension/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1486,3 +1485,28 @@ msgstr "Alkalmaz"
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonResetTimeFrame.Text"
 msgid "Reset"
 msgstr "Visszaállít"
+
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelSendAsAddress.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelSendAsAddress.Text"
+msgid "Send-as address"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsFailed_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Label"
+msgid "Unable to determine the send-as email address for the folder. Send-as will only work if you specify the email address manually."
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsFailed_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Title"
+msgid "Shared Folders"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsUpdateFailed_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsUpdateFailed_Label"
+msgid "Unable to determine the send-as email address for the existing shared folder {0}. Send-as will only work if you specify the email address manually. Would you like to open the Shared Folders dialog?"
+msgstr ""
+

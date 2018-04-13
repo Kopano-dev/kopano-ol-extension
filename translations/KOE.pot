@@ -358,6 +358,12 @@ msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_label
 msgid "Send as owner"
 msgstr ""
 
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelSendAsAddress.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelSendAsAddress.Text"
+msgid "Send-as address"
+msgstr ""
+
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelReminders.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelReminders.Text"
@@ -1153,6 +1159,24 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Title"
 msgid "Open stores"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsFailed_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Label"
+msgid "Unable to determine the send-as email address for the folder. Send-as will only work if you specify the email address manually."
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsFailed_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Title"
+msgid "Shared Folders"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsUpdateFailed_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsUpdateFailed_Label"
+msgid "Unable to determine the send-as email address for the existing shared folder {0}. Send-as will only work if you specify the email address manually. Would you like to open the Shared Folders dialog?"
 msgstr ""
 
 #: AcaciaZPushPlugin\UI\ProgressDialog\labelMessage.Text

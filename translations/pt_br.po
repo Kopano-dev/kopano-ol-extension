@@ -1240,3 +1240,27 @@ msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonResetTim
 msgid "Reset"
 msgstr ""
 
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelSendAsAddress.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelSendAsAddress.Text"
+msgid "Send-as address"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsFailed_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Label"
+msgid "Unable to determine the send-as email address for the folder. Send-as will only work if you specify the email address manually."
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsFailed_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Title"
+msgid "Shared Folders"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsUpdateFailed_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsUpdateFailed_Label"
+msgid "Unable to determine the send-as email address for the existing shared folder {0}. Send-as will only work if you specify the email address manually. Would you like to open the Shared Folders dialog?"
+msgstr ""
+
