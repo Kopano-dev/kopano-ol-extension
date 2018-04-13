@@ -1,6 +1,4 @@
-﻿
-using Acacia.Native.MAPI;
-/// Copyright 2017 Kopano b.v.
+﻿/// Copyright 2018 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -21,6 +19,8 @@ using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using Acacia.Native.MAPI;
+using Acacia.Utils;
 
 namespace Acacia.Stubs
 {
@@ -32,7 +32,7 @@ namespace Acacia.Stubs
 
         IStore Store { get; }
 
-        void SendReceive();
+        void SendReceive(AcaciaTask after = null);
 
         string DisplayName { get; }
 

@@ -1,4 +1,4 @@
-﻿/// Copyright 2017 Kopano b.v.
+﻿/// Copyright 2018 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -62,7 +62,7 @@ namespace Acacia.Stubs
         /// <summary>
         /// Sends and receives all accounts, or a specific account.
         /// </summary>
-        void SendReceive(IAccount account = null);
+        void SendReceive(IAccount account = null, AcaciaTask after = null);
 
         /// <summary>
         /// Restarts the application

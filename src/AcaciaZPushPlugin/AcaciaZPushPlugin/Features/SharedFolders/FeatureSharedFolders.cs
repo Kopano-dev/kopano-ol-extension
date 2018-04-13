@@ -148,8 +148,7 @@ namespace Acacia.Features.SharedFolders
 
         public void Sync(ZPushAccount account)
         {
-            Watcher.Sync.Resync();
-            account.Account.SendReceive();
+            account.Account.SendReceive(new AcaciaTask(null, this, "SyncShares", () => SyncShares(account)));
         }
 
         private void SyncShares(ZPushAccount account)

@@ -27,6 +27,7 @@ using Acacia.ZPush.API.SharedFolders;
 using static Acacia.DebugOptions;
 using Acacia.Features.GAB;
 using Acacia.Features.SyncState;
+using System.Windows.Forms;
 
 namespace Acacia.Features.SendAs
 {
@@ -108,7 +109,6 @@ namespace Acacia.Features.SendAs
             Logger.Instance.Trace(this, "Responding to mail, checking");
             using (IStore store = mail.GetStore())
             {
-                /*
                 ZPushAccount zpush = Watcher.Accounts.GetAccount(store);
                 Logger.Instance.Trace(this, "Checking ZPush: {0}", zpush);
                 if (zpush == null)
@@ -127,7 +127,7 @@ namespace Acacia.Features.SendAs
                     {
                         response.SetSender(address);
                     }
-                }*/
+                }
             }
         }
 
@@ -159,11 +159,57 @@ namespace Acacia.Features.SendAs
 
         #region Address resolving
 
+        private IRecipient FindSendAsSender(ZPushAccount zpush, IFolder folder)
+        {
+            SyncId syncId = folder.SyncId;
+            if (syncId != null)
+            {
+                string address = zpush.GetSendAsAddress(syncId);
+                if (address == null)
+                {
+                    // Check if it should have an address
+                    SharedFolder shared = _sharedFolders?.GetSharedFolder(folder);
+                    if (shared?.FlagSendAsOwner == true)
+                    {
+                        // See if we can get it now
+                        address = FindSendAsAddress(zpush, shared);
+
+                        if (address == null)
+                        {
+                            // Should have it, error
+                            MessageBox.Show(ThisAddIn.Instance.Window,
+                                               Properties.Resources.SharedFolders_SendAsFailed_Label,
+                                               Properties.Resources.SharedFolders_SendAsFailed_Title,
+                                               MessageBoxButtons.OK,
+                                               MessageBoxIcon.Error
+                                           );
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                }
+
+                if (address != null)
+                {
+                    IRecipient resolved = ThisAddIn.Instance.ResolveRecipient(address);
+                    if (resolved != null)
+                        return resolved;
+                }
+            }
+            return null;
+        }
+
         public string FindSendAsAddress(ZPushAccount zpush, SharedFolder folder)
         {
             string address = folder.SendAsAddress;
             if (!string.IsNullOrWhiteSpace(address))
+            {
+                // Make sure it's in the registry
+                StoreSyncIdAddress(zpush, folder);
                 return address;
+            }
 
             // Check the registry
             string addressSync = zpush.GetSendAsAddress(folder.SyncId);
@@ -171,20 +217,23 @@ namespace Acacia.Features.SendAs
             // If we have no address on sync id, or it differs from the one on backend id, backend id wins, as that's the one set by the dialog
             if (string.IsNullOrWhiteSpace(addressSync) || !addressSync.Equals(addressBackend))
             {
-                address = addressBackend;
+                folder.SendAsAddress = address = addressBackend;
                 // Resolved now, store on sync id
-                if (folder.SyncId.IsCustom)
-                    zpush.SetSendAsAddress(folder.SyncId, address);
+                StoreSyncIdAddress(zpush, folder);
             }
             else address = addressSync;
 
             return address;
         }
 
+        private void StoreSyncIdAddress(ZPushAccount zpush, SharedFolder folder)
+        {
+            if (!string.IsNullOrWhiteSpace(folder.SyncId?.ToString()) && !folder.SyncId.Equals(folder.BackendId))
+                zpush.SetSendAsAddress(folder.SyncId, folder.SendAsAddress);
+        }
+
         internal void UpdateSendAsAddresses(ZPushAccount zpush, ICollection<SharedFolder> shares)
         {
-            SyncState.SyncState state = ThisAddIn.Instance.GetFeature<FeatureSyncState>()?.GetSyncState(zpush);
-
             foreach (SharedFolder folder in shares)
             {
                 if (!folder.FlagSendAsOwner)

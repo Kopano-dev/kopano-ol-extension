@@ -72,9 +72,9 @@ namespace Acacia.Stubs.OutlookWrappers
         /// <summary>
         /// Triggers an Outlook send/receive operation for this account.
         /// </summary>
-        public void SendReceive()
+        public void SendReceive(AcaciaTask after = null)
         {
-            ThisAddIn.Instance.SendReceive(this);
+            ThisAddIn.Instance.SendReceive(this, after);
         }
 
         #region Properties

@@ -137,8 +137,13 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        public void SendReceive(IAccount account)
+        public void SendReceive(IAccount account, AcaciaTask after)
         {
+            if (after != null)
+            {
+                Watcher.Sync.AddEndTaskOnce(after);
+            }
+
             // TODO: send/receive specific account
             NSOutlook.NameSpace session = _app.Session;
             try

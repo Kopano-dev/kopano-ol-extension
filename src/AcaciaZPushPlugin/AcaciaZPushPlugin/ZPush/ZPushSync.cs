@@ -1,4 +1,4 @@
-﻿/// Copyright 2017 Kopano b.v.
+﻿/// Copyright 2018 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -19,6 +19,7 @@ using Acacia.Stubs;
 using Acacia.Utils;
 using Acacia.ZPush.Connect;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -223,6 +224,11 @@ namespace Acacia.ZPush
             }
         }
 
+        public void AddEndTaskOnce(AcaciaTask after)
+        {
+            _endTasks.Enqueue(after);
+        }
+
         #endregion
 
         #region Setup 
@@ -261,6 +267,7 @@ namespace Acacia.ZPush
                 // Need to keep a reference to keep receiving events
                 _syncObject = addIn.GetSyncObject();
                 _syncObject.SyncStart += SyncObject_SyncStart;
+                _syncObject.SyncEnd += SyncObject_SyncEnd;
                 watcher.AccountDiscovered += Watcher_AccountDiscovered;
             }
         }
@@ -280,11 +287,6 @@ namespace Acacia.ZPush
         public void Start()
         {
             _started = true;
-        }
-
-        public void Resync()
-        {
-            LastSyncTime = new DateTime();
         }
 
         /// <summary>
@@ -496,6 +498,20 @@ namespace Acacia.ZPush
             {
                 // Explicit sync, run tasks
                 PossiblyExecuteTasks();
+            }
+        }
+
+        private readonly ConcurrentQueue<AcaciaTask> _endTasks = new ConcurrentQueue<AcaciaTask>();
+
+        /// <summary>
+        /// Invoked after an explicit send and receive is performed, invokes any tasks.
+        /// </summary>
+        private void SyncObject_SyncEnd()
+        {
+            AcaciaTask task;
+            while (_endTasks.TryDequeue(out task))
+            {
+                Tasks.Task(task, false);
             }
         }
 
