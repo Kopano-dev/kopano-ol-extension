@@ -99,6 +99,12 @@ namespace Acacia.Features.SharedFolders
         private ZPushAccount _initialAccount;
         private SharedFolder _initialFolder;
 
+        public bool SuppressInitialSendAsWarning
+        {
+            get;
+            set;
+        }
+
         public SharedFoldersDialog(FeatureSharedFolders feature, ZPushAccount account, SyncId initial = null)
         {
             // If this is a shared store, open the account it's a share for, with the request account as the initial
@@ -883,9 +889,16 @@ namespace Acacia.Features.SharedFolders
             }
             else if (checkSendAs.Checked)
             {
-                MessageBox.Show(Properties.Resources.SharedFolders_SendAsFailed_Label,
-                    Properties.Resources.SharedFolders_SendAsFailed_Title, 
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (SuppressInitialSendAsWarning)
+                {
+                    SuppressInitialSendAsWarning = false;
+                }
+                else
+                {
+                    MessageBox.Show(Properties.Resources.SharedFolders_SendAsFailed_Label,
+                        Properties.Resources.SharedFolders_SendAsFailed_Title,
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
 

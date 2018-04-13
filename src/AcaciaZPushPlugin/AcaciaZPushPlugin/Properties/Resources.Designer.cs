@@ -1167,7 +1167,7 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to determine the email address for the folder. Send-as will only work if you specify the email address manually..
+        ///   Looks up a localized string similar to Unable to determine the send-as email address for the folder. Send-as will only work if you specify the email address manually..
         /// </summary>
         internal static string SharedFolders_SendAsFailed_Label {
             get {
@@ -1181,6 +1181,15 @@ namespace Acacia.Properties {
         internal static string SharedFolders_SendAsFailed_Title {
             get {
                 return ResourceManager.GetString("SharedFolders_SendAsFailed_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to determine the send-as email address for the existing shared folder {0}. Send-as will only work if you specify the email address manually. Would you like to open the Shared Folders dialog?.
+        /// </summary>
+        internal static string SharedFolders_SendAsUpdateFailed_Label {
+            get {
+                return ResourceManager.GetString("SharedFolders_SendAsUpdateFailed_Label", resourceCulture);
             }
         }
         

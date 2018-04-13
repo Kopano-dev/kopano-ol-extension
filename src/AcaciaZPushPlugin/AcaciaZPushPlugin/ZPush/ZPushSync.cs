@@ -266,8 +266,8 @@ namespace Acacia.ZPush
 
                 // Need to keep a reference to keep receiving events
                 _syncObject = addIn.GetSyncObject();
-                _syncObject.SyncStart += SyncObject_SyncStart;
-                _syncObject.SyncEnd += SyncObject_SyncEnd;
+                _syncObject.SyncEnd += SyncObject_SyncPeriodics;
+                _syncObject.SyncEnd += SyncObject_SyncOneOffTasks;
                 watcher.AccountDiscovered += Watcher_AccountDiscovered;
             }
         }
@@ -489,7 +489,7 @@ namespace Acacia.ZPush
         /// <summary>
         /// Invoked when an explicit send and receive is performed, invokes any tasks.
         /// </summary>
-        private void SyncObject_SyncStart()
+        private void SyncObject_SyncPeriodics()
         {
             // TODO: this checks _started, others don't. Also, this is probably invoked on
             //       start-up, as is AccountDiscoverd. Does that mean tasks are invoked twice
@@ -506,7 +506,7 @@ namespace Acacia.ZPush
         /// <summary>
         /// Invoked after an explicit send and receive is performed, invokes any tasks.
         /// </summary>
-        private void SyncObject_SyncEnd()
+        private void SyncObject_SyncOneOffTasks()
         {
             AcaciaTask task;
             while (_endTasks.TryDequeue(out task))

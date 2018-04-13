@@ -28,6 +28,7 @@ using static Acacia.DebugOptions;
 using Acacia.Features.GAB;
 using Acacia.Features.SyncState;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Acacia.Features.SendAs
 {
@@ -60,6 +61,9 @@ namespace Acacia.Features.SendAs
                         MailEvents.Respond += MailEvents_Respond;
                     }
                 }
+
+                // Upgrade after accounts are determined
+                Watcher.AccountsScanned += CheckUpgrades;
             }
         }
 
@@ -184,10 +188,6 @@ namespace Acacia.Features.SendAs
                                                MessageBoxIcon.Error
                                            );
                         }
-                        else
-                        {
-
-                        }
                     }
                 }
 
@@ -234,13 +234,50 @@ namespace Acacia.Features.SendAs
 
         internal void UpdateSendAsAddresses(ZPushAccount zpush, ICollection<SharedFolder> shares)
         {
+            UpdateSendAsAddresses(zpush, shares, false);
+        }
+
+        private void UpdateSendAsAddresses(ZPushAccount zpush, ICollection<SharedFolder> shares, bool checkUpgradeFolders)
+        {
+
+            SharedFolder firstFailure = null;
             foreach (SharedFolder folder in shares)
             {
                 if (!folder.FlagSendAsOwner)
                     continue;
 
                 // Resolve it
-                FindSendAsAddress(zpush, folder);
+                string address = FindSendAsAddress(zpush, folder);
+                if (checkUpgradeFolders && address == null)
+                {
+                    // This is an update from an old shared folder. See if it can be resolved
+                    address = UpgradeSharedFolderAddress(zpush, folder);
+                    if (address == null)
+                    {
+                        // Still not resolved, mark a failure for later
+                        if (firstFailure == null)
+                            firstFailure = folder;
+                    }
+                }
+            }
+
+            if (firstFailure != null)
+            {
+                ThisAddIn.Instance.InUI(() =>
+                {
+                    if (MessageBox.Show(ThisAddIn.Instance.Window,
+                                       string.Format(Properties.Resources.SharedFolders_SendAsUpdateFailed_Label, firstFailure.Name),
+                                       Properties.Resources.SharedFolders_SendAsFailed_Title,
+                                       MessageBoxButtons.YesNo,
+                                       MessageBoxIcon.Warning
+                                   ) == DialogResult.Yes)
+                    {
+
+                        SharedFoldersDialog dialog = new SharedFoldersDialog(_sharedFolders, zpush, firstFailure.SyncId);
+                        dialog.SuppressInitialSendAsWarning = true;
+                        dialog.ShowDialog();
+                    }
+                }, false);
             }
         }
 
@@ -275,5 +312,52 @@ namespace Acacia.Features.SendAs
         }
 
         #endregion
+
+        #region Upgrading of old send-as folders
+
+        private void CheckUpgrades()
+        {
+            // To determine the send-as address, we need the GAB. So wait for that to finish updating.
+            FeatureGAB gab = ThisAddIn.Instance.GetFeature<FeatureGAB>();
+            if (gab != null)
+                gab.SyncFinished += CheckUpgradesGabSynced;
+        }
+
+        private string UpgradeSharedFolderAddress(ZPushAccount zpush, SharedFolder folder)
+        {
+            string address = FindSendAsAddress(zpush, folder.Store);
+            if (string.IsNullOrWhiteSpace(address))
+                return null;
+
+            // Store it
+            folder.SendAsAddress = address;
+            StoreSyncIdAddress(zpush, folder);
+            zpush.SetSendAsAddress(folder.BackendId, address);
+            return address;
+        }
+
+        private void CheckUpgradesGabSynced(GABHandler gab)
+        {
+            ThisAddIn.Instance.InUI(() =>
+            {
+                ZPushAccount account = gab.ActiveAccount;
+                ICollection<SharedFolder> shares = _sharedFolders.GetCachedFolders(account);
+                if (shares == null)
+                {
+                    using (SharedFoldersManager manager = _sharedFolders.Manage(account))
+                    {
+                        shares = manager.GetCurrentShares(null);
+                    }
+                }
+
+                if (shares != null)
+                {
+                    UpdateSendAsAddresses(account, shares, true);
+                }
+            }, false);
+        }
+
+        #endregion
+
     }
 }

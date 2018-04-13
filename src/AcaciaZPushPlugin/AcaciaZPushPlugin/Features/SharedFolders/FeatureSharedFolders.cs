@@ -113,8 +113,13 @@ namespace Acacia.Features.SharedFolders
             ZPushAccount account = Watcher.Accounts.GetAccount(folder);
             if (account != null)
             {
-                new SharedFoldersDialog(this, account, folder.SyncId).ShowDialog();
+                ManageFolder(account, folder.SyncId);
             }
+        }
+
+        public void ManageFolder(ZPushAccount account, SyncId folderId)
+        {
+            new SharedFoldersDialog(this, account, folderId).ShowDialog();
         }
 
         private void ManageFolders()
@@ -172,6 +177,14 @@ namespace Acacia.Features.SharedFolders
                 // Store with the account
                 account.SetFeatureData(this, KEY_SHARES, dict);
             }
+        }
+
+        public ICollection<SharedFolder> GetCachedFolders(ZPushAccount zpush)
+        {
+            Dictionary<SyncId, SharedFolder> shared = zpush.GetFeatureData<Dictionary<SyncId, SharedFolder>>(this, KEY_SHARES);
+            if (shared == null)
+                return null;
+            return shared.Values;
         }
 
         public SharedFolder GetSharedFolder(IFolder folder)
