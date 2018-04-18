@@ -273,10 +273,30 @@ namespace Acacia.Features.SharedFolders
                         // Check if the send-as address has been resolved (or entered) correctly
                         if (folder.FlagSendAsOwner && string.IsNullOrWhiteSpace(folder.SendAsAddress))
                         {
-                            // Select the node if we can
+                            // Find the tree node
                             KTreeNode folderNode = storeNode.FindNode(folder);
                             if (folderNode != null)
                             {
+                                // See if we can obtain it from a parent
+                                for (KTreeNode current = folderNode.Parent; current is FolderTreeNode; current = current.Parent)
+                                {
+                                    FolderTreeNode parentNode = (FolderTreeNode)current;
+                                    if (parentNode.SharedFolder == null)
+                                        break;
+
+                                    if (parentNode.SharedFolder.FlagSendAsOwner)
+                                    {
+                                        if (!string.IsNullOrWhiteSpace(parentNode.SharedFolder.SendAsAddress))
+                                        {
+                                            folder.SendAsAddress = parentNode.SharedFolder.SendAsAddress;
+                                            break;
+                                        }
+                                    }
+                                    else break;
+                                }
+                                if (!string.IsNullOrWhiteSpace(folder.SendAsAddress))
+                                    continue;
+
                                 // If the node is already selected, explicitly warn about the send-as address
                                 // Otherwise, selecting it will pop up the warning
                                 if (folderNode.IsSelected)
@@ -767,6 +787,7 @@ namespace Acacia.Features.SharedFolders
                             checkSendAs.ThreeState = true;
                         }
 
+                        textSendAsAddress.Text = "";
                         TryInitSendAsAddress();
                         EnableSendAsAddress();
                     }
@@ -884,7 +905,9 @@ namespace Acacia.Features.SharedFolders
 
             if (!string.IsNullOrEmpty(email))
             {
+                // Set the entry field
                 textSendAsAddress.Text = email;
+                // And the value
                 _optionSendAsNodes[0].SharedFolder.SendAsAddress = email;
             }
             else if (checkSendAs.Checked)
