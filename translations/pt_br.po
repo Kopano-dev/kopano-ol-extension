@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-12 14:56+0000\n"
-"PO-Revision-Date: 2017-12-01 12:10+0000\n"
+"PO-Revision-Date: 2018-04-13 14:56+0000\n"
 "Last-Translator: Sebastian <s.kummer@kopano.com>\n"
-"Language-Team: Portuguese (Brazil) <http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) "
+"<http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt_BR/>\n"
 "Language: pt_br\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1166,77 +1167,105 @@ msgstr "(Requer reiniciar Outlook)"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Body"
 msgid "Outlook will be restarted to open the new stores"
-msgstr ""
+msgstr "Outlook será reinicializado para abrir as novas contas"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_WholeStoreRestart_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Title"
 msgid "Open stores"
-msgstr ""
+msgstr "Contas abertas"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelTimeFrame.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelTimeFrame.Text"
 msgid "Synchronise"
-msgstr ""
+msgstr "Sincronizar"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items"
 msgid "all"
-msgstr ""
+msgstr "tudo"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items1
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items1"
 msgid "1 day"
-msgstr ""
+msgstr "1 dia"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items2
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items2"
 msgid "3 days"
-msgstr ""
+msgstr "3 dias"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items3
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items3"
 msgid "1 week"
-msgstr ""
+msgstr "1 semana"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items4
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items4"
 msgid "2 weeks"
-msgstr ""
+msgstr "2 semanas"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items5
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items5"
 msgid "1 month"
-msgstr ""
+msgstr "1 mês"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items6
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items6"
 msgid "3 months"
-msgstr ""
+msgstr "3 meses"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items7
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items7"
 msgid "6 months"
-msgstr ""
+msgstr "6 meses"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonApplyTimeFrame.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonApplyTimeFrame.Text"
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonResetTimeFrame.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonResetTimeFrame.Text"
 msgid "Reset"
-msgstr ""
+msgstr "Resetar"
 
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelSendAsAddress.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelSendAsAddress.Text"
+msgid "Send-as address"
+msgstr "Endereço enviar-como"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsFailed_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Label"
+msgid "Unable to determine the send-as email address for the folder. Send-as will only work if you specify the email address manually."
+msgstr ""
+"Não foi possível determinar o endereço enviar-como para essa pasta. Enviar-"
+"como somente funcionará se um endereço é selecionado manualmente."
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsFailed_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Title"
+msgid "Shared Folders"
+msgstr "Pastas Compartilhadas"
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsUpdateFailed_Label
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsUpdateFailed_Label"
+msgid "Unable to determine the send-as email address for the existing shared folder {0}. Send-as will only work if you specify the email address manually. Would you like to open the Shared Folders dialog?"
+msgstr ""
+"Não foi possível determinar o endereço enviar-como para a pasta "
+"compartilhada {0}. Enviar-como somente funcionará se um endereço é "
+"selecionado manualmente. Gostaria de abrir o menu Pastas Compartilhadas?"
