@@ -948,6 +948,25 @@ namespace Acacia.Features.SharedFolders
                 if (node.SharedFolder.SendAsAddress != textSendAsAddress.Text)
                 {
                     node.SharedFolder = node.SharedFolder.WithSendAsAddress(textSendAsAddress.Text);
+
+                    // Try any children
+                    ApplySendAsAddressChildren(node, textSendAsAddress.Text);
+                }
+            }
+        }
+
+        private void ApplySendAsAddressChildren(FolderTreeNode node, string address)
+        {
+            foreach(FolderTreeNode child in node.Children)
+            {
+                if (child.SharedFolder == null || !child.SharedFolder.FlagSendAsOwner)
+                    continue;
+
+                if (string.IsNullOrWhiteSpace(child.SharedFolder.SendAsAddress))
+                {
+                    child.SharedFolder = child.SharedFolder.WithSendAsAddress(address);
+
+                    ApplySendAsAddressChildren(child, address);
                 }
             }
         }
