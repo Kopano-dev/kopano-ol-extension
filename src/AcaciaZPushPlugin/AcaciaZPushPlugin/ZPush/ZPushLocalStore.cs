@@ -23,6 +23,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Acacia.Features.GAB;
+using Acacia.Features;
+using System.Windows.Forms;
 
 namespace Acacia.ZPush
 {
@@ -35,7 +38,7 @@ namespace Acacia.ZPush
         /// Returns or creates the local store.
         /// </summary>
         /// <returns>The store, or null on error. If a store is returned, the caller is responsible for disposing.</returns>
-        public static IStore GetInstance(IAddIn addIn)
+        public static IStore GetInstance(IAddIn addIn, Feature feature)
         {
             IStore store = OpenOrCreateInstance(addIn);
             if (store == null)
@@ -44,6 +47,7 @@ namespace Acacia.ZPush
             try
             {
                 HideAllFolders(store);
+                SetupChangeSuppression(store, feature);
                 return store;
             }
             catch(Exception e)
@@ -106,6 +110,60 @@ namespace Acacia.ZPush
             }
         }
 
+        private static readonly Dictionary<string, Suppressor> _suppressors = new Dictionary<string, Suppressor>();
+
+        private static void SetupChangeSuppression(IStore localStore, Feature feature)
+        {
+            string localStoreID = localStore.StoreID;
+            if (!_suppressors.ContainsKey(localStoreID))
+            {
+                _suppressors.Add(localStoreID, new Suppressor(localStoreID, feature));
+            }
+        }
+
+        private class Suppressor
+        {
+            private readonly string _localStoreID;
+
+            public Suppressor(string localStoreID, Feature feature)
+            {
+                this._localStoreID = localStoreID;
+
+                feature.Watcher.WatchFolder(new FolderRegistrationAny(feature),
+                        (folder) =>
+                        {
+                            folder.BeforeFolderMove += Folder_BeforeFolderMove;
+                            folder.BeforeItemMove += Folder_BeforeItemMove;
+                        });
+
+            }
+
+            private void Folder_BeforeItemMove(IFolder src, IItem item, IFolder moveTo, ref bool cancel)
+            {
+                SuppressCore(src, item, moveTo, ref cancel);
+            }
+
+            private void Folder_BeforeFolderMove(IFolder src, IFolder moveTo, ref bool cancel)
+            {
+                SuppressCore(src, null, moveTo, ref cancel);
+            }
+
+            private void SuppressCore(IFolder src, IItem item, IFolder moveTo, ref bool cancel)
+            { 
+                if (moveTo.StoreID == _localStoreID)
+                {
+                    Logger.Instance.Trace(this, "Move into Kopano Folders: {0} - {1}: {2}", src.Name, src.EntryID, item?.EntryID);
+                    cancel = true;
+                    MessageBox.Show(ThisAddIn.Instance.Window,
+                                    Properties.Resources.LocalStore_Move_Body,
+                                    Properties.Resources.LocalStore_Move_Title,
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning
+                                );
+                }
+            }
+        }
+
         private static IStore FindInstance(IAddIn addIn, string prefix)
         {
             foreach (IStore store in addIn.Stores)
@@ -122,16 +180,14 @@ namespace Acacia.ZPush
             }
             return null;
         }
-
-        private static bool IsCustomFolder(IFolder folder)
-        {
-            return Features.GAB.FeatureGAB.IsGABContactsFolder(folder, null);
-        }
-
+        
         private static void HideAllFolders(IStore store)
         {
             if (GlobalOptions.INSTANCE.LocalFolders_Hide)
             {
+                HashSet<string> hideIds = new HashSet<string>();
+                hideIds.Add(store.GetDefaultFolderId(DefaultFolder.DeletedItems));
+
                 // Hide the folders that are not custom folders
                 using (IFolder root = store.GetRootFolder())
                 {
@@ -139,7 +195,7 @@ namespace Acacia.ZPush
                     {
                         using (sub)
                         {
-                            sub.AttrHidden = !IsCustomFolder(sub);
+                            sub.AttrHidden = hideIds.Contains(sub.EntryID);
                         }
                     }
                 }

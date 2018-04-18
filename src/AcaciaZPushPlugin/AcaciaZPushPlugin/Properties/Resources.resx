@@ -539,4 +539,10 @@ Please contact your system administrator for any required changes.</value>
   <data name="SharedFolders_SendAsUpdateFailed_Label" xml:space="preserve">
     <value>Unable to determine the send-as email address for the existing shared folder {0}. Send-as will only work if you specify the email address manually. Would you like to open the Shared Folders dialog?</value>
   </data>
+  <data name="LocalStore_Move_Body" xml:space="preserve">
+    <value>Storing items in Kopano Folders is not supported.</value>
+  </data>
+  <data name="LocalStore_Move_Title" xml:space="preserve">
+    <value>Kopano Folders</value>
+  </data>
 </root>

@@ -206,6 +206,24 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Storing items in Kopano Folders is not supported..
+        /// </summary>
+        internal static string LocalStore_Move_Body {
+            get {
+                return ResourceManager.GetString("LocalStore_Move_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kopano Folders.
+        /// </summary>
+        internal static string LocalStore_Move_Title {
+            get {
+                return ResourceManager.GetString("LocalStore_Move_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are unsaved changes. Do you really want to to discard these?.
         /// </summary>
         internal static string OOF_Unsaved_Changes {

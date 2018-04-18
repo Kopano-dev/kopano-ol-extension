@@ -194,7 +194,7 @@ namespace Acacia.Features
 
         #region Event helpers
 
-        protected static MailEvents MailEvents
+        public static MailEvents MailEvents
         {
             get
             {
@@ -202,7 +202,7 @@ namespace Acacia.Features
             }
         }
         
-        protected ZPushWatcher Watcher
+        public ZPushWatcher Watcher
         {
             get
             {

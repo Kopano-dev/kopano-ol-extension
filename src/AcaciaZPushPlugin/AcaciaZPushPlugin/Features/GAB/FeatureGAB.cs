@@ -71,15 +71,24 @@ namespace Acacia.Features.GAB
 
         public override void Startup()
         {
-            if (SuppressModifications && MailEvents != null)
+            SetupModificationSuppression();
+            Watcher.AccountDiscovered += AccountDiscovered;
+            Watcher.AccountRemoved += AccountRemoved;
+            Watcher.AccountsScanned += AccountsScanned;
+        }
+
+        private void SetupModificationSuppression()
+        {
+            if (MailEvents == null)
+                return;
+
+            // GAB modification suppression
+            if (SuppressModifications)
             {
                 MailEvents.BeforeDelete += SuppressEventHandler_Delete;
                 MailEvents.PropertyChange += SuppressEventHandler_PropertyChange;
                 MailEvents.Write += SuppressEventHandler_Write;
             }
-            Watcher.AccountDiscovered += AccountDiscovered;
-            Watcher.AccountRemoved += AccountRemoved;
-            Watcher.AccountsScanned += AccountsScanned;
         }
 
         #region Settings
@@ -367,7 +376,7 @@ namespace Acacia.Features.GAB
                 // Delete any contacts folders in the local store
                 if (DeleteExistingFolder)
                 {
-                    using (IStore store = ZPushLocalStore.GetInstance(ThisAddIn.Instance))
+                    using (IStore store = ZPushLocalStore.GetInstance(ThisAddIn.Instance, this))
                     {
                         if (store != null)
                         {
@@ -471,7 +480,7 @@ namespace Acacia.Features.GAB
                 _store.Dispose();
                 _store = null;
             }
-            _store = ZPushLocalStore.GetInstance(ThisAddIn.Instance);
+            _store = ZPushLocalStore.GetInstance(ThisAddIn.Instance, this);
             if (_store == null)
                 return null;
 
@@ -614,7 +623,7 @@ namespace Acacia.Features.GAB
                 _store.Dispose();
                 _store = null;
             }
-            _store = ZPushLocalStore.GetInstance(ThisAddIn.Instance);
+            _store = ZPushLocalStore.GetInstance(ThisAddIn.Instance, this);
             if (_store == null)
                 return;
 
