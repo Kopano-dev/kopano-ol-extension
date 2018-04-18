@@ -144,13 +144,15 @@ namespace Acacia.Features.SendAs
         {
             using (IStore store = item.GetStore())
             {
+                Logger.Instance.Trace(this, "SendAs ItemSend: {0}: {1}", item.Subject, store?.DisplayName);
                 ZPushAccount zpush = Watcher.Accounts.GetAccount(store);
                 if (zpush != null)
                 {
                     string address = item.SenderEmailAddress;
+                    Logger.Instance.Trace(this, "SendAs ItemSend address: {0}: {1} - {2}", item.EntryID, address, zpush.Account.SmtpAddress);
                     if (address != null && address != zpush.Account.SmtpAddress)
                     {
-                        Logger.Instance.Trace(this, "SendAs: {0}: {1}", address, item.SenderName);
+                        Logger.Instance.Info(this, "SendAs: {0}: {1}", address, item.SenderName);
                         item.SetProperty(Constants.ZPUSH_SEND_AS, address);
                         if (item.SenderName != null)
                             item.SetProperty(Constants.ZPUSH_SEND_AS_NAME, item.SenderName);
