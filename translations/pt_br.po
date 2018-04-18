@@ -5,8 +5,7 @@ msgstr ""
 "POT-Creation-Date: 2016-12-12 14:56+0000\n"
 "PO-Revision-Date: 2018-04-13 14:56+0000\n"
 "Last-Translator: Sebastian <s.kummer@kopano.com>\n"
-"Language-Team: Portuguese (Brazil) "
-"<http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt_BR/>\n"
 "Language: pt_br\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1251,9 +1250,7 @@ msgstr "Endereço enviar-como"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Label"
 msgid "Unable to determine the send-as email address for the folder. Send-as will only work if you specify the email address manually."
-msgstr ""
-"Não foi possível determinar o endereço enviar-como para essa pasta. Enviar-"
-"como somente funcionará se um endereço é selecionado manualmente."
+msgstr "Não foi possível determinar o endereço enviar-como para essa pasta. Enviar-como somente funcionará se um endereço é selecionado manualmente."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsFailed_Title
 #, csharp-format
@@ -1265,7 +1262,5 @@ msgstr "Pastas Compartilhadas"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsUpdateFailed_Label"
 msgid "Unable to determine the send-as email address for the existing shared folder {0}. Send-as will only work if you specify the email address manually. Would you like to open the Shared Folders dialog?"
-msgstr ""
-"Não foi possível determinar o endereço enviar-como para a pasta "
-"compartilhada {0}. Enviar-como somente funcionará se um endereço é "
-"selecionado manualmente. Gostaria de abrir o menu Pastas Compartilhadas?"
+msgstr "Não foi possível determinar o endereço enviar-como para a pasta compartilhada {0}. Enviar-como somente funcionará se um endereço é selecionado manualmente. Gostaria de abrir o menu Pastas Compartilhadas?"
+
