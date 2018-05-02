@@ -169,7 +169,7 @@ namespace Acacia.ZPush.API.SharedFolders
         private SharedFolder DoClone(SoapData newData)
         {
             SharedFolder clone = new SharedFolder(newData);
-            clone.SendAsAddress = SendAsAddress;
+            clone._sendAsAddress = SendAsAddress;
             return clone;
         }
 
@@ -210,10 +210,15 @@ namespace Acacia.ZPush.API.SharedFolders
 
         #region Send as
 
+        private string _sendAsAddress;
+
         public string SendAsAddress
         {
-            get;
-            set;
+            get { return _sendAsAddress; }
+            set
+            {
+                this._sendAsAddress = value;
+            }
         }
 
         public SharedFolder WithSendAsAddress(string sendAs)

@@ -278,22 +278,7 @@ namespace Acacia.Features.SharedFolders
                             if (folderNode != null)
                             {
                                 // See if we can obtain it from a parent
-                                for (KTreeNode current = folderNode.Parent; current is FolderTreeNode; current = current.Parent)
-                                {
-                                    FolderTreeNode parentNode = (FolderTreeNode)current;
-                                    if (parentNode.SharedFolder == null)
-                                        break;
-
-                                    if (parentNode.SharedFolder.FlagSendAsOwner)
-                                    {
-                                        if (!string.IsNullOrWhiteSpace(parentNode.SharedFolder.SendAsAddress))
-                                        {
-                                            folder.SendAsAddress = parentNode.SharedFolder.SendAsAddress;
-                                            break;
-                                        }
-                                    }
-                                    else break;
-                                }
+                                TryInitSendAsAddressParent(folderNode as FolderTreeNode);
                                 if (!string.IsNullOrWhiteSpace(folder.SendAsAddress))
                                     continue;
 
@@ -787,8 +772,7 @@ namespace Acacia.Features.SharedFolders
                             checkSendAs.ThreeState = true;
                         }
 
-                        textSendAsAddress.Text = "";
-                        TryInitSendAsAddress();
+                        textSendAsAddress.Text = TryInitSendAsAddress();
                         EnableSendAsAddress();
                     }
                     // Reminders shown if any node supports it
@@ -896,12 +880,19 @@ namespace Acacia.Features.SharedFolders
             }
         }
 
-        private void TryInitSendAsAddress()
+        private string TryInitSendAsAddress()
         {
             // Initialise to the send-as address specified for an existing share, or a simple GAB lookup otherwise
             string email =
                 _optionSendAsNodes[0].SharedFolder?.SendAsAddress ??
                 _featureSendAs?.FindSendAsAddress(_account, _optionSendAsNodes[0].AvailableFolder.Store);
+
+            if (string.IsNullOrEmpty(email))
+            {
+                // Try to initialise from the parent
+                TryInitSendAsAddressParent(_optionSendAsNodes[0]);
+                email = _optionSendAsNodes[0].SharedFolder?.SendAsAddress;
+            }
 
             if (!string.IsNullOrEmpty(email))
             {
@@ -922,6 +913,30 @@ namespace Acacia.Features.SharedFolders
                         Properties.Resources.SharedFolders_SendAsFailed_Title,
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+            }
+            return email;
+        }
+
+        private void TryInitSendAsAddressParent(FolderTreeNode node)
+        {
+            if (node == null)
+                return;
+
+            for (KTreeNode current = node.Parent; current is FolderTreeNode; current = current.Parent)
+            {
+                FolderTreeNode parentNode = (FolderTreeNode)current;
+                if (parentNode.SharedFolder == null)
+                    break;
+
+                if (parentNode.SharedFolder.FlagSendAsOwner)
+                {
+                    if (!string.IsNullOrWhiteSpace(parentNode.SharedFolder.SendAsAddress))
+                    {
+                        node.SharedFolder.SendAsAddress = parentNode.SharedFolder.SendAsAddress;
+                        break;
+                    }
+                }
+                else break;
             }
         }
 
@@ -948,25 +963,6 @@ namespace Acacia.Features.SharedFolders
                 if (node.SharedFolder.SendAsAddress != textSendAsAddress.Text)
                 {
                     node.SharedFolder = node.SharedFolder.WithSendAsAddress(textSendAsAddress.Text);
-
-                    // Try any children
-                    ApplySendAsAddressChildren(node, textSendAsAddress.Text);
-                }
-            }
-        }
-
-        private void ApplySendAsAddressChildren(FolderTreeNode node, string address)
-        {
-            foreach(FolderTreeNode child in node.Children)
-            {
-                if (child.SharedFolder == null || !child.SharedFolder.FlagSendAsOwner)
-                    continue;
-
-                if (string.IsNullOrWhiteSpace(child.SharedFolder.SendAsAddress))
-                {
-                    child.SharedFolder = child.SharedFolder.WithSendAsAddress(address);
-
-                    ApplySendAsAddressChildren(child, address);
                 }
             }
         }
