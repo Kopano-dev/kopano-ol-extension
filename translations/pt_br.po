@@ -1264,3 +1264,15 @@ msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsUpdateFai
 msgid "Unable to determine the send-as email address for the existing shared folder {0}. Send-as will only work if you specify the email address manually. Would you like to open the Shared Folders dialog?"
 msgstr "Não foi possível determinar o endereço enviar-como para a pasta compartilhada {0}. Enviar-como somente funcionará se um endereço é selecionado manualmente. Gostaria de abrir o menu Pastas Compartilhadas?"
 
+#: AcaciaZPushPlugin\Properties\Resources\LocalStore_Move_Body
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\LocalStore_Move_Body"
+msgid "Storing items in Kopano Folders is not supported."
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\LocalStore_Move_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\LocalStore_Move_Title"
+msgid "Kopano Folders"
+msgstr ""
+
