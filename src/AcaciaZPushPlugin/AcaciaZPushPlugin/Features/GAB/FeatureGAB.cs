@@ -254,6 +254,14 @@ namespace Acacia.Features.GAB
         }
         private static readonly BoolOption OPTION_SMTP_GROUPS_AS_CONTACTS = new BoolOption("SMTPGroupsAsContacts", false);
 
+        [AcaciaOption("If enabled, the FileAs field will be set to displayName. Otherwise, Outlook will create it.")]
+        public bool FileAsDisplayName
+        {
+            get { return GetOption(OPTION_FILE_AS_DISPLAY_NAME); }
+            set { SetOption(OPTION_FILE_AS_DISPLAY_NAME, value); }
+        }
+        private static readonly BoolOption OPTION_FILE_AS_DISPLAY_NAME = new BoolOption("FileAsDisplayName", false);
+
         #endregion
 
         #region Modification suppression

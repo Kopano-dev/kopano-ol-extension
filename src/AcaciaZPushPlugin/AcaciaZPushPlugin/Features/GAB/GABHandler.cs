@@ -522,7 +522,8 @@ namespace Acacia.Features.GAB
                 if (Get<string>(value, "title") != null) contact.JobTitle = Get<string>(value, "title");
                 if (Get<string>(value, "displayName") != null)
                 {
-                    contact.FileAs = Get<string>(value, "displayName");
+                    if (_feature.FileAsDisplayName)
+                        contact.FileAs = Get<string>(value, "displayName");
                     contact.FullName = Get<string>(value, "displayName");
                 }
 
