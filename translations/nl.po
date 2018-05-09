@@ -2,9 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-11-08 13:06+0000\n"
-"Last-Translator: Patrick Simpson <p.simpson@etosis.com>\n"
-"Language-Team: Dutch <http://translate.kopano.io/projects/kopano/kopano-ol-extension/nl/>\n"
+"PO-Revision-Date: 2018-05-08 14:30+0000\n"
+"Last-Translator: Bob <b.huisman@kopano.com>\n"
+"Language-Team: Dutch <http://translate.kopano.io/projects/kopano/kopano-ol-"
+"extension/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -1393,131 +1394,136 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\GAB\\GABSettings\\checkSMTPGroupsAsContacts.Text"
 msgid "Synchronise groups with addresses as contacts"
-msgstr ""
+msgstr "Synchroniseer groepen met adressen als contactpersonen"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelWholeStore.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelWholeStore.Text"
 msgid "Open whole store"
-msgstr ""
+msgstr "Open gehele store"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelRestartRequired.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelRestartRequired.Text"
 msgid "(Requires restart)"
-msgstr ""
+msgstr "(Vereist herstart)"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_WholeStoreRestart_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Body"
 msgid "Outlook will be restarted to open the new stores"
-msgstr ""
+msgstr "Outlook moet worden herstart om de nieuwe stores te openen"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_WholeStoreRestart_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Title"
 msgid "Open stores"
-msgstr ""
+msgstr "Open stores"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelTimeFrame.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelTimeFrame.Text"
 msgid "Synchronise"
-msgstr ""
+msgstr "Synchroniseer"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items"
 msgid "all"
-msgstr ""
+msgstr "alle"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items1
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items1"
 msgid "1 day"
-msgstr ""
+msgstr "1 dag"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items2
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items2"
 msgid "3 days"
-msgstr ""
+msgstr "3 dagen"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items3
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items3"
 msgid "1 week"
-msgstr ""
+msgstr "1 week"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items4
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items4"
 msgid "2 weeks"
-msgstr ""
+msgstr "2 weken"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items5
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items5"
 msgid "1 month"
-msgstr ""
+msgstr "1 maand"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items6
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items6"
 msgid "3 months"
-msgstr ""
+msgstr "3 maanden"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items7
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items7"
 msgid "6 months"
-msgstr ""
+msgstr "6 maanden"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonApplyTimeFrame.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonApplyTimeFrame.Text"
 msgid "Apply"
-msgstr ""
+msgstr "Toepassen"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonResetTimeFrame.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonResetTimeFrame.Text"
 msgid "Reset"
-msgstr ""
+msgstr "Herstellen"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelSendAsAddress.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelSendAsAddress.Text"
 msgid "Send-as address"
-msgstr ""
+msgstr "Verzenden-als adres"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsFailed_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Label"
 msgid "Unable to determine the send-as email address for the folder. Send-as will only work if you specify the email address manually."
 msgstr ""
+"Kan niet vaststellen welk email adres moet worden gebruikt om email te "
+"verzenden voor deze map. Verzenden-als zal alleen werken wanneer het email "
+"adres handmatig wordt gespecificeerd."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsFailed_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Title"
 msgid "Shared Folders"
-msgstr ""
+msgstr "Gedeelde mappen"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsUpdateFailed_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsUpdateFailed_Label"
 msgid "Unable to determine the send-as email address for the existing shared folder {0}. Send-as will only work if you specify the email address manually. Would you like to open the Shared Folders dialog?"
 msgstr ""
+"Kan het verzenden-als email adres van de bestaande gedeelde map {0} niet "
+"vaststellen. Verzenden-als werkt alleen wanneer het email adres handmatig "
+"wordt gespecificeerd. Wilt u het dialoog Gedeelde Mappen openen?"
 
 #: AcaciaZPushPlugin\Properties\Resources\LocalStore_Move_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\LocalStore_Move_Body"
 msgid "Storing items in Kopano Folders is not supported."
-msgstr ""
+msgstr "Opslaan van items in Kopano Mappen wordt niet ondersteund."
 
 #: AcaciaZPushPlugin\Properties\Resources\LocalStore_Move_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\LocalStore_Move_Title"
 msgid "Kopano Folders"
-msgstr ""
-
+msgstr "Kopano Mappen"
