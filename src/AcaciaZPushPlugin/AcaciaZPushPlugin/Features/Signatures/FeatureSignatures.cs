@@ -270,9 +270,9 @@ namespace Acacia.Features.Signatures
                     if (gab != null)    
                         ReplacePlaceholders(gab, name);
                 }
-            }
 
-            return name;
+                return signature.Name;
+            }
         }
 
         private string GetSignatureName(ISignatures signatures, ZPushAccount account, string name)

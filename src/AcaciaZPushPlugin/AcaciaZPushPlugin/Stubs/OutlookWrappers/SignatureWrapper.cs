@@ -32,6 +32,11 @@ namespace Acacia.Stubs.OutlookWrappers
             this._name = name;
         }
 
+        public string Name
+        {
+            get { return EscapeSignatureName(_name); }
+        }
+
         protected override void DoRelease()
         {
         }
@@ -50,7 +55,15 @@ namespace Acacia.Stubs.OutlookWrappers
 
         private static string GetPath(string name, string suffix)
         {
-            return Path.Combine(BasePath, name) + "." + suffix;
+            return Path.Combine(BasePath, EscapeSignatureName(name)) + "." + suffix;
+        }
+
+        private static string EscapeSignatureName(string name)
+        {
+            string invalidChars = System.Text.RegularExpressions.Regex.Escape(new string(Path.GetInvalidFileNameChars()));
+            string invalidRegStr = string.Format(@"([{0}]*\.+$)|([{0}]+)", invalidChars);
+
+            return System.Text.RegularExpressions.Regex.Replace(name, invalidRegStr, "_");
         }
 
         public void Delete()
