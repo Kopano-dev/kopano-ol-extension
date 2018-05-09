@@ -737,6 +737,10 @@ namespace Acacia.Features.SyncState
             return new SyncStateImpl(this, account == null ? Watcher.Accounts.GetAccounts().ToArray() : new ZPushAccount[] { account });
         }
 
+        public bool SupportsSyncTimeFrame(ZPushAccount account)
+        {
+            return account?.ZPushVersion.IsAtLeast(2, 4) == true;
+        }
 
         private class SetDeviceOptionsRequest : SoapRequest<bool>
         {

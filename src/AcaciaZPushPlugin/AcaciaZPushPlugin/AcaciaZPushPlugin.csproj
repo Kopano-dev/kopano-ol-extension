@@ -470,6 +470,7 @@
     <Compile Include="ZPush\ZPushFolder.cs" />
     <Compile Include="ZPush\ZPushSync.cs" />
     <Compile Include="ZPush\ZPushTypes.cs" />
+    <Compile Include="ZPush\ZPushVersion.cs" />
     <Compile Include="ZPush\ZPushWatcher.cs" />
     <Compile Include="Features\DebugSupport\DebugDialog.cs">
       <SubType>Form</SubType>

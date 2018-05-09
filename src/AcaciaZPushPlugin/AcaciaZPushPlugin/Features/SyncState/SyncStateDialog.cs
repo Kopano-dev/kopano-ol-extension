@@ -73,7 +73,11 @@ namespace Acacia.Features.SyncState
         private void comboAccounts_SelectedIndexChanged(object sender, EventArgs e)
         {
             _syncState = _feature.GetSyncState(SelectedAccount);
-            _labelTimeFrame.Enabled = comboTimeFrame.Enabled = SelectedAccount != null;
+
+            // Check if time frame should be visible
+            // It is visible if a single account is selected that supports it
+            bool haveSyncTimeFrame = _feature.SupportsSyncTimeFrame(SelectedAccount);
+            _labelTimeFrame.Visible = comboTimeFrame.Visible = buttonApplyTimeFrame.Visible = buttonResetTimeFrame.Visible = haveSyncTimeFrame;
 
             if (SelectedAccount == null)
                 comboTimeFrame.SelectedIndex = 0;

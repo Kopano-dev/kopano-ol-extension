@@ -121,7 +121,7 @@ namespace Acacia.ZPush
             private set;
         }
 
-        public string ZPushVersion
+        public ZPushVersion ZPushVersion
         {
             get;
             private set;
@@ -144,7 +144,7 @@ namespace Acacia.ZPush
             Capabilities = response.Capabilities;
             // TODO: move these properties to the features? Though it's nice to have them here for the debug dialog
             GABFolder = response.GABName;
-            ZPushVersion = response.ZPushVersion;
+            ZPushVersion = ZPushVersion.FromString(response.ZPushVersion);
             ServerSignaturesHash = response.SignaturesHash;
             Confirmed = Capabilities == null ? ConfirmationType.IsNotZPush : ConfirmationType.IsZPush;
             Logger.Instance.Info(this, "ZPush confirmation: {0} -> {1}, {2}", Confirmed, Capabilities, GABFolder);
