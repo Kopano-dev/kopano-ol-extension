@@ -1094,7 +1094,7 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Modifying shared folders locally is not supported. Please use the &apos;Shared Folders&apos; dialog to modify these folders..
+        ///   Looks up a localized string similar to Modifying shared folders locally is not supported. Please use the &apos;Shared Folders&apos; dialog to rename shared folders or add additional shared folders..
         /// </summary>
         internal static string SharedFolders_LocalFolder_Body {
             get {

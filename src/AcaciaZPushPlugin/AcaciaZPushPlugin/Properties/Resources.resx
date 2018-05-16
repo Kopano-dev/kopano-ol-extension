@@ -515,7 +515,7 @@
     <value>Private event</value>
   </data>
   <data name="SharedFolders_LocalFolder_Body" xml:space="preserve">
-    <value>Modifying shared folders locally is not supported. Please use the 'Shared Folders' dialog to modify these folders.</value>
+    <value>Modifying shared folders locally is not supported. Please use the 'Shared Folders' dialog to rename shared folders or add additional shared folders.</value>
   </data>
   <data name="SharedFolders_LocalFolder_Title" xml:space="preserve">
     <value>Shared folders</value>
