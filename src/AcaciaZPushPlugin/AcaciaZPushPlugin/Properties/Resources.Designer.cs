@@ -1212,6 +1212,24 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are trying to open many additional folders. Having many shared folders open can impact the stability of Outlook. When working with many shared folders its recommended to take a look at Kopano WebApp/DeskApp instead..
+        /// </summary>
+        internal static string SharedFolders_TooManyFolders_Body {
+            get {
+                return ResourceManager.GetString("SharedFolders_TooManyFolders_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shared Folders.
+        /// </summary>
+        internal static string SharedFolders_TooManyFolders_Title {
+            get {
+                return ResourceManager.GetString("SharedFolders_TooManyFolders_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are unsaved changes. Do you really want to to discard these?.
         /// </summary>
         internal static string SharedFolders_Unsaved_Changes {

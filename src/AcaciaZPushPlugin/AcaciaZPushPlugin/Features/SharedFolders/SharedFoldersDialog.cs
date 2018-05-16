@@ -262,9 +262,14 @@ namespace Acacia.Features.SharedFolders
 
         private void dialogButtons_Apply(object sender, EventArgs e)
         {
+            int folderCount = 0;
+
             // Check if all fields are properly set
             foreach (StoreTreeNode storeNode in _userFolders.Values)
             {
+                // Check totals
+                folderCount += storeNode.CurrentShares.Count();
+
                 // Check modified folders
                 if (storeNode.IsDirty)
                 {
@@ -294,7 +299,19 @@ namespace Acacia.Features.SharedFolders
                     }
                 }
             }
-
+                                        
+            // Check total number of folders
+            if (folderCount >= _feature.MaxFolderCount)
+            {
+                MessageBox.Show(ThisAddIn.Instance.Window,
+                                                Properties.Resources.SharedFolders_TooManyFolders_Body,
+                                                Properties.Resources.SharedFolders_TooManyFolders_Title,
+                                                MessageBoxButtons.OK,
+                                                MessageBoxIcon.Error
+                               );
+                // And don't apply anything
+                return;
+            }
 
             BusyText = Properties.Resources.SharedFolders_Applying_Label;
             KUITask.New((ctx) =>

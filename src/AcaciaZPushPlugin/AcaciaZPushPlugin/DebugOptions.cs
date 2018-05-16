@@ -174,6 +174,42 @@ namespace Acacia
 
         }
 
+        public class IntOption : Option<int>
+        {
+            private readonly int _defaultValue;
+
+            public IntOption(string token, int defaultValue)
+            :
+            base(token)
+            {
+                this._defaultValue = defaultValue;
+            }
+
+            public override string GetToken(int value)
+            {
+                if (value.Equals(_defaultValue))
+                    return null;
+                return Token + "=" + value.ToString();
+            }
+
+            public override int GetValue(string value)
+            {
+                if (string.IsNullOrEmpty(value))
+                    return _defaultValue;
+                else
+                {
+                    if (value.ToLower().StartsWith(Token.ToLower() + "="))
+                        value = value.Substring(Token.Length + 1);
+
+                    int result;
+                    if (!int.TryParse(value, out result))
+                        return _defaultValue;
+                    return result;
+                }
+            }
+
+        }
+
         // General
         public static readonly BoolOption ENABLED = new BoolOption("", true);
         public static readonly BoolOption FEATURE_DISABLED_DEFAULT = new BoolOption("", false);

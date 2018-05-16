@@ -545,4 +545,10 @@ Please contact your system administrator for any required changes.</value>
   <data name="LocalStore_Move_Title" xml:space="preserve">
     <value>Kopano Folders</value>
   </data>
+  <data name="SharedFolders_TooManyFolders_Body" xml:space="preserve">
+    <value>You are trying to open many additional folders. Having many shared folders open can impact the stability of Outlook. When working with many shared folders its recommended to take a look at Kopano WebApp/DeskApp instead.</value>
+  </data>
+  <data name="SharedFolders_TooManyFolders_Title" xml:space="preserve">
+    <value>Shared Folders</value>
+  </data>
 </root>

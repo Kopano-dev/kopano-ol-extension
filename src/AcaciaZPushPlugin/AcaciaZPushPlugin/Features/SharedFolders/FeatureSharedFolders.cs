@@ -75,6 +75,15 @@ namespace Acacia.Features.SharedFolders
         }
         private static readonly BoolOption OPTION_ALLOW_IMPERSONATE = new BoolOption("AllowImpersonate", false);
 
+
+        [AcaciaOption("The maximum number of shared folders before an error is shown. Defaults to 50.")]
+        public int MaxFolderCount
+        {
+            get { return GetOption(OPTION_MAX_FOLDER_COUNT); }
+            set { SetOption(OPTION_MAX_FOLDER_COUNT, value); }
+        }
+        private static readonly IntOption OPTION_MAX_FOLDER_COUNT = new IntOption("MaxFolderCount", 50);
+
         #endregion
 
         public override void Startup()
