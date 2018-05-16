@@ -1371,7 +1371,7 @@ msgstr "Kopieer filter"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_LocalFolder_Body"
 msgid "Modifying shared folders locally is not supported. Please use the 'Shared Folders' dialog to rename shared folders or add additional shared folders."
-msgstr "Het lokaal aanpassen van gedeelde mappen word niet ondersteund. Gebruik het venster 'Gedeelde Mappen' om deze mappen aan te passen."
+msgstr "Het lokaal aanpassen van gedeelde mappen word niet ondersteund. Gebruik het venster 'Gedeelde Mappen' om deze mappen aan te passen of andere gedeelde mappen toe te voegen."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_LocalFolder_Title
 #, csharp-format
