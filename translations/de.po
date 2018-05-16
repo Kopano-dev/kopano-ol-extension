@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KC-8\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-04-13 13:52+0000\n"
+"PO-Revision-Date: 2018-05-16 10:15+0000\n"
 "Last-Translator: Felix <f.bartels@kopano.com>\n"
 "Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-extension/de/>\n"
 "Language: de\n"
@@ -1371,7 +1371,7 @@ msgstr "Filter kopieren"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_LocalFolder_Body"
 msgid "Modifying shared folders locally is not supported. Please use the 'Shared Folders' dialog to rename shared folders or add additional shared folders."
-msgstr "Die Bearbeitung von geteilten Ordner durch Outlook ist nicht gestattet. Bitte benutzen Sie den \"Geteilte Ordner\" Dialog um Änderungen durchzuführen."
+msgstr "Die Bearbeitung von geteilten Ordner durch Outlook ist nicht gestattet. Bitte benutzen Sie den \"Geteilte Ordner\" Dialog um geteilte Ordner umzubenennen oder weitere geteilte Ordner hinzuzufügen."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_LocalFolder_Title
 #, csharp-format
@@ -1495,29 +1495,29 @@ msgstr "Senden als Adresse"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Label"
 msgid "Unable to determine the send-as email address for the folder. Send-as will only work if you specify the email address manually."
-msgstr ""
+msgstr "Die Senden als Adresse konnte nicht erkannt werden. Senden als wird nur funktionieren, wenn Sie diese manuell angeben (In den Einstellungen für geteilte Ordner)."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsFailed_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Title"
 msgid "Shared Folders"
-msgstr ""
+msgstr "Geteilte Ordner"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsUpdateFailed_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsUpdateFailed_Label"
 msgid "Unable to determine the send-as email address for the existing shared folder {0}. Send-as will only work if you specify the email address manually. Would you like to open the Shared Folders dialog?"
-msgstr ""
+msgstr "Die Senden als Adresse konnte für den Ordner {0} nicht erkannt werden. Senden als wird nur funktionieren, wenn Sie diese Adresse manuell festlegen. Möchten Sie hierfür die Einstellungen für geteilte Ordner öffnen?"
 
 #: AcaciaZPushPlugin\Properties\Resources\LocalStore_Move_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\LocalStore_Move_Body"
 msgid "Storing items in Kopano Folders is not supported."
-msgstr ""
+msgstr "Das Ablegen von Elementen in den Kopano Ordnern wird nicht unterstützt."
 
 #: AcaciaZPushPlugin\Properties\Resources\LocalStore_Move_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\LocalStore_Move_Title"
 msgid "Kopano Folders"
-msgstr ""
+msgstr "Kopano Ordner"
 
