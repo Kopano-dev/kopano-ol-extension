@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-16 11:10+0000\n"
-"PO-Revision-Date: 2018-05-16 11:10+0000\n"
+"PO-Revision-Date: 2018-05-16 11:24+0000\n"
 "Last-Translator: Nuno Jerónimo <nuno.jeronimo@valsousa.pt>\n"
 "Language-Team: Portuguese <http://translate.kopano.io/projects/kopano/kopano-"
 "ol-extension/pt/>\n"
@@ -264,7 +264,7 @@ msgstr "Abrir localização do ficheiro de log"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\FreeBusy\\FreeBusySettings\\checkGABLookup.Text"
 msgid "Look up contacts in Global Address Book"
-msgstr "Procurar contatos no Livro de Endereços Global"
+msgstr "Procurar contatos no Livro Global de Endereços"
 
 #: AcaciaZPushPlugin\Features\FreeBusy\FreeBusySettings\labelUseAccount.Text
 #, csharp-format
@@ -512,13 +512,13 @@ msgstr "Ressincronizar"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonGAB.Hint"
 msgid "Resynchronise the global address book"
-msgstr "Ressincronizar o livro de endereços global"
+msgstr "Ressincronizar o livro global de endereços"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonGAB.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonGAB.Text"
 msgid "Global Address Book"
-msgstr "Livro de Endereços Global"
+msgstr "Livro Global de Endereços"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonSignatures.Hint
 #, csharp-format
@@ -731,14 +731,14 @@ msgstr "Assistente Fora do Escritório"
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABEvent_Body"
 msgid "Modifications to the Global Address Book are not allowed. Please contact your administrator if you think changes are required."
 msgstr ""
-"Modificações ao Livro de Endereços Global não são permitidas. Por favor "
+"Modificações ao Livro Global de Endereços não são permitidas. Por favor "
 "contate o seu administrador se achar que são necessárias alterações."
 
 #: AcaciaZPushPlugin\Properties\Resources\GABEvent_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABEvent_Title"
 msgid "Global Address Book"
-msgstr "Livro de Endereços Global"
+msgstr "Livro Global de Endereços"
 
 #: AcaciaZPushPlugin\Properties\Resources\GAB_FolderFormat
 #, csharp-format
@@ -768,7 +768,7 @@ msgstr "Livre/Ocupado"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_GAB"
 msgid "Global Address Book"
-msgstr "Livro de Endereços Global"
+msgstr "Livro Global de Endereços"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_Notes
 #, csharp-format
@@ -1134,7 +1134,7 @@ msgstr "Ressincronização total"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Resync_Body_GAB"
 msgid "The Global Address Book has been scheduled for resynchronisation."
-msgstr "A ressincronização do Livro de Endereços Global foi agendada."
+msgstr "A ressincronização do Livro Global de Endereços foi agendada."
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Resync_Caption
 #, csharp-format
@@ -1158,13 +1158,13 @@ msgstr "Dados do servidor"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABSync_Label"
 msgid "The global address book is being synchronised."
-msgstr "O Livro de Endereços Global está a ser sincronizado."
+msgstr "O Livro Global de Endereços está a ser sincronizado."
 
 #: AcaciaZPushPlugin\Properties\Resources\GABSync_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABSync_Title"
 msgid "Global Address Book"
-msgstr "Livro de Endereços Global"
+msgstr "Livro Global de Endereços"
 
 #. {0} will be replaced with the account name
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Stalled_Body
