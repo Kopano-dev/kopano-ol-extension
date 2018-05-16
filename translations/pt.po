@@ -1,566 +1,590 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-16 11:10+0000\n"
+"PO-Revision-Date: 2018-05-16 11:10+0000\n"
+"Last-Translator: Nuno Jerónimo <nuno.jeronimo@valsousa.pt>\n"
+"Language-Team: Portuguese <http://translate.kopano.io/projects/kopano/kopano-"
+"ol-extension/pt/>\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.4\n"
+
 #: AcaciaZPushPlugin\Controls\KDialogButtons\buttonApply.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonApply.Text"
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #: AcaciaZPushPlugin\Controls\KDialogButtons\buttonCancel.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonCancel.Text"
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: AcaciaZPushPlugin\Controls\KDialogButtons\buttonClose.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Controls\\KDialogButtons\\buttonClose.Text"
 msgid "Close"
-msgstr ""
+msgstr "Fechar"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelTitle.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelTitle.Text"
 msgid "Kopano OL Extension"
-msgstr ""
+msgstr "Extensão OL Kopano"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelVersionCaption.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelVersionCaption.Text"
 msgid "Version"
-msgstr ""
+msgstr "Versão"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelRevisionCaption.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelRevisionCaption.Text"
 msgid "Revision"
-msgstr ""
+msgstr "Revisão"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\textLicense.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\textLicense.Text"
 msgid "!!! This string is not used"
-msgstr ""
+msgstr "!!! Esta string não é usada"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\labelDateCaption.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\labelDateCaption.Text"
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\linkKopano.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\linkKopano.Text"
 msgid "https://kopano.com/"
-msgstr ""
+msgstr "https://kopano.com/"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\AboutDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\AboutDialog\\$this.Text"
 msgid "About Kopano OL Extenion"
-msgstr ""
+msgstr "Acerca da Extensão OL Kopano"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnMethod.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnMethod.Text"
 msgid "Method"
-msgstr ""
+msgstr "Método"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnFile.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnFile.Text"
 msgid "File"
-msgstr ""
+msgstr "Ficheiro"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnLine.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnLine.Text"
 msgid "Line"
-msgstr ""
+msgstr "Linha"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnEvent.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnEvent.Text"
 msgid "Event"
-msgstr ""
+msgstr "Evento"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnCount.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnCount.Text"
 msgid "Count"
-msgstr ""
+msgstr "Contagem"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnId.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnId.Text"
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnEvents.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnEvents.Text"
 msgid "Events"
-msgstr ""
+msgstr "Eventos"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnSubject.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnSubject.Text"
 msgid "Subject"
-msgstr ""
+msgstr "Assunto"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonGC.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonGC.Text"
 msgid "Run GC"
-msgstr ""
+msgstr "Executar GC"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonRefresh.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonRefresh.Text"
 msgid "Refresh"
-msgstr ""
+msgstr "Atualizar"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonClose.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonClose.Text"
 msgid "Close"
-msgstr ""
+msgstr "Fechar"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonLog.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonLog.Text"
 msgid "Log"
-msgstr ""
+msgstr "Log"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabProperties.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabProperties.Text"
 msgid "General"
-msgstr ""
+msgstr "Geral"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader5.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader5.Text"
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader6.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader6.Text"
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader7.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader7.Text"
 msgid "Subject"
-msgstr ""
+msgstr "Assunto"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabWrappers.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabWrappers.Text"
 msgid "Wrappers"
-msgstr ""
+msgstr "Wrappers"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader1.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader1.Text"
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader2.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader2.Text"
 msgid "Count"
-msgstr ""
+msgstr "Contagem"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabWrapperTypes.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabWrapperTypes.Text"
 msgid "Wrapper types"
-msgstr ""
+msgstr "Tipo de wrapper"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader3.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader3.Text"
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnHeader4.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnHeader4.Text"
 msgid "Count"
-msgstr ""
+msgstr "Contagem"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabWrapperLocations.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabWrapperLocations.Text"
 msgid "Wrapper locations"
-msgstr ""
+msgstr "Localizações do Wrapper"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnProperties.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnProperties.Text"
 msgid "Properties"
-msgstr ""
+msgstr "Propriedades"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\columnItemId.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\columnItemId.Text"
 msgid "ItemId"
-msgstr ""
+msgstr "IdItem"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonCleanGC.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonCleanGC.Text"
 msgid "Remove GC"
-msgstr ""
+msgstr "Remover GC"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\buttonCopyFilter.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\buttonCopyFilter.Text"
 msgid "Copy filter"
-msgstr ""
+msgstr "Copiar filtro"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabItemEvents.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabItemEvents.Text"
 msgid "Item events"
-msgstr ""
+msgstr "Eventos do item"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\$this.Text"
 msgid "Debug"
-msgstr ""
+msgstr "Depurar"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugSupportSettings\labelLogLevel.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugSupportSettings\\labelLogLevel.Text"
 msgid "Log level:"
-msgstr ""
+msgstr "Nível do log:"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugSupportSettings\buttonShowLog.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugSupportSettings\\buttonShowLog.Text"
 msgid "Open log file location"
-msgstr ""
+msgstr "Abrir localização do ficheiro de log"
 
 #: AcaciaZPushPlugin\Features\FreeBusy\FreeBusySettings\checkGABLookup.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\FreeBusy\\FreeBusySettings\\checkGABLookup.Text"
 msgid "Look up contacts in Global Address Book"
-msgstr ""
+msgstr "Procurar contatos no Livro de Endereços Global"
 
 #: AcaciaZPushPlugin\Features\FreeBusy\FreeBusySettings\labelUseAccount.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\FreeBusy\\FreeBusySettings\\labelUseAccount.Text"
 msgid "Use account: "
-msgstr ""
+msgstr "Usar conta: "
 
 #: AcaciaZPushPlugin\Features\GAB\GABSettings\checkFaxNumbers.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\GAB\\GABSettings\\checkFaxNumbers.Text"
 msgid "Synchronise fax numbers"
-msgstr ""
+msgstr "Sincronizar números de fax"
 
 #: AcaciaZPushPlugin\Features\GAB\GABSettings\checkSMTPGroupsAsContacts.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\GAB\\GABSettings\\checkSMTPGroupsAsContacts.Text"
 msgid "Synchronise groups with addresses as contacts"
-msgstr ""
+msgstr "Sincronizar grupos com endereços como contatos"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\chkEnable.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\chkEnable.Text"
 msgid "Enable out-of-office auto-responding"
-msgstr ""
+msgstr "Ativar a resposta automática fora do escritório"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\radioNoTime.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\radioNoTime.Text"
 msgid "until further notice"
-msgstr ""
+msgstr "até próxima notificação"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\radioTime.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\radioTime.Text"
 msgid "from"
-msgstr ""
+msgstr "de"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\timeFrom.CustomFormat
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\timeFrom.CustomFormat"
 msgid "HH:mm"
-msgstr ""
+msgstr "HH:mm"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\labelTill.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\labelTill.Text"
 msgid "until"
-msgstr ""
+msgstr "até"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\timeTill.CustomFormat
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\timeTill.CustomFormat"
 msgid "HH:mm"
-msgstr ""
+msgstr "HH:mm"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\labelBody.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\labelBody.Text"
 msgid "AutoReply only once to each sender with the following text:"
 msgstr ""
+"Responder automaticamente para cada remetente  apenas uma vez com o seguinte "
+"texto:"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\OutOfOffice\\OutOfOfficeDialog\\$this.Text"
 msgid "Out of Office Assistant for {0}"
-msgstr ""
+msgstr "Assistente Fora do Escritório {0}"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\labelSelectUser.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\labelSelectUser.Text"
 msgid "Open folders for user"
-msgstr ""
+msgstr "Abrir pastas para o utilizador"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\gabLookup.NotFoundText
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\gabLookup.NotFoundText"
 msgid "The user was not found"
-msgstr ""
+msgstr "O utilizador não foi encontrado"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\gabLookup.Placeholder
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\gabLookup.Placeholder"
 msgid "Start typing name"
-msgstr ""
+msgstr "Começe a escrever o nome"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\buttonOpenUser.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\buttonOpenUser.Text"
 msgid "Open"
-msgstr ""
+msgstr "Abrir"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelWholeStore.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelWholeStore.Text"
 msgid "Open whole store"
-msgstr ""
+msgstr "Abrir toda a caixa"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelName.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelName.Text"
 msgid "Share as"
-msgstr ""
+msgstr "Partilhar como"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelSendAs.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelSendAs.Text"
 msgid "Send as owner"
-msgstr ""
+msgstr "Enviar como proprietário"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelSendAsAddress.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelSendAsAddress.Text"
 msgid "Send-as address"
-msgstr ""
+msgstr "Endereço enviar-como"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelReminders.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelReminders.Text"
 msgid "Show reminders"
-msgstr ""
+msgstr "Mostar lembretes"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelPermissions.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelPermissions.Text"
 msgid "Permissions"
-msgstr ""
+msgstr "Permissões"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelRestartRequired.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelRestartRequired.Text"
 msgid "(Requires restart)"
-msgstr ""
+msgstr "(Requer reiniciar)"
 
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\$this.Text"
 msgid "Shared Folders - {0}"
-msgstr ""
+msgstr "Pastas partilhadas - {0}"
 
 #: AcaciaZPushPlugin\Features\Signatures\SignaturesSettings\checkForceSet.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\Signatures\\SignaturesSettings\\checkForceSet.Text"
 msgid "Override local signatures"
-msgstr ""
+msgstr "Substitui assinaturas locais"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelRemaining.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelRemaining.Text"
 msgid "Remaining"
-msgstr ""
+msgstr "Faltam"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelAccount.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelAccount.Text"
 msgid "Account"
-msgstr ""
+msgstr "Conta"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboAccounts.Items
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboAccounts.Items"
 msgid "All Z-Push accounts"
-msgstr ""
+msgstr "Todas as contas Z-Push"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelProgress.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelProgress.Text"
 msgid "Progress"
-msgstr ""
+msgstr "Progresso"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelTimeFrame.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelTimeFrame.Text"
 msgid "Synchronise"
-msgstr ""
+msgstr "Sincronizar"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items"
 msgid "all"
-msgstr ""
+msgstr "todos"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items1
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items1"
 msgid "1 day"
-msgstr ""
+msgstr "1 dia"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items2
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items2"
 msgid "3 days"
-msgstr ""
+msgstr "3 dias"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items3
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items3"
 msgid "1 week"
-msgstr ""
+msgstr "1 semana"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items4
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items4"
 msgid "2 weeks"
-msgstr ""
+msgstr "duas semanas"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items5
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items5"
 msgid "1 month"
-msgstr ""
+msgstr "1 mês"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items6
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items6"
 msgid "3 months"
-msgstr ""
+msgstr "3 meses"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items7
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items7"
 msgid "6 months"
-msgstr ""
+msgstr "6 meses"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonApplyTimeFrame.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonApplyTimeFrame.Text"
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonResetTimeFrame.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonResetTimeFrame.Text"
 msgid "Reset"
-msgstr ""
+msgstr "Reset"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\_labelResync.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\_labelResync.Text"
 msgid "Resynchronise"
-msgstr ""
+msgstr "Ressincronizar"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonGAB.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonGAB.Hint"
 msgid "Resynchronise the global address book"
-msgstr ""
+msgstr "Ressincronizar o livro de endereços global"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonGAB.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonGAB.Text"
 msgid "Global Address Book"
-msgstr ""
+msgstr "Livro de Endereços Global"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonSignatures.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonSignatures.Hint"
 msgid "Resynchronise all signatures from the server"
-msgstr ""
+msgstr "Ressincronizar todas as assinaturas do servidor"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonSignatures.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonSignatures.Text"
 msgid "Signatures"
-msgstr ""
+msgstr "Assinaturas"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonServerData.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonServerData.Hint"
 msgid "Resynchronise all server data on shared folders and out-of-office"
 msgstr ""
+"Ressincronizar todos os dados nas pastas partilhadas e fora do escritório"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonServerData.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonServerData.Text"
 msgid "Server Data"
-msgstr ""
+msgstr "Dados do servidor"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonFullResync.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonFullResync.Hint"
 msgid "Fully resynchronise the Z-Push store. This requires a restart and may take some time."
 msgstr ""
+"Ressincronizar na totalidade a caixa Z-Push. Isto requer reiniciar e pode "
+"demorar algum tempo."
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonFullResync.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonFullResync.Text"
 msgid "Full Resynchronisation"
-msgstr ""
+msgstr "Ressincronização total"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\$this.Text"
 msgid "Synchronisation State"
-msgstr ""
+msgstr "Estado da sincronização"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFGet_Failed
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFGet_Failed"
 msgid "Unable to retrieve Out of Office settings. You can still enable or disable Out of Office, but applying the settings might fail."
 msgstr ""
+"Não foi possível obter as definições de Fora do Escritório. Mesmo assim pode "
+"ativar ou desativar o Fora do Escritório, mas poderá falhar ao aplicar as "
+"definições."
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFGet_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFGet_Label"
 msgid "Retrieving current Out of Office settings"
-msgstr ""
+msgstr "A obter as definições atuais de Fora do Escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFGet_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFGet_Title"
 msgid "Out of Office Assistant"
-msgstr ""
+msgstr "Assistente Fora do Escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_DifferentState
 #, csharp-format
@@ -569,416 +593,444 @@ msgid ""
 "Out of office has been enabled, but the server could not handle your full request.\n"
 "\n"
 msgstr ""
+"Fora do Escritório foi ativado, mas o servidor não conseguiu processar o "
+"pedido na totalidade.\n"
+"\n"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_Disabled
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_Disabled"
 msgid "Out of Office has been disabled."
-msgstr ""
+msgstr "Fora do Escritório foi desativado."
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_DisableFailed
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_DisableFailed"
 msgid "Unable to disable Out of Office."
-msgstr ""
+msgstr "Não foi possível desativar o Fora do Escritório."
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_Enabled
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_Enabled"
 msgid "Out of Office has been enabled until further notice."
-msgstr ""
+msgstr "Fora do Escritório foi ativado até nova notificação."
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_EnabledTimeBased
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_EnabledTimeBased"
 msgid "Out of Office has been enabled from {0} till {1}."
-msgstr ""
+msgstr "Fora do Escritório foi ativado de {0} até {1}."
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_EnableFailed
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_EnableFailed"
 msgid "Unable to enable Out of Office."
-msgstr ""
+msgstr "Não foi possível ativar Fora do Escritório."
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_Failed
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_Failed"
 msgid "Unable to apply Out of Office settings"
-msgstr ""
+msgstr "Não foi possível aplicar as definições de Fora do Escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_Label"
 msgid "Applying Out of Office settings"
-msgstr ""
+msgstr "A aplicar as definições de Fora do Escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFSet_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFSet_Title"
 msgid "Out of Office Assistant"
-msgstr ""
+msgstr "Assistente Fora do Escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_Debug_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_Debug_Label"
 msgid "Debug"
-msgstr ""
+msgstr "Depurar"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_Debug_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_Debug_Screentip"
 msgid "Debug dialog"
-msgstr ""
+msgstr "Caixa de diálogo de depuração"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_Debug_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_Debug_Supertip"
 msgid "Opens the debug dialog, which shows information on the Kopano Outlook Extension."
 msgstr ""
+"Abre caixa de diálogo de depuração, que mostra informações sobre a extensão "
+"Kopano Outlook."
 
 #. The group label for the ribbon
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_GroupMain_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_GroupMain_Label"
 msgid "Kopano"
-msgstr ""
+msgstr "Kopano"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_OOF_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_OOF_Label"
 msgid "Out-of-Office"
-msgstr ""
+msgstr "Fora do Escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_OOF_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_OOF_Screentip"
 msgid "Change Out-of-Office settings"
-msgstr ""
+msgstr "Alterar definições Fora do Escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_OOF_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_OOF_Supertip"
 msgid "Opens a dialog which allows Out-of-Office settings to be viewed or modified."
 msgstr ""
+"Abre uma caixa de diálogo que permite ver ou modificar as definições de Fora "
+"do Escritório."
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_Settings_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_Settings_Label"
 msgid "Settings"
-msgstr ""
+msgstr "Definições"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_Settings_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_Settings_Screentip"
 msgid "Settings dialog"
-msgstr ""
+msgstr "Caixa de diálogo das definições"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_Settings_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_Settings_Supertip"
 msgid "Opens the settings dialog, which allows configuration of the plugin and access to support functions."
 msgstr ""
+"Abre a caixa de diálogo das definições que permite configurar o plugin e "
+"aceder a funções de suporte."
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFStartup_Message
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFStartup_Message"
 msgid "Out of Office is currently enabled on account '{0}'. Would you like to change the settings?"
 msgstr ""
+"Fora do Escritório está atualmente ativado para a conta '{0}'. Deseja "
+"alterar as definições?"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOFStartup_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOFStartup_Title"
 msgid "Out of Office Assistant"
-msgstr ""
+msgstr "Assistente Fora do Escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\GABEvent_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABEvent_Body"
 msgid "Modifications to the Global Address Book are not allowed. Please contact your administrator if you think changes are required."
 msgstr ""
+"Modificações ao Livro de Endereços Global não são permitidas. Por favor "
+"contate o seu administrador se achar que são necessárias alterações."
 
 #: AcaciaZPushPlugin\Properties\Resources\GABEvent_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABEvent_Title"
 msgid "Global Address Book"
-msgstr ""
+msgstr "Livro de Endereços Global"
 
 #: AcaciaZPushPlugin\Properties\Resources\GAB_FolderFormat
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GAB_FolderFormat"
 msgid "Address Book for {0}"
-msgstr ""
+msgstr "Livro de Endereços para {0}"
 
 #: AcaciaZPushPlugin\Properties\Resources\LocalStore_DisplayName
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\LocalStore_DisplayName"
 msgid "Kopano Folders"
-msgstr ""
+msgstr "Pastas Kopano"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_DebugSupport
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_DebugSupport"
 msgid "Support"
-msgstr ""
+msgstr "Suporte"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_FreeBusy
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_FreeBusy"
 msgid "Free/Busy"
-msgstr ""
+msgstr "Livre/Ocupado"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_GAB
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_GAB"
 msgid "Global Address Book"
-msgstr ""
+msgstr "Livro de Endereços Global"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_Notes
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_Notes"
 msgid "Notes"
-msgstr ""
+msgstr "Notas"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_OutOfOffice
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_OutOfOffice"
 msgid "Out of office"
-msgstr ""
+msgstr "Fora do Escritório"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_ReplyFlags
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_ReplyFlags"
 msgid "Reply flags"
-msgstr ""
+msgstr "Bandeiras de resposta"
 
 #: AcaciaZPushPlugin\Properties\Resources\ThisAddIn_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\ThisAddIn_Title"
 msgid "Kopano"
-msgstr ""
+msgstr "Kopano"
 
 #: AcaciaZPushPlugin\Properties\Resources\SSLFailed_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SSLFailed_Body"
 msgid "There is an error with the security certificate for server {0}. Do you want to allow the connection anyway?"
 msgstr ""
+"Existe um erro com o certificado de segurança para o servidor {0}. Deseja "
+"permitir a ligação na mesma?"
 
 #: AcaciaZPushPlugin\Properties\Resources\SSLFailed_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SSLFailed_Title"
 msgid "Certificate error"
-msgstr ""
+msgstr "Erro de certificado"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_Title"
 msgid "Kopano"
-msgstr ""
+msgstr "Kopano"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Adding_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Adding_Label"
 msgid "Opening shared folder"
-msgstr ""
+msgstr "A abrir pasta partilhada"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Adding_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Adding_Title"
 msgid "Shared folders"
-msgstr ""
+msgstr "Pastas partilhadas"
 
 #. {0} will be replaced with the folder name
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Closing_Confirm
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Closing_Confirm"
 msgid "Close shared folder {0}?"
-msgstr ""
+msgstr "Fechar a pasta partilhada {0}?"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Closing_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Closing_Label"
 msgid "Closing shared folder"
-msgstr ""
+msgstr "A fechar pasta partilhada"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Closing_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Closing_Title"
 msgid "Shared folders"
-msgstr ""
+msgstr "Pastas partilhadas"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Adding_Failure
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Adding_Failure"
 msgid "Unable to open the shared folder. Please ensure you have permission to open the shared folder."
 msgstr ""
+"Não foi possível abrir a pasta partilhada. Por favor certifique-se que tem "
+"permissões para abrir a pasta partilhada."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Closing_Failure
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Closing_Failure"
 msgid "Unable to close the shared folder."
-msgstr ""
+msgstr "Não foi possível fechar a pasta partilhada."
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_WebApp_Label"
 msgid "Open WebApp"
-msgstr ""
+msgstr "Abrir WebApp"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_WebApp_Screentip"
 msgid "Open WebApp"
-msgstr ""
+msgstr "Abrir WebApp"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_WebApp_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_WebApp_Supertip"
 msgid "Open WebApp in the system default browser"
-msgstr ""
+msgstr "Abrir a WebApp no navegador por defeito do sistema"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Label"
 msgid "Shared folders"
-msgstr ""
+msgstr "Pastas partilhadas"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Screentip"
 msgid "Manage shared folders"
-msgstr ""
+msgstr "Gerir pastas partilhadas"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Supertip"
 msgid "Open the \"Shared Folders\" dialog, which can be used to add or remove shared folders."
 msgstr ""
+"Abrir a caixa de diálogo 'Pastas Partilhadas', que pode ser usada para "
+"adicionar ou remover pastas partilhadas."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PublicFolders
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PublicFolders"
 msgid "Public folders"
-msgstr ""
+msgstr "Pastas Publicas"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Loading
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Loading"
 msgid "Retrieving shared folders"
-msgstr ""
+msgstr "A obter pastas partilhadas"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Loading_Error
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Loading_Error"
 msgid "There was an error retrieving shared folders"
-msgstr ""
+msgstr "Ocorreu um erro a obter as pastas partilhadas"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_None
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_None"
 msgid "No shared folders are available or you do not have permissions to view the root of the inbox."
 msgstr ""
+"Não existem pastas partilhadas disponíveis ou não tem permissões para ver a "
+"raiz da caixa de entrada."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Failure
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Fetching_Failure"
 msgid "Unable to retrieve shared folders. Please try again later."
 msgstr ""
+"Não foi possível obter as pastas partilhadas. Por favor tente mais tarde."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Fetching_Label"
 msgid "Retrieving shared folders"
-msgstr ""
+msgstr "A obter pastas partilhadas"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Fetching_Title"
 msgid "Shared folders"
-msgstr ""
+msgstr "Pastas partilhadas"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Unsaved_Changes
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Unsaved_Changes"
 msgid "There are unsaved changes. Do you really want to to discard these?"
-msgstr ""
+msgstr "Existem alterações por guardar. Tem a certeza que as quer descartar?"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Context_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Context_Label"
 msgid "Manage shared folder"
-msgstr ""
+msgstr "Gerir pasta partilhada"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Context_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Context_Screentip"
 msgid "Manage this folder in the Shared Folders dialog"
-msgstr ""
+msgstr "Gerir esta pasta na caixa de diálogo das Pastas Partilhadas"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SharedFolders_Context_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SharedFolders_Context_Supertip"
 msgid "Open the \"Shared Folders\" dialog for the currently selected folder."
 msgstr ""
+"Abrir a caixa de diálogo 'Pastas Partilhadas' para a pasta atualmente "
+"selecionada."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Label"
 msgid "Applying changes to shared folders"
-msgstr ""
+msgstr "A aplicar alterações às pastas partilhadas"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Failure
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Failure"
 msgid "Unable to apply the changes to the shared folders. Please try again later."
 msgstr ""
+"Não foi possível aplicar as alterações à pasta partilhada. Por favor tente "
+"mais tarde."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Title"
 msgid "Shared folders"
-msgstr ""
+msgstr "Pastas partilhadas"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_None
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_None"
 msgid "None"
-msgstr ""
+msgstr "Nenhum"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_Read
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_Read"
 msgid "Read"
-msgstr ""
+msgstr "Ler"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Permission_Write
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Permission_Write"
 msgid "Write"
-msgstr ""
+msgstr "Escrever"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Applying_Success
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_Applying_Success"
 msgid "The changes to the shared folders have been applied successfully."
-msgstr ""
+msgstr "As alterações à pasta partilhada foram aplicadas com sucesso."
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Label"
 msgid "About"
-msgstr ""
+msgstr "Acerca"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Screentip"
 msgid "About dialog"
-msgstr ""
+msgstr "Caixa de diálogo de Acerca"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_About_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_About_Supertip"
 msgid "Shows the about dialog, which contains licensing and version information."
 msgstr ""
+"Mostra a caixa de diálogo do Acerca que contém informação sobre a versão e "
+"licenciamento."
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Body
@@ -986,122 +1038,133 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Body"
 msgid "The contacts folder '{0}' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click 'Yes' to restart Outlook now, or 'No' if you plan to restart Outlook later."
 msgstr ""
+"A pasta de contatos {0} foi descoberta. Está a ser sincronizada mas não irá "
+"aparecer na pasta de contatos até o Outlook ser reiniciado. Selecione 'Sim' "
+"para reiniciar o Outlook agora, ou 'Não' se planeia reiniciar o Outlook mais "
+"tarde."
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Title"
 msgid "Contacts folder"
-msgstr ""
+msgstr "Pasta de contatos"
 
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Body"
 msgid "The password for account '{0}' is not available. Advanced Z-Push features will not work."
 msgstr ""
+"A palavra passe para a conta '{0}' não está disponível. Funcionalidades "
+"avançadas do Z-push não irão funcionar."
 
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Title"
 msgid "Password unavailable"
-msgstr ""
+msgstr "Palavra passe não disponível"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_Signatures
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_Signatures"
 msgid "Signatures"
-msgstr ""
+msgstr "Assinaturas"
 
 #: AcaciaZPushPlugin\Properties\Resources\SignaturesSync_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SignaturesSync_Label"
 msgid "The signatures are being synchronised."
-msgstr ""
+msgstr "As assinaturas estão a ser sincronizadas."
 
 #: AcaciaZPushPlugin\Properties\Resources\SignaturesSync_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SignaturesSync_Title"
 msgid "Signatures"
-msgstr ""
+msgstr "Assinaturas"
 
 #: AcaciaZPushPlugin\Properties\Resources\OOF_Unsaved_Changes
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\OOF_Unsaved_Changes"
 msgid "There are unsaved changes. Do you really want to to discard these?"
-msgstr ""
+msgstr "Existem alterações por guardar. Tem a certeza que as quer descartar?"
 
 #. {0} will be replaced with progress in percent
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Label"
 msgid "Syncing: {0}%"
-msgstr ""
+msgstr "A sincronizar: {0}%"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Label_Done
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Label_Done"
 msgid "Up-to-date"
-msgstr ""
+msgstr "Atualizado"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Screentip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Screentip"
 msgid "Synchronisation state"
-msgstr ""
+msgstr "Estado da sincronização"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Supertip
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Supertip"
 msgid "Open the \"Synchronisation\" dialog, in which the synchronisation state can be viewed and managed."
 msgstr ""
+"Abrir a caixa de diálogo 'Sincronização' onde visualizar e gerir o estado da "
+"sincronização."
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_FullResync_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_FullResync_Body"
 msgid "To fully resynchronise, Outlook must be restarted and all local data will be removed. Fetching all the data from the server again may take some time. Are you sure you want to resynchronise all data?"
 msgstr ""
+"Para ressincronizar totalmente, o Outlook tem que reiniciar e todos os dados "
+"locais serão removidos. Obter novamente todos os dados do servidor poderá "
+"demorar algum tempo. Tem a certeza que quer ressincronizar todos os dados?"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_FullResync_Caption
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_FullResync_Caption"
 msgid "Full Resynchronisation"
-msgstr ""
+msgstr "Ressincronização total"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Resync_Body_GAB
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Resync_Body_GAB"
 msgid "The Global Address Book has been scheduled for resynchronisation."
-msgstr ""
+msgstr "A ressincronização do Livro de Endereços Global foi agendada."
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Resync_Caption
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Resync_Caption"
 msgid "Resynchronisation"
-msgstr ""
+msgstr "Ressincronização"
 
 #: AcaciaZPushPlugin\Properties\Resources\ServerSync_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\ServerSync_Label"
 msgid "The server data is being synchronised."
-msgstr ""
+msgstr "Os dados do servidor estão a ser sincronizados."
 
 #: AcaciaZPushPlugin\Properties\Resources\ServerSync_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\ServerSync_Title"
 msgid "Server data"
-msgstr ""
+msgstr "Dados do servidor"
 
 #: AcaciaZPushPlugin\Properties\Resources\GABSync_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABSync_Label"
 msgid "The global address book is being synchronised."
-msgstr ""
+msgstr "O Livro de Endereços Global está a ser sincronizado."
 
 #: AcaciaZPushPlugin\Properties\Resources\GABSync_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABSync_Title"
 msgid "Global Address Book"
-msgstr ""
+msgstr "Livro de Endereços Global"
 
 #. {0} will be replaced with the account name
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Stalled_Body
@@ -1109,37 +1172,43 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Stalled_Body"
 msgid "It appears synchronisation has stalled for account {0}. This can be fixed by performing a full resynchronisation. Would you like to perform this resynchronisation now?"
 msgstr ""
+"Aparentemente a sincronização para a conta {0} está parada. Isto poderá ser "
+"corrigido se for realizada um ressincronização total. Deseja fazer uma "
+"ressincronização total agora?"
 
 #. {0} will be replaced with the account name
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Stalled_Caption
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Stalled_Caption"
 msgid "Synchronisation stalled - {0}"
-msgstr ""
+msgstr "Sincronização parou - {0}"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Body"
 msgid "Changing other people's private events is not allowed."
-msgstr ""
+msgstr "Alterar eventos privados de outras pessoas não é permitido."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_PrivateEvent_Title"
 msgid "Private event"
-msgstr ""
+msgstr "Evento privado"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_LocalFolder_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_LocalFolder_Body"
 msgid "Modifying shared folders locally is not supported. Please use the 'Shared Folders' dialog to rename shared folders or add additional shared folders."
 msgstr ""
+"Modificar pastas partilhadas localmente não é suportado. Por favor use a "
+"caixa de diálogo 'Pastas Partilhadas' para alterar o nome das pastas "
+"partilhadas ou adicionar novas pastas partilhadas."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_LocalFolder_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_LocalFolder_Title"
 msgid "Shared folders"
-msgstr ""
+msgstr "Pastas partilhadas"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Node_Readonly_ToolTip
 #, csharp-format
@@ -1148,88 +1217,95 @@ msgid ""
 "The folder has been configured by your system administrator and cannot be modified. \n"
 "Please contact your system administrator for any required changes."
 msgstr ""
+"A pasta foi configurada pelo administrador do sistema e não pode ser "
+"modificada. \n"
+"Por favor contate o seu administrador para qualquer alteração pretendida."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_WholeStoreRestart_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Body"
 msgid "Outlook will be restarted to open the new stores"
-msgstr ""
+msgstr "O Outlook vai reiniciar para abrir a novas caixas"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_WholeStoreRestart_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Title"
 msgid "Open stores"
-msgstr ""
+msgstr "Abrir caixas"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsFailed_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Label"
 msgid "Unable to determine the send-as email address for the folder. Send-as will only work if you specify the email address manually."
 msgstr ""
+"Não foi possível determinar o endereço enviar-como para a pasta. Enviar-como "
+"só irá funcionar se especificar o endereço manualmente."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsFailed_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Title"
 msgid "Shared Folders"
-msgstr ""
+msgstr "Pastas partilhadas"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsUpdateFailed_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsUpdateFailed_Label"
 msgid "Unable to determine the send-as email address for the existing shared folder {0}. Send-as will only work if you specify the email address manually. Would you like to open the Shared Folders dialog?"
 msgstr ""
+"Não foi possível determinar o endereço enviar-como para pasta partilhada {0}"
+". Enviar-como só irá funcionar especificar um endereço manualmente. Deseja "
+"abrir a caixa de diálogo 'Pastas Partilhadas'?"
 
 #: AcaciaZPushPlugin\Properties\Resources\LocalStore_Move_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\LocalStore_Move_Body"
 msgid "Storing items in Kopano Folders is not supported."
-msgstr ""
+msgstr "Guardar itens em pastas Kopano não é suportado."
 
 #: AcaciaZPushPlugin\Properties\Resources\LocalStore_Move_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\LocalStore_Move_Title"
 msgid "Kopano Folders"
-msgstr ""
+msgstr "Pastas Kopano"
 
 #: AcaciaZPushPlugin\UI\ProgressDialog\labelMessage.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\ProgressDialog\\labelMessage.Text"
 msgid "labelMessage: SET FROM CODE, NO NEED TO TRANSLATE"
-msgstr ""
+msgstr "labelMessage: SET FROM CODE, NO NEED TO TRANSLATE"
 
 #: AcaciaZPushPlugin\UI\ProgressDialog\buttonCancel.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\ProgressDialog\\buttonCancel.Text"
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: AcaciaZPushPlugin\UI\ProgressDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\ProgressDialog\\$this.Text"
 msgid "ProgressDialog: SET FROM CODE, NO NEED TO TRANSLATE"
-msgstr ""
+msgstr "ProgressDialog: SET FROM CODE, NO NEED TO TRANSLATE"
 
 #: AcaciaZPushPlugin\UI\SettingsDialog\buttonApply.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\SettingsDialog\\buttonApply.Text"
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #: AcaciaZPushPlugin\UI\SettingsDialog\buttonCancel.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\SettingsDialog\\buttonCancel.Text"
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: AcaciaZPushPlugin\UI\SettingsDialog\buttonOK.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\SettingsDialog\\buttonOK.Text"
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: AcaciaZPushPlugin\UI\SettingsDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\UI\\SettingsDialog\\$this.Text"
 msgid "Kopano Settings"
-msgstr ""
-
+msgstr "Definições Kopano"
