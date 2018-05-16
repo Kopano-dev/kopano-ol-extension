@@ -1521,3 +1521,15 @@ msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\LocalStore_Move_Title"
 msgid "Kopano Folders"
 msgstr "Kopano Ordner"
 
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_TooManyFolders_Body
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_TooManyFolders_Body"
+msgid "You are trying to open many additional folders. Having many shared folders open can impact the stability of Outlook. When working with many shared folders its recommended to take a look at Kopano WebApp/DeskApp instead."
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SharedFolders_TooManyFolders_Title
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_TooManyFolders_Title"
+msgid "Shared Folders"
+msgstr ""
+
