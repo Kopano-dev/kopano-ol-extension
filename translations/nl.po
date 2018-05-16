@@ -4,8 +4,7 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2018-05-08 14:30+0000\n"
 "Last-Translator: Bob <b.huisman@kopano.com>\n"
-"Language-Team: Dutch <http://translate.kopano.io/projects/kopano/kopano-ol-"
-"extension/nl/>\n"
+"Language-Team: Dutch <http://translate.kopano.io/projects/kopano/kopano-ol-extension/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -1371,7 +1370,7 @@ msgstr "Kopieer filter"
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_LocalFolder_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_LocalFolder_Body"
-msgid "Modifying shared folders locally is not supported. Please use the 'Shared Folders' dialog to modify these folders."
+msgid "Modifying shared folders locally is not supported. Please use the 'Shared Folders' dialog to rename shared folders or add additional shared folders."
 msgstr "Het lokaal aanpassen van gedeelde mappen word niet ondersteund. Gebruik het venster 'Gedeelde Mappen' om deze mappen aan te passen."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_LocalFolder_Title
@@ -1496,10 +1495,7 @@ msgstr "Verzenden-als adres"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Label"
 msgid "Unable to determine the send-as email address for the folder. Send-as will only work if you specify the email address manually."
-msgstr ""
-"Kan niet vaststellen welk email adres moet worden gebruikt om email te "
-"verzenden voor deze map. Verzenden-als zal alleen werken wanneer het email "
-"adres handmatig wordt gespecificeerd."
+msgstr "Kan niet vaststellen welk email adres moet worden gebruikt om email te verzenden voor deze map. Verzenden-als zal alleen werken wanneer het email adres handmatig wordt gespecificeerd."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsFailed_Title
 #, csharp-format
@@ -1511,10 +1507,7 @@ msgstr "Gedeelde mappen"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsUpdateFailed_Label"
 msgid "Unable to determine the send-as email address for the existing shared folder {0}. Send-as will only work if you specify the email address manually. Would you like to open the Shared Folders dialog?"
-msgstr ""
-"Kan het verzenden-als email adres van de bestaande gedeelde map {0} niet "
-"vaststellen. Verzenden-als werkt alleen wanneer het email adres handmatig "
-"wordt gespecificeerd. Wilt u het dialoog Gedeelde Mappen openen?"
+msgstr "Kan het verzenden-als email adres van de bestaande gedeelde map {0} niet vaststellen. Verzenden-als werkt alleen wanneer het email adres handmatig wordt gespecificeerd. Wilt u het dialoog Gedeelde Mappen openen?"
 
 #: AcaciaZPushPlugin\Properties\Resources\LocalStore_Move_Body
 #, csharp-format
@@ -1527,3 +1520,4 @@ msgstr "Opslaan van items in Kopano Mappen wordt niet ondersteund."
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\LocalStore_Move_Title"
 msgid "Kopano Folders"
 msgstr "Kopano Mappen"
+

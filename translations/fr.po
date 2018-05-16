@@ -1368,7 +1368,7 @@ msgstr ""
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_LocalFolder_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_LocalFolder_Body"
-msgid "Modifying shared folders locally is not supported. Please use the 'Shared Folders' dialog to modify these folders."
+msgid "Modifying shared folders locally is not supported. Please use the 'Shared Folders' dialog to rename shared folders or add additional shared folders."
 msgstr ""
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_LocalFolder_Title
