@@ -82,6 +82,11 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
+        virtual public string LogKey
+        {
+            get { return EntryID; }
+        }
+
         abstract public string EntryID
         {
             get;

@@ -36,6 +36,7 @@ namespace Acacia.Stubs
 
         #region Ids and hierarchy
 
+        string LogKey { get; }
         string EntryID { get; }
         IFolder Parent { get; }
         string ParentEntryID { get; }

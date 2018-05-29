@@ -133,6 +133,25 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
+        public override string LogKey
+        {
+            get
+            {
+                string s = EntryID;
+                try
+                {
+                    s += ":" + SyncId;
+                }
+                catch (Exception) { }
+                try
+                {
+                    s += ":" + Name;
+                }
+                catch (Exception) { }
+                return s;
+            }
+        }
+
         override public string EntryID { get { return _item.EntryID; } }
 
         override public IStore GetStore() { return Mapping.Wrap(_item.Store); }

@@ -48,7 +48,7 @@ namespace Acacia.ZPush
 
         private ZPushFolder(ZPushWatcher watcher, ZPushFolder parent, IFolder folder)
         {
-            Logger.Instance.Trace(this, "Watching folder: {1}: {0}", folder.EntryID, folder.Name);
+            Logger.Instance.Trace(this, "Watching folder: {0}", folder.LogKey);
             this._parent = parent;
             this._watcher = watcher;
             this._folder = folder;
@@ -68,7 +68,7 @@ namespace Acacia.ZPush
 
         public override string ToString()
         {
-            return Name;
+            return _folder.LogKey;
         }
 
         public IFolder Folder { get { return _folder; } }
@@ -152,17 +152,17 @@ namespace Acacia.ZPush
         {
             try
             {
-                Logger.Instance.Debug(this, "Folder added in {0}: {1}", Name, folder.Name);
+                Logger.Instance.Debug(this, "Folder added in {0}: {1}", _folder.LogKey, folder.LogKey);
                 WatchChild(folder, false);
             }
-            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderAdd: {0}: {1}", Name, e); }
+            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderAdd: {0}: {1}", _folder.LogKey, e); }
         }
 
         private void SubFolders_FolderRemove()
         {
             try
             {
-                Logger.Instance.Debug(this, "Folder removed from {0}", Name);
+                Logger.Instance.Debug(this, "Folder removed from {0}", _folder.LogKey);
 
                 // Helpfully, Outlook doesn't tell us which folder was removed. Could use the BeforeFolderMove event instead,
                 // but that doesn't fire if a folder was removed on the server.
@@ -193,20 +193,20 @@ namespace Acacia.ZPush
                 // Actually remove the folders
                 foreach (var entry in remove)
                 {
-                    Logger.Instance.Debug(this, "Removing subfolder {0}, {1}", Name, entry.Key);
+                    Logger.Instance.Debug(this, "Removing subfolder {0}, {1}", _folder.LogKey, entry.Key);
                     _watcher.OnFolderRemoved(entry.Value);
                     _children.Remove(entry.Key);
                     entry.Value.Cleanup();
                 }
             }
-            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderRemove: {0}: {1}", Name, e); }
+            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderRemove: {0}: {1}", _folder.LogKey, e); }
         }
 
         private void SubFolders_FolderChange(IFolder folder)
         {
             try
             {
-                Logger.Instance.Debug(this, "Folder changed in {0}: {1}", Name, folder.Name);
+                Logger.Instance.Debug(this, "Folder changed in {0}: {1}", _folder.LogKey, folder.LogKey);
                 ZPushFolder child;
                 if (_children.TryGetValue(folder.EntryID, out child))
                 {
@@ -217,24 +217,24 @@ namespace Acacia.ZPush
                     // On a clean profile, we sometimes get a change notification, but not an add notification
                     // Create it now
                     // This will send a discover notification if required, which is just as good as a change notification
-                    Logger.Instance.Debug(this, "Folder change on unreported folder in {0}: {1}, {2}, {3}", Name, folder.Name, folder.EntryID, folder.StoreDisplayName);
+                    Logger.Instance.Debug(this, "Folder change on unreported folder in {0}: {1}, {2}", _folder.LogKey, folder.LogKey, folder.StoreDisplayName);
                     WatchChild(folder, false);
                 }
             }
-            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderChange: {0}: {1}", Name, e); }
+            catch (System.Exception e) { Logger.Instance.Error(this, "Exception in SubFolders_FolderChange: {0}: {1}", _folder.LogKey, e); }
         }
 
         private void Items_ItemAdd(IItem item)
         {
             try
             {
-                Logger.Instance.Trace(this, "New item {0}: {1}", Name, item.EntryID);
+                Logger.Instance.Trace(this, "New item {0}: {1}", _folder.LogKey, item.EntryID);
                 foreach (ItemsWatcher watcher in _itemsWatchers)
                     watcher.OnItemAdd(this, item);
             }
             catch (System.Exception e)
             {
-                Logger.Instance.Trace(this, "ItemAdd exception: {0}: {1}", Name, e);
+                Logger.Instance.Trace(this, "ItemAdd exception: {0}: {1}", _folder.LogKey, e);
             }
         }
 
@@ -248,7 +248,7 @@ namespace Acacia.ZPush
             }
             catch (System.Exception e)
             {
-                Logger.Instance.Trace(this, "ItemChange exception: {0}: {1}", Name, e);
+                Logger.Instance.Trace(this, "ItemChange exception: {0}: {1}", _folder.LogKey, e);
             }
         }
 
@@ -278,7 +278,7 @@ namespace Acacia.ZPush
             {
                 if (_watcher.ShouldFolderBeWatched(this, child))
                 {
-                    Logger.Instance.Trace(this, "Registering child on {0}: {1}", this, child.FullFolderPath);
+                    Logger.Instance.Trace(this, "Registering child on {0}: {1}", _folder.LogKey, child.FullFolderPath);
 
                     // Make sure we register the entry id actually before registering any listeners.
                     // That will cause change notifications, which require the entryid to be registered.
@@ -290,7 +290,7 @@ namespace Acacia.ZPush
                 }
                 else
                 {
-                    Logger.Instance.Trace(this, "Excluding child on {0}: {1}", this, child.FullFolderPath);
+                    Logger.Instance.Trace(this, "Excluding child on {0}: {1}", _folder.LogKey, child.FullFolderPath);
                 }
             }
 
