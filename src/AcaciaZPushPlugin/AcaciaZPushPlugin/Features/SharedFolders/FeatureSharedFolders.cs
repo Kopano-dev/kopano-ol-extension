@@ -73,7 +73,7 @@ namespace Acacia.Features.SharedFolders
             get { return GetOption(OPTION_ALLOW_IMPERSONATE); }
             set { SetOption(OPTION_ALLOW_IMPERSONATE, value); }
         }
-        private static readonly BoolOption OPTION_ALLOW_IMPERSONATE = new BoolOption("AllowImpersonate", false);
+        private static readonly BoolOption OPTION_ALLOW_IMPERSONATE = new BoolOption("AllowImpersonate", true);
 
 
         [AcaciaOption("The maximum number of shared folders before an error is shown. Defaults to 50.")]
