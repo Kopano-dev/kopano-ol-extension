@@ -1284,3 +1284,67 @@ msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_TooManyFolders_
 msgid "Shared Folders"
 msgstr ""
 
+#: AcaciaZPushPlugin\Properties\Resources\SyncState_StoreSize_Body
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_StoreSize_Body"
+msgid ""
+"KOE has detected that the current store size exceeds to recommended value for synced data and will therefore reduce the time synced.\n"
+"\n"
+"Current store size:  {0}\n"
+"New sync window: {1}"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncState_StoreSize_Caption
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_StoreSize_Caption"
+msgid "Store size"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_ALL
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_ALL"
+msgid "All"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_DAY_1
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_DAY_1"
+msgid "1 day"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_DAY_3
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_DAY_3"
+msgid "3 days"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_MONTH_1
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_MONTH_1"
+msgid "1 month"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_MONTH_3
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_MONTH_3"
+msgid "3 months"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_MONTH_6
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_MONTH_6"
+msgid "6 months"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_WEEK_1
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_WEEK_1"
+msgid "1 week"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_WEEK_2
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_WEEK_2"
+msgid "2 weeks"
+msgstr ""
+
