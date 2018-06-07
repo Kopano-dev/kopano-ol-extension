@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-16 11:10+0000\n"
-"PO-Revision-Date: 2018-05-16 15:51+0000\n"
+"PO-Revision-Date: 2018-06-07 11:34+0000\n"
 "Last-Translator: Nuno Jerónimo <nuno.jeronimo@valsousa.pt>\n"
-"Language-Team: Portuguese <http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt/>\n"
+"Language-Team: Portuguese <http://translate.kopano.io/projects/kopano/kopano-"
+"ol-extension/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1273,58 +1274,63 @@ msgid ""
 "Current store size:  {0}\n"
 "New sync window: {1}"
 msgstr ""
+"O KOE detetou que o tamanho atual da caixa de correio excede o tamanho "
+"recomendado dos dados sincronizados e irá por isso reduzir o tempo a "
+"sincronizar.\n"
+"\n"
+"Tamanho atual da caixa de correio: {0}\n"
+"Novo intervalo de sincronização: {1}"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_StoreSize_Caption
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_StoreSize_Caption"
 msgid "Store size"
-msgstr ""
+msgstr "Tamanho da caixa de correio"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_ALL
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_ALL"
 msgid "All"
-msgstr ""
+msgstr "Tudo"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_DAY_1
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_DAY_1"
 msgid "1 day"
-msgstr ""
+msgstr "1 dia"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_DAY_3
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_DAY_3"
 msgid "3 days"
-msgstr ""
+msgstr "3 dias"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_MONTH_1
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_MONTH_1"
 msgid "1 month"
-msgstr ""
+msgstr "1 mês"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_MONTH_3
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_MONTH_3"
 msgid "3 months"
-msgstr ""
+msgstr "3 meses"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_MONTH_6
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_MONTH_6"
 msgid "6 months"
-msgstr ""
+msgstr "6 meses"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_WEEK_1
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_WEEK_1"
 msgid "1 week"
-msgstr ""
+msgstr "1 semana"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_WEEK_2
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_WEEK_2"
 msgid "2 weeks"
-msgstr ""
-
+msgstr "2 semanas"
