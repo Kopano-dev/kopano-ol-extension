@@ -420,34 +420,58 @@ namespace Acacia.Features.SyncState
             }
         }
 
+
+        private class UserStoreInfo
+        {
+            public string emailaddress;
+            public string fullname;
+            public long foldercount;
+            public long storesize;
+
+            public override string ToString()
+            {
+                return string.Format("emailaddress={0}\nfullname={1}\nfoldercount={2}\nstoresize={3}",
+                    emailaddress, fullname, foldercount, storesize);
+            }
+        }
+        private class GetUserStoreInfoRequest : SoapRequest<UserStoreInfo>
+        {
+        }
+
         private void CheckSyncState(ZPushAccount account)
         {
             // TODO: we probably want one invocation for all accounts
             using (ZPushConnection connection = account.Connect())
-            using (ZPushWebServiceDevice deviceService = connection.DeviceService)
             {
-                // Fetch
-                DeviceDetails details = deviceService.Execute(new GetDeviceDetailsRequest());
-                if (details != null)
+                // Check total size
+                CheckTotalSize(connection);
+
+                // Update sync state
+                using (ZPushWebServiceDevice deviceService = connection.DeviceService)
                 {
-                    bool wasSyncing = false;
-
-                    // Create or update session
-                    SyncSession session = account.GetFeatureData<SyncSession>(this, null);
-                    if (session == null)
-                        session = new SyncSession(this, account);
-                    else
-                        wasSyncing = session.IsSyncing;
-
-                    session.Add(details);
-
-                    // Store with the account
-                    account.SetFeatureData(this, null, session);
-
-                    if (wasSyncing != session.IsSyncing)
+                    // Fetch
+                    DeviceDetails details = deviceService.Execute(new GetDeviceDetailsRequest());
+                    if (details != null)
                     {
-                        // Sync state has changed, update the schedule
-                        Watcher.Sync.SetTaskSchedule(_task, account, session.IsSyncing ? CheckPeriodSync : (TimeSpan?)null);
+                        bool wasSyncing = false;
+
+                        // Create or update session
+                        SyncSession session = account.GetFeatureData<SyncSession>(this, null);
+                        if (session == null)
+                            session = new SyncSession(this, account);
+                        else
+                            wasSyncing = session.IsSyncing;
+
+                        session.Add(details);
+
+                        // Store with the account
+                        account.SetFeatureData(this, null, session);
+
+                        if (wasSyncing != session.IsSyncing)
+                        {
+                            // Sync state has changed, update the schedule
+                            Watcher.Sync.SetTaskSchedule(_task, account, session.IsSyncing ? CheckPeriodSync : (TimeSpan?)null);
+                        }
                     }
                 }
             }
@@ -739,7 +763,7 @@ namespace Acacia.Features.SyncState
 
         public bool SupportsSyncTimeFrame(ZPushAccount account)
         {
-            return account?.ZPushVersion.IsAtLeast(2, 4) == true;
+            return account?.ZPushVersion?.IsAtLeast(2, 4) == true;
         }
 
         private class SetDeviceOptionsRequest : SoapRequest<bool>
@@ -752,7 +776,6 @@ namespace Acacia.Features.SyncState
 
         public void SetDeviceOptions(ZPushAccount account, SyncTimeFrame timeFrame)
         {
-
             try
             {
                 Logger.Instance.Debug(this, "Setting sync time frame for {0} to {1}", account, timeFrame);
@@ -778,5 +801,126 @@ namespace Acacia.Features.SyncState
 
 
         }
+
+
+        #region Size checking
+
+        [AcaciaOption("Disable checking of store size to suggest a sync time frame.")]
+        public bool CheckStoreSize
+        {
+            get { return GetOption(OPTION_CHECK_STORE_SIZE); }
+            set { SetOption(OPTION_CHECK_STORE_SIZE, value); }
+        }
+        private static readonly BoolOption OPTION_CHECK_STORE_SIZE = new BoolOption("CheckStoreSize", true);
+
+        private bool _checkedStoreSize = false;
+
+        private const string KEY_CHECKED_SIZE = "KOE Size Checked";
+
+        private void CheckTotalSize(ZPushConnection connection)
+        {
+            if (!CheckStoreSize || _checkedStoreSize)
+                return;
+
+            // Only works on 2.5
+            // If we don't have the version yet, try again later
+            if (connection.Account.ZPushVersion == null)
+                return;
+
+            // Only check once
+            _checkedStoreSize = true;
+
+            // If it's not 2.5, don't check again
+            if (!connection.Account.ZPushVersion.IsAtLeast(2, 5))
+                return;
+
+            try
+            {
+                Logger.Instance.Debug(this, "Fetching size information for account {0}", connection.Account);
+                using (ZPushWebServiceInfo infoService = connection.InfoService)
+                {
+                    UserStoreInfo info = infoService.Execute(new GetUserStoreInfoRequest());
+                    Logger.Instance.Debug(this, "Size information: {0}", info);
+                    SyncTimeFrame suggested = SuggestSyncTimeFrame(info);
+
+                    if (suggested.IsShorterThan(connection.Account.SyncTimeFrame))
+                    {
+                        // Suggest shorter time frame, if not already done
+                        string lastCheckedSize = connection.Account.Account[KEY_CHECKED_SIZE];
+                        if (!string.IsNullOrWhiteSpace(lastCheckedSize))
+                        {
+                            try
+                            {
+                                SyncTimeFrame old = (SyncTimeFrame)int.Parse(lastCheckedSize);
+                                if (old >= suggested)
+                                {
+                                    Logger.Instance.Trace(this, "Not suggesting reduced sync time frame again: {0}: {2} -> {1}", info, suggested, old);
+                                    return;
+                                }
+                            }
+                            catch(Exception e)
+                            {
+                                Logger.Instance.Warning(this, "Invalid lastCheckedSize: {0}: {1}", lastCheckedSize, e);
+                            }
+                        }
+
+                        Logger.Instance.Debug(this, "Suggesting reduced sync time frame: {0}: {2} -> {1}", info, suggested, connection.Account.SyncTimeFrame);
+
+                        // Suggest a shorter timeframe
+                        DialogResult result = MessageBox.Show(ThisAddIn.Instance.Window,
+                            string.Format(Properties.Resources.SyncState_StoreSize_Body, 
+                                info.storesize.ToSizeString(SizeUtil.Size.MB), 
+                                suggested.ToDisplayString()), 
+                            Properties.Resources.SyncState_StoreSize_Caption,
+                            MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+                        if (result == DialogResult.OK)
+                        {
+                            // Set the sync time frame
+                            Logger.Instance.Debug(this, "Applying reduced sync time frame: {0}: {2} -> {1}", info, suggested, connection.Account.SyncTimeFrame);
+                            connection.Account.SyncTimeFrame = suggested;
+                        }
+                    }
+
+                    connection.Account.Account[KEY_CHECKED_SIZE] = ((int)suggested).ToString();
+                }
+            }
+            catch(Exception e)
+            {
+                Logger.Instance.Warning(this, "Error suggesting size: {0}", e);
+            }
+        }
+
+        private struct SuggestedSyncTimeFrame
+        {
+            public long storeSize;
+            public SyncTimeFrame timeFrame;
+
+            public SuggestedSyncTimeFrame(long storeSize, SyncTimeFrame timeFrame) : this()
+            {
+                this.storeSize = storeSize;
+                this.timeFrame = timeFrame;
+            }
+        }
+
+        private static readonly SuggestedSyncTimeFrame[] SUGGESTED_SYNC_TIME_FRAMES =
+        {
+            new SuggestedSyncTimeFrame(10.WithSize(SizeUtil.Size.GB), SyncTimeFrame.MONTH_1),
+            new SuggestedSyncTimeFrame(5.WithSize(SizeUtil.Size.GB), SyncTimeFrame.MONTH_3),
+            new SuggestedSyncTimeFrame(2.WithSize(SizeUtil.Size.GB), SyncTimeFrame.MONTH_6)
+        };
+
+        private SyncTimeFrame SuggestSyncTimeFrame(UserStoreInfo info)
+        {
+            foreach(SuggestedSyncTimeFrame suggested in SUGGESTED_SYNC_TIME_FRAMES)
+            {
+                if (info.storesize >= suggested.storeSize)
+                    return suggested.timeFrame;
+            }
+            return SyncTimeFrame.ALL;
+        }
+
+        #endregion
     }
+
 }

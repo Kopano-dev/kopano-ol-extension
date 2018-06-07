@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Acacia.ZPush
@@ -42,17 +43,20 @@ namespace Acacia.ZPush
             if (string.IsNullOrWhiteSpace(version))
                 return null;
 
-            string[] parts = version.Split('.');
             try
             {
-                int major = int.Parse(parts[0]);
-                int minor = int.Parse(parts[1]);
-                return new ZPushVersion(major, minor, version);
+                Match match = new Regex(@"(\d+)[.](\d+)[.](\d+)[.]").Match(version);
+                if (match.Success)
+                {
+                    int major = int.Parse(match.Groups[1].Value);
+                    int minor = int.Parse(match.Groups[2].Value);
+                    return new ZPushVersion(major, minor, version);
+                }
             }
             catch (Exception)
             {
-                return null;
             }
+            return null;
         }
 
         public bool IsAtLeast(int major, int minor)

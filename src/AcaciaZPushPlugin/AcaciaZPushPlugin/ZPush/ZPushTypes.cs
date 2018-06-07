@@ -163,4 +163,30 @@ namespace Acacia.ZPush
         MONTH_3,
         MONTH_6
     }
+
+    public static class SyncTimeFrameMethods
+    {
+        public static bool IsOneMonthOrLess(this SyncTimeFrame sync)
+        {
+            return sync <= SyncTimeFrame.MONTH_1 && sync != SyncTimeFrame.ALL;
+        }
+
+        public static bool IsShorterThan(this SyncTimeFrame _this, SyncTimeFrame other)
+        {
+            if (_this == SyncTimeFrame.ALL)
+                return false; // ALL can not be shorter than anything
+            if (other == SyncTimeFrame.ALL)
+                return true; // Always true, if this was ALL, already returned above, so this must be shorter
+
+            return (int)_this < (int)other;
+        }
+
+        public static string ToDisplayString(this SyncTimeFrame _this)
+        {
+            string s = Properties.Resources.ResourceManager.GetString("SyncTimeFrame_" + _this.ToString());
+            if (s == null)
+                return _this.ToString();
+            return s;
+        }
+    }
 }

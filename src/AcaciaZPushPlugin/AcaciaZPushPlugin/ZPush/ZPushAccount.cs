@@ -348,7 +348,7 @@ namespace Acacia.ZPush
 
                 SyncTimeFrame frame = (SyncTimeFrame)val;
                 // If the timeframe exceeds one month, but Outlook is set to one month, only one month will be synced.
-                if (!IsSyncOneMonthOrLess(frame) && EASSyncOneMonth)
+                if (!frame.IsOneMonthOrLess() && EASSyncOneMonth)
                     return SyncTimeFrame.MONTH_1;
                 return frame;
             }
@@ -358,7 +358,7 @@ namespace Acacia.ZPush
                 if (value != SyncTimeFrame)
                 {
                     // Set the outlook property
-                    EASSyncOneMonth = IsSyncOneMonthOrLess(value);
+                    EASSyncOneMonth = value.IsOneMonthOrLess();
                     // And the registry value
                     RegistryUtil.SetValueDword(Account.RegistryBaseKey, OutlookConstants.REG_VAL_SYNC_TIMEFRAME, (int)value);
                 }
@@ -379,11 +379,6 @@ namespace Acacia.ZPush
                     Account.SetAccountProp(OutlookConstants.PROP_SYNC_1_MONTH, value ? (uint)1 : (uint)0);
                 }
             }
-        }
-
-        private bool IsSyncOneMonthOrLess(SyncTimeFrame sync)
-        {
-            return sync <= SyncTimeFrame.MONTH_1 && sync != SyncTimeFrame.ALL;
         }
 
         #endregion

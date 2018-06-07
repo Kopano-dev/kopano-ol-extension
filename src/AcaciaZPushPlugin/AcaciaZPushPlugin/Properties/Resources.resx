@@ -551,4 +551,37 @@ Please contact your system administrator for any required changes.</value>
   <data name="SharedFolders_TooManyFolders_Title" xml:space="preserve">
     <value>Shared Folders</value>
   </data>
+  <data name="SyncState_StoreSize_Body" xml:space="preserve">
+    <value>KOE has detected that the current store size exceeds to recommended value for synced data and will therefore reduce the time synced.
+
+Current store size:  {0}
+New sync window: {1}</value>
+  </data>
+  <data name="SyncState_StoreSize_Caption" xml:space="preserve">
+    <value>Store size</value>
+  </data>
+  <data name="SyncTimeFrame_ALL" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="SyncTimeFrame_DAY_1" xml:space="preserve">
+    <value>1 day</value>
+  </data>
+  <data name="SyncTimeFrame_DAY_3" xml:space="preserve">
+    <value>3 days</value>
+  </data>
+  <data name="SyncTimeFrame_MONTH_1" xml:space="preserve">
+    <value>1 month</value>
+  </data>
+  <data name="SyncTimeFrame_MONTH_3" xml:space="preserve">
+    <value>3 months</value>
+  </data>
+  <data name="SyncTimeFrame_MONTH_6" xml:space="preserve">
+    <value>6 months</value>
+  </data>
+  <data name="SyncTimeFrame_WEEK_1" xml:space="preserve">
+    <value>1 week</value>
+  </data>
+  <data name="SyncTimeFrame_WEEK_2" xml:space="preserve">
+    <value>2 weeks</value>
+  </data>
 </root>

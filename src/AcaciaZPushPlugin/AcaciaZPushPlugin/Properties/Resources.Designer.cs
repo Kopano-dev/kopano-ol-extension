@@ -1347,6 +1347,99 @@ namespace Acacia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to KOE has detected that the current store size exceeds to recommended value for synced data and will therefore reduce the time synced.
+        ///
+        ///Current store size:  {0}
+        ///New sync window: {1}.
+        /// </summary>
+        internal static string SyncState_StoreSize_Body {
+            get {
+                return ResourceManager.GetString("SyncState_StoreSize_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store size.
+        /// </summary>
+        internal static string SyncState_StoreSize_Caption {
+            get {
+                return ResourceManager.GetString("SyncState_StoreSize_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        internal static string SyncTimeFrame_ALL {
+            get {
+                return ResourceManager.GetString("SyncTimeFrame_ALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 day.
+        /// </summary>
+        internal static string SyncTimeFrame_DAY_1 {
+            get {
+                return ResourceManager.GetString("SyncTimeFrame_DAY_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3 days.
+        /// </summary>
+        internal static string SyncTimeFrame_DAY_3 {
+            get {
+                return ResourceManager.GetString("SyncTimeFrame_DAY_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 month.
+        /// </summary>
+        internal static string SyncTimeFrame_MONTH_1 {
+            get {
+                return ResourceManager.GetString("SyncTimeFrame_MONTH_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3 months.
+        /// </summary>
+        internal static string SyncTimeFrame_MONTH_3 {
+            get {
+                return ResourceManager.GetString("SyncTimeFrame_MONTH_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 6 months.
+        /// </summary>
+        internal static string SyncTimeFrame_MONTH_6 {
+            get {
+                return ResourceManager.GetString("SyncTimeFrame_MONTH_6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 week.
+        /// </summary>
+        internal static string SyncTimeFrame_WEEK_1 {
+            get {
+                return ResourceManager.GetString("SyncTimeFrame_WEEK_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2 weeks.
+        /// </summary>
+        internal static string SyncTimeFrame_WEEK_2 {
+            get {
+                return ResourceManager.GetString("SyncTimeFrame_WEEK_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kopano.
         /// </summary>
         internal static string ThisAddIn_Title {
