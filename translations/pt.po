@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-16 11:10+0000\n"
-"PO-Revision-Date: 2018-05-16 15:51+0000\n"
+"PO-Revision-Date: 2018-06-07 11:34+0000\n"
 "Last-Translator: Nuno Jerónimo <nuno.jeronimo@valsousa.pt>\n"
 "Language-Team: Portuguese <http://translate.kopano.io/projects/kopano/kopano-"
 "ol-extension/pt/>\n"
@@ -1257,13 +1257,80 @@ msgstr "Definições Kopano"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_TooManyFolders_Body"
 msgid "You are trying to open many additional folders. Having many shared folders open can impact the stability of Outlook. When working with many shared folders its recommended to take a look at Kopano WebApp/DeskApp instead."
-msgstr ""
-"Está a tentar abrir demasiadas pastas adicionais. Ter pastas partilhadas "
-"abertas em demasia pode causar instabilidade no Outlook. Quando se trabalha "
-"com muitas pastas partilhadas é aconselhado usar a Kopano WebApp/DeskApp."
+msgstr "Está a tentar abrir demasiadas pastas adicionais. Ter pastas partilhadas abertas em demasia pode causar instabilidade no Outlook. Quando se trabalha com muitas pastas partilhadas é aconselhado usar a Kopano WebApp/DeskApp."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_TooManyFolders_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_TooManyFolders_Title"
 msgid "Shared Folders"
 msgstr "Pastas Partilhadas"
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncState_StoreSize_Body
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_StoreSize_Body"
+msgid ""
+"KOE has detected that the current store size exceeds to recommended value for synced data and will therefore reduce the time synced.\n"
+"\n"
+"Current store size:  {0}\n"
+"New sync window: {1}"
+msgstr ""
+"O KOE detetou que o tamanho atual da caixa de correio excede o tamanho "
+"recomendado dos dados sincronizados e irá por isso reduzir o tempo a "
+"sincronizar.\n"
+"\n"
+"Tamanho atual da caixa de correio: {0}\n"
+"Novo intervalo de sincronização: {1}"
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncState_StoreSize_Caption
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_StoreSize_Caption"
+msgid "Store size"
+msgstr "Tamanho da caixa de correio"
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_ALL
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_ALL"
+msgid "All"
+msgstr "Tudo"
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_DAY_1
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_DAY_1"
+msgid "1 day"
+msgstr "1 dia"
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_DAY_3
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_DAY_3"
+msgid "3 days"
+msgstr "3 dias"
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_MONTH_1
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_MONTH_1"
+msgid "1 month"
+msgstr "1 mês"
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_MONTH_3
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_MONTH_3"
+msgid "3 months"
+msgstr "3 meses"
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_MONTH_6
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_MONTH_6"
+msgid "6 months"
+msgstr "6 meses"
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_WEEK_1
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_WEEK_1"
+msgid "1 week"
+msgstr "1 semana"
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_WEEK_2
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_WEEK_2"
+msgid "2 weeks"
+msgstr "2 semanas"
