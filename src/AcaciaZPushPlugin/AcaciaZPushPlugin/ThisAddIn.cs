@@ -95,7 +95,7 @@ namespace Acacia
                 Logger.Instance.Info(this, "Starting version {0}: {1} @ {2}. Outlook version: {3}. Options: '{4}'",
                                     LibUtils.Version, BuildVersions.REVISION, LibUtils.BuildTime,
                                     Application.Version,
-                                    DebugOptions.GetOptions(null));
+                                    DebugOptions.GetTokens(null));
                 Logger.Instance.Initialize();
 
                 // Check if we're enabled
@@ -200,7 +200,7 @@ namespace Acacia
                     }
                     else
                     {
-                        Logger.Instance.Trace(this, "OutlookUI is disabled: '{0}'", DebugOptions.GetOptions(null));
+                        Logger.Instance.Trace(this, "OutlookUI is disabled: '{0}'", DebugOptions.GetTokens(null));
                     }
                 }
                 return _outlookUI;

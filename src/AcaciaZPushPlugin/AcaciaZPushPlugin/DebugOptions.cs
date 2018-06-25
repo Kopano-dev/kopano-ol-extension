@@ -18,7 +18,9 @@ using Acacia.Utils;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
+using System.Linq;
 
 namespace Acacia
 {
@@ -33,7 +35,18 @@ namespace Acacia
                 this.Token = token;
             }
 
-            abstract public string GetToken(ValueType value);
+            public string Key
+            {
+                get
+                {
+                    string key = Token;
+                    if (key.StartsWith("-") || key.StartsWith("+"))
+                        key = key.Substring(1);
+                    return key.ToLower();
+                }
+            }
+
+            abstract public string GetToken(ValueType value, bool needExplicit);
             abstract public ValueType GetValue(string value);
         }
 
@@ -43,17 +56,31 @@ namespace Acacia
 
             public BoolOption(string token, bool inverse)
             :
-            base(inverse ? "-" + token : (token.Length == 0 ? "+" : token))
+            base(inverse ? ("-" + token) : (token.Length == 0 ? "+" : token))
             {
                 this.Inverse = inverse;
             }
 
-            public override string GetToken(bool value)
+            public override string GetToken(bool value, bool needExplicit)
             {
                 if (Inverse)
                     value = !value;
                 if (value)
                     return Token;
+                else if (needExplicit)
+                {
+                    string inverse;
+                    if (Token.StartsWith("-"))
+                    {
+                        if (Token.Length == 1)
+                            inverse = "+";
+                        else
+                            inverse = Token.Substring(1);
+                    }
+                    else
+                        inverse = "-" + Token;
+                    return inverse;
+                }
                 else
                     return null; 
             }
@@ -89,9 +116,9 @@ namespace Acacia
                 this._defaultValue = defaultValue;
             }
 
-            public override string GetToken(EnumType value)
+            public override string GetToken(EnumType value, bool needExplicit)
             {
-                if (value.Equals(DefaultValue))
+                if (!needExplicit && value.Equals(DefaultValue))
                     return null;
                 return Token + "=" + value.ToString();
             }
@@ -121,9 +148,9 @@ namespace Acacia
                 this._defaultValue = defaultValue;
             }
 
-            public override string GetToken(TimeSpan value)
+            public override string GetToken(TimeSpan value, bool needExplicit)
             {
-                if (value.Equals(_defaultValue))
+                if (!needExplicit && value.Equals(_defaultValue))
                     return null;
                 return Token + "=" + value.ToString();
             }
@@ -153,9 +180,9 @@ namespace Acacia
                 this._defaultValue = defaultValue;
             }
 
-            public override string GetToken(string value)
+            public override string GetToken(string value, bool needExplicit)
             {
-                if (value.Equals(_defaultValue))
+                if (!needExplicit && value.Equals(_defaultValue))
                     return null;
                 return Token + "=" + value.ToString();
             }
@@ -185,9 +212,9 @@ namespace Acacia
                 this._defaultValue = defaultValue;
             }
 
-            public override string GetToken(int value)
+            public override string GetToken(int value, bool needExplicit)
             {
-                if (value.Equals(_defaultValue))
+                if (!needExplicit && value.Equals(_defaultValue))
                     return null;
                 return Token + "=" + value.ToString();
             }
@@ -239,57 +266,127 @@ namespace Acacia
 
         #region Access methods
 
-        public static string GetOptions(string prefix)
+        private class Token
         {
-            if (ReturnDefaults)
-                return null;
+            public string Key;
+            public string Value;
+            public bool HasCurrentUser;
+            public bool HasLocalMachine;
+            public string LocalMachineToken;
+            public int Order;
 
-            return RegistryUtil.GetConfigValue<string>(prefix, null, null);
-        }
-
-        public static ValueType GetOption<ValueType>(string prefix, Option<ValueType> option)
-        {
-            // Parse the options
-            Dictionary<string, string> tokens = ParseTokens(prefix);
-            string value;
-            tokens.TryGetValue(option.Token.ToLower(), out value);
-            return option.GetValue(value);
-        }
-        
-        private static Dictionary<string,string> ParseTokens(string prefix)
-        {
-            Dictionary<string, string> tokens = new Dictionary<string, string>();
-            string value = GetOptions(prefix);
-            if (!string.IsNullOrEmpty(value))
+            public override string ToString()
             {
-                foreach (string token in value.Split(','))
+                return string.Format("key={0}, value={1}, HKCU={2}, HLKM={3}, HLKMToken={4}", Key, Value, HasCurrentUser, HasLocalMachine, LocalMachineToken);
+            }
+        }
+
+        private static Dictionary<string, Token> GetEffectiveTokens(string prefix)
+        {
+            Dictionary<string, Token> tokens = new Dictionary<string, Token>();
+
+            foreach (bool localMachine in new bool[] {true, false})
+            {
+                string value = RegistryUtil.GetConfigValue<string>(localMachine, prefix, null);
+
+                if (!string.IsNullOrEmpty(value))
                 {
-                    if (!string.IsNullOrEmpty(token))
+                    foreach (string token in value.Split(','))
                     {
-                        string[] keyVal = token.Split(new[] { '=' }, 2);
-                        if (!string.IsNullOrEmpty(keyVal[0]))
+                        if (!string.IsNullOrEmpty(token))
                         {
-                            tokens[keyVal[0].ToLower()] = token;
+                            string[] keyVal = token.Split(new[] { '=' }, 2);
+                            if (!string.IsNullOrEmpty(keyVal[0]))
+                            {
+                                string key = keyVal[0].ToLower();
+                                if (key.StartsWith("-") || key.StartsWith("+"))
+                                    key = key.Substring(1);
+
+                                Token existing;
+                                if (tokens.TryGetValue(key, out existing))
+                                {
+                                    existing.Value = token;
+                                }
+                                else
+                                {
+                                    existing = new Token() { Key = key, Value = token };
+                                    existing.Order = tokens.Count;
+                                    tokens.Add(key, existing);
+                                }
+                                if (localMachine)
+                                {
+                                    existing.HasLocalMachine = true;
+                                    existing.LocalMachineToken = token;
+                                }
+                                else
+                                {
+                                    existing.HasCurrentUser = true;
+                                }
+                            }
                         }
                     }
                 }
             }
+
             return tokens;
+        }
+
+        public static string GetTokens(string prefix)
+        {
+            // Use GetEffectiveTokens to get the effective string in case there are duplicates in local and user
+            Dictionary<string, Token> tokens = GetEffectiveTokens(prefix);
+            return String.Join(",", tokens.Values.OrderBy(t => t.Order).Select(t => t.Value));
+        }
+
+        public static ValueType GetOption<ValueType>(string prefix, Option<ValueType> option)
+        {
+            // Get all options
+            Dictionary<string, Token> tokens = GetEffectiveTokens(prefix);
+
+            // And get the effective value
+            Token value;
+            tokens.TryGetValue(option.Key, out value);
+            ValueType result = option.GetValue(value?.Value);
+            return result;
         }
 
         public static void SetOption<ValueType>(string prefix, Option<ValueType> option, ValueType value)
         {
-            Dictionary<string, string> tokens = ParseTokens(prefix);
+            Dictionary<string, Token> tokens = GetEffectiveTokens(prefix);
+
+            // If the token is currently defined in HKLM, we need an explicit override. Otherwise, leave it empty for default value
+            string key = option.Key;
+            Token existing;
+            tokens.TryGetValue(key, out existing);
+            bool needExplicit = existing?.HasLocalMachine == true;
 
             // Update the token
-            string token = option.GetToken(value);
-            if (token != null)
-                tokens[option.Token.ToLower()] = token;
-            else
-                tokens.Remove(option.Token.ToLower());
+            string token = option.GetToken(value, needExplicit);
 
-            // Write to registry
-            string newValue = string.Join(",", tokens.Values);
+            // If the new value matches the value set in HKLM, remove it
+            if (token != null && existing?.LocalMachineToken?.Equals(token) == true)
+            {
+                tokens.Remove(key);
+            }
+            else if (token != null)
+            {
+                // Set or add the token
+                if (tokens.ContainsKey(key))
+                {
+                    tokens[key].Value = token;
+                    tokens[key].HasCurrentUser = true;
+                }
+                else
+                    tokens.Add(key, new Token() { Key = key, Value = token, HasCurrentUser = true });
+            }
+            else
+            {
+                // Remove the token
+                tokens.Remove(key);
+            }
+
+            // Write to registry, skipping ones only defined in HKLM
+            string newValue = string.Join(",", tokens.Values.Where(t => t.HasCurrentUser).Select(t => t.Value));
             RegistryUtil.SetConfigValue(prefix, null, newValue, RegistryValueKind.String);
         }
 

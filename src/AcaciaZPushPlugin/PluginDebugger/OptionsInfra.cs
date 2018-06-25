@@ -300,7 +300,7 @@ namespace PluginDebugger
                 {
                     // Show full registry string
                     Feature feature = value as Feature;
-                    return DebugOptions.GetOptions(feature?.Name);
+                    return DebugOptions.GetTokens(feature?.Name);
                 }
                 return base.ConvertTo(context, culture, value, destinationType);
             }

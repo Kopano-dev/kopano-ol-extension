@@ -94,19 +94,33 @@ namespace Acacia.Utils
         public static ValueType GetConfigValue<ValueType>(string path, string valueName, ValueType defaultValue)
         {
             // Try current user first
-            foreach (bool localMachine in new bool[]{ false, true})
+            foreach (bool localMachine in new bool[] { false, true })
             {
-                using (RegistryKey key = OpenKeyImpl(Constants.PLUGIN_REGISTRY_BASE, path, localMachine, RegistryKeyPermissionCheck.ReadSubTree))
+                ValueType value = GetConfigValue<ValueType>(localMachine, path, valueName);
+                if (value != null)
+                    return value;
+            }
+
+            return defaultValue;
+        }
+
+        public static ValueType GetConfigValue<ValueType>(bool localMachine, string path, string valueName)
+        { 
+            using (RegistryKey key = OpenKeyImpl(Constants.PLUGIN_REGISTRY_BASE, path, localMachine, RegistryKeyPermissionCheck.ReadSubTree))
+            {
+                if (key != null)
                 {
-                    if (key != null)
+                    object value = key.GetValue(valueName);
+                    if (value != null)
                     {
-                        object value = key.GetValue(valueName);
-                        if (value != null)
-                            return (ValueType)value;
+                        // Treat an empty string like a missing value. Otherwise the default value used for options is always present in HKCU
+                        if (typeof(ValueType) == typeof(string) && string.IsNullOrWhiteSpace((string)value))
+                            return default(ValueType);
+                        return (ValueType)value;
                     }
                 }
             }
-            return defaultValue;
+            return default(ValueType);
         }
 
         public static void SetConfigValue(string path, string valueName, object value, RegistryValueKind kind)

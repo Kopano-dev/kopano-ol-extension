@@ -71,7 +71,7 @@ namespace Acacia.Features
 
         public static string GetDebugTokens(Type featureType)
         {
-            return DebugOptions.GetOptions(GetFeatureName(featureType));
+            return DebugOptions.GetTokens(GetFeatureName(featureType));
         }
 
         public static bool IsEnabled(Type featureType)
