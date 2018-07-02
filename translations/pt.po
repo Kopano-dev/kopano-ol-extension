@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-16 11:10+0000\n"
-"PO-Revision-Date: 2018-06-07 11:34+0000\n"
+"PO-Revision-Date: 2018-07-02 13:46+0000\n"
 "Last-Translator: Nuno Jerónimo <nuno.jeronimo@valsousa.pt>\n"
-"Language-Team: Portuguese <http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt/>\n"
+"Language-Team: Portuguese <http://translate.kopano.io/projects/kopano/kopano-"
+"ol-extension/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -263,7 +264,7 @@ msgstr "Abrir localização do ficheiro de log"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\FreeBusy\\FreeBusySettings\\checkGABLookup.Text"
 msgid "Look up contacts in Global Address Book"
-msgstr "Procurar contatos no Livro Global de Endereços"
+msgstr "Procurar contactos no Livro Global de Endereços"
 
 #: AcaciaZPushPlugin\Features\FreeBusy\FreeBusySettings\labelUseAccount.Text
 #, csharp-format
@@ -281,7 +282,7 @@ msgstr "Sincronizar números de fax"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\GAB\\GABSettings\\checkSMTPGroupsAsContacts.Text"
 msgid "Synchronise groups with addresses as contacts"
-msgstr "Sincronizar grupos com endereços como contatos"
+msgstr "Sincronizar grupos com endereços como contactos"
 
 #: AcaciaZPushPlugin\Features\OutOfOffice\OutOfOfficeDialog\chkEnable.Text
 #, csharp-format
@@ -712,7 +713,9 @@ msgstr "Assistente Fora do Escritório"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABEvent_Body"
 msgid "Modifications to the Global Address Book are not allowed. Please contact your administrator if you think changes are required."
-msgstr "Modificações ao Livro Global de Endereços não são permitidas. Por favor contate o seu administrador se achar que são necessárias alterações."
+msgstr ""
+"Modificações ao Livro Global de Endereços não são permitidas. Por favor "
+"contacte o seu administrador se achar que são necessárias alterações."
 
 #: AcaciaZPushPlugin\Properties\Resources\GABEvent_Title
 #, csharp-format
@@ -1002,14 +1005,18 @@ msgstr "Mostra a caixa de diálogo do Acerca que contém informação sobre a ve
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Body"
 msgid "The contacts folder '{0}' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click 'Yes' to restart Outlook now, or 'No' if you plan to restart Outlook later."
-msgstr "A pasta de contatos {0} foi descoberta. Está a ser sincronizada mas não irá aparecer na pasta de contatos até o Outlook ser reiniciado. Selecione 'Sim' para reiniciar o Outlook agora, ou 'Não' se planeia reiniciar o Outlook mais tarde."
+msgstr ""
+"A pasta de contactos {0} foi descoberta. Está a ser sincronizada mas não irá "
+"aparecer na pasta de contactos até o Outlook ser reiniciado. Selecione 'Sim' "
+"para reiniciar o Outlook agora, ou 'Não' se planeia reiniciar o Outlook mais "
+"tarde."
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Title"
 msgid "Contacts folder"
-msgstr "Pasta de contatos"
+msgstr "Pasta de contactos"
 
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Body
 #, csharp-format
@@ -1165,8 +1172,9 @@ msgid ""
 "The folder has been configured by your system administrator and cannot be modified. \n"
 "Please contact your system administrator for any required changes."
 msgstr ""
-"A pasta foi configurada pelo administrador do sistema e não pode ser modificada. \n"
-"Por favor contate o seu administrador para qualquer alteração pretendida."
+"A pasta foi configurada pelo administrador do sistema e não pode ser "
+"modificada. \n"
+"Por favor contacte o seu administrador para qualquer alteração pretendida."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_WholeStoreRestart_Body
 #, csharp-format
@@ -1331,4 +1339,3 @@ msgstr "1 semana"
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_WEEK_2"
 msgid "2 weeks"
 msgstr "2 semanas"
-
