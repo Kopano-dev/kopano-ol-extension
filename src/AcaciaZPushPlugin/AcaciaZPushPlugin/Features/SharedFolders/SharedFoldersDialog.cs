@@ -716,7 +716,7 @@ namespace Acacia.Features.SharedFolders
                     // Ignore the root nodes
                     if (node is StoreTreeNode)
                     {
-                        if (!_folders.SupportsWholeStore)
+                        if (!_folders.SupportsWholeStore || !node.HasCheckBox)
                             continue;
 
                         StoreTreeNode storeNode = (StoreTreeNode)node;
