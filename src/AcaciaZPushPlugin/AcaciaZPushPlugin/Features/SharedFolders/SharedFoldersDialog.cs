@@ -414,7 +414,7 @@ namespace Acacia.Features.SharedFolders
                         IRestarter restarter = ThisAddIn.Instance.Restarter();
                         restarter.CloseWindows = true;
                         foreach (StoreTreeNode node in state.stores)
-                            restarter.OpenShare(_account, node.User);
+                            restarter.OpenShare(_account, node.User, node.ShowReminders);
                         restarter.Restart();
                     }
 

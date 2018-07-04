@@ -15,7 +15,14 @@ namespace Acacia.Stubs.OutlookWrappers
     {
         private readonly AddInWrapper _addIn;
         private readonly List<ZPushAccount> _resyncAccounts = new List<ZPushAccount>();
-        private readonly List<KeyValuePair<ZPushAccount, GABUser>> _shares = new List<KeyValuePair<ZPushAccount, GABUser>>();
+
+        private struct Share
+        {
+            public ZPushAccount account;
+            public GABUser store;
+            public bool showReminders;
+        }
+        private readonly List<Share> _shares = new List<Share>();
 
         public Restarter(AddInWrapper addIn)
         {
@@ -46,9 +53,12 @@ namespace Acacia.Stubs.OutlookWrappers
             _resyncAccounts.AddRange(accounts);
         }
 
-        public void OpenShare(ZPushAccount account, GABUser store)
+        public void OpenShare(ZPushAccount account, GABUser store, bool showReminders)
         {
-            _shares.Add(new KeyValuePair<ZPushAccount, GABUser>(account, store));
+            _shares.Add(new Share()
+            {
+                account = account, store = store, showReminders = showReminders
+            });
         }
 
         public void Restart()
@@ -75,16 +85,16 @@ namespace Acacia.Stubs.OutlookWrappers
 
             if (_shares.Count > 0)
             {
-                foreach (KeyValuePair<ZPushAccount, GABUser> share in _shares)
+                foreach (Share share in _shares)
                 {
-                    Logger.Instance.Debug(this, "Adding KOE share: profile={0}, version={1}, accountid={2}, user={3}, email={4}",
-                            _addIn.ProfileName, _addIn.VersionMajor, share.Key.Account.AccountId, share.Value.UserName, share.Value.EmailAddress);
+                    Logger.Instance.Debug(this, "Adding KOE share: profile={0}, version={1}, accountid={2}, user={3}, email={4}, reminders={5}",
+                            _addIn.ProfileName, _addIn.VersionMajor, share.account.Account.AccountId, share.store.UserName, share.store.EmailAddress, share.showReminders);
                     // TODO: escaping
                     commandLine += " /sharekoe " + Util.QuoteCommandLine(_addIn.ProfileName + ":" + 
                             _addIn.VersionMajor + ":" +
-                            share.Key.Account.AccountId + ":" + 
-                            share.Value.UserName + ":" + share.Value.EmailAddress + ":" +
-                            share.Value.EmailAddress);
+                            share.account.Account.AccountId + ":" + 
+                            share.store.UserName + ":" + share.store.EmailAddress + ":" +
+                            share.store.EmailAddress + ":1:" + (share.showReminders ? "1" : "0"));
                 }
             }
 

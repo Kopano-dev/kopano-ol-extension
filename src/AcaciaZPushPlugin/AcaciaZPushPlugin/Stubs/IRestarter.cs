@@ -25,7 +25,7 @@ namespace Acacia.Stubs
         /// </summary>
         /// <param name="account"></param>
         /// <param name="store"></param>
-        void OpenShare(ZPushAccount account, GABUser store);
+        void OpenShare(ZPushAccount account, GABUser store, bool showReminders);
 
         /// <summary>
         /// Performs the actual restart.

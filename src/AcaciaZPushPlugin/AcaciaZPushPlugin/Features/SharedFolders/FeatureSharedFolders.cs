@@ -234,10 +234,10 @@ namespace Acacia.Features.SharedFolders
             return share;
         }
 
-        public static bool IsSharedFolder(IFolder folder)
+        public static bool IsSharedOrImpersonatedFolder(IFolder folder)
         {
             string id = (string)folder.GetProperty(OutlookConstants.PR_ZPUSH_SYNC_ID);
-            return id?.StartsWith("S") == true;
+            return id?.StartsWith("S") == true || id?.StartsWith("I") == true;
         }
 
         #endregion
@@ -324,7 +324,7 @@ namespace Acacia.Features.SharedFolders
             // Check if in a shared folder
             using (IFolder parent = item.Parent)
             {
-                if (parent == null || !IsSharedFolder(parent))
+                if (parent == null || !IsSharedOrImpersonatedFolder(parent))
                 {
                     Logger.Instance.TraceExtra(this, "Private appointment: suppress: not in a shared folder");
                     return;

@@ -54,6 +54,7 @@ static const wstring R_EMAIL = L"Email";
 static const wstring R_EMAIL_ORIGINAL = L"KOE Share For";
 static const wstring R_PASSWORD = L"EAS Password";
 static const wstring R_ONE_MONTH = L"EAS SyncSlider";
+static const wstring R_SHOW_REMINDERS = L"KOE Reminders";
 
 struct Account
 {
@@ -70,6 +71,7 @@ public:
 	vector<byte> encryptedPassword;
 	wstring dataFolder;
 	bool syncOneMonth;
+	bool showReminders;
 private:
 	wstring path;
 	int initializedMAPI = 0;
@@ -139,7 +141,9 @@ public:
 			L"\tpath=%ls\n"
 			L"\tservice=%ls\n"
 			L"\tentryId=%ls\n"
-			L"\taccountId=%.8X\n",
+			L"\taccountId=%.8X\n"
+			L"\toneMonth=%d\n"
+			L"\treminders=%d\n",
 			prefix,
 			profileName.c_str(),
 			outlookVersion.c_str(),
@@ -156,7 +160,9 @@ public:
 			path.c_str(),
 			ToHex(&service, sizeof(service)).c_str(),
 			ToHex(entryId).c_str(),
-			accountId
+			accountId,
+			syncOneMonth ? 1 : 0,
+			showReminders ? 1 : 0
 		);
 	}
 	void Create()
@@ -504,6 +510,9 @@ private:
 		if (syncOneMonth)
 			WriteAccountKey(R_ONE_MONTH, (DWORD)1);
 
+		if (!showReminders)
+			WriteAccountKey(R_SHOW_REMINDERS, (DWORD)0);
+
 		WriteAccountKey(L"clsid", L"{ED475415-B0D6-11D2-8C3B-00104B2A6676}");
 
 		WriteAccountKey(R_PASSWORD, &encryptedPassword[0], encryptedPassword.size());
@@ -654,9 +663,9 @@ int __cdecl wmain(int argc, wchar_t  **argv)
 	// Main
 	try
 	{
-		if (argc < 7 || argc > 8)
+		if (argc < 7 || argc > 9)
 		{
-			fwprintf(stderr, L"EASAccount: <profile> <outlook version> <accountid> <username> <email> <display> [1 month]\n");
+			fwprintf(stderr, L"EASAccount: <profile> <outlook version> <accountid> <username> <email> <display> [1 month] [reminders]\n");
 			exit(3);
 		}
 
@@ -672,6 +681,9 @@ int __cdecl wmain(int argc, wchar_t  **argv)
 		account.syncOneMonth = true;
 		if (argc > 7)
 			account.syncOneMonth = !wcscmp(argv[7], L"1");
+		account.showReminders = true;
+		if (argc > 8)
+			account.showReminders = !wcscmp(argv[8], L"1");
 
 		try
 		{

@@ -54,7 +54,7 @@ namespace Acacia.Features.SharedFolders
         {
             get
             {
-                return _folder.SearchCriteria;
+                return _folder?.SearchCriteria;
             }
             set
             {
