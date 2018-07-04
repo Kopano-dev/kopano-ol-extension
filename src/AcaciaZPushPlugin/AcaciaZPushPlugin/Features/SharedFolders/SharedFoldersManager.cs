@@ -98,7 +98,7 @@ namespace Acacia.Features.SharedFolders
                 UpdateReminders(shares);
 
                 // Remove any reminders from the shares that are not wanted, they are stale
-                OpenQuery()?.RemoveStaleReminders(
+                ((RemindersQueryFolders) OpenQuery())?.RemoveStaleReminders(
                     shares
                         .Where(x => x.IsSynced && x.SyncType.IsAppointment() && x.FlagCalendarReminders)
                         .Select(x => x.SyncId)
@@ -126,6 +126,18 @@ namespace Acacia.Features.SharedFolders
             return _api.GetUserFolders(store);
         }
 
+        public void UpdateSharedStore()
+        {
+            Logger.Instance.Debug(this, "Updating shared store: {0}", _account);
+            RemindersQuery query = OpenQuery();
+            if (query != null)
+            {
+                Logger.Instance.Debug(this, "Updating shared store reminders: {0}", query);
+                ((RemindersQueryStore)query).SetReminders(_account.ShowReminders);
+                query.Commit();
+            }
+        }
+
         #endregion
 
         #region Reminders
@@ -139,7 +151,7 @@ namespace Acacia.Features.SharedFolders
                     Logger.Instance.Debug(this, "UpdateReminders: {0}", share);
                     if (share.IsSynced && share.SyncType.IsAppointment())
                     {
-                        OpenQuery()?.UpdateReminders(share.SyncId, share.FlagCalendarReminders);
+                        ((RemindersQueryFolders)OpenQuery())?.UpdateReminders(share.SyncId, share.FlagCalendarReminders);
                     }
                 }
             }
@@ -151,7 +163,9 @@ namespace Acacia.Features.SharedFolders
             {
                 if (_feature.Reminders)
                 {
-                    RemindersQuery query = new RemindersQuery(_feature, _account.Account.Store);
+                    RemindersQuery query = _account.IsShare 
+                        ? (RemindersQuery)new RemindersQueryStore(_feature, _account.Account.Store)
+                        : (RemindersQuery)new RemindersQueryFolders(_feature, _account.Account.Store);
                     if (query.Open())
                     {
                         _query = query;

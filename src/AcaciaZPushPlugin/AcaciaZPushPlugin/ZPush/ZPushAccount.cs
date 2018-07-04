@@ -222,6 +222,11 @@ namespace Acacia.ZPush
             }
         }
 
+        public bool IsShare
+        {
+            get { return ShareFor != null; }
+        }
+
         public string ShareUserName
         {
             get
@@ -287,6 +292,19 @@ namespace Acacia.ZPush
             }
 
             return null;
+        }
+
+        public bool ShowReminders
+        {
+            get
+            {
+                return RegistryUtil.GetValueDword(Account.RegistryBaseKey, OutlookConstants.REG_VAL_SHOW_REMINDERS, 1) != 0;
+            }
+
+            set
+            {
+                RegistryUtil.SetValueDword(Account.RegistryBaseKey, OutlookConstants.REG_VAL_SHOW_REMINDERS, value ? 1 : 0);
+            }
         }
 
         #endregion

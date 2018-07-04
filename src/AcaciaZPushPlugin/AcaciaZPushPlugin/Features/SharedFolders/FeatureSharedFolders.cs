@@ -171,20 +171,28 @@ namespace Acacia.Features.SharedFolders
             {
                 Logger.Instance.Debug(this, "Starting sync for account {0}", account);
 
-                // Fetch the current shares
-                ICollection<SharedFolder> shares = manager.GetCurrentShares(null);
-                Logger.Instance.Trace(this, "AdditionalFolders_Sync: {0}", shares.Count);
+                if (account.IsShare)
+                {
+                    Logger.Instance.Debug(this, "Account {0} is a share", account);
+                    manager.UpdateSharedStore();
+                }
+                else
+                {
+                    // Fetch the current shares
+                    ICollection<SharedFolder> shares = manager.GetCurrentShares(null);
+                    Logger.Instance.Trace(this, "AdditionalFolders_Sync: {0}", shares.Count);
 
-                // Convert to dictionary
-                Dictionary<SyncId, SharedFolder> dict = shares.ToDictionary(x => x.SyncId);
-                Logger.Instance.Trace(this, "AdditionalFolders_Sync2: {0}", shares.Count);
+                    // Convert to dictionary
+                    Dictionary<SyncId, SharedFolder> dict = shares.ToDictionary(x => x.SyncId);
+                    Logger.Instance.Trace(this, "AdditionalFolders_Sync2: {0}", shares.Count);
 
-                // Store any send-as properties
-                FeatureSendAs sendAs = ThisAddIn.Instance.GetFeature<FeatureSendAs>();
-                sendAs?.UpdateSendAsAddresses(account, shares);
+                    // Store any send-as properties
+                    FeatureSendAs sendAs = ThisAddIn.Instance.GetFeature<FeatureSendAs>();
+                    sendAs?.UpdateSendAsAddresses(account, shares);
 
-                // Store with the account
-                account.SetFeatureData(this, KEY_SHARES, dict);
+                    // Store with the account
+                    account.SetFeatureData(this, KEY_SHARES, dict);
+                }
             }
         }
 
@@ -226,10 +234,10 @@ namespace Acacia.Features.SharedFolders
             return share;
         }
 
-        public static bool IsSharedFolder(IFolder folder)
+        public static bool IsSharedOrImpersonatedFolder(IFolder folder)
         {
             string id = (string)folder.GetProperty(OutlookConstants.PR_ZPUSH_SYNC_ID);
-            return id?.StartsWith("S") == true;
+            return id?.StartsWith("S") == true || id?.StartsWith("I") == true;
         }
 
         #endregion
@@ -316,7 +324,7 @@ namespace Acacia.Features.SharedFolders
             // Check if in a shared folder
             using (IFolder parent = item.Parent)
             {
-                if (parent == null || !IsSharedFolder(parent))
+                if (parent == null || !IsSharedOrImpersonatedFolder(parent))
                 {
                     Logger.Instance.TraceExtra(this, "Private appointment: suppress: not in a shared folder");
                     return;

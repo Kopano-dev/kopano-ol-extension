@@ -340,6 +340,12 @@ msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\button
 msgid "Open"
 msgstr ""
 
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelWholeStoreReminders.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelWholeStoreReminders.Text"
+msgid "Show reminders"
+msgstr ""
+
 #: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelWholeStore.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelWholeStore.Text"

@@ -66,8 +66,19 @@ namespace Acacia.Features.SharedFolders
             }
         }
 
+        public bool ShowReminders
+        {
+            get;
+            set;
+        }
+        public bool ShowRemindersInitial
+        {
+            get;
+            set;
+        }
+
         public StoreTreeNode(SharedFoldersManager folders, GABHandler gab, GABUser user, string sendAsAddress, string text, 
-                             Dictionary<BackendId, SharedFolder> currentFolders, bool isShared)
+                             Dictionary<BackendId, SharedFolder> currentFolders, bool isShared, bool showRemindersWholeStore)
         :
         base(text)
         {
@@ -91,7 +102,7 @@ namespace Acacia.Features.SharedFolders
 
             ChildLoader = new UserFolderLoader(this, folders, user);
             ChildLoader.ReloadOnCloseOpen = true;
-            HasCheckBox = folders.SupportsWholeStore;
+            HasCheckBox = folders.SupportsWholeStore && !string.IsNullOrWhiteSpace(user.EmailAddress);
             ApplyReadOnly(this, IsReadOnly);
 
             // TODO: better icons, better way of handling this
@@ -109,6 +120,8 @@ namespace Acacia.Features.SharedFolders
 
             // Set up sharing
             WantShare = isShared;
+            ShowRemindersInitial = showRemindersWholeStore;
+            ShowReminders = ShowRemindersInitial;
         }
 
         private static void ApplyReadOnly(KTreeNode node, bool isReadOnly)
@@ -145,6 +158,18 @@ namespace Acacia.Features.SharedFolders
             else
             {
                 ChildLoader.Reset();
+            }
+        }
+
+        public ZPushAccount WholeStoreAccount
+        {
+            get
+            {
+                if (IsShared)
+                {
+                    return _account.FindSharedAccount(_user.UserName);
+                }
+                return null;
             }
         }
 
@@ -289,7 +314,7 @@ namespace Acacia.Features.SharedFolders
         {
             get
             {
-                return WantShare != IsShared;
+                return WantShare != IsShared || ShowReminders != ShowRemindersInitial;
             }
         }
 
