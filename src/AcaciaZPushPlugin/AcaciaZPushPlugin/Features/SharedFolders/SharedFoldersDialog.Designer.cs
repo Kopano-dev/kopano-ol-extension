@@ -38,6 +38,8 @@
             this.buttonOpenUser = new System.Windows.Forms.Button();
             this.kTreeFolders = new Acacia.Controls.KTree();
             this._layoutOptions = new System.Windows.Forms.TableLayoutPanel();
+            this._labelWholeStoreReminders = new System.Windows.Forms.Label();
+            this.checkWholeStoreReminders = new System.Windows.Forms.CheckBox();
             this._labelWholeStore = new System.Windows.Forms.Label();
             this.checkWholeStore = new System.Windows.Forms.CheckBox();
             this.labelPermissionsValue = new System.Windows.Forms.Label();
@@ -137,20 +139,34 @@
             // _layoutOptions
             // 
             resources.ApplyResources(this._layoutOptions, "_layoutOptions");
+            this._layoutOptions.Controls.Add(this._labelWholeStoreReminders, 0, 1);
+            this._layoutOptions.Controls.Add(this.checkWholeStoreReminders, 1, 1);
             this._layoutOptions.Controls.Add(this._labelWholeStore, 0, 0);
             this._layoutOptions.Controls.Add(this.checkWholeStore, 1, 0);
-            this._layoutOptions.Controls.Add(this.labelPermissionsValue, 1, 5);
-            this._layoutOptions.Controls.Add(this._labelName, 0, 1);
-            this._layoutOptions.Controls.Add(this.textName, 1, 1);
-            this._layoutOptions.Controls.Add(this._labelSendAs, 0, 2);
-            this._layoutOptions.Controls.Add(this.checkSendAs, 1, 2);
-            this._layoutOptions.Controls.Add(this._labelSendAsAddress, 0, 3);
-            this._layoutOptions.Controls.Add(this.textSendAsAddress, 1, 3);
-            this._layoutOptions.Controls.Add(this._labelReminders, 0, 4);
-            this._layoutOptions.Controls.Add(this.checkReminders, 1, 4);
-            this._layoutOptions.Controls.Add(this._labelPermissions, 0, 5);
+            this._layoutOptions.Controls.Add(this.labelPermissionsValue, 1, 6);
+            this._layoutOptions.Controls.Add(this._labelName, 0, 2);
+            this._layoutOptions.Controls.Add(this.textName, 1, 2);
+            this._layoutOptions.Controls.Add(this._labelSendAs, 0, 3);
+            this._layoutOptions.Controls.Add(this.checkSendAs, 1, 3);
+            this._layoutOptions.Controls.Add(this._labelSendAsAddress, 0, 4);
+            this._layoutOptions.Controls.Add(this.textSendAsAddress, 1, 4);
+            this._layoutOptions.Controls.Add(this._labelReminders, 0, 5);
+            this._layoutOptions.Controls.Add(this.checkReminders, 1, 5);
+            this._layoutOptions.Controls.Add(this._labelPermissions, 0, 6);
             this._layoutOptions.Controls.Add(this._labelRestartRequired, 2, 0);
             this._layoutOptions.Name = "_layoutOptions";
+            // 
+            // _labelWholeStoreReminders
+            // 
+            resources.ApplyResources(this._labelWholeStoreReminders, "_labelWholeStoreReminders");
+            this._labelWholeStoreReminders.Name = "_labelWholeStoreReminders";
+            // 
+            // checkWholeStoreReminders
+            // 
+            resources.ApplyResources(this.checkWholeStoreReminders, "checkWholeStoreReminders");
+            this.checkWholeStoreReminders.Name = "checkWholeStoreReminders";
+            this.checkWholeStoreReminders.UseVisualStyleBackColor = true;
+            this.checkWholeStoreReminders.CheckedChanged += new System.EventHandler(this.checkWholeStoreReminders_CheckedChanged);
             // 
             // _labelWholeStore
             // 
@@ -288,5 +304,7 @@
         private System.Windows.Forms.Label _labelRestartRequired;
         private System.Windows.Forms.Label _labelSendAsAddress;
         private System.Windows.Forms.TextBox textSendAsAddress;
+        private System.Windows.Forms.Label _labelWholeStoreReminders;
+        private System.Windows.Forms.CheckBox checkWholeStoreReminders;
     }
 }

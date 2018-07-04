@@ -171,20 +171,28 @@ namespace Acacia.Features.SharedFolders
             {
                 Logger.Instance.Debug(this, "Starting sync for account {0}", account);
 
-                // Fetch the current shares
-                ICollection<SharedFolder> shares = manager.GetCurrentShares(null);
-                Logger.Instance.Trace(this, "AdditionalFolders_Sync: {0}", shares.Count);
+                if (account.IsShare)
+                {
+                    Logger.Instance.Debug(this, "Account {0} is a share", account);
+                    manager.UpdateSharedStore();
+                }
+                else
+                {
+                    // Fetch the current shares
+                    ICollection<SharedFolder> shares = manager.GetCurrentShares(null);
+                    Logger.Instance.Trace(this, "AdditionalFolders_Sync: {0}", shares.Count);
 
-                // Convert to dictionary
-                Dictionary<SyncId, SharedFolder> dict = shares.ToDictionary(x => x.SyncId);
-                Logger.Instance.Trace(this, "AdditionalFolders_Sync2: {0}", shares.Count);
+                    // Convert to dictionary
+                    Dictionary<SyncId, SharedFolder> dict = shares.ToDictionary(x => x.SyncId);
+                    Logger.Instance.Trace(this, "AdditionalFolders_Sync2: {0}", shares.Count);
 
-                // Store any send-as properties
-                FeatureSendAs sendAs = ThisAddIn.Instance.GetFeature<FeatureSendAs>();
-                sendAs?.UpdateSendAsAddresses(account, shares);
+                    // Store any send-as properties
+                    FeatureSendAs sendAs = ThisAddIn.Instance.GetFeature<FeatureSendAs>();
+                    sendAs?.UpdateSendAsAddresses(account, shares);
 
-                // Store with the account
-                account.SetFeatureData(this, KEY_SHARES, dict);
+                    // Store with the account
+                    account.SetFeatureData(this, KEY_SHARES, dict);
+                }
             }
         }
 

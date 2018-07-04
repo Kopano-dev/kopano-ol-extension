@@ -234,7 +234,6 @@ namespace Acacia
                     return result;
                 }
             }
-
         }
 
         // General

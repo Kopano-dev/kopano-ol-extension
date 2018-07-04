@@ -46,6 +46,8 @@ namespace Acacia
         public const string REG_VAL_REPLY_FORWARD_SIGNATURE = "Reply-Forward Signature";
         public const string REG_VAL_CURRENT_SIGNATURE = "KOE Signature Digest";
 
+        public const string REG_VAL_SHOW_REMINDERS = "KOE Reminders";
+
         public const string REG_VAL_SYNC_TIMEFRAME = "KOE SyncTimeFrame";
         public const string REG_VAL_SYNC_SLIDER = "EAS SyncSlider";
         public const string REG_VAL_NEXT_ACCOUNT_ID = "NextAccountID";

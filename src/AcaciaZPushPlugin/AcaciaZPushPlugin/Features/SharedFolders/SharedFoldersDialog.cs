@@ -194,18 +194,18 @@ namespace Acacia.Features.SharedFolders
                 // Add public folders
                 Dictionary<BackendId, SharedFolder> publicShares;
                 shares.TryGetValue(GABUser.USER_PUBLIC, out publicShares);
-                AddUserFolders(GABUser.USER_PUBLIC, false, publicShares, false);
+                AddUserFolders(GABUser.USER_PUBLIC, null, publicShares, false);
 
                 // Add shared stores
                 foreach (ZPushAccount shared in _account.SharedAccounts)
                 {
-                    AddUserFolders(new GABUser(shared.ShareUserName), true, null, false);
+                    AddUserFolders(new GABUser(shared.ShareUserName), shared, null, false);
                 }
 
                 // Add any users for which we have shared folders
                 foreach (KeyValuePair<GABUser, Dictionary<BackendId, SharedFolder>> entry in shares.OrderBy(x => x.Key.DisplayName))
                     if (GABUser.USER_PUBLIC != entry.Key)
-                       AddUserFolders(entry.Key, false, entry.Value, false);
+                       AddUserFolders(entry.Key, null, entry.Value, false);
             }
             finally
             {
@@ -352,6 +352,8 @@ namespace Acacia.Features.SharedFolders
 
                 ctx.AddBusy(-state.folders);
 
+                List<ZPushAccount> syncAdditional = new List<ZPushAccount>();
+
                 // Handle stores
                 if (state.stores.Count > 0)
                 {
@@ -362,7 +364,23 @@ namespace Acacia.Features.SharedFolders
                     {
                         if (store.WantShare)
                         {
-                            add.Add(store);
+                            // Check if it must be added
+                            if (!store.IsShared)
+                                add.Add(store);
+
+                            // Update reminders for existing stores
+                            if (store.ShowReminders != store.ShowRemindersInitial)
+                            {
+                                ZPushAccount storeAccount = store.WholeStoreAccount;
+                                if (storeAccount != null)
+                                {
+                                    storeAccount.ShowReminders = store.ShowReminders;
+                                    syncAdditional.Add(storeAccount);
+                                    // Update UI state
+                                    store.ShowRemindersInitial = store.ShowReminders;
+                                    WholeStoreShareChanged(store);
+                                }
+                            }
                             continue;
                         }
                         else
@@ -406,6 +424,10 @@ namespace Acacia.Features.SharedFolders
                     CheckDirty();
                 }
 
+                // Sync accounts
+                foreach (ZPushAccount account in syncAdditional)
+                    _feature.Sync(account);
+
                 if (state.folders != 0)
                 {
                     // Sync account
@@ -432,7 +454,7 @@ namespace Acacia.Features.SharedFolders
 
         private void buttonOpenUser_Click(object sender, EventArgs e)
         {
-            AddUserFolders(gabLookup.SelectedUser, false, null, true);
+            AddUserFolders(gabLookup.SelectedUser, null, null, true);
         }
 
         private void gabLookup_SelectedUserChanged(object source, GABLookupControl.SelectedUserEventArgs e)
@@ -441,7 +463,7 @@ namespace Acacia.Features.SharedFolders
                 
             if (e.IsChosen)
             {
-                AddUserFolders(e.SelectedUser, false, null, true);
+                AddUserFolders(e.SelectedUser, null, null, true);
             }
         }
 
@@ -459,7 +481,7 @@ namespace Acacia.Features.SharedFolders
 
         private readonly Dictionary<GABUser, StoreTreeNode> _userFolders = new Dictionary<GABUser, StoreTreeNode>();
 
-        private void AddUserFolders(GABUser user, bool wholeStore, Dictionary<BackendId, SharedFolder> currentShares, bool select)
+        private void AddUserFolders(GABUser user, ZPushAccount wholeStore, Dictionary<BackendId, SharedFolder> currentShares, bool select)
         {
             if (user == null)
                 return;
@@ -480,7 +502,8 @@ namespace Acacia.Features.SharedFolders
                 node = new StoreTreeNode(_folders, gabLookup.GAB,
                                          user, sendAsAddress,
                                          user.DisplayName, currentShares ?? new Dictionary<BackendId, SharedFolder>(),
-                                         wholeStore);
+                                         wholeStore != null,
+                                         wholeStore?.ShowReminders == true);
                 node.DirtyChanged += UserSharesChanged;
                 node.CheckStateChanged += WholeStoreShareChanged;
                 _userFolders.Add(user, node);
@@ -646,6 +669,22 @@ namespace Acacia.Features.SharedFolders
         }
         private readonly List<StoreTreeNode> _optionWholeStoreNodes = new List<StoreTreeNode>();
         private readonly List<bool> _optionWholeStoreNodesInitial = new List<bool>();
+        private CheckState? OptionWholeStoreReminders
+        {
+            get
+            {
+                if (checkWholeStoreReminders.Visible)
+                    return checkWholeStoreReminders.CheckState;
+                return null;
+            }
+
+            set
+            {
+                _labelWholeStoreReminders.Visible = checkWholeStoreReminders.Visible = value != null;
+                if (value != null)
+                    checkWholeStoreReminders.CheckState = value.Value;
+            }
+        }
 
         private void ShowOptions(KTreeNode[] nodes)
         {
@@ -667,6 +706,7 @@ namespace Acacia.Features.SharedFolders
                 OptionReminders = null;
                 OptionPermissions = null;
                 OptionWholeStore = null;
+                OptionWholeStoreReminders = null;
                 bool readOnly = false;
                 bool haveStoreNodes = false;
                 bool haveFolderNodes = false;
@@ -749,7 +789,6 @@ namespace Acacia.Features.SharedFolders
 
                         _labelRestartRequired.Visible = isShared && !wasShared;
                     }
-
                 }
                 else
                 {
@@ -846,6 +885,7 @@ namespace Acacia.Features.SharedFolders
 
         private void checkWholeStore_CheckedChanged(object sender, EventArgs e)
         {
+            CheckState? reminders = null;
             for (int i = 0; i < _optionWholeStoreNodes.Count; ++i)
             {
                 StoreTreeNode node = _optionWholeStoreNodes[i];
@@ -857,7 +897,31 @@ namespace Acacia.Features.SharedFolders
                     case CheckState.Unchecked: wholeStore = false; break;
                 }
 
+                if (wholeStore)
+                {
+                    CheckState remindersCheck = node.ShowReminders? CheckState.Checked: CheckState.Unchecked;
+                    if (reminders == null)
+                        reminders = remindersCheck;
+                    else if (reminders.Value != remindersCheck)
+                        reminders = CheckState.Indeterminate;
+                }
                 node.WantShare = wholeStore;
+            }
+
+            OptionWholeStoreReminders = reminders;
+        }
+        private void checkWholeStoreReminders_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < _optionWholeStoreNodes.Count; ++i)
+            {
+                StoreTreeNode node = _optionWholeStoreNodes[i];
+                switch (checkWholeStoreReminders.CheckState)
+                {
+                    case CheckState.Checked: node.ShowReminders = true; break;
+                    case CheckState.Indeterminate: node.ShowReminders = node.ShowRemindersInitial; break;
+                    case CheckState.Unchecked: node.ShowReminders = false; break;
+                }
+                WholeStoreShareChanged(node);
             }
         }
 

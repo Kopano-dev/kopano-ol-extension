@@ -145,10 +145,13 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="labelSelectUser.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 0</value>
+    <value>4, 0</value>
+  </data>
+  <data name="labelSelectUser.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="labelSelectUser.Size" type="System.Drawing.Size, System.Drawing">
-    <value>105, 29</value>
+    <value>158, 40</value>
   </data>
   <data name="labelSelectUser.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -175,10 +178,13 @@
     <value>Fill</value>
   </data>
   <data name="gabLookup.Location" type="System.Drawing.Point, System.Drawing">
-    <value>114, 3</value>
+    <value>170, 5</value>
+  </data>
+  <data name="gabLookup.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="gabLookup.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>200, 0</value>
+    <value>300, 0</value>
   </data>
   <data name="gabLookup.NotFoundText" xml:space="preserve">
     <value>The user was not found</value>
@@ -187,7 +193,7 @@
     <value>Start typing name</value>
   </data>
   <data name="gabLookup.Size" type="System.Drawing.Size, System.Drawing">
-    <value>260, 23</value>
+    <value>401, 30</value>
   </data>
   <data name="gabLookup.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -220,13 +226,16 @@
     <value>NoControl</value>
   </data>
   <data name="buttonOpenUser.Location" type="System.Drawing.Point, System.Drawing">
-    <value>380, 3</value>
+    <value>579, 5</value>
+  </data>
+  <data name="buttonOpenUser.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="buttonOpenUser.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 0, 8, 0</value>
+    <value>12, 0, 12, 0</value>
   </data>
   <data name="buttonOpenUser.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 23</value>
+    <value>82, 30</value>
   </data>
   <data name="buttonOpenUser.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -250,13 +259,16 @@
     <value>Fill</value>
   </data>
   <data name="_layoutSelectUser.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+    <value>4, 5</value>
+  </data>
+  <data name="_layoutSelectUser.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="_layoutSelectUser.RowCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="_layoutSelectUser.Size" type="System.Drawing.Size, System.Drawing">
-    <value>442, 29</value>
+    <value>665, 40</value>
   </data>
   <data name="_layoutSelectUser.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -274,16 +286,19 @@
     <value>0</value>
   </data>
   <data name="_layoutSelectUser.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="labelSelectUser" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="gabLookup" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonOpenUser" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,Percent,100,AutoSize,0" /&gt;&lt;Rows Styles="Percent,100,Absolute,29" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="labelSelectUser" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="gabLookup" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="buttonOpenUser" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,Percent,100,AutoSize,0" /&gt;&lt;Rows Styles="Percent,100,Absolute,40" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="kTreeFolders.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="kTreeFolders.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 38</value>
+    <value>4, 55</value>
+  </data>
+  <data name="kTreeFolders.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="kTreeFolders.Size" type="System.Drawing.Size, System.Drawing">
-    <value>442, 224</value>
+    <value>665, 313</value>
   </data>
   <data name="kTreeFolders.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -309,6 +324,81 @@
   <data name="_layoutOptions.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
+  <data name="_labelWholeStoreReminders.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="_labelWholeStoreReminders.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="_labelWholeStoreReminders.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="_labelWholeStoreReminders.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 52</value>
+  </data>
+  <data name="_labelWholeStoreReminders.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="_labelWholeStoreReminders.Size" type="System.Drawing.Size, System.Drawing">
+    <value>133, 42</value>
+  </data>
+  <data name="_labelWholeStoreReminders.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="_labelWholeStoreReminders.Text" xml:space="preserve">
+    <value>Show reminders</value>
+  </data>
+  <data name="_labelWholeStoreReminders.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;_labelWholeStoreReminders.Name" xml:space="preserve">
+    <value>_labelWholeStoreReminders</value>
+  </data>
+  <data name="&gt;&gt;_labelWholeStoreReminders.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_labelWholeStoreReminders.Parent" xml:space="preserve">
+    <value>_layoutOptions</value>
+  </data>
+  <data name="&gt;&gt;_labelWholeStoreReminders.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="checkWholeStoreReminders.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkWholeStoreReminders.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="checkWholeStoreReminders.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkWholeStoreReminders.Location" type="System.Drawing.Point, System.Drawing">
+    <value>150, 58</value>
+  </data>
+  <data name="checkWholeStoreReminders.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>9, 6, 4, 5</value>
+  </data>
+  <data name="checkWholeStoreReminders.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 5, 0, 5</value>
+  </data>
+  <data name="checkWholeStoreReminders.Size" type="System.Drawing.Size, System.Drawing">
+    <value>22, 31</value>
+  </data>
+  <data name="checkWholeStoreReminders.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;checkWholeStoreReminders.Name" xml:space="preserve">
+    <value>checkWholeStoreReminders</value>
+  </data>
+  <data name="&gt;&gt;checkWholeStoreReminders.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkWholeStoreReminders.Parent" xml:space="preserve">
+    <value>_layoutOptions</value>
+  </data>
+  <data name="&gt;&gt;checkWholeStoreReminders.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="_labelWholeStore.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -319,13 +409,16 @@
     <value>MiddleLeft</value>
   </data>
   <data name="_labelWholeStore.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 0</value>
+    <value>4, 0</value>
+  </data>
+  <data name="_labelWholeStore.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="_labelWholeStore.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 4, 0, 3</value>
+    <value>0, 6, 0, 5</value>
   </data>
   <data name="_labelWholeStore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 27</value>
+    <value>133, 52</value>
   </data>
   <data name="_labelWholeStore.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -346,7 +439,7 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;_labelWholeStore.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="checkWholeStore.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -358,16 +451,16 @@
     <value>NoControl</value>
   </data>
   <data name="checkWholeStore.Location" type="System.Drawing.Point, System.Drawing">
-    <value>102, 4</value>
+    <value>150, 6</value>
   </data>
   <data name="checkWholeStore.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 4, 3, 3</value>
+    <value>9, 6, 4, 5</value>
   </data>
   <data name="checkWholeStore.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 3, 0, 3</value>
+    <value>0, 5, 0, 5</value>
   </data>
   <data name="checkWholeStore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>15, 20</value>
+    <value>22, 41</value>
   </data>
   <data name="checkWholeStore.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -382,7 +475,7 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;checkWholeStore.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="labelPermissionsValue.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -394,10 +487,13 @@
     <value>NoControl</value>
   </data>
   <data name="labelPermissionsValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>99, 133</value>
+    <value>145, 250</value>
+  </data>
+  <data name="labelPermissionsValue.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="labelPermissionsValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 20</value>
+    <value>524, 31</value>
   </data>
   <data name="labelPermissionsValue.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -415,7 +511,7 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;labelPermissionsValue.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="_labelName.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -424,10 +520,13 @@
     <value>Fill</value>
   </data>
   <data name="_labelName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 27</value>
+    <value>4, 94</value>
+  </data>
+  <data name="_labelName.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="_labelName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 26</value>
+    <value>133, 36</value>
   </data>
   <data name="_labelName.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -448,19 +547,19 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;_labelName.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="textName.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="textName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>102, 30</value>
+    <value>150, 99</value>
   </data>
   <data name="textName.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 3, 3, 3</value>
+    <value>9, 5, 4, 5</value>
   </data>
   <data name="textName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>343, 20</value>
+    <value>519, 26</value>
   </data>
   <data name="textName.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -475,7 +574,7 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;textName.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="_labelSendAs.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -484,10 +583,13 @@
     <value>Fill</value>
   </data>
   <data name="_labelSendAs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 53</value>
+    <value>4, 130</value>
+  </data>
+  <data name="_labelSendAs.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="_labelSendAs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 27</value>
+    <value>133, 42</value>
   </data>
   <data name="_labelSendAs.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -508,7 +610,7 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;_labelSendAs.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="checkSendAs.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -517,16 +619,16 @@
     <value>Left</value>
   </data>
   <data name="checkSendAs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>102, 57</value>
+    <value>150, 136</value>
   </data>
   <data name="checkSendAs.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 4, 3, 3</value>
+    <value>9, 6, 4, 5</value>
   </data>
   <data name="checkSendAs.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 3, 0, 3</value>
+    <value>0, 5, 0, 5</value>
   </data>
   <data name="checkSendAs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>15, 20</value>
+    <value>22, 31</value>
   </data>
   <data name="checkSendAs.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -541,7 +643,7 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;checkSendAs.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="_labelSendAsAddress.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -553,10 +655,13 @@
     <value>NoControl</value>
   </data>
   <data name="_labelSendAsAddress.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 80</value>
+    <value>4, 172</value>
+  </data>
+  <data name="_labelSendAsAddress.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="_labelSendAsAddress.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 26</value>
+    <value>133, 36</value>
   </data>
   <data name="_labelSendAsAddress.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -577,19 +682,19 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;_labelSendAsAddress.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="textSendAsAddress.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="textSendAsAddress.Location" type="System.Drawing.Point, System.Drawing">
-    <value>102, 83</value>
+    <value>150, 177</value>
   </data>
   <data name="textSendAsAddress.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 3, 3, 3</value>
+    <value>9, 5, 4, 5</value>
   </data>
   <data name="textSendAsAddress.Size" type="System.Drawing.Size, System.Drawing">
-    <value>343, 20</value>
+    <value>519, 26</value>
   </data>
   <data name="textSendAsAddress.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -604,7 +709,7 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;textSendAsAddress.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="_labelReminders.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -613,10 +718,13 @@
     <value>Fill</value>
   </data>
   <data name="_labelReminders.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 106</value>
+    <value>4, 208</value>
+  </data>
+  <data name="_labelReminders.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="_labelReminders.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 27</value>
+    <value>133, 42</value>
   </data>
   <data name="_labelReminders.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -637,7 +745,7 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;_labelReminders.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="checkReminders.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -646,16 +754,16 @@
     <value>Left</value>
   </data>
   <data name="checkReminders.Location" type="System.Drawing.Point, System.Drawing">
-    <value>102, 110</value>
+    <value>150, 214</value>
   </data>
   <data name="checkReminders.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 4, 3, 3</value>
+    <value>9, 6, 4, 5</value>
   </data>
   <data name="checkReminders.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 3, 0, 3</value>
+    <value>0, 5, 0, 5</value>
   </data>
   <data name="checkReminders.Size" type="System.Drawing.Size, System.Drawing">
-    <value>15, 20</value>
+    <value>22, 31</value>
   </data>
   <data name="checkReminders.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -670,7 +778,7 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;checkReminders.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="_labelPermissions.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -679,13 +787,16 @@
     <value>Fill</value>
   </data>
   <data name="_labelPermissions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 133</value>
+    <value>4, 250</value>
+  </data>
+  <data name="_labelPermissions.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="_labelPermissions.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 4, 0, 3</value>
+    <value>0, 6, 0, 5</value>
   </data>
   <data name="_labelPermissions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 20</value>
+    <value>133, 31</value>
   </data>
   <data name="_labelPermissions.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -706,16 +817,19 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;_labelPermissions.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
   </data>
   <data name="_labelRestartRequired.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="_labelRestartRequired.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 0</value>
+    <value>180, 0</value>
+  </data>
+  <data name="_labelRestartRequired.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="_labelRestartRequired.Size" type="System.Drawing.Size, System.Drawing">
-    <value>322, 27</value>
+    <value>489, 52</value>
   </data>
   <data name="_labelRestartRequired.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -739,22 +853,22 @@
     <value>_layoutOptions</value>
   </data>
   <data name="&gt;&gt;_labelRestartRequired.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>14</value>
   </data>
   <data name="_layoutOptions.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="_layoutOptions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 265</value>
+    <value>0, 373</value>
   </data>
   <data name="_layoutOptions.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="_layoutOptions.RowCount" type="System.Int32, mscorlib">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="_layoutOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>448, 153</value>
+    <value>673, 281</value>
   </data>
   <data name="_layoutOptions.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -772,7 +886,7 @@
     <value>2</value>
   </data>
   <data name="_layoutOptions.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="_labelWholeStore" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkWholeStore" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelPermissionsValue" Row="5" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="_labelName" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textName" Row="1" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="_labelSendAs" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkSendAs" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="_labelSendAsAddress" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textSendAsAddress" Row="3" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="_labelReminders" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkReminders" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="_labelPermissions" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="_labelRestartRequired" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,AutoSize,0,Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="_labelWholeStoreReminders" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkWholeStoreReminders" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="_labelWholeStore" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkWholeStore" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="labelPermissionsValue" Row="6" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="_labelName" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textName" Row="2" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="_labelSendAs" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkSendAs" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="_labelSendAsAddress" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="textSendAsAddress" Row="4" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="_labelReminders" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkReminders" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="_labelPermissions" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="_labelRestartRequired" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,AutoSize,0,Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="_layoutMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -780,11 +894,14 @@
   <data name="_layoutMain.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="_layoutMain.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
   <data name="_layoutMain.RowCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="_layoutMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>448, 418</value>
+    <value>673, 654</value>
   </data>
   <data name="_layoutMain.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -808,10 +925,13 @@
     <value>Fill</value>
   </data>
   <data name="_mainBusyHider.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+    <value>4, 5</value>
+  </data>
+  <data name="_mainBusyHider.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="_mainBusyHider.Size" type="System.Drawing.Size, System.Drawing">
-    <value>448, 418</value>
+    <value>673, 654</value>
   </data>
   <data name="_mainBusyHider.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -841,13 +961,13 @@
     <value>Fill</value>
   </data>
   <data name="dialogButtons.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 425</value>
+    <value>3, 666</value>
   </data>
   <data name="dialogButtons.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 1, 2, 1</value>
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="dialogButtons.Size" type="System.Drawing.Size, System.Drawing">
-    <value>450, 35</value>
+    <value>675, 42</value>
   </data>
   <data name="dialogButtons.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -868,7 +988,7 @@
     <value>Fill</value>
   </data>
   <data name="_layout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 6</value>
+    <value>9, 9</value>
   </data>
   <data name="_layout.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
@@ -877,7 +997,7 @@
     <value>2</value>
   </data>
   <data name="_layout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>454, 461</value>
+    <value>681, 710</value>
   </data>
   <data name="_layout.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -895,22 +1015,19 @@
     <value>0</value>
   </data>
   <data name="_layout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="_mainBusyHider" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="dialogButtons" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,100,AutoSize,0,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="_mainBusyHider" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="dialogButtons" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,100,AutoSize,0,Absolute,31" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+    <value>9, 20</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>466, 473</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>699, 728</value>
   </data>
   <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
+    <value>9, 9, 9, 9</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
