@@ -1332,3 +1332,9 @@ msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_WEEK_2"
 msgid "2 weeks"
 msgstr "2 semanas"
 
+#: AcaciaZPushPlugin\Features\SharedFolders\SharedFoldersDialog\_labelWholeStoreReminders.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelWholeStoreReminders.Text"
+msgid "Show reminders"
+msgstr ""
+
