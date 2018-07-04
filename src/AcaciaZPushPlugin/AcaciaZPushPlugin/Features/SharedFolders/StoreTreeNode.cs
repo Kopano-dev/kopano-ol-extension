@@ -102,7 +102,9 @@ namespace Acacia.Features.SharedFolders
 
             ChildLoader = new UserFolderLoader(this, folders, user);
             ChildLoader.ReloadOnCloseOpen = true;
-            HasCheckBox = folders.SupportsWholeStore && !string.IsNullOrWhiteSpace(user.EmailAddress);
+            // Can only open the whole store if it's supported and there's an email address, as that's needed to open it
+            // However, if it's already opened, we can remove it without the email address
+            HasCheckBox = folders.SupportsWholeStore && (!string.IsNullOrWhiteSpace(user.EmailAddress) || isShared);
             ApplyReadOnly(this, IsReadOnly);
 
             // TODO: better icons, better way of handling this
