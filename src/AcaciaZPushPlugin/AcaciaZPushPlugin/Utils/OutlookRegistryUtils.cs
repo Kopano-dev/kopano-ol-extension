@@ -1,4 +1,4 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿/// Copyright 2018 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -27,7 +27,30 @@ namespace Acacia.Utils
     {
         public static RegistryKey OpenProfileOutlookKey(string profile, RegistryKeyPermissionCheck permissions = RegistryKeyPermissionCheck.Default)
         {
-            string path = string.Format(OutlookConstants.REG_SUBKEY_ACCOUNTS, profile);
+            /* [KOE-173] - Special characters cause problems in profile names. I have been unable to find any documentation on the
+             * encoding used in registry keys, or even the allowed characters in profile names, but it seems that any character with
+             * a value of above 0x7F gets encoded as 0x5B 0x7l 0x7h, where l is the low nibble of the character code and h the high.
+             * This allows encoding of characters in the range 0x80-0xFF. I have been unable to find a character above 0xFF that
+             * Outlook will allow in a profile name, so I guess there is no way to encode higher characters.
+             */
+            string profileRegName = "";
+            foreach(char c in profile)
+            {
+                if (c >= 0x80)
+                {
+                    byte nibbleLo = (byte)(c & 0xF);
+                    byte nibbleHi = (byte)(c >> 4 & 0xF);
+                    profileRegName += "[";
+                    profileRegName += (char)(0x70 + nibbleLo);
+                    profileRegName += (char)(0x70 + nibbleHi);
+                }
+                else
+                {
+                    profileRegName += c;
+                }
+            }
+            System.Diagnostics.Trace.WriteLine("PROF: " + profile + " -> " + profileRegName);
+            string path = string.Format(OutlookConstants.REG_SUBKEY_ACCOUNTS, profileRegName);
             return OpenOutlookKey(path, permissions);
         }
 
