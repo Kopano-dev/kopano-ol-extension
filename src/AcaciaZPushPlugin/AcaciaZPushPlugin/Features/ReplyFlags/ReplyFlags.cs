@@ -102,7 +102,7 @@ namespace Acacia.Features.ReplyFlags
                             Verb verb = VerbFromString(match.Groups[1].Value);
 
                             // Parse the date
-                            DateTime date = DateTime.Parse(dateString);
+                            DateTime date = DateTime.Parse(dateString).ToUniversalTime();
 
                             // Remove the category
                             if (updateCategories)
