@@ -149,8 +149,6 @@ namespace Acacia.ZPush
             Confirmed = Capabilities == null ? ConfirmationType.IsNotZPush : ConfirmationType.IsZPush;
             Logger.Instance.Info(this, "ZPush confirmation: {0} -> {1}, {2}", Confirmed, Capabilities, GABFolder);
 
-            //new Thread(() => { System.Threading.Thread.Sleep(30000); _confirmedChanged?.Invoke(this); }).Start();
-            //
             _confirmedChanged?.Invoke(this);
         }
 
