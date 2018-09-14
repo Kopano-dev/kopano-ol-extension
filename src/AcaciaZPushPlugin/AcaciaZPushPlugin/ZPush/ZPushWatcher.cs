@@ -121,14 +121,20 @@ namespace Acacia.ZPush
                     {
                         oof = connection.Execute(new ActiveSync.SettingsOOFGet());
                     }
-                    account.OnConfirmationResponse(oof.RawResponse);
+
+                    new Thread(() => { System.Threading.Thread.Sleep(30000);
+                        account.OnConfirmationResponse(oof.RawResponse);
+                        Explorer_SelectionChange();
+                        ThisAddIn.Instance.GetFeature<FeatureOutOfOffice>()?.OnOOFSettings(account, oof);
+                    }).Start();
+                    /*account.OnConfirmationResponse(oof.RawResponse);
 
                     // [ZO-109] Always update the current selection, it might have changed.
                     Explorer_SelectionChange();
 
                     // Notify the OOF feature.
                     // TODO: this coupling is pretty hideous
-                    ThisAddIn.Instance.GetFeature<FeatureOutOfOffice>()?.OnOOFSettings(account, oof);
+                    ThisAddIn.Instance.GetFeature<FeatureOutOfOffice>()?.OnOOFSettings(account, oof);*/
                 });
             }
             else

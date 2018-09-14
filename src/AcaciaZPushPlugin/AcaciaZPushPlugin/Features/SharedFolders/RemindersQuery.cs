@@ -92,7 +92,7 @@ namespace Acacia.Features.SharedFolders
                 _queryRoot = FolderQuery;
                 if (!(_queryRoot is SearchQuery.And))
                     return false;
-                Logger.Instance.Debug(this, "Current query:\n{0}", _queryRoot.ToString());
+                Logger.Instance.Trace(this, "Current query:\n{0}", _queryRoot.ToString());
 
                 SearchQuery.And root = (SearchQuery.And)_queryRoot;
                 // TODO: more strict checking of query
@@ -113,7 +113,7 @@ namespace Acacia.Features.SharedFolders
                 }
 
                 // We have the root, but not the custom query. Create it.
-                Logger.Instance.Debug(this, "Creating custom query");
+                Logger.Instance.Trace(this, "Creating custom query");
                 if (_queryCustomShared == null)
                     _queryCustomShared = AddCustomQuery(root, "S");
                 _queryCustomConfigured = AddCustomQuery(root, "C");
@@ -124,10 +124,10 @@ namespace Acacia.Features.SharedFolders
                     )
                 ));
 
-                Logger.Instance.Debug(this, "Modified query:\n{0}", root.ToString());
+                Logger.Instance.Trace(this, "Modified query:\n{0}", root.ToString());
                 // Store it
                 FolderQuery = root;
-                Logger.Instance.Debug(this, "Modified query readback:\n{0}", FolderQuery);
+                Logger.Instance.Trace(this, "Modified query readback:\n{0}", FolderQuery);
             }
             catch (Exception e)
             {
@@ -281,7 +281,7 @@ namespace Acacia.Features.SharedFolders
                 _queryRoot = FolderQuery;
                 if (!(_queryRoot is SearchQuery.And))
                     return false;
-                Logger.Instance.Debug(this, "Current query:\n{0}", _queryRoot.ToString());
+                Logger.Instance.Trace(this, "Current query:\n{0}", _queryRoot.ToString());
 
                 SearchQuery.And root = (SearchQuery.And)_queryRoot;
                 // TODO: more strict checking of query
@@ -304,10 +304,10 @@ namespace Acacia.Features.SharedFolders
                     root.Operands.Add(_queryCustomShared);
                 }
 
-                Logger.Instance.Debug(this, "Modified query:\n{0}", root.ToString());
+                Logger.Instance.Trace(this, "Modified query:\n{0}", root.ToString());
                 // Store it
                 FolderQuery = root;
-                Logger.Instance.Debug(this, "Modified query readback:\n{0}", FolderQuery);
+                Logger.Instance.Trace(this, "Modified query readback:\n{0}", FolderQuery);
             }
             catch (Exception e)
             {

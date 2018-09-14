@@ -446,7 +446,7 @@ namespace Acacia.Stubs.OutlookWrappers
                 {
                     SearchCriteriaState state;
                     imapi.GetSearchCriteria(0, &restrict, &sb1, out state);
-                    Logger.Instance.Debug(this, "GetSearchCriteria: {0}: {1}\n{2}", Name, state, 
+                    Logger.Instance.Trace(this, "GetSearchCriteria: {0}: {1}\n{2}", Name, state, 
                                             restrict == null ? "<NODE>" : restrict->ToString());
                     return restrict->ToSearchQuery();
                 }
@@ -466,7 +466,7 @@ namespace Acacia.Stubs.OutlookWrappers
                     using (RestrictionEncoder res = value.ToRestriction())
                     {
                         SRestriction* resEncoded = res.Encoded;
-                        Logger.Instance.Debug(this, "SetSearchCriteria: {0}\n{1}", Name, resEncoded == null ? "<NODE>" : resEncoded->ToString());
+                        Logger.Instance.Trace(this, "SetSearchCriteria: {0}\n{1}", Name, resEncoded == null ? "<NODE>" : resEncoded->ToString());
                         imapi.SetSearchCriteria(resEncoded, null, SearchCriteriaFlags.NONE);
                     }
                 }

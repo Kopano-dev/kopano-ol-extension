@@ -85,7 +85,19 @@ namespace Acacia.ZPush
             // Notify any listeners
             if (Available != null)
             {
-                Tasks.Task(null, null, "Watcher_WatchingFolder", () => Available(folder));
+                Logger.Instance.Debug(this, "ZPUSHCANNEL FOLDER, NOTIFY Available: {0} on {1}", folder.Name, _account.DisplayName);
+                Tasks.Task(null, null, "Watcher_WatchingFolder", 
+                    () =>
+                    {
+                        Logger.Instance.Debug(this, "ZPUSHCANNEL FOLDER, NOTIFY Available before: {0} on {1}", folder.Name, _account.DisplayName);
+                        Available(folder);
+                        Logger.Instance.Debug(this, "ZPUSHCANNEL FOLDER, NOTIFY Available after: {0} on {1}", folder.Name, _account.DisplayName);
+                    }
+                );
+            }
+            else
+            {
+                Logger.Instance.Debug(this, "ZPUSHCANNEL FOLDER, Available not registered: {0} on {1}", folder.Name, _account.DisplayName);
             }
         }
 

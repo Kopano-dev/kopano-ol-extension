@@ -576,9 +576,11 @@ namespace Acacia.Features.GAB
 
             zpush.ConfirmedChanged += (z) =>
             {
+                Logger.Instance.Debug(this, "Account discovered and confirmed: {0} -> {1}: {2}", zpush.DisplayName, zpush.Confirmed, zpush.GABFolder);
                 if (zpush.Confirmed == ZPushAccount.ConfirmationType.IsZPush &&
                     !string.IsNullOrEmpty(zpush.GABFolder))
                 {
+                    Logger.Instance.Debug(this, "Account discovered, listening for folder: {0} -> {1}: {2}", zpush.DisplayName, zpush.Confirmed, zpush.GABFolder);
                     // Set up the Z-Push channel listener
                     ZPushChannel channel = ZPushChannels.Get(this, zpush, zpush.GABFolder);
                     channel.Available += ZPushChannelAvailable;
@@ -735,6 +737,7 @@ namespace Acacia.Features.GAB
 
         private void ZPushChannelAvailable(IFolder folder)
         {
+            Logger.Instance.Debug(this, "Z-Push channel available 0: {0}", folder);
             using (IStore store = folder.GetStore())
             {
                 Logger.Instance.Debug(this, "Z-Push channel available: {0} on {1}", folder, store.DisplayName);
@@ -742,6 +745,7 @@ namespace Acacia.Features.GAB
                 ZPushAccount account = Watcher.Accounts.GetAccount(folder);
                 if (account != null)
                 {
+                    Logger.Instance.Debug(this, "Z-Push channel available 0: {0} -> {1}", folder, account);
                     account.LinkedGABFolder(folder);
                     RegisterGABAccount(account, folder);
                 }
