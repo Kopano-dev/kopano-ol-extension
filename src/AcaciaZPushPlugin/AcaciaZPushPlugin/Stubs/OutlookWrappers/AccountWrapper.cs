@@ -231,16 +231,21 @@ namespace Acacia.Stubs.OutlookWrappers
         {
             // Use IOlkAccount to notify while we're running
             // IOlkAccount can only be accessed on main thread
+            Logger.Instance.Trace(this, "SetAccountProp1: {0}: {1}", propTag, value);
             ThisAddIn.Instance.InUI(() =>
             {
+                Logger.Instance.Trace(this, "SetAccountProp2: {0}: {1}", propTag, value);
                 using (ComRelease com = new ComRelease())
                 {
+                    Logger.Instance.Trace(this, "SetAccountProp3: {0}: {1}", propTag, value);
                     NSOutlook.Account account = com.Add(FindAccountObject());
                     IOlkAccount olk = com.Add(account.IOlkAccount);
+                    Logger.Instance.Trace(this, "SetAccountProp4: {0}: {1}", propTag, value);
 
-                    switch(propTag.type)
+                    switch (propTag.type)
                     {
                         case PropType.UNICODE:
+                            Logger.Instance.Trace(this, "SetAccountProp5: {0}: {1}", propTag, value);
                             fixed (char* ptr = ((string)value).ToCharArray())
                             {
                                 ACCT_VARIANT val = new ACCT_VARIANT()
@@ -249,23 +254,30 @@ namespace Acacia.Stubs.OutlookWrappers
                                     lpszW = ptr
                                 };
                                 olk.SetProp(propTag, &val);
+                                Logger.Instance.Trace(this, "SetAccountProp6: {0}: {1}", propTag, value);
                                 olk.SaveChanges(0);
+                                Logger.Instance.Trace(this, "SetAccountProp7: {0}: {1}", propTag, value);
                             }
                             break;
                         case PropType.LONG:
                             {
+                                Logger.Instance.Trace(this, "SetAccountProp8: {0}: {1}", propTag, value);
                                 ACCT_VARIANT val = new ACCT_VARIANT()
                                 {
                                     dwType = (uint)PropType.LONG,
                                     dw = (uint)value
                                 };
                                 olk.SetProp(propTag, &val);
+                                Logger.Instance.Trace(this, "SetAccountProp9: {0}: {1}", propTag, value);
                                 olk.SaveChanges(0);
+                                Logger.Instance.Trace(this, "SetAccountPropA: {0}: {1}", propTag, value);
                                 break;
                             }
                     }
+                    Logger.Instance.Trace(this, "SetAccountPropDone: {0}: {1}", propTag, value);
+
                 }
-            });
+            }, true);
         }
 
         public string this[string index]
