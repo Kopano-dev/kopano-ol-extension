@@ -192,15 +192,20 @@ namespace Acacia.Features.Signatures
             using (ZPushConnection connection = account.Connect())
             using (ZPushWebServiceInfo infoService = connection.InfoService)
             {
+                Logger.Instance.Trace(this, "Executing request: {0}", account);
                 GetSignatures result = infoService.Execute(new GetSignaturesRequest());
+                Logger.Instance.Trace(this, "Executed request: {0} -> {1}", account, result);
 
                 // Store the signatures
                 Dictionary<object, string> fullNames = new Dictionary<object, string>();
                 using (ISignatures signatures = ThisAddIn.Instance.GetSignatures())
                 {
+                    Logger.Instance.Trace(this, "Storing signatures: {0}", account);
                     foreach (Signature signature in result.all.Values)
                     {
+                        Logger.Instance.Trace(this, "Storing signature: {0}: {1}", account, signature);
                         string name = StoreSignature(signatures, account, signature);
+                        Logger.Instance.Trace(this, "Stored signature: {0}: {1}: {2}", account, name, signature);
                         fullNames.Add(signature.id, name);
                     }
                 }
@@ -208,13 +213,16 @@ namespace Acacia.Features.Signatures
                 // Set default signatures if available and none are set
                 if (!string.IsNullOrEmpty(result.new_message) && ShouldSetSignature(account.SignatureNewMessage))
                 {
+                    Logger.Instance.Trace(this, "Setting signature new message: {0}: {1}", account, result.new_message);
                     account.SignatureNewMessage = fullNames[result.new_message];
                 }
                 if (!string.IsNullOrEmpty(result.replyforward_message) && ShouldSetSignature(account.SignatureReplyForwardMessage))
                 {
+                    Logger.Instance.Trace(this, "Setting signature reply message: {0}: {1}", account, result.replyforward_message);
                     account.SignatureReplyForwardMessage = fullNames[result.replyforward_message];
                 }
 
+                Logger.Instance.Trace(this, "Signature synced: {0}: {1}", account, result.hash);
                 return result.hash;
             }
         }

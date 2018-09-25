@@ -42,25 +42,25 @@ namespace Acacia.Utils
             {
                 while (!_tasks.IsCompleted)
                 {
-                    Logger.Instance.Debug(this, "Take task 1");
+                    Logger.Instance.Trace(this, "Take task 1");
                     AcaciaTask task = _tasks.Take();
-                    Logger.Instance.Debug(this, "Take task 2: {0}", task);
+                    Logger.Instance.Trace(this, "Take task 2: {0}", task);
                     PerformTask(task);
-                    Logger.Instance.Debug(this, "Take task 3: {0}", task);
+                    Logger.Instance.Trace(this, "Take task 3: {0}", task);
                 }
                 Logger.Instance.Debug(this, "Worker completed");
             }
             catch(Exception e)
             {
-                Logger.Instance.Debug(this, "Worker failure: {0}", e);
+                Logger.Instance.Warning(this, "Worker failure: {0}", e);
             }
         }
 
         protected override void EnqueueTask(AcaciaTask task)
         {
-            Logger.Instance.Debug(this, "EnqueueTask 1: {0}", task);
+            Logger.Instance.Trace(this, "EnqueueTask 1: {0}", task);
             _tasks.Add(task);
-            Logger.Instance.Debug(this, "EnqueueTask 2: {0}", task);
+            Logger.Instance.Trace(this, "EnqueueTask 2: {0}", task);
         }
 
         override public string Name { get { return "Background"; } }
