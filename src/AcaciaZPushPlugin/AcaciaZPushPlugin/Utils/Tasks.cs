@@ -71,6 +71,11 @@ namespace Acacia.Utils
             }
         }
 
+        public override string ToString()
+        {
+            return Id;
+        }
+
     }
 
     public abstract class TaskExecutor
@@ -136,8 +141,13 @@ namespace Acacia.Utils
 
         public static void Task(AcaciaTask task, bool synchronous = false)
         {
+            Logger.Instance.Debug(typeof(Tasks), "TASK added: {0}", task);
             if (synchronous)
+            {
+                Logger.Instance.Debug(typeof(Tasks), "TASK exec synchronous 1: {0}", task);
                 task.Execute();
+                Logger.Instance.Debug(typeof(Tasks), "TASK exec synchronous 2: {0}", task);
+            }
             else
                 Executor.AddTask(task);
         }
