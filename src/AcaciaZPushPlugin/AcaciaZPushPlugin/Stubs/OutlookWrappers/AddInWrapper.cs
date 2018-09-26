@@ -119,7 +119,10 @@ namespace Acacia.Stubs.OutlookWrappers
                 }, null);
 
                 if (x != null)
+                {
+                    Logger.Instance.Trace(this, "Rethrowing exception from UI send: {0}", x);
                     throw x;
+                }
             }
             else
             {
