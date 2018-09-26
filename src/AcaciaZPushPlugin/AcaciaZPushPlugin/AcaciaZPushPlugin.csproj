@@ -396,6 +396,7 @@
     <Compile Include="Utils\DisposableTracerFull.cs" />
     <Compile Include="Utils\DisposableWrapper.cs" />
     <Compile Include="Utils\ImageUtils.cs" />
+    <Compile Include="Utils\MemUtil.cs" />
     <Compile Include="Utils\RegistryUtil.cs" />
     <Compile Include="Utils\SizeUtil.cs" />
     <Compile Include="ZPush\API\SharedFolders\AvailableFolder.cs" />

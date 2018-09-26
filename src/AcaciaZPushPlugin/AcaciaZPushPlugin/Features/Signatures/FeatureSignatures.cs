@@ -134,8 +134,8 @@ namespace Acacia.Features.Signatures
             if (serverSignatureHash != null)
             {
                 Logger.Instance.Trace(this, "Checking signature hash for account {0}: {1}", account, serverSignatureHash);
-                if (serverSignatureHash == account.LocalSignaturesHash)
-                    return;
+                //if (serverSignatureHash == account.LocalSignaturesHash)
+                  //  return;
             }
 
             // Fetch signatures if there is a change

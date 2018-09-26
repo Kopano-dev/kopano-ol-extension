@@ -246,16 +246,16 @@ namespace Acacia.Stubs.OutlookWrappers
                     {
                         case PropType.UNICODE:
                             Logger.Instance.Trace(this, "SetAccountProp5: {0}: {1}", propTag, value);
-                            fixed (char* ptr = ((string)value).ToCharArray())
+                            using (MapiAlloc mem = MapiAlloc.FromString((string)value))
                             {
                                 ACCT_VARIANT val = new ACCT_VARIANT()
                                 {
                                     dwType = (uint)PropType.UNICODE,
-                                    lpszW = ptr
+                                    lpszW = (char*)mem.Ptr
                                 };
-                                //olk.SetProp(propTag, &val);
+                                olk.SetProp(propTag, &val);
                                 Logger.Instance.Trace(this, "SetAccountProp6: {0}: {1}", propTag, value);
-                                //olk.SaveChanges(0);
+                                olk.SaveChanges(0);
                                 Logger.Instance.Trace(this, "SetAccountProp7: {0}: {1}", propTag, value);
                             }
                             break;
@@ -267,9 +267,9 @@ namespace Acacia.Stubs.OutlookWrappers
                                     dwType = (uint)PropType.LONG,
                                     dw = (uint)value
                                 };
-                                //olk.SetProp(propTag, &val);
+                                olk.SetProp(propTag, &val);
                                 Logger.Instance.Trace(this, "SetAccountProp9: {0}: {1}", propTag, value);
-                                //olk.SaveChanges(0);
+                                olk.SaveChanges(0);
                                 Logger.Instance.Trace(this, "SetAccountPropA: {0}: {1}", propTag, value);
                                 break;
                             }
