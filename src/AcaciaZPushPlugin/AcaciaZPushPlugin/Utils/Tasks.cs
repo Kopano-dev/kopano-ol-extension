@@ -31,6 +31,12 @@ namespace Acacia.Utils
         public readonly string Name;
         public readonly Action Action;
 
+        public long TaskId
+        {
+            get;
+            internal set;
+        }
+
         public AcaciaTask(CompletionTracker completion, Feature owner, string name, Action action)
         {
             this._completion = completion;
@@ -44,9 +50,13 @@ namespace Acacia.Utils
         {
             get
             {
+                string suffix = "";
+                if (TaskId != 0)
+                    suffix = ":" + TaskId;
+
                 if (Owner != null)
-                    return Owner.Name + "." + Name;
-                return Name;
+                    return Owner.Name + "." + Name + suffix;
+                return Name + suffix;
             }
         }
 
@@ -80,12 +90,16 @@ namespace Acacia.Utils
 
     public abstract class TaskExecutor
     {
+        internal TasksTracer Tracer;
+
         public abstract string Name { get; }
 
         public void AddTask(AcaciaTask task)
         {
             Interlocked.Increment(ref Statistics.StartedTasks);
+            Tracer?.OnTaskAdding(task);
             EnqueueTask(task);
+            Tracer?.OnTaskAdded(task);
         }
 
         abstract protected void EnqueueTask(AcaciaTask task);
@@ -94,10 +108,17 @@ namespace Acacia.Utils
         {
             try
             {
+                Tracer?.OnTaskExecuting(task);
                 task.Execute();
+            }
+            catch(Exception e)
+            {
+                Tracer?.OnTaskFailed(task, e);
+                throw e;
             }
             finally
             {
+                Tracer?.OnTaskExecuted(task);
                 Interlocked.Increment(ref Statistics.FinishedTasks);
             }
         }
@@ -106,6 +127,8 @@ namespace Acacia.Utils
     public static class Tasks
     {
         private static TaskExecutor _executor;
+        private static TasksTracer _tracer;
+        private static long _taskId;
 
         public static TaskExecutor Executor
         {
@@ -125,6 +148,13 @@ namespace Acacia.Utils
                             _executor = new TasksBackground();
                             break;
                     }
+
+                    if (GlobalOptions.INSTANCE.TaskTrace)
+                    {
+                        // Create a tracer
+                        _tracer = new TasksTracer();
+                        _executor.Tracer = _tracer;
+                    }
                 }
                 return _executor;
             }
@@ -134,6 +164,11 @@ namespace Acacia.Utils
             }
         }
 
+        public static TasksTracer Tracer
+        {
+            get { return _tracer; }
+        }
+
         public static void Task(CompletionTracker completion, Feature owner, string name, Action action)
         {
             Task(new AcaciaTask(completion, owner, name, action));
@@ -141,6 +176,8 @@ namespace Acacia.Utils
 
         public static void Task(AcaciaTask task, bool synchronous = false)
         {
+            task.TaskId = Interlocked.Increment(ref _taskId);
+
             Logger.Instance.Trace(typeof(Tasks), "TASK added: {0}", task);
             if (synchronous)
             {

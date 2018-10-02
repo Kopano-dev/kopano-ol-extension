@@ -116,6 +116,15 @@ namespace Acacia
         }
         private static readonly BoolOption WRAPPER_TRACE = new BoolOption("WrapperTrace", false);
 
+        [AcaciaOption("Enables tracing of task execution. Should only be enabled for debugging, as it's very " +
+                      "resource intensive. Requires WrapperTrace.")]
+        public bool TaskTrace
+        {
+            get { return GetOption(null, TASK_TRACE); }
+            set { SetOption(null, TASK_TRACE, value); }
+        }
+        private static readonly BoolOption TASK_TRACE = new BoolOption("TaskTrace", false);
+
         [AcaciaOption("Enables or disables logging completely.")]
         public bool Logging
         {

@@ -399,6 +399,7 @@
     <Compile Include="Utils\MemUtil.cs" />
     <Compile Include="Utils\RegistryUtil.cs" />
     <Compile Include="Utils\SizeUtil.cs" />
+    <Compile Include="Utils\TasksTracer.cs" />
     <Compile Include="ZPush\API\SharedFolders\AvailableFolder.cs" />
     <Compile Include="ZPush\API\SharedFolders\SharedFolder.cs" />
     <Compile Include="ZPush\API\SharedFolders\Types.cs" />

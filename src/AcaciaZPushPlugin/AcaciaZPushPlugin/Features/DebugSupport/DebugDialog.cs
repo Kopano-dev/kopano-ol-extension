@@ -35,15 +35,17 @@ namespace Acacia.Features.DebugSupport
 {
     public partial class DebugDialog : KopanoDialog
     {
-        private readonly DisposableTracerFull _tracer;
+        private readonly DisposableTracerFull _wrapperTracer;
+        private readonly TasksTracer _taskTracer;
 
         public DebugDialog()
         {
             InitializeComponent();
             Properties.SelectedObject = new DebugInfo();
 
-            _tracer = DisposableWrapper.GetTracer();
-            if (_tracer == null)
+            // Check wrapper tracing
+            _wrapperTracer = DisposableWrapper.GetTracer();
+            if (_wrapperTracer == null)
             {
                 // If we don't have a wrapper tracer, hide the tabs
                 _tabs.SizeMode = TabSizeMode.Fixed;
@@ -62,6 +64,8 @@ namespace Acacia.Features.DebugSupport
                 Width = Width + 400;
                 Height = Height + 200;
             }
+
+            _taskTracer = Tasks.Tracer;
         }
 
         private void UpdateFields()
@@ -69,18 +73,88 @@ namespace Acacia.Features.DebugSupport
             Properties.Refresh();
             RefreshWrappers();
             RefreshItemEvents();
+            RefreshTasks();
         }
+
+        #region Task tracing
+
+        private void RefreshTasks()
+        {
+            if (_taskTracer == null)
+                return;
+
+            _listTasks.Items.Clear();
+            foreach(TasksTracer.TaskInfo info in _taskTracer.Tasks)
+            {
+                ListViewItem item = new ListViewItem(info.Task.Id);
+                item.Tag = info;
+                switch(info.State)
+                {
+                    case TasksTracer.TaskInfo.EventType.Finished:
+                        item.ForeColor = Color.Black;
+                        break;
+                    case TasksTracer.TaskInfo.EventType.Created:
+                        item.ForeColor = Color.Yellow;
+                        break;
+                    case TasksTracer.TaskInfo.EventType.Added:
+                        item.ForeColor = Color.Blue;
+                        break;
+                    case TasksTracer.TaskInfo.EventType.Started:
+                        item.ForeColor = Color.Green;
+                        break;
+                    case TasksTracer.TaskInfo.EventType.Failed:
+                        item.ForeColor = Color.Red;
+                        break;
+                }
+                item.SubItems.Add(MakeDate(info.Created));
+                item.SubItems.Add(MakeDuration(info.Added, info.Created.Value));
+                item.SubItems.Add(MakeDuration(info.Started, info.Created.Value));
+                item.SubItems.Add(MakeDuration(info.Failed ?? info.Finished, info.Created.Value));
+                if (info.FailedCause != null)
+                {
+                    item.SubItems.Add(info.FailedCause.Message);
+                }
+
+                _listTasks.Items.Add(item);
+            }
+            foreach (ColumnHeader header in _listTasks.Columns)
+                header.Width = -2;
+
+        }
+
+        private string MakeDate(DateTime? d)
+        {
+            if (d == null)
+                return "";
+
+            return d.Value.ToString("HH:mm:ss.fff");
+        }
+
+        private string MakeDuration(DateTime? d, DateTime origin)
+        {
+            if (d == null)
+                return "";
+
+            return (d.Value.Subtract(origin)).ToString("fff");
+        }
+
+        private void _buttonTasksRefresh_Click(object sender, EventArgs e)
+        {
+            RefreshTasks();
+        }
+
+        #endregion
 
         #region Wrappers
 
         private void RefreshWrappers()
         {
-            if (_tracer == null)
+            if (_wrapperTracer == null)
                 return;
 
             // Wrappers
             listWrappers.Items.Clear();
-            foreach (DisposableTracerFull.DisposableInfo wrapperInfo in _tracer.GetActive())
+            foreach (DisposableTracerFull.DisposableInfo wrapperInfo in _wrapperTracer.GetActive())
             {
                 Type type = wrapperInfo.WrapperType;
                 string name = type.Name;
@@ -99,7 +173,7 @@ namespace Acacia.Features.DebugSupport
 
             // Wrapper types
             listWrapperTypes.Items.Clear();
-            foreach(KeyValuePair<Type, int> type in _tracer.GetTypes())
+            foreach(KeyValuePair<Type, int> type in _wrapperTracer.GetTypes())
             {
                 string name = type.Key.Name;
                 if (type.Key.DeclaringType != null)
@@ -115,7 +189,7 @@ namespace Acacia.Features.DebugSupport
 
             // Wrapper locations
             listWrapperLocations.Items.Clear();
-            foreach (KeyValuePair<DisposableTracerFull.CustomTrace, int> entry in _tracer.GetLocations())
+            foreach (KeyValuePair<DisposableTracerFull.CustomTrace, int> entry in _wrapperTracer.GetLocations())
             {
                 ListViewItem item = new ListViewItem(entry.Key.DisplayName);
                 item.SubItems.Add(entry.Value.ToString());
@@ -180,7 +254,7 @@ namespace Acacia.Features.DebugSupport
 
         private void RefreshItemEvents()
         {
-            if (_tracer == null)
+            if (_wrapperTracer == null)
                 return;
 
             listItemEvents.Items.Clear();
@@ -407,5 +481,6 @@ namespace Acacia.Features.DebugSupport
         }
 
         #endregion
+
     }
 }

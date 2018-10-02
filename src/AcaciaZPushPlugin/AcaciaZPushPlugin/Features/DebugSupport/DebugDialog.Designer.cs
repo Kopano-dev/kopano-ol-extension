@@ -71,6 +71,17 @@
             this._layoutEventsButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonCleanGC = new System.Windows.Forms.Button();
             this.buttonCopyFilter = new System.Windows.Forms.Button();
+            this._tabTasks = new System.Windows.Forms.TabPage();
+            this._layoutTasks = new System.Windows.Forms.TableLayoutPanel();
+            this._listTasks = new System.Windows.Forms.ListView();
+            this._columnTaskId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this._columnTaskCreated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this._columnTaskAdded = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this._columnTaskStarted = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this._columnTaskFinished = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this._layoutTaskButtons = new System.Windows.Forms.FlowLayoutPanel();
+            this._buttonTasksRefresh = new System.Windows.Forms.Button();
+            this._columnFailure = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnMethod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnFile = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnLine = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -91,6 +102,9 @@
             this._tabItemEvents.SuspendLayout();
             this._layoutItemEvents.SuspendLayout();
             this._layoutEventsButtons.SuspendLayout();
+            this._tabTasks.SuspendLayout();
+            this._layoutTasks.SuspendLayout();
+            this._layoutTaskButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // columnMethod
@@ -177,6 +191,7 @@
             this._tabs.Controls.Add(this._tabWrapperTypes);
             this._tabs.Controls.Add(this._tabWrapperLocations);
             this._tabs.Controls.Add(this._tabItemEvents);
+            this._tabs.Controls.Add(this._tabTasks);
             resources.ApplyResources(this._tabs, "_tabs");
             this._tabs.Name = "_tabs";
             this._tabs.SelectedIndex = 0;
@@ -391,6 +406,71 @@
             this.buttonCopyFilter.UseVisualStyleBackColor = true;
             this.buttonCopyFilter.Click += new System.EventHandler(this.buttonCopyFilter_Click);
             // 
+            // _tabTasks
+            // 
+            this._tabTasks.Controls.Add(this._layoutTasks);
+            resources.ApplyResources(this._tabTasks, "_tabTasks");
+            this._tabTasks.Name = "_tabTasks";
+            this._tabTasks.UseVisualStyleBackColor = true;
+            // 
+            // _layoutTasks
+            // 
+            resources.ApplyResources(this._layoutTasks, "_layoutTasks");
+            this._layoutTasks.Controls.Add(this._listTasks, 0, 0);
+            this._layoutTasks.Controls.Add(this._layoutTaskButtons, 0, 1);
+            this._layoutTasks.Name = "_layoutTasks";
+            // 
+            // _listTasks
+            // 
+            this._listTasks.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this._columnTaskId,
+            this._columnTaskCreated,
+            this._columnTaskAdded,
+            this._columnTaskStarted,
+            this._columnTaskFinished,
+            this._columnFailure});
+            resources.ApplyResources(this._listTasks, "_listTasks");
+            this._listTasks.Name = "_listTasks";
+            this._listTasks.UseCompatibleStateImageBehavior = false;
+            this._listTasks.View = System.Windows.Forms.View.Details;
+            // 
+            // _columnTaskId
+            // 
+            resources.ApplyResources(this._columnTaskId, "_columnTaskId");
+            // 
+            // _columnTaskCreated
+            // 
+            resources.ApplyResources(this._columnTaskCreated, "_columnTaskCreated");
+            // 
+            // _columnTaskAdded
+            // 
+            resources.ApplyResources(this._columnTaskAdded, "_columnTaskAdded");
+            // 
+            // _columnTaskStarted
+            // 
+            resources.ApplyResources(this._columnTaskStarted, "_columnTaskStarted");
+            // 
+            // _columnTaskFinished
+            // 
+            resources.ApplyResources(this._columnTaskFinished, "_columnTaskFinished");
+            // 
+            // _layoutTaskButtons
+            // 
+            resources.ApplyResources(this._layoutTaskButtons, "_layoutTaskButtons");
+            this._layoutTaskButtons.Controls.Add(this._buttonTasksRefresh);
+            this._layoutTaskButtons.Name = "_layoutTaskButtons";
+            // 
+            // _buttonTasksRefresh
+            // 
+            resources.ApplyResources(this._buttonTasksRefresh, "_buttonTasksRefresh");
+            this._buttonTasksRefresh.Name = "_buttonTasksRefresh";
+            this._buttonTasksRefresh.UseVisualStyleBackColor = true;
+            this._buttonTasksRefresh.Click += new System.EventHandler(this._buttonTasksRefresh_Click);
+            // 
+            // _columnFailure
+            // 
+            resources.ApplyResources(this._columnFailure, "_columnFailure");
+            // 
             // DebugDialog
             // 
             resources.ApplyResources(this, "$this");
@@ -417,6 +497,11 @@
             this._layoutItemEvents.PerformLayout();
             this._layoutEventsButtons.ResumeLayout(false);
             this._layoutEventsButtons.PerformLayout();
+            this._tabTasks.ResumeLayout(false);
+            this._layoutTasks.ResumeLayout(false);
+            this._layoutTasks.PerformLayout();
+            this._layoutTaskButtons.ResumeLayout(false);
+            this._layoutTaskButtons.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -458,5 +543,16 @@
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.ColumnHeader columnHeader7;
         private System.Windows.Forms.Button buttonCopyFilter;
+        private System.Windows.Forms.TabPage _tabTasks;
+        private System.Windows.Forms.ListView _listTasks;
+        private System.Windows.Forms.TableLayoutPanel _layoutTasks;
+        private System.Windows.Forms.FlowLayoutPanel _layoutTaskButtons;
+        private System.Windows.Forms.Button _buttonTasksRefresh;
+        private System.Windows.Forms.ColumnHeader _columnTaskId;
+        private System.Windows.Forms.ColumnHeader _columnTaskStarted;
+        private System.Windows.Forms.ColumnHeader _columnTaskFinished;
+        private System.Windows.Forms.ColumnHeader _columnTaskCreated;
+        private System.Windows.Forms.ColumnHeader _columnTaskAdded;
+        private System.Windows.Forms.ColumnHeader _columnFailure;
     }
 }
