@@ -147,7 +147,7 @@ namespace Acacia.ZPush
             ZPushVersion = ZPushVersion.FromString(response.ZPushVersion);
             ServerSignaturesHash = response.SignaturesHash;
             Confirmed = Capabilities == null ? ConfirmationType.IsNotZPush : ConfirmationType.IsZPush;
-            Logger.Instance.Info(this, "ZPush confirmation: {0} -> {1}, {2}", Confirmed, Capabilities, GABFolder);
+            Logger.Instance.Info(this, "ZPush confirmation: {0} -> {1}, {2}, {3} -> {4}", Confirmed, Capabilities, GABFolder, response.ZPushVersion, ZPushVersion);
 
             _confirmedChanged?.Invoke(this);
         }

@@ -45,7 +45,7 @@ namespace Acacia.ZPush
 
             try
             {
-                Match match = new Regex(@"(\d+)[.](\d+)[.](\d+)[.]").Match(version);
+                Match match = new Regex(@"(\d+)[.](\d+)[.]").Match(version);
                 if (match.Success)
                 {
                     int major = int.Parse(match.Groups[1].Value);
