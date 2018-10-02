@@ -253,6 +253,7 @@ namespace Acacia.Stubs.OutlookWrappers
                                     dwType = (uint)PropType.UNICODE,
                                     lpszW = (char*)mem.Ptr
                                 };
+                                Logger.Instance.Trace(this, "SetAccountProp5A: {0}: {1}", propTag, value);
                                 olk.SetProp(propTag, &val);
                                 Logger.Instance.Trace(this, "SetAccountProp6: {0}: {1}", propTag, value);
                                 olk.SaveChanges(0);
