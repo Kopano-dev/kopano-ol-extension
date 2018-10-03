@@ -27,7 +27,7 @@ namespace Acacia.Utils
     {
         public static Dictionary<string, object> Deserialise(string json)
         {
-            var serializer = new JavaScriptSerializer(); //using System.Web.Script.Serialization;
+            var serializer = new JavaScriptSerializer();
             Dictionary<string, object> values = serializer.Deserialize<Dictionary<string, object>>(json);
             return values;
         }
