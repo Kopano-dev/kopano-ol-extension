@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-16 11:10+0000\n"
-"PO-Revision-Date: 2018-07-04 10:54+0000\n"
+"PO-Revision-Date: 2018-10-08 10:21+0000\n"
 "Last-Translator: Nuno Jerónimo <nuno.jeronimo@valsousa.pt>\n"
-"Language-Team: Portuguese <http://translate.kopano.io/projects/kopano/kopano-ol-extension/pt/>\n"
+"Language-Team: Portuguese <http://translate.kopano.io/projects/kopano/kopano-"
+"ol-extension/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1342,47 +1343,46 @@ msgstr "Mostrar lembretes"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskId.Text"
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskCreated.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskCreated.Text"
 msgid "Created"
-msgstr ""
+msgstr "Criado"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskAdded.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskAdded.Text"
 msgid "Added"
-msgstr ""
+msgstr "Adicionada"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskStarted.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskStarted.Text"
 msgid "Started"
-msgstr ""
+msgstr "Iniciada"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskFinished.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskFinished.Text"
 msgid "Finished"
-msgstr ""
+msgstr "Acabada"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnFailure.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnFailure.Text"
 msgid "Failure"
-msgstr ""
+msgstr "Falha"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_buttonTasksRefresh.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_buttonTasksRefresh.Text"
 msgid "Refresh"
-msgstr ""
+msgstr "Atualizar"
 
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabTasks.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabTasks.Text"
 msgid "Tasks"
-msgstr ""
-
+msgstr "Tarefas"
