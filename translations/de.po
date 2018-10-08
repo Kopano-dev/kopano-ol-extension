@@ -2,9 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KC-8\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-07-24 07:19+0000\n"
+"PO-Revision-Date: 2018-10-05 12:12+0000\n"
 "Last-Translator: Felix <f.bartels@kopano.com>\n"
-"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-extension/de/>\n"
+"Language-Team: German <http://translate.kopano.io/projects/kopano/kopano-ol-"
+"extension/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1607,3 +1608,50 @@ msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_label
 msgid "Show reminders"
 msgstr "Erinnerungen anzeigen"
 
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskId.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskId.Text"
+msgid "Id"
+msgstr "Id"
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskCreated.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskCreated.Text"
+msgid "Created"
+msgstr "Erstellt"
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskAdded.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskAdded.Text"
+msgid "Added"
+msgstr "Hinzugefügt"
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskStarted.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskStarted.Text"
+msgid "Started"
+msgstr "Begonnen"
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskFinished.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskFinished.Text"
+msgid "Finished"
+msgstr "Beendet"
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnFailure.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnFailure.Text"
+msgid "Failure"
+msgstr "Fehler"
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_buttonTasksRefresh.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_buttonTasksRefresh.Text"
+msgid "Refresh"
+msgstr "Aktualisieren"
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabTasks.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabTasks.Text"
+msgid "Tasks"
+msgstr "Aufgaben"

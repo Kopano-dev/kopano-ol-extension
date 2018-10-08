@@ -226,6 +226,54 @@ msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabItemEvents.
 msgid "Item events"
 msgstr "Item events"
 
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskId.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskId.Text"
+msgid "Id"
+msgstr "Id"
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskCreated.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskCreated.Text"
+msgid "Created"
+msgstr "Created"
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskAdded.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskAdded.Text"
+msgid "Added"
+msgstr "Added"
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskStarted.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskStarted.Text"
+msgid "Started"
+msgstr "Started"
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskFinished.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskFinished.Text"
+msgid "Finished"
+msgstr "Finished"
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnFailure.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnFailure.Text"
+msgid "Failure"
+msgstr "Failure"
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_buttonTasksRefresh.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_buttonTasksRefresh.Text"
+msgid "Refresh"
+msgstr "Refresh"
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabTasks.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabTasks.Text"
+msgid "Tasks"
+msgstr "Tasks"
+
 #: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\$this.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\$this.Text"

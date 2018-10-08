@@ -1604,3 +1604,51 @@ msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_label
 msgid "Show reminders"
 msgstr ""
 
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskId.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskId.Text"
+msgid "Id"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskCreated.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskCreated.Text"
+msgid "Created"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskAdded.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskAdded.Text"
+msgid "Added"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskStarted.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskStarted.Text"
+msgid "Started"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnTaskFinished.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnTaskFinished.Text"
+msgid "Finished"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_columnFailure.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_columnFailure.Text"
+msgid "Failure"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_buttonTasksRefresh.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_buttonTasksRefresh.Text"
+msgid "Refresh"
+msgstr ""
+
+#: AcaciaZPushPlugin\Features\DebugSupport\DebugDialog\_tabTasks.Text
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabTasks.Text"
+msgid "Tasks"
+msgstr ""
+
