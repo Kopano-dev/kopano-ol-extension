@@ -173,6 +173,7 @@ public:
 		// Set up the account
 		OpenProfileAdmin();
 		EncryptPassword();
+		FetchAccountKey();
 		CreateMessageService();
 		GetEntryId();
 		CreateAccount();
@@ -306,10 +307,10 @@ private:
 		msprops[3].Value.bin.lpb = &encryptedPassword[0];
 
 		msprops[4].ulPropTag = PR_RESOURCE_FLAGS;
-		msprops[4].Value.l = SERVICE_NO_PRIMARY_IDENTITY | SERVICE_CREATE_WITH_STORE;
+		msprops[4].Value.l = SERVICE_NO_PRIMARY_IDENTITY | SERVICE_CREATE_WITH_STORE | SERVICE_SINGLE_COPY;
 
 		msprops[5].ulPropTag = 0x67060003;
-		msprops[5].Value.l = 4;
+		msprops[5].Value.l = accountId;
 
 	VERBOSE(L"CreateMessageService: 2\n");
 		CHECK_H(lpServiceAdmin2->ConfigureMsgService(&service, 0, SERVICE_UI_ALLOWED, 6, msprops), "ConfigureMSGService");
@@ -372,16 +373,21 @@ private:
 		CHECK_L(RegOpenKey(hKeyAccounts, accountId.c_str(), &hKeyNewAccount), "OpenAccountKey");
 	}
 
-	void AllocateAccountKey()
+	void FetchAccountKey()
 	{
 		OpenAccountsKey();
-
-		wchar_t keyPath[MAX_PATH];
 
 		// Get the NextAccountID value
 		DWORD size = sizeof(accountId);
 		CHECK_L(RegQueryValueEx(hKeyAccounts, VALUE_NEXT_ACCOUNT_ID, nullptr, nullptr, (LPBYTE)&accountId, &size), "GetNextAccountId");
-		
+	}
+
+	void AllocateAccountKey()
+	{
+		FetchAccountKey();
+
+		wchar_t keyPath[MAX_PATH];
+
 		// Create the subkey
 		swprintf_s(keyPath, ARRAYSIZE(keyPath), L"%.8X", accountId);
 		CHECK_L(RegCreateKey(hKeyAccounts, keyPath, &hKeyNewAccount), "CreateAccountKey");

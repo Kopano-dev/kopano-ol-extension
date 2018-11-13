@@ -98,9 +98,9 @@ namespace OutlookRestarter
                     // Start the process
                     Process process = new Process();
                     process.StartInfo = new ProcessStartInfo(procPath, argsString);
-                    Logger.Instance.Debug(typeof(OutlookRestarter), "Starting process: {0}", process);
+                    Logger.Instance.Debug(typeof(OutlookRestarter), "Starting process: {0} - {1}", procPath, argsString);
                     process.Start();
-                    Logger.Instance.Debug(typeof(OutlookRestarter), "Started process: {0}", process);
+                    Logger.Instance.Debug(typeof(OutlookRestarter), "Started process: {0} - {1}", procPath, argsString);
                 }
             }
             catch(Exception e)
