@@ -710,10 +710,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AcaciaZPushPlugin_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AcaciaZPushPlugin_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>89D77AA770A430BB94965012BB6D3AA2024A821B</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>B8C4EE803C7FAAB765833281B425AB50E019C66F</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
