@@ -121,6 +121,12 @@ namespace Acacia.Stubs.OutlookWrappers
                     case SearchOperation.Like:
                         oper = "like";
                         break;
+                    case SearchOperation.StartsWith:
+                        oper = "startswith";
+                        break;
+                    case SearchOperation.StartsWithCI:
+                        oper = "ci_startswith";
+                        break;
                     default:
                         throw new NotImplementedException();
                 }
@@ -150,7 +156,9 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        private readonly List<SearchTerm> terms = new List<SearchTerm>();
+        private readonly List<SearchTerm> _terms = new List<SearchTerm>();
+        private string _sortField;
+        private bool _sortDescending;
 
         /// <summary>
         /// Constructor.
@@ -160,23 +168,34 @@ namespace Acacia.Stubs.OutlookWrappers
         {
         }
 
+        public void Sort(string field, bool descending)
+        {
+            _sortField = field;
+            _sortDescending = descending;
+        }
+
         public ISearchOperator AddOperator(SearchOperator oper)
         {
             SearchOperatorImpl so = new SearchOperatorImpl(oper);
-            terms.Add(so);
+            _terms.Add(so);
             return so;
         }
 
         public ISearchField AddField(string name, bool isUserField = false)
         {
             SearchField field = new SearchField(name, isUserField);
-            terms.Add(field);
+            _terms.Add(field);
             return field;
         }
 
         public IEnumerable<ItemType> Search(int maxResults)
         {
             string filter = MakeFilter();
+
+            if (_sortField != null)
+            {
+                _item.Sort(_sortField, _sortDescending);
+            }
 
             int count = 0;
             object value = _item.Find(filter);
@@ -222,7 +241,7 @@ namespace Acacia.Stubs.OutlookWrappers
             string filter = "@SQL=";
 
             bool first = true;
-            foreach(SearchTerm term in terms)
+            foreach(SearchTerm term in _terms)
             {
                 if (first)
                     first = false;

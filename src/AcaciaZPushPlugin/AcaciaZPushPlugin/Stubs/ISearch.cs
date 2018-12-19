@@ -33,7 +33,9 @@ namespace Acacia.Stubs
         GreaterEqual,
         Equal,
         NotEqual,
-        Like
+        Like,
+        StartsWith,
+        StartsWithCI
     }
 
     public interface ISearchField
@@ -61,6 +63,7 @@ namespace Acacia.Stubs
     public interface ISearch<ItemType> : ISearchQuery, IDisposable
     where ItemType : IItem
     {
+        void Sort(string field, bool descending);
 
         IEnumerable<ItemType> Search(int maxResults = int.MaxValue);
 

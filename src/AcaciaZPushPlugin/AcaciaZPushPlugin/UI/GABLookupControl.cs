@@ -43,29 +43,61 @@ namespace Acacia.UI
         private class GABDataSource : KDataSource<GABUser>
         {
             private readonly GABHandler _gab;
-            private readonly List<GABUser> _users;
+            public int Limit { get; set; }
 
             public GABDataSource(GABHandler gab)
             {
                 this._gab = gab;
-
-                _users = new List<GABUser>();
-                foreach (IItem item in _gab.Contacts.Items.Sort("FullName", false))
-                {
-                    IContactItem contact = item as IContactItem;
-                    // The check for customer id is to avoid groups created as contacts
-                    if (contact != null && contact.CustomerID != null)
-                    {
-                        _users.Add(new GABUser(contact));
-                    }
-                }
+                Limit = 10;
             }
 
-            public override IEnumerable<GABUser> Items
+            protected override void UpdateFilter()
+            {
+            }
+
+            public override IEnumerable<GABUser> FilteredItems
             {
                 get
                 {
-                    return _users;
+                    ISearch<IContactItem> search = null;
+                    try
+                    {
+                        IEnumerable<IItem> items;
+                        if (HasFilter)
+                        {
+                            search = _gab.Contacts.Search<IContactItem>();
+                            search.Sort("FullName", false);
+                            ISearchOperator terms = search.AddOperator(SearchOperator.Or);
+                            terms.AddField("urn:schemas:contacts:cn").SetOperation(SearchOperation.Like, Filter.FilterText + "%");
+                            terms.AddField("urn:schemas:contacts:customerid").SetOperation(SearchOperation.Like, Filter.FilterText + "%");
+                            terms.AddField("urn:schemas:contacts:email1").SetOperation(SearchOperation.Like, Filter.FilterText + "%");
+                            items = search.Search(Limit);
+                        }
+                        else
+                        {
+                            items = _gab.Contacts.Items.Sort("FullName", false);
+                        }
+
+                        int index = 0;
+                        foreach (IItem item in items)
+                        {
+                            IContactItem contact = item as IContactItem;
+                            // The check for customer id is to avoid groups created as contacts
+                            if (contact != null && contact.CustomerID != null)
+                            {
+                                ++index;
+                                if (index > Limit)
+                                    break;
+
+                                yield return new GABUser(contact);
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        if (search != null)
+                            search.Dispose();
+                    }
                 }
             }
 
@@ -83,15 +115,6 @@ namespace Acacia.UI
                         return item.EmailAddress;
                 }
                 return item.UserName;
-            }
-
-            protected override bool MatchesFilter(GABUser item)
-            {
-                string s = Filter.FilterText.ToLower();
-                return
-                    item.FullName?.ToLower().StartsWith(s) == true ||
-                    item.UserName?.ToLower().StartsWith(s) == true ||
-                    item.EmailAddress?.ToLower().StartsWith(s) == true;
             }
 
             public override object NotFoundItem
@@ -202,15 +225,19 @@ namespace Acacia.UI
             string s = username.ToLower();
             if (DataSource != null)
             {
-                foreach(GABUser user in DataSource.Items)
+                using (ISearch<IContactItem> search = _gab.Contacts.Search<IContactItem>())
                 {
-                    if (
-                        user.FullName?.ToLower().Equals(s) == true ||
-                        user.UserName?.ToLower().Equals(s) == true ||
-                        user.EmailAddress?.ToLower().Equals(s) == true
-                        )
+                    search.Sort("FullName", false);
+                    ISearchOperator terms = search.AddOperator(SearchOperator.Or);
+                    terms.AddField("urn:schemas:contacts:cn").SetOperation(SearchOperation.Like, username);
+                    terms.AddField("urn:schemas:contacts:customerid").SetOperation(SearchOperation.Like, username);
+                    terms.AddField("urn:schemas:contacts:email1").SetOperation(SearchOperation.Like, username);
+                    using (IContactItem contact = search.SearchOne())
                     {
-                        return user;
+                        if (contact != null)
+                        {
+                            return new GABUser(contact);
+                        }
                     }
                 }
             }

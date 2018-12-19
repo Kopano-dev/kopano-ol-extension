@@ -19,7 +19,6 @@ namespace Acacia.Controls
 
     public interface KDataSourceRaw
     {
-        System.Collections.IEnumerable Items { get; }
         System.Collections.IEnumerable FilteredItems { get; }
         KDataFilter Filter { get; set; }
         string GetItemText(object item);
@@ -28,37 +27,28 @@ namespace Acacia.Controls
 
     abstract public class KDataSource<T> : KDataSourceRaw
     {
-        /// <summary>
-        /// Returns all the items
-        /// </summary>
-        abstract public IEnumerable<T> Items
+        private KDataFilter _filter;
+
+        public KDataFilter Filter
+        {
+            get { return _filter; }
+            set
+            {
+                _filter = value;
+                UpdateFilter();
+            }
+        }
+
+        public bool HasFilter
+        {
+            get { return _filter?.FilterText != null; }
+        }
+
+        abstract protected void UpdateFilter();
+
+        abstract public IEnumerable<T> FilteredItems
         {
             get;
-        }
-
-        public IEnumerable<T> FilteredItems
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(Filter?.FilterText))
-                    return Items;
-
-                return ApplyFilter();
-            }
-        }
-
-        private IEnumerable<T> ApplyFilter()
-        {
-            foreach (T item in Items)
-            {
-                if (MatchesFilter(item))
-                    yield return item;
-            }
-        }
-
-        virtual protected bool MatchesFilter(T item)
-        {
-            return GetItemText(item).StartsWith(Filter.FilterText);
         }
 
         abstract protected string GetItemText(T item);
@@ -68,18 +58,11 @@ namespace Acacia.Controls
             return GetItemText((T)item);
         }
 
-        public KDataFilter Filter
-        {
-            get;
-            set;
-        }
-
         virtual public object NotFoundItem
         {
             get { return null; }
         }
 
-        IEnumerable KDataSourceRaw.Items { get{return Items;}}
         IEnumerable KDataSourceRaw.FilteredItems { get { return FilteredItems; } }
     }
 }
