@@ -48,7 +48,7 @@ namespace Acacia.UI
             public GABDataSource(GABHandler gab)
             {
                 this._gab = gab;
-                Limit = 10;
+                Limit = 8;
             }
 
             protected override void UpdateFilter()
