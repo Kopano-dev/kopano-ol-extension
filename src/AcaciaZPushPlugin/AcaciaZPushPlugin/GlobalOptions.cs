@@ -162,6 +162,14 @@ namespace Acacia
         }
         private static readonly BoolOption RELEASE_ITEM_EVENT_WRAPPERS = new BoolOption("ReleaseItemEventWrappers", true);
 
+        [AcaciaOption("If enabled, certificate errors from Z-Push servers are ignored silently.")]
+        virtual public bool IgnoreCertificateErrors
+        {
+            get { return GetOption(null, IGNORE_CERTIFICATE_ERRORS); }
+            set { SetOption(null, IGNORE_CERTIFICATE_ERRORS, value); }
+        }
+        private static readonly BoolOption IGNORE_CERTIFICATE_ERRORS = new BoolOption("IgnoreCertificateErrors", false);
+
 
         #region UI Options
 

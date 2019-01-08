@@ -63,15 +63,22 @@ namespace Acacia.ZPush.Connect
             bool allow = false;
             if (!_allowCertificateErrors.TryGetValue(request.Host, out allow))
             {
-                ThisAddIn.Instance.InvokeUI(() =>
+                if (GlobalOptions.INSTANCE.IgnoreCertificateErrors)
                 {
-                    allow = MessageBox.Show(
-                                        string.Format(Properties.Resources.SSLFailed_Body, request.Host),
-                                        Properties.Resources.SSLFailed_Title,
-                                        MessageBoxButtons.YesNo,
-                                        MessageBoxIcon.Error
-                                        ) == DialogResult.Yes;
-                });
+                    allow = true;
+                }
+                else
+                {
+                    ThisAddIn.Instance.InvokeUI(() =>
+                    {
+                        allow = MessageBox.Show(
+                                            string.Format(Properties.Resources.SSLFailed_Body, request.Host),
+                                            Properties.Resources.SSLFailed_Title,
+                                            MessageBoxButtons.YesNo,
+                                            MessageBoxIcon.Error
+                                            ) == DialogResult.Yes;
+                    });
+                }
                 _allowCertificateErrors.Add(request.Host, allow);
             }
 
