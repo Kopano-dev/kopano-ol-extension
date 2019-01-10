@@ -28,7 +28,7 @@ using stdole;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    class FolderWrapper : OutlookWrapper<NSOutlook.Folder>, IFolder
+    public class FolderWrapper : OutlookWrapper<NSOutlook.Folder>, IFolder
     {
         public FolderWrapper(NSOutlook.MAPIFolder folder)
         :
@@ -70,7 +70,7 @@ namespace Acacia.Stubs.OutlookWrappers
             }
         }
 
-        internal NSOutlook.Folder RawItem { get { return _item; } }
+        public NSOutlook.Folder RawItem { get { return _item; } }
 
         protected override NSOutlook.PropertyAccessor GetPropertyAccessor()
         {

@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace Acacia.Stubs.OutlookWrappers
 {
-    abstract class ComWrapper<ItemType> : DisposableWrapper, IComWrapper
+    public abstract class ComWrapper<ItemType> : DisposableWrapper, IComWrapper
     {
         protected readonly ItemType _item;
 
@@ -49,10 +49,6 @@ namespace Acacia.Stubs.OutlookWrappers
             if (MustRelease)
             {
                 ComRelease.Release(_item);
-            }
-            else
-            {
-
             }
         }
 

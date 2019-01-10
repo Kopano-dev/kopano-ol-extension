@@ -45,32 +45,43 @@ namespace Acacia.Stubs.OutlookWrappers
         }
 
         private static IBase CreateWrapper(object o, bool mustRelease)
-        { 
-            // TODO: switch on o.Class
-            if (o is NSOutlook.MailItem)
-                return new MailItemWrapper((NSOutlook.MailItem)o);
-            if (o is NSOutlook.AppointmentItem)
-                return new AppointmentItemWrapper((NSOutlook.AppointmentItem)o);
-            if (o is NSOutlook.Folder)
-                return new FolderWrapper((NSOutlook.Folder)o);
-            if (o is NSOutlook.ContactItem)
-                return new ContactItemWrapper((NSOutlook.ContactItem)o);
-            if (o is NSOutlook.DistListItem)
-                return new DistributionListWrapper((NSOutlook.DistListItem)o);
-            if (o is NSOutlook.NoteItem)
-                return new NoteItemWrapper((NSOutlook.NoteItem)o);
-            if (o is NSOutlook.TaskItem)
-                return new TaskItemWrapper((NSOutlook.TaskItem)o);
-            if (o is NSOutlook.MeetingItem)
-                return new MeetingItemWrapper((NSOutlook.MeetingItem)o);
-
-            // TODO: support others?
-            if (mustRelease)
+        {
+            try
             {
-                // The caller assumes a wrapper will be returned, so any lingering object here will never be released.
-                ComRelease.Release(o);
+                switch ((NSOutlook.OlObjectClass)((dynamic)o).Class)
+                {
+                    case NSOutlook.OlObjectClass.olAppointment:
+                        return new AppointmentItemWrapper((NSOutlook.AppointmentItem)o);
+                    case NSOutlook.OlObjectClass.olMail:
+                        return new MailItemWrapper((NSOutlook.MailItem)o);
+                    case NSOutlook.OlObjectClass.olFolder:
+                        return new FolderWrapper((NSOutlook.Folder)o);
+                    case NSOutlook.OlObjectClass.olContact:
+                        return new ContactItemWrapper((NSOutlook.ContactItem)o);
+                    case NSOutlook.OlObjectClass.olDistributionList:
+                        return new DistributionListWrapper((NSOutlook.DistListItem)o);
+                    case NSOutlook.OlObjectClass.olNote:
+                        return new NoteItemWrapper((NSOutlook.NoteItem)o);
+                    case NSOutlook.OlObjectClass.olTask:
+                        return new TaskItemWrapper((NSOutlook.TaskItem)o);
+                }
+
+                // TODO: switch on o.Class
+                if (o is NSOutlook.MeetingItem)
+                    return new MeetingItemWrapper((NSOutlook.MeetingItem)o);
+
+                // TODO: support others?
+                if (mustRelease)
+                {
+                    // The caller assumes a wrapper will be returned, so any lingering object here will never be released.
+                    ComRelease.Release(o);
+                }
+                return null;
             }
-            return null;
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
         public static Type Wrap<Type>(object o, bool mustRelease = true)

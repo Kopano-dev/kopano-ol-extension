@@ -1,4 +1,4 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿/// Copyright 2019 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -19,9 +19,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Acacia.Utils;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Stubs
 {
+    public delegate void GABInitializer<ItemType>(ComRelease com, ItemType type);
+
     public interface IAddressBook : IFolder
     {
         /// <summary>
@@ -30,5 +34,12 @@ namespace Acacia.Stubs
         void Clear();
 
         new IAddressBook Clone();
+
+        /// Contains GAB-specific methods, for speeding up creation of large GABs
+        #region GAB
+
+        void GABCreate<ItemType>(NSOutlook.OlItemType itemType, GABInitializer<ItemType> initializer);
+
+        #endregion
     }
 }

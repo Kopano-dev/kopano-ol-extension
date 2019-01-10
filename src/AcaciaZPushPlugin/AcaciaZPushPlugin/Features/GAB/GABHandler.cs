@@ -1,4 +1,4 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿/// Copyright 2019 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -25,6 +25,8 @@ using Acacia.ZPush;
 using Acacia.Utils;
 using System.Collections;
 using static Acacia.DebugOptions;
+using Acacia.Stubs.OutlookWrappers;
+using NSOutlook = Microsoft.Office.Interop.Outlook;
 
 namespace Acacia.Features.GAB
 {
@@ -128,8 +130,18 @@ namespace Acacia.Features.GAB
 
         #region Processing
 
+        private string[] _chunkStateStringCache;
+        private int? _currentSequenceCache;
+
+        private void ClearCache()
+        {
+            _chunkStateStringCache = null;
+            _currentSequenceCache = null;
+        }
+
         public void FullResync(CompletionTracker completion)
         {
+            ClearCache();
             ClearContacts();
             Process(completion, null);
         }
@@ -205,6 +217,13 @@ namespace Acacia.Features.GAB
             // Process the messages
             foreach (IZPushItem item in Folder.Items.Typed<IZPushItem>())
             {
+                // Check if up-to-date
+                if (ShouldProcess(item) == null)
+                {
+                    Logger.Instance.Debug(this, "Not processing chunk: {0}", item.Subject);
+                    continue;
+                }
+
                 // Store the entry id to fetch again later, the item will be disposed
                 string entryId = item.EntryID;
                 Logger.Instance.Trace(this, "Checking chunk: {0}", item.Subject);
@@ -212,33 +231,54 @@ namespace Acacia.Features.GAB
                 {
                     Tasks.Task(completion, _feature, "ProcessChunk", () =>
                     {
+                        var watch = System.Diagnostics.Stopwatch.StartNew();
                         using (IItem item2 = Folder.GetItemById(entryId))
                         {
                             if (item2 != null)
                                 ProcessMessage(completion, (IZPushItem)item2);
                         }
+                        watch.Stop();
+                        Logger.Instance.Warning(this, "ProcessChunk: {0}ms", watch.ElapsedMilliseconds);
                     });
                 }
             }
+
         }
+       
 
         public const string PROP_LAST_PROCESSED = "ZPushLastProcessed";
-        public const string PROP_SEQUENCE = "ZPushSequence";
-        public const string PROP_CHUNK = "ZPushChunk";
+        public const string PROP_SEQUENCE_CHUNK = "ZPushSequenceChunk";
         public const string PROP_GAB_ID = "ZPushId";
         public const string PROP_CURRENT_SEQUENCE = "ZPushCurrentSequence";
 
-        private void ProcessMessage(CompletionTracker completion, IZPushItem item)
+        private class ProcessInfo
+        {
+            public ChunkIndex index;
+            public string lastProcessed;
+
+            public ProcessInfo(ChunkIndex index, string lastProcessed)
+            {
+                this.index = index;
+                this.lastProcessed = lastProcessed;
+            }
+        }
+
+        /// <summary>
+        /// Checks if the item should be processed.
+        /// </summary>
+        /// <returns>null if the item does not need to be processed. Otherwise an instance of ProcessInfo containing the relevant
+        /// information is returned</returns>
+        private ProcessInfo ShouldProcess(IZPushItem item)
         {
             if (!_feature.ProcessMessage)
-                return;
+                return null;
 
             // Check if the message is for the current sequence
             ChunkIndex? optionalIndex = ChunkIndex.Parse(item.Subject);
             if (optionalIndex == null)
             {
                 Logger.Instance.Trace(this, "Not a chunk: {0}", item.Subject);
-                return;
+                return null;
             }
 
             if (optionalIndex.Value.numberOfChunks != CurrentSequence)
@@ -250,7 +290,7 @@ namespace Acacia.Features.GAB
                 if (optionalIndex.Value.numberOfChunks != CurrentSequence)
                 {
                     Logger.Instance.Trace(this, "Skipping, wrong sequence: {0}", item.Subject);
-                    return;
+                    return null;
                 }
             }
             ChunkIndex index = optionalIndex.Value;
@@ -260,11 +300,21 @@ namespace Acacia.Features.GAB
             if (lastProcessed == item.Location)
             {
                 Logger.Instance.Trace(this, "Already up to date: {0} - {1}", item.Subject, item.Location);
-                return;
+                return null;
             }
 
+            return new ProcessInfo(index, lastProcessed);
+        }
+
+        private void ProcessMessage(CompletionTracker completion, IZPushItem item)
+        {
+            ProcessInfo shouldProcess = ShouldProcess(item);
+            if (shouldProcess == null)
+                return;
+            ChunkIndex index = shouldProcess.index;
+
             // Process it
-            Logger.Instance.Trace(this, "Processing: {0} - {1} - {2}", item.Subject, item.Location, lastProcessed);
+            Logger.Instance.Trace(this, "Processing: {0} - {1} - {2}", item.Subject, item.Location, shouldProcess.lastProcessed);
             _feature?.BeginProcessing();
             try
             {
@@ -273,8 +323,7 @@ namespace Acacia.Features.GAB
                     // Delete the old contacts from this chunk
                     using (ISearch<IItem> search = Contacts.Search<IItem>())
                     {
-                        search.AddField(PROP_SEQUENCE, true).SetOperation(SearchOperation.Equal, index.numberOfChunks);
-                        search.AddField(PROP_CHUNK, true).SetOperation(SearchOperation.Equal, index.chunk);
+                        search.AddField(PROP_SEQUENCE_CHUNK, true).SetOperation(SearchOperation.Equal, index.ToString());
                         foreach (IItem oldItem in search.Search())
                         {
                             Logger.Instance.Trace(this, "Deleting GAB entry: {0}", oldItem.Subject);
@@ -303,10 +352,14 @@ namespace Acacia.Features.GAB
         {
             get
             {
-                using (IStorageItem index = GetIndexItem())
+                if (_currentSequenceCache == null)
                 {
-                    return index?.GetUserProperty<int?>(PROP_CURRENT_SEQUENCE);
+                    using (IStorageItem index = GetIndexItem())
+                    {
+                        _currentSequenceCache = index?.GetUserProperty<int?>(PROP_CURRENT_SEQUENCE);
+                    }
                 }
+                return _currentSequenceCache;
             }
             set
             {
@@ -320,6 +373,7 @@ namespace Acacia.Features.GAB
                     {
                         index.Delete();
                     }
+                    _currentSequenceCache = value;
                 }
             }
         }
@@ -409,22 +463,26 @@ namespace Acacia.Features.GAB
 
         private string GetChunkStateString(ChunkIndex index)
         {
-            using (IStorageItem item = GetIndexItem())
+            if (_chunkStateStringCache == null)
             {
-                if (item == null)
-                    return null;
-                string state = item.GetUserProperty<string>(PROP_LAST_PROCESSED);
-                if (string.IsNullOrEmpty(state))
-                    return null;
-
-                string[] parts = state.Split(';');
-                if (parts.Length != index.numberOfChunks)
+                using (IStorageItem item = GetIndexItem())
                 {
-                    Logger.Instance.Error(this, "Wrong number of chunks, got {0}, expected {1}: {2}",
-                        parts.Length, index.numberOfChunks, state);
+                    if (item == null)
+                        return null;
+                    string state = item.GetUserProperty<string>(PROP_LAST_PROCESSED);
+                    if (string.IsNullOrEmpty(state))
+                        return null;
+
+                    _chunkStateStringCache = state.Split(';');
                 }
-                return parts[index.chunk];
             }
+
+            if (_chunkStateStringCache.Length != index.numberOfChunks)
+            {
+                Logger.Instance.Error(this, "Wrong number of chunks, got {0}, expected {1}",
+                    _chunkStateStringCache.Length, index.numberOfChunks);
+            }
+            return _chunkStateStringCache[index.chunk];
         }
 
         private void SetChunkStateString(ChunkIndex index, string partState)
@@ -443,6 +501,7 @@ namespace Acacia.Features.GAB
                         parts.Length, index.numberOfChunks, state);
                 }
                 parts[index.chunk] = partState;
+                _chunkStateStringCache = parts;
                 string combined = string.Join(";", parts);
 
                 item.SetUserProperty(PROP_LAST_PROCESSED, combined);
@@ -468,12 +527,17 @@ namespace Acacia.Features.GAB
             Logger.Instance.Trace(this, "Parsing chunck: {0}: {1}", index, item.Body);
 
             // Process the body
-            foreach (var entry in JSONUtils.Deserialise(item.Body))
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            var body = JSONUtils.Deserialise(item.Body);
+            foreach (var entry in body)
             {
                 string id = entry.Key;
                 Dictionary<string, object> value = (Dictionary<string, object>)entry.Value;
-                Tasks.Task(completion, _feature, "CreateItem", () => CreateObject(index, id, value));
+                //Tasks.Task(completion, _feature, "CreateItem", () => CreateObject(index, id, value));
+                CreateObject(index, id, value);
             }
+            watch.Stop();
+            Logger.Instance.Warning(this, "ProcessChunkBody: {0}ms", watch.ElapsedMilliseconds);
         }
 
         private void CreateObject(ChunkIndex index, string id, Dictionary<string, object> value)
@@ -511,7 +575,7 @@ namespace Acacia.Features.GAB
             if (!_feature.CreateContacts)
                 return;
 
-            using (IContactItem contact = Contacts.Create<IContactItem>())
+            Contacts.GABCreate<NSOutlook.ContactItem>(NSOutlook.OlItemType.olContactItem, (com, contact) =>
             {
                 Logger.Instance.Trace(this, "Creating contact: {0}", id);
                 contact.CustomerID = id;
@@ -563,7 +627,7 @@ namespace Acacia.Features.GAB
                         path = System.IO.Path.GetTempFileName();
                         Logger.Instance.Trace(this, "Contact image: {0}", path);
                         System.IO.File.WriteAllBytes(path, data);
-                        contact.SetPicture(path);
+                        contact.AddPicture(path);
                     }
                     catch (Exception) { }
                     finally
@@ -580,17 +644,35 @@ namespace Acacia.Features.GAB
                 // Resource flags
                 if (resourceType != 0)
                 {
-                    contact.SetProperty(OutlookConstants.PR_DISPLAY_TYPE, 0);
-                    contact.SetProperty(OutlookConstants.PR_DISPLAY_TYPE_EX, resourceType);
+                    NSOutlook.PropertyAccessor props = com.Add(contact.PropertyAccessor);
+                    props.SetProperties
+                    (
+                        new string[] { OutlookConstants.PR_DISPLAY_TYPE, OutlookConstants.PR_DISPLAY_TYPE_EX },
+                        new object[] { 0, resourceType }
+                    );
                 }
 
-                // Standard properties
-                SetItemStandard(contact, id, value, index);
-                contact.Save();
+                // Set the chunk data
+                SetItemStandard(index, id, com, com.Add(contact.UserProperties));
 
-                // Update the groups
-                AddItemToGroups(contact, id, value, index);
-            }
+                // TODO: groups
+
+                // Done
+                contact.Save();
+            });
+        }
+
+        private void SetItemStandard(ChunkIndex index, string id, ComRelease com, NSOutlook.UserProperties userProperties)
+        {
+            SetItemStandardProperty(com, userProperties, PROP_SEQUENCE_CHUNK, index.ToString());
+            SetItemStandardProperty(com, userProperties, PROP_GAB_ID, id);
+        }
+
+        private void SetItemStandardProperty<Type>(ComRelease com, NSOutlook.UserProperties userProperties, string name, Type value)
+        {
+            // TODO: com.Add for this?
+            NSOutlook.UserProperty prop = com.Add(userProperties.Add(name, Mapping.OutlookPropertyType<Type>()));
+            prop.Value = value;
         }
 
         private void CreateGroup(string id, Dictionary<string, object> value, ChunkIndex index)
@@ -601,6 +683,9 @@ namespace Acacia.Features.GAB
             string smtpAddress = Get<string> (value, "smtpAddress");
             if (!string.IsNullOrEmpty(smtpAddress) && _feature.SMTPGroupsAsContacts)
             {
+                // TODO:
+                throw new NotImplementedException();
+                /*
                 // Create a contact
                 using (IContactItem contact = Contacts.Create<IContactItem>())
                 {
@@ -656,21 +741,21 @@ namespace Acacia.Features.GAB
                     contact.Save();
 
                     AddItemToGroups(contact, id, value, index);
-                }
+                }*/
             }
             else
             {
                 // Create a proper group
-                using (IDistributionList group = Contacts.Create<IDistributionList>())
+                Contacts.GABCreate<NSOutlook.DistListItem>(NSOutlook.OlItemType.olDistributionListItem, (com, group) =>
                 {
                     Logger.Instance.Debug(this, "Creating group: {0}", id);
                     group.DLName = Get<string>(value, "displayName");
                     if (smtpAddress != null)
                     {
-                        group.SMTPAddress = smtpAddress;
+                        // TODO? group.SMTPAddress = smtpAddress;
                     }
 
-                    SetItemStandard(group, id, value, index);
+                    SetItemStandard(index, id, com, com.Add(group.UserProperties));
                     group.Save();
 
                     if (_feature.GroupMembers)
@@ -683,16 +768,18 @@ namespace Acacia.Features.GAB
                                 using (IItem item = FindItemById(memberId))
                                 {
                                     Logger.Instance.Debug(this, "Finding member {0} of {1}: {2}", memberId, id, item?.EntryID);
-                                    if (item != null)
-                                        AddGroupMember(group, item);
+                                    //if (item != null)
+                                      //  AddGroupMember(group, item);
                                 }
                             }
                         }
                         group.Save();
                     }
 
-                    AddItemToGroups(group, id, value, index);
-                }
+                    // TODO AddItemToGroups(group, id, value, index);
+
+                });
+                
             }
         }
 
@@ -708,8 +795,7 @@ namespace Acacia.Features.GAB
         private void SetItemStandard(IItem item, string id, Dictionary<string, object> value, ChunkIndex index)
         {
             // Set the chunk data
-            item.SetUserProperty(PROP_SEQUENCE, index.numberOfChunks);
-            item.SetUserProperty(PROP_CHUNK, index.chunk);
+            item.SetUserProperty(PROP_SEQUENCE_CHUNK, index.ToString());
             item.SetUserProperty(PROP_GAB_ID, id);
         }
 

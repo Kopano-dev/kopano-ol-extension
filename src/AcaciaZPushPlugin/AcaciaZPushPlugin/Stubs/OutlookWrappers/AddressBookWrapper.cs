@@ -1,4 +1,4 @@
-﻿/// Copyright 2016 Kopano b.v.
+﻿/// Copyright 2019 Kopano b.v.
 /// 
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
@@ -50,5 +50,19 @@ namespace Acacia.Stubs.OutlookWrappers
                 item.Delete();
             }
         }
+
+        #region GAB
+
+        public void GABCreate<ItemType>(NSOutlook.OlItemType itemType, GABInitializer<ItemType> initializer)
+        {
+            using (ComRelease com = new ComRelease())
+            {
+                NSOutlook.Items items = com.Add(_item.Items);
+                dynamic contact = com.Add(items.Add(itemType));
+                initializer(com, contact);
+            }
+        }
+
+        #endregion
     }
 }
