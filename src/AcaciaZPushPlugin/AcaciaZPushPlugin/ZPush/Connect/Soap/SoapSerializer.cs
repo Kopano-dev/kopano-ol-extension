@@ -87,6 +87,48 @@ namespace Acacia.ZPush.Connect.Soap
 
         #region Builtin types
 
+        private class ConversionException : Exception
+        {
+            private readonly List<XmlNode> trace = new List<XmlNode>();
+
+            public ConversionException(XmlNode node, string message, Exception innerException) : base(message, innerException)
+            {
+                AddNode(node);
+            }
+
+            public void AddNode(XmlNode node)
+            {
+                trace.Add(node);
+            }
+
+            public override string Message
+            {
+                get
+                {
+                    string context = "";
+                    foreach(XmlNode node in trace)
+                    {
+                        int index = -1;
+                        int count = 0;
+                        if (node.ParentNode != null)
+                        {
+                            for (int i = 0; i < node.ParentNode.ChildNodes.Count; ++i)
+                            {
+                                if (node.ParentNode.ChildNodes[i].Name == node.Name)
+                                    ++count;
+                                if (node.ParentNode.ChildNodes[i] == node)
+                                    index = i;
+                            }
+                        }
+
+                        string suffix = (index < 0 || count <= 1) ? "" : ("[" + index + "]");
+                        context = "/" + node.Name + suffix + context;
+                    }
+                    return base.Message + " @ " + context + "\n";
+                }
+            }
+        }
+
         private abstract class TypeHandler
         {
             public string FullName
@@ -109,14 +151,32 @@ namespace Acacia.ZPush.Connect.Soap
 
             public object Deserialize(XmlNode node, Type expectedType)
             {
-                object value = DeserializeContents(node, expectedType);
-                if (expectedType != null)
+                object value = null;
+                try
                 {
-                    // Try to convert it to the expected type
-                    return SoapConvert(expectedType, value);
-                }
+                    value = DeserializeContents(node, expectedType);
+                    if (expectedType != null)
+                    {
+                        // Try to convert it to the expected type
+                        return SoapConvert(expectedType, value);
+                    }
 
-                return value;
+                    return value;
+                }
+                catch(ConversionException e)
+                {
+                    e.AddNode(node);
+                    throw e;
+                }
+                catch(Exception e)
+                {
+                    throw new ConversionException(node,
+                        string.Format("Cannot convert value '{0}' to {1}",
+                            value ?? node.InnerXml, expectedType
+                        ), 
+                        e
+                    );
+                }
             }
 
 

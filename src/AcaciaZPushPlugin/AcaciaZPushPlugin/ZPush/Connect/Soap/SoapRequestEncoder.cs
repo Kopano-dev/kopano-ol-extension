@@ -49,6 +49,14 @@ namespace Acacia.ZPush.Connect.Soap
 
         public string ServiceName { get; set; }
 
+        public override string RequestName
+        {
+            get
+            {
+                return _request.RequestName;
+            }
+        }
+
         #region Encoding
 
         private const string PREFIX = @"<?xml version=""1.0"" encoding=""utf-8""?>

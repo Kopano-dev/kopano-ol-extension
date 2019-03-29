@@ -26,6 +26,11 @@ namespace Acacia.ZPush.Connect
 {
     public abstract class RequestEncoder
     {
+        /// <summary>
+        /// The name of the request, for debug purposes.
+        /// </summary>
+        public abstract string RequestName { get; }
+
         public abstract HttpContent GetContent();
 
         public abstract object ParseResponse(string url, Stream result);
