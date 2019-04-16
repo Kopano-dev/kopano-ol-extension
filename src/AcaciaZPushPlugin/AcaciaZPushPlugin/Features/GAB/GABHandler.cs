@@ -117,6 +117,8 @@ namespace Acacia.Features.GAB
             this._feature = feature;
             this._contactsProvider = contactsProvider;
             this._contactsDisposer = contactsDisposer;
+            _items = new ItemCache(this);
+            _items.Enabled = feature.ItemCache;
         }
 
         public string DisplayName
@@ -129,15 +131,6 @@ namespace Acacia.Features.GAB
         }
 
         #region Processing
-
-        private string[] _chunkStateStringCache;
-        private int? _currentSequenceCache;
-
-        private void ClearCache()
-        {
-            _chunkStateStringCache = null;
-            _currentSequenceCache = null;
-        }
 
         public void FullResync(CompletionTracker completion)
         {
@@ -181,7 +174,18 @@ namespace Acacia.Features.GAB
         /// <param name="item">If specified, this item has changed. If null, means a global check should be performed</param>
         public void Process(CompletionTracker completion, IZPushItem item)
         {
-            using (CompletionTracker.Step step = completion?.Begin())
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            if (completion == null)
+                completion = new CompletionTracker(null);
+
+            completion.AddCompletion(() =>
+            {
+                // Log time
+                watch.Stop();
+                Logger.Instance.Info(this, "GAB.Process done in {0}ms", watch.ElapsedMilliseconds);
+            });
+
+            using (CompletionTracker.Step step = completion.Begin())
             {
                 try
                 {
@@ -238,7 +242,8 @@ namespace Acacia.Features.GAB
                                 ProcessMessage(completion, (IZPushItem)item2);
                         }
                         watch.Stop();
-                        Logger.Instance.Warning(this, "ProcessChunk: {0}ms", watch.ElapsedMilliseconds);
+                        _items.Clear();
+                        Logger.Instance.Warning(this, "ProcessChunk: {0} in {1}ms", entryId, watch.ElapsedMilliseconds);
                     });
                 }
             }
@@ -537,7 +542,7 @@ namespace Acacia.Features.GAB
                 CreateObject(index, id, value);
             }
             watch.Stop();
-            Logger.Instance.Warning(this, "ProcessChunkBody: {0}ms", watch.ElapsedMilliseconds);
+            Logger.Instance.Warning(this, "ProcessChunkBody: {0} in {1}ms", index, watch.ElapsedMilliseconds);
         }
 
         private void CreateObject(ChunkIndex index, string id, Dictionary<string, object> value)
@@ -545,6 +550,9 @@ namespace Acacia.Features.GAB
             try
             {
                 _feature?.BeginProcessing();
+
+                // Remove any cached entry
+                _items.Remove(id);
 
                 string type = Get<string>(value, "type");
                 if (type == "contact")
@@ -655,10 +663,17 @@ namespace Acacia.Features.GAB
                 // Set the chunk data
                 SetItemStandard(index, id, com, com.Add(contact.UserProperties));
 
-                // TODO: groups
-
                 // Done
                 contact.Save();
+
+                // Add to groups
+                if (_feature.GroupMembers && Get<ArrayList>(value, "memberOf") != null)
+                {
+                    using (IContactItem wrapped = Mapping.Wrap<IContactItem>(contact, false))
+                    {
+                        AddItemToGroups(wrapped, id, value, index);
+                    }
+                }
             });
         }
 
@@ -680,12 +695,9 @@ namespace Acacia.Features.GAB
             if (!_feature.CreateGroups)
                 return;
 
-            string smtpAddress = Get<string> (value, "smtpAddress");
+            string smtpAddress = Get<string>(value, "smtpAddress");
             if (!string.IsNullOrEmpty(smtpAddress) && _feature.SMTPGroupsAsContacts)
             {
-                // TODO:
-                throw new NotImplementedException();
-                /*
                 // Create a contact
                 using (IContactItem contact = Contacts.Create<IContactItem>())
                 {
@@ -705,7 +717,7 @@ namespace Acacia.Features.GAB
                             string membersBody = null;
                             foreach (string memberId in members)
                             {
-                                using (IItem item = FindItemById(memberId))
+                                using (IItem item = _items.Find(memberId))
                                 {
                                     Logger.Instance.Debug(this, "Finding member {0} of {1}: {2}", memberId, id, item?.EntryID);
                                     if (item != null)
@@ -741,21 +753,21 @@ namespace Acacia.Features.GAB
                     contact.Save();
 
                     AddItemToGroups(contact, id, value, index);
-                }*/
+                }
             }
             else
             {
                 // Create a proper group
-                Contacts.GABCreate<NSOutlook.DistListItem>(NSOutlook.OlItemType.olDistributionListItem, (com, group) =>
+                using (IDistributionList group = Contacts.Create<IDistributionList>())
                 {
                     Logger.Instance.Debug(this, "Creating group: {0}", id);
                     group.DLName = Get<string>(value, "displayName");
                     if (smtpAddress != null)
                     {
-                        // TODO? group.SMTPAddress = smtpAddress;
+                        group.SMTPAddress = smtpAddress;
                     }
 
-                    SetItemStandard(index, id, com, com.Add(group.UserProperties));
+                    SetItemStandard(group, id, value, index);
                     group.Save();
 
                     if (_feature.GroupMembers)
@@ -765,30 +777,19 @@ namespace Acacia.Features.GAB
                         {
                             foreach (string memberId in members)
                             {
-                                using (IItem item = FindItemById(memberId))
+                                using (IItem item = _items.Find(memberId))
                                 {
                                     Logger.Instance.Debug(this, "Finding member {0} of {1}: {2}", memberId, id, item?.EntryID);
-                                    //if (item != null)
-                                      //  AddGroupMember(group, item);
+                                    if (item != null)
+                                        AddGroupMember(group, item);
                                 }
                             }
                         }
                         group.Save();
                     }
 
-                    // TODO AddItemToGroups(group, id, value, index);
-
-                });
-                
-            }
-        }
-
-        private IItem FindItemById(string id)
-        {
-            using (ISearch<IItem> search = Contacts.Search<IItem>())
-            {
-                search.AddField(PROP_GAB_ID, true).SetOperation(SearchOperation.Equal, id);
-                return search.SearchOne();
+                    AddItemToGroups(group, id, value, index);
+                }
             }
         }
 
@@ -827,7 +828,7 @@ namespace Acacia.Features.GAB
                     string memberOf = memberOfObject as string;
                     if (memberOf != null)
                     {
-                        using (IItem groupItem = FindItemById(memberOf))
+                        using (IItem groupItem = _items.Find(memberOf))
                         {
                             Logger.Instance.Debug(this, "Finding group {0} for {1}: {2}", memberOf, id, groupItem?.EntryID);
                             if (groupItem is IDistributionList)
@@ -844,6 +845,133 @@ namespace Acacia.Features.GAB
                 }
             }
         }
+
+        #endregion
+
+        #region Caching
+
+        private string[] _chunkStateStringCache;
+        private int? _currentSequenceCache;
+
+        private void ClearCache()
+        {
+            _chunkStateStringCache = null;
+            _currentSequenceCache = null;
+        }
+
+        private class ItemCache
+        {
+            private readonly GABHandler _gab;
+            private Dictionary<string, IItem> _items;
+
+            public bool Enabled
+            {
+                get { return _items != null; }
+                set
+                {
+                    if (value)
+                    {
+                        if (_items == null)
+                            _items = new Dictionary<string, IItem>();
+                    }
+                    else
+                    {
+                        _items = null;
+                    }
+                }
+            } 
+
+            public ItemCache(GABHandler gab)
+            {
+                this._gab = gab;
+            }
+
+            public IItem Find(string id)
+            {
+                // First try the item cache
+                if (Enabled)
+                {
+                    IItem item;
+                    if (_items.TryGetValue(id, out item))
+                    {
+                        bool ok = true;
+                        try
+                        {
+                            if (item != null)
+                            {
+                                // Get the entry id to test if the underlying object is still valid
+                                string s = item.EntryID;
+                                if (string.IsNullOrEmpty(s))
+                                {
+                                    ok = false;
+                                }
+                            }
+                        }
+                        catch (System.Runtime.InteropServices.InvalidComObjectException)
+                        {
+                            Logger.Instance.Trace(this, "Cache item detached");
+                            ok = false;
+                        }
+
+                        // If it's ok, we're done
+                        if (ok)
+                            return item;
+
+                        // Otherwise clear the cache, as usually all items are stale
+                        Clear();
+                        System.GC.Collect();
+                        // And fall through to fetch it properly
+                    }
+                }
+
+                // Do a lookup.
+                using (ISearch<IItem> search = _gab.Contacts.Search<IItem>())
+                {
+                    search.AddField(PROP_GAB_ID, true).SetOperation(SearchOperation.Equal, id);
+                    IItem item = search.SearchOne();
+
+                    // Add to cache. Also for failed lookups, will be updated when created
+                    if (Enabled)
+                    {
+                        _items.Add(id, item);
+                    }
+
+                    return item;
+                }
+            }
+
+            public void Remove(string id)
+            {
+                _items?.Remove(id);
+            }
+
+            public void Clear()
+            {
+                Dictionary<string, IItem> old = _items;
+                _items = null;
+                if (old != null)
+                {
+                    _items = new Dictionary<string, IItem>();
+
+                    Logger.Instance.Info(this, "GAB ItemCache: {0} entries", old.Count);
+                    foreach (IItem item in old.Values)
+                    {
+                        try
+                        {
+                            item?.Dispose();
+                        }
+                        catch(System.Runtime.InteropServices.InvalidComObjectException)
+                        {
+                            // Ignore silently, means it already got disposed
+                        }
+                    }
+                    old.Clear();
+                }
+
+            }
+        }
+
+        private readonly ItemCache _items;
 
         #endregion
 

@@ -24,12 +24,13 @@ namespace Acacia.Utils
             }
         }
 
-        private readonly Action _completion;
+        private readonly List<Action> _completions = new List<Action>();
         private int steps = 0;
 
         public CompletionTracker(Action completion)
         {
-            this._completion = completion;
+            if (completion != null)
+                _completions.Add(completion);
         }
 
         /// <summary>
@@ -47,8 +48,14 @@ namespace Acacia.Utils
             if (Interlocked.Decrement(ref steps) == 0)
             {
                 // Done
-                _completion();
+                foreach(Action completion in _completions)
+                    completion();
             }
+        }
+
+        public void AddCompletion(Action completion)
+        {
+            _completions.Add(completion);
         }
     }
 }

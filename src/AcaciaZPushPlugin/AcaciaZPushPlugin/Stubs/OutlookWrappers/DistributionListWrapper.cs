@@ -43,7 +43,7 @@ namespace Acacia.Stubs.OutlookWrappers
             set
             {
                 string displayName = DLName + " (" + value + ")";
-                byte[] oneOffId = CreateOneOffMemberId(DLName, "SMTP", value);
+                byte[] oneOffId = OutlookConstants.CreateOneOffMemberId(DLName, "SMTP", value);
 
                 SetProperties(
                     new string[]
@@ -111,8 +111,8 @@ namespace Acacia.Stubs.OutlookWrappers
             object[] oneOffMembers = (object[])GetProperty(OutlookConstants.PR_DISTLIST_ONEOFFMEMBERS);
 
             // Create the new member ids
-            byte[] memberId = CreateMemberId(member);
-            byte[] oneOffMemberId = CreateOneOffMemberId(member);
+            byte[] memberId = OutlookConstants.CreateMemberId(member);
+            byte[] oneOffMemberId = OutlookConstants.CreateOneOffMemberId(member);
 
             // See if it is already a member
             // Compare on one-off member id, as memberId changes
@@ -151,47 +151,6 @@ namespace Acacia.Stubs.OutlookWrappers
             );
         }
 
-        private static readonly byte[] PREFIX_MEMBER_ID =
-        {
-            0x00, 0x00, 0x00, 0x00, 0xC0, 0x91, 0xAD, 0xD3, 0x51, 0x9D, 0xCF, 0x11, 0xA4, 0xA9, 0x00, 0xAA, 0x00, 0x47, 0xFA, 0xA4, 0xB4
-        };
-
-        private byte[] CreateMemberId(IDistributionList member)
-        {
-            List<byte> id = new List<byte>();
-            id.AddRange(PREFIX_MEMBER_ID);
-            id.AddRange(StringUtil.HexToBytes(member.EntryID));
-            return id.ToArray();
-        }
-
-        private static readonly byte[] PREFIX_ONEOFFMEMBER_ID =
-        {
-            0x00, 0x00, 0x00, 0x00, 0x81, 0x2B, 0x1F, 0xA4, 0xBE, 0xA3, 0x10, 0x19, 0x9D, 0x6E, 0x00, 0xDD, 0x01, 0x0F, 0x54, 0x02, 0x00, 0x00, 0x01, 0x80
-        };
-
-        private byte[] CreateOneOffMemberId(IDistributionList member)
-        {
-            return CreateOneOffMemberId(member.DLName, "UNKNOWN", "UNKNOWN");
-        }
-
-        private byte[] CreateOneOffMemberId(string displayName, string addressType, string address)
-        {
-            byte[] zeroes = { 0, 0 };
-            List<byte> id = new List<byte>();
-            id.AddRange(PREFIX_ONEOFFMEMBER_ID);
-
-            id.AddRange(Encoding.Unicode.GetBytes(displayName));
-            id.AddRange(zeroes);
-
-            id.AddRange(Encoding.Unicode.GetBytes(addressType));
-            id.AddRange(zeroes);
-
-            id.AddRange(Encoding.Unicode.GetBytes(address));
-            id.AddRange(zeroes);
-
-            id.AddRange(zeroes);
-            return id.ToArray();
-        }
 
         #endregion
 

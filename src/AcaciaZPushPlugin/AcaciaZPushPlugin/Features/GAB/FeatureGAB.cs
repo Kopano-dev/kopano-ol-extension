@@ -262,6 +262,14 @@ namespace Acacia.Features.GAB
         }
         private static readonly BoolOption OPTION_FILE_AS_DISPLAY_NAME = new BoolOption("FileAsDisplayName", false);
 
+        [AcaciaOption("If enabled, an item cache will be used during GAB creation")]
+        public bool ItemCache
+        {
+            get { return GetOption(OPTION_ITEM_CACHE); }
+            set { SetOption(OPTION_ITEM_CACHE, value); }
+        }
+        private static readonly BoolOption OPTION_ITEM_CACHE = new BoolOption("ItemCache", false);
+
         #endregion
 
         #region Modification suppression
