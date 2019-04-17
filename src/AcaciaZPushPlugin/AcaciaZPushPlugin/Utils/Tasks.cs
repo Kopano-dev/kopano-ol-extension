@@ -147,6 +147,9 @@ namespace Acacia.Utils
                         case DebugOptions.Threading.Background:
                             _executor = new TasksBackground();
                             break;
+                        case DebugOptions.Threading.BackgroundRespawn:
+                            _executor = new TasksBackgroundRespawn();
+                            break;
                     }
 
                     if (GlobalOptions.INSTANCE.TaskTrace)

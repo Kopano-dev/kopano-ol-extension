@@ -213,13 +213,19 @@ namespace Acacia.Features.Signatures
                 // Set default signatures if available and none are set
                 if (!string.IsNullOrEmpty(result.new_message) && ShouldSetSignature(account.SignatureNewMessage))
                 {
-                    Logger.Instance.Trace(this, "Setting signature new message: {0}: {1}", account, result.new_message);
-                    account.SignatureNewMessage = fullNames[result.new_message];
+                    Tasks.Task(new AcaciaTask(null, this, "SignatureNewMessage", () =>
+                    {
+                        Logger.Instance.Trace(this, "Setting signature new message: {0}: {1}", account, result.new_message);
+                        account.SignatureNewMessage = fullNames[result.new_message];
+                    }));
                 }
                 if (!string.IsNullOrEmpty(result.replyforward_message) && ShouldSetSignature(account.SignatureReplyForwardMessage))
                 {
-                    Logger.Instance.Trace(this, "Setting signature reply message: {0}: {1}", account, result.replyforward_message);
-                    account.SignatureReplyForwardMessage = fullNames[result.replyforward_message];
+                    Tasks.Task(new AcaciaTask(null, this, "SignatureReplyForwardMessage", () =>
+                    {
+                        Logger.Instance.Trace(this, "Setting signature reply message: {0}: {1}", account, result.replyforward_message);
+                        account.SignatureReplyForwardMessage = fullNames[result.replyforward_message];
+                    }));
                 }
 
                 Logger.Instance.Trace(this, "Signature synced: {0}: {1}", account, result.hash);

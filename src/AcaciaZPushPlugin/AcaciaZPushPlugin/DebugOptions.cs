@@ -260,7 +260,8 @@ namespace Acacia
         {
             MainThread,
             Background,
-            Synchronous
+            Synchronous,
+            BackgroundRespawn
         }
 
         #region Access methods
