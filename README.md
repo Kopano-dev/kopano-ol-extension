@@ -15,10 +15,8 @@ with development tickets organised in [Jira](https://jira.kopano.io/projects/KC/
 [CONTRIBUTING.md](CONTRIBUTING.md) for steps on how to contribute patches.
 
 # Downloading compiled packages
-Compiled packages are only available to subscription 
-holders from the the [Kopano Portal](https://portal.kopano.com/) and a 
-[package repository]( 
-https://download.kopano.io/supported/olextension:/).
+Compiled releases and the release archive are available to subscription holders from the the [Kopano Portal](https://portal.kopano.com/) and [Kopano package repository]( 
+https://download.kopano.io/supported/olextension:/). Nightly builds can be obtained from https://download.kopano.io/community/olextension:/.
 
 # Support
 Community Support is available through the [Kopano Forum]( 
