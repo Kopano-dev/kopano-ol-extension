@@ -11,7 +11,7 @@ using System.Security;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Kopano OL Extension")]
-[assembly: AssemblyCopyright("Copyright © Kopano b.v. 2017")]
+[assembly: AssemblyCopyright("Copyright © Kopano b.v. 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
