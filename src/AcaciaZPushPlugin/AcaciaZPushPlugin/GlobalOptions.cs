@@ -51,7 +51,7 @@ namespace Acacia
             get { return GetOption(null, THREADING); }
             set { SetOption(null, THREADING, value); }
         }
-        private static readonly EnumOption<Threading> THREADING = new EnumOption<Threading>("Threading", Threading.Background);
+        private static readonly EnumOption<Threading> THREADING = new EnumOption<Threading>("Threading", Threading.BackgroundRespawn);
 
         [AcaciaOption("Enables or disables ZPush account checking. To enable advanced features, it must be known " + 
                       "which accounts use ZPush servers. This option checks responses from ActiveSync servers to " + 
