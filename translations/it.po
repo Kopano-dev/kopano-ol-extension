@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-03-08 15:01+0000\n"
+"PO-Revision-Date: 2021-03-10 11:49+0000\n"
 "Last-Translator: Michele Lunardi <michele.lunardi@welcomeitalia.it>\n"
 "Language-Team: Italian <https://weblate.cloudron.kopano.io/projects/kopano/"
 "kopano-ol-extension/it/>\n"
@@ -446,7 +446,7 @@ msgstr "Supporto"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Feature_FreeBusy"
 msgid "Free/Busy"
-msgstr "Libero/Occupato"
+msgstr "Free/Busy"
 
 #: AcaciaZPushPlugin\Properties\Resources\Feature_GAB
 #, csharp-format
@@ -693,7 +693,7 @@ msgstr "Si è verificato un errore recuperando le cartelle condivise"
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_None"
 msgid "No shared folders are available or you do not have permissions to view the root of the inbox."
-msgstr "Nessuna cartella condivisa disponibile"
+msgstr "Nessuna cartella condivisa disponibile."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_Fetching_Failure
 #, csharp-format
@@ -987,7 +987,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonGAB.Hint"
 msgid "Resynchronise the global address book"
-msgstr ""
+msgstr "Risincronizza la global address book"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonGAB.Text
 #, csharp-format
@@ -999,7 +999,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonSignatures.Hint"
 msgid "Resynchronise all signatures from the server"
-msgstr ""
+msgstr "Risincronizza tutte le firme dal server"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonSignatures.Text
 #, csharp-format
@@ -1012,18 +1012,21 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonServerData.Hint"
 msgid "Resynchronise all server data on shared folders and out-of-office"
 msgstr ""
+"Risincronizza dal server tutti i dati su cartelle condivise e fuori sede"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonServerData.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonServerData.Text"
 msgid "Server Data"
-msgstr ""
+msgstr "Dati del server"
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonFullResync.Hint
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonFullResync.Hint"
 msgid "Fully resynchronise the Z-Push store. This requires a restart and may take some time."
 msgstr ""
+"Risincronizza completamente l' account ActiveSync. E' necessario un riavvio "
+"e potrebbe richiedere del tempo."
 
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonFullResync.Text
 #, csharp-format
@@ -1043,6 +1046,11 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SecondaryContactsPatched_Body"
 msgid "The contacts folder '{0}' has been discovered. It is being synchronised, but will not show up in the list of contacts folders until Outlook is restarted. Click 'Yes' to restart Outlook now, or 'No' if you plan to restart Outlook later."
 msgstr ""
+"La cartella dei contatti '{0}' è stata rilevata. È in fase di "
+"sincronizzazione, ma non verrà visualizzata nell'elenco delle cartelle dei "
+"contatti fino al riavvio di Outlook. Fare clic su \"Sì\" per riavviare "
+"Outlook adesso, su \"No\" se si prevede di riavviare Outlook in un secondo "
+"momento."
 
 #. Shown when a secondary contact folder is detected, to inform the user that a restart is required
 #: AcaciaZPushPlugin\Properties\Resources\SecondaryContactsPatched_Title
@@ -1056,6 +1064,8 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\AccountNoPassword_Body"
 msgid "The password for account '{0}' is not available. Advanced Z-Push features will not work."
 msgstr ""
+"La password per l'account '{0}' non è disponibile. Le funzionalità Z-Push "
+"avanzate non funzioneranno."
 
 #: AcaciaZPushPlugin\Properties\Resources\AccountNoPassword_Title
 #, csharp-format
@@ -1092,13 +1102,13 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Label"
 msgid "Syncing: {0}%"
-msgstr ""
+msgstr "In sincronizzazione: {0}%"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Label_Done
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Label_Done"
 msgid "Up-to-date"
-msgstr ""
+msgstr "Sincronizzato"
 
 #: AcaciaZPushPlugin\Properties\Resources\Ribbon_SyncState_Screentip
 #, csharp-format
@@ -1111,6 +1121,7 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\Ribbon_SyncState_Supertip"
 msgid "Open the \"Synchronisation\" dialog, in which the synchronisation state can be viewed and managed."
 msgstr ""
+"Apre la finestra di dialogo per gestire lo \"Stato di sincronizzazione\"."
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_FullResync_Body
 #, csharp-format
@@ -1128,7 +1139,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Resync_Body_GAB"
 msgid "The Global Address Book has been scheduled for resynchronisation."
-msgstr ""
+msgstr "La Global Address Book è stata pianificata per la risincronizzazione."
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_Resync_Caption
 #, csharp-format
@@ -1152,7 +1163,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\GABSync_Label"
 msgid "The global address book is being synchronised."
-msgstr ""
+msgstr "La global address book è in corso di sincronizzazione."
 
 #: AcaciaZPushPlugin\Properties\Resources\GABSync_Title
 #, csharp-format
@@ -1172,7 +1183,7 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_Stalled_Caption"
 msgid "Synchronisation stalled - {0}"
-msgstr ""
+msgstr "Sincronizzazione bloccata - {0}"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_PrivateEvent_Body
 #, csharp-format
@@ -1347,6 +1358,9 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_LocalFolder_Body"
 msgid "Modifying shared folders locally is not supported. Please use the 'Shared Folders' dialog to rename shared folders or add additional shared folders."
 msgstr ""
+"La modifica delle cartelle condivise in locale non è supportata. Utilizzare "
+"la finestra di dialogo \"Cartelle condivise\" per rinominare le cartelle "
+"condivise o aggiungerne altre."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_LocalFolder_Title
 #, csharp-format
@@ -1378,13 +1392,13 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SharedFolders\\SharedFoldersDialog\\_labelRestartRequired.Text"
 msgid "(Requires restart)"
-msgstr ""
+msgstr "(Richiede il riavvio)"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_WholeStoreRestart_Body
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_WholeStoreRestart_Body"
 msgid "Outlook will be restarted to open the new stores"
-msgstr ""
+msgstr "Outlook verrà riavviato per aprire per aprire le nuove caselle"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_WholeStoreRestart_Title
 #, csharp-format
@@ -1474,13 +1488,16 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsFailed_Title"
 msgid "Shared Folders"
-msgstr ""
+msgstr "Cartelle Condivise"
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_SendAsUpdateFailed_Label
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_SendAsUpdateFailed_Label"
 msgid "Unable to determine the send-as email address for the existing shared folder {0}. Send-as will only work if you specify the email address manually. Would you like to open the Shared Folders dialog?"
 msgstr ""
+"Impossibile determinare l'indirizzo email send-as per la cartella condivisa "
+"{0}. Send-ad funzionerà solo se specifichi manualmente l'indirizzo email. "
+"Vuoi aprire la finestra di dialogo Cartelle condivise?"
 
 #: AcaciaZPushPlugin\Properties\Resources\LocalStore_Move_Body
 #, csharp-format
@@ -1499,12 +1516,15 @@ msgstr ""
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_TooManyFolders_Body"
 msgid "You are trying to open many additional folders. Having many shared folders open can impact the stability of Outlook. When working with many shared folders its recommended to take a look at Kopano WebApp/DeskApp instead."
 msgstr ""
+"Stai tentando di aprire molte cartelle aggiuntive. Avere molte cartelle "
+"condivise aperte può influire sulla stabilità di Outlook. Quando si lavora "
+"con molte cartelle condivise, si consiglia di utilizzare la Webmail."
 
 #: AcaciaZPushPlugin\Properties\Resources\SharedFolders_TooManyFolders_Title
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_TooManyFolders_Title"
 msgid "Shared Folders"
-msgstr ""
+msgstr "Cartelle Condivise"
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_StoreSize_Body
 #, csharp-format
