@@ -1438,7 +1438,18 @@ namespace Acacia.Properties {
                 return ResourceManager.GetString("SyncTimeFrame_WEEK_2", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to 1 year.
+        /// </summary>
+        internal static string SyncTimeFrame_YEAR_1
+        {
+            get
+            {
+                return ResourceManager.GetString("SyncTimeFrame_YEAR_1", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Kopano.
         /// </summary>
