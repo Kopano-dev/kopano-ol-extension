@@ -28,10 +28,10 @@ namespace Acacia.Utils
     public class TasksBackgroundRespawn : TaskExecutor
     {
         private readonly BlockingCollection<AcaciaTask> _tasks = new BlockingCollection<AcaciaTask>();
-        public static int TIMEOUT_MS = 5000;
-
-        public TasksBackgroundRespawn()
+        public static int TIMEOUT_MS;
+        public TasksBackgroundRespawn(int timeout_ms)
         {
+            TIMEOUT_MS = timeout_ms;
             Thread t = new Thread(Watcher);
             t.SetApartmentState(ApartmentState.STA);
             t.Start();
