@@ -36,6 +36,8 @@ namespace Acacia.Features.SyncState
 
         private readonly Button[] _syncButtons;
 
+        private readonly System.ComponentModel.ComponentResourceManager resources;
+
         private ZPushAccount SelectedAccount
         {
             get
@@ -47,6 +49,9 @@ namespace Acacia.Features.SyncState
         public SyncStateDialog(FeatureSyncState feature, ZPushAccount currentAccount)
         {
             InitializeComponent();
+
+            // Used for handling custom time frame values.
+            resources = new System.ComponentModel.ComponentResourceManager(typeof(SyncStateDialog));
 
             // Ensure these are in sync with ResyncOption
             _syncButtons = new Button[]
@@ -81,6 +86,9 @@ namespace Acacia.Features.SyncState
 
             if (SelectedAccount == null)
                 comboTimeFrame.SelectedIndex = 0;
+            // Custom values handling. Custom values will be appended into comboTimeFrame after the last standard value (7)
+            else if (SelectedAccount.SyncTimeFrame == (SyncTimeFrame)(int)SyncTimeFrame.YEAR_1) // 1 year
+                comboTimeFrame.SelectedIndex = comboTimeFrame.Items.IndexOf(resources.GetString("comboTimeFrame.Items101"));
             else
                 comboTimeFrame.SelectedIndex = (int)SelectedAccount.SyncTimeFrame;
 
@@ -97,8 +105,17 @@ namespace Acacia.Features.SyncState
             if (SelectedAccount != null)
             {
                 SyncTimeFrame timeFrame = (SyncTimeFrame)comboTimeFrame.SelectedIndex;
-                bool isDirty = timeFrame != SelectedAccount.SyncTimeFrame;
-                buttonApplyTimeFrame.Enabled = buttonResetTimeFrame.Enabled = isDirty;
+                // Handle custom values
+                if ((int)timeFrame == comboTimeFrame.Items.IndexOf(resources.GetString("comboTimeFrame.Items101")))
+                {
+                    bool isDirty = SelectedAccount.SyncTimeFrame != (SyncTimeFrame)(int)SyncTimeFrame.YEAR_1;
+                    buttonApplyTimeFrame.Enabled = buttonResetTimeFrame.Enabled = isDirty;
+                }
+                else
+                {
+                    bool isDirty = timeFrame != SelectedAccount.SyncTimeFrame;
+                    buttonApplyTimeFrame.Enabled = buttonResetTimeFrame.Enabled = isDirty;
+                }
             }
             else
             {
@@ -118,8 +135,16 @@ namespace Acacia.Features.SyncState
             {
                 Busy = true;
 
-                // TODO: do this in the background
-                _feature.SetDeviceOptions(SelectedAccount, (SyncTimeFrame)comboTimeFrame.SelectedIndex);
+                // Custom values handling. Custom values will be appended into comboTimeFrame after the last standard value (7)
+                if (comboTimeFrame.SelectedItem.Equals(resources.GetString("comboTimeFrame.Items101")))
+                {
+                    _feature.SetDeviceOptions(SelectedAccount, (SyncTimeFrame)(int)SyncTimeFrame.YEAR_1);
+                }
+                else
+                {
+                    // TODO: do this in the background
+                    _feature.SetDeviceOptions(SelectedAccount, (SyncTimeFrame)comboTimeFrame.SelectedIndex);
+                }
                 CheckTimeFrameDirty();
             }
         }

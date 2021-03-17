@@ -444,7 +444,7 @@
   <data name="comboTimeFrame.Items7" xml:space="preserve">
     <value>6 months</value>
   </data>
-  <data name="comboTimeFrame.Items8" xml:space="preserve">
+  <data name="comboTimeFrame.Items101" xml:space="preserve">
     <value>1 year</value>
   </data>
   <data name="comboTimeFrame.Location" type="System.Drawing.Point, System.Drawing">

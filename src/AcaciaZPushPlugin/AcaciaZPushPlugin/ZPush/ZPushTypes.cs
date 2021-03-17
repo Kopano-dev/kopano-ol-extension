@@ -162,7 +162,7 @@ namespace Acacia.ZPush
         MONTH_1,
         MONTH_3,
         MONTH_6,
-        YEAR_1
+        YEAR_1 = 101    // Custom value
     }
 
     public static class SyncTimeFrameMethods
