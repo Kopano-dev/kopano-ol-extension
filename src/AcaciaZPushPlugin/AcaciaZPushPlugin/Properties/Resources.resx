@@ -578,6 +578,9 @@ New sync window: {1}</value>
   <data name="SyncTimeFrame_MONTH_6" xml:space="preserve">
     <value>6 months</value>
   </data>
+<data name="SyncTimeFrame_YEAR_1" xml:space="preserve">
+    <value>1 year</value>
+  </data>
   <data name="SyncTimeFrame_WEEK_1" xml:space="preserve">
     <value>1 week</value>
   </data>

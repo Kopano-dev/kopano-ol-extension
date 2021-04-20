@@ -155,7 +155,8 @@
             resources.GetString("comboTimeFrame.Items4"),
             resources.GetString("comboTimeFrame.Items5"),
             resources.GetString("comboTimeFrame.Items6"),
-            resources.GetString("comboTimeFrame.Items7")});
+            resources.GetString("comboTimeFrame.Items7"),
+            resources.GetString("comboTimeFrame.Items101")});   // custom time frame value
             this.comboTimeFrame.Name = "comboTimeFrame";
             this.comboTimeFrame.SelectedIndexChanged += new System.EventHandler(this.comboTimeFrame_SelectedIndexChanged);
             // 
