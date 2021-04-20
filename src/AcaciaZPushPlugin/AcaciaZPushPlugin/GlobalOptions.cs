@@ -53,8 +53,16 @@ namespace Acacia
         }
         private static readonly EnumOption<Threading> THREADING = new EnumOption<Threading>("Threading", Threading.BackgroundRespawn);
 
-        [AcaciaOption("Enables or disables ZPush account checking. To enable advanced features, it must be known " + 
-                      "which accounts use ZPush servers. This option checks responses from ActiveSync servers to " + 
+        [AcaciaOption("Sets respawn timeout for BackgroundRespawn threading model.")]
+        public int ThreadingRespawnTimeout
+        {
+            get { return GetOption(null, THREADING_RESPONSE_TIMEOUT); }
+            set { SetOption(null, THREADING_RESPONSE_TIMEOUT, value); }
+        }
+        private static readonly IntOption THREADING_RESPONSE_TIMEOUT = new IntOption("ThreadingRespawnTimeout", 15000);
+
+        [AcaciaOption("Enables or disables ZPush account checking. To enable advanced features, it must be known " +
+                      "which accounts use ZPush servers. This option checks responses from ActiveSync servers to " +
                       "identify the ZPush ones.")]
         public bool ZPushCheck
         {
