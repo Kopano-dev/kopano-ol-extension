@@ -103,6 +103,7 @@ namespace Acacia.ZPush
                 if (token == "username") return _contact.CustomerID ?? "";
                 if (token == "title") return _contact.JobTitle ?? "";
                 if (token == "company") return _contact.CompanyName ?? "";
+                if (token == "department") return _contact.Department ?? "";
                 if (token == "office") return _contact.OfficeLocation ?? "";
                 if (token == "phone") return _contact.BusinessTelephoneNumber ?? _contact.MobileTelephoneNumber ?? "";
                 if (token == "primary_email") return _contact.Email1Address ?? "";
@@ -111,6 +112,7 @@ namespace Acacia.ZPush
                 if (token == "state") return _contact.BusinessAddressState ?? "";
                 if (token == "zipcode") return _contact.BusinessAddressPostalCode ?? "";
                 if (token == "country") return _contact.BusinessAddressState ?? "";
+                if (token == "street") return _contact.BusinessAddressStreet ?? "";
                 if (token == "phone_business") return _contact.BusinessTelephoneNumber ?? "";
                 if (token == "phone_fax") return _contact.BusinessFaxNumber ?? "";
                 if (token == "phone_home") return _contact.HomeTelephoneNumber ?? "";

@@ -1,17 +1,17 @@
 ﻿/// Copyright 2019 Kopano b.v.
-/// 
+///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License, version 3,
 /// as published by the Free Software Foundation.
-/// 
+///
 /// This program is distributed in the hope that it will be useful,
 /// but WITHOUT ANY WARRANTY; without even the implied warranty of
 /// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
 /// GNU Affero General Public License for more details.
-/// 
+///
 /// You should have received a copy of the GNU Affero General Public License
 /// along with this program.If not, see<http://www.gnu.org/licenses/>.
-/// 
+///
 /// Consult LICENSE file for details
 
 using System;
@@ -249,7 +249,7 @@ namespace Acacia.Features.GAB
             }
 
         }
-       
+
 
         public const string PROP_LAST_PROCESSED = "ZPushLastProcessed";
         public const string PROP_SEQUENCE_CHUNK = "ZPushSequenceChunk";
@@ -607,6 +607,7 @@ namespace Acacia.Features.GAB
                     contact.Email1AddressType = "SMTP";
                 }
                 if (Get<string>(value, "companyName") != null) contact.CompanyName = Get<string>(value, "companyName");
+                if (Get<string>(value, "department") != null) contact.Department = Get<string>(value, "department");
                 if (Get<string>(value, "officeLocation") != null) contact.OfficeLocation = Get<string>(value, "officeLocation");
                 if (Get<string>(value, "businessTelephoneNumber") != null) contact.BusinessTelephoneNumber = Get<string>(value, "businessTelephoneNumber");
                 if (Get<string>(value, "mobileTelephoneNumber") != null) contact.MobileTelephoneNumber = Get<string>(value, "mobileTelephoneNumber");
@@ -622,6 +623,7 @@ namespace Acacia.Features.GAB
                 if (Get<string>(value, "businessAddressPostalCode") != null) contact.BusinessAddressPostalCode = Get<string>(value, "businessAddressPostalCode");
                 if (Get<string>(value, "businessAddressPostOfficeBox") != null) contact.BusinessAddressPostOfficeBox = Get<string>(value, "businessAddressPostOfficeBox");
                 if (Get<string>(value, "businessAddressStateOrProvince") != null) contact.BusinessAddressState = Get<string>(value, "businessAddressStateOrProvince");
+                if (Get<string>(value, "businessAddressStreet") != null) contact.BusinessAddressStreet = Get<string>(value, "businessAddressStreet");
                 if (Get<string>(value, "language") != null) contact.Language = Get<string>(value, "language");
 
                 // Thumbnail
@@ -879,7 +881,7 @@ namespace Acacia.Features.GAB
                         _items = null;
                     }
                 }
-            } 
+            }
 
             public ItemCache(GABHandler gab)
             {
