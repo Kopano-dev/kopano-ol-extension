@@ -641,6 +641,7 @@
     <EmbeddedResource Include="UI\SettingsPage.resx">
       <DependentUpon>SettingsPage.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="AcaciaZPushPlugin_1_TemporaryKey.pfx" />
     <None Include="AcaciaZPushPlugin_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -711,10 +712,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AcaciaZPushPlugin_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AcaciaZPushPlugin_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>B8C4EE803C7FAAB765833281B425AB50E019C66F</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>7EF725B92F8C90386842E773F946583B220A8AF8</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
