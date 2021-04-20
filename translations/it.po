@@ -1534,16 +1534,6 @@ msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SharedFolders_TooManyFolders_
 msgid "Shared Folders"
 msgstr "Cartelle condivise"
 
-#: AcaciaZPushPlugin\Properties\Resources\SyncState_StoreSize_Body
-#, csharp-format
-msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_StoreSize_Body"
-msgid ""
-"KOE has detected that the current store size exceeds to recommended value for synced data and will therefore reduce the time synced.\n"
-"\n"
-"Current store size:  {0}\n"
-"New sync window: {1}"
-msgstr ""
-
 #: AcaciaZPushPlugin\Properties\Resources\SyncState_StoreSize_Caption
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncState_StoreSize_Caption"
