@@ -526,6 +526,12 @@ msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame
 msgid "6 months"
 msgstr ""
 
+#: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items101
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items101"
+msgid "1 year"
+msgstr ""
+
 #: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\buttonApplyTimeFrame.Text
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\buttonApplyTimeFrame.Text"
@@ -1307,6 +1313,12 @@ msgstr ""
 #, csharp-format
 msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_MONTH_6"
 msgid "6 months"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_YEAR_1
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_YEAR_1"
+msgid "1 year"
 msgstr ""
 
 #: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_WEEK_1
