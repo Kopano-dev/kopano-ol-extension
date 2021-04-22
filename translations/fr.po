@@ -1647,3 +1647,15 @@ msgctxt "AcaciaZPushPlugin\\Features\\DebugSupport\\DebugDialog\\_tabTasks.Text"
 msgid "Tasks"
 msgstr ""
 
+#: AcaciaZPushPlugin\Features\SyncState\SyncStateDialog\comboTimeFrame.Items101
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Features\\SyncState\\SyncStateDialog\\comboTimeFrame.Items101"
+msgid "1 year"
+msgstr ""
+
+#: AcaciaZPushPlugin\Properties\Resources\SyncTimeFrame_YEAR_1
+#, csharp-format
+msgctxt "AcaciaZPushPlugin\\Properties\\Resources\\SyncTimeFrame_YEAR_1"
+msgid "1 year"
+msgstr ""
+
